@@ -1,0 +1,996 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GaimControl · Mobile · §05 Onboarding</title>
+<link rel="icon" href="../assets/gc-favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  /* Color scale tokens — exact from spec 01-brand & 02-design-system */
+  --p-10:#0B0F1C;--p-20:#161B2D;--p-30:#20273C;--p-40:#354872;--p-50:#4D608C;--p-60:#6B7DA6;--p-70:#8E9DC0;--p-80:#B5BFD9;--p-90:#DCE2F0;--p-95:#ECF0F9;--p-99:#FAFBFE;--p-100:#FFF;
+  --s-10:#28215A;--s-20:#3E3478;--s-30:#534792;--s-40:#6B5DAC;--s-50:#8576C2;--s-60:#9D90D2;--s-70:#B5ACDF;--s-80:#CFC8EA;--s-90:#E8E4F4;
+  --t-10:#0E4A35;--t-20:#1A6047;--t-30:#1F7058;--t-40:#2A8060;--t-50:#399971;--t-60:#5BB088;--t-70:#82C7A4;--t-80:#ADDCC2;--t-90:#D5EDDF;
+  --w-30:#6B4500;--w-40:#8C5A00;--w-50:#A36A00;--w-60:#C28200;--w-70:#E09900;--w-80:#FAB44A;--w-90:#FFDFA8;
+  --e-30:#7A1F1F;--e-50:#C73838;--e-90:#FBD9D9;
+  --n-50:#76798A;--n-60:#9094A3;--n-95:#F1F2F5;--nv-80:#C5C9DD;
+}
+
+/* Dark theme = product default */
+[data-theme="dark"] {
+  --bg-base: var(--p-30);
+  --bg-surface: var(--p-20);
+  --bg-surface-2: var(--p-10);
+  --border: rgba(255,255,255,0.08);
+  --text-primary: var(--n-95);
+  --text-secondary: var(--nv-80);
+  --accent: var(--s-70);
+  --accent-strong: var(--s-50);
+  --on-accent: #fff;
+  --page-bg: #0a0e1a;
+  --page-fg: var(--n-95);
+  --page-fg-muted: var(--nv-80);
+  --page-card-bg: var(--p-20);
+  --page-divider: rgba(255,255,255,0.06);
+}
+[data-theme="light"] {
+  --bg-base: var(--p-99);
+  --bg-surface: #fff;
+  --bg-surface-2: var(--p-95);
+  --border: rgba(22,27,45,0.08);
+  --text-primary: var(--p-20);
+  --text-secondary: var(--n-50);
+  --accent: var(--p-40);
+  --accent-strong: var(--s-40);
+  --on-accent: #fff;
+  --page-bg: var(--p-95);
+  --page-fg: var(--p-20);
+  --page-fg-muted: var(--n-50);
+  --page-card-bg: #fff;
+  --page-divider: rgba(22,27,45,0.08);
+}
+
+* { box-sizing: border-box; }
+html, body { background: var(--page-bg); color: var(--page-fg); margin: 0; transition: background-color 220ms ease, color 220ms ease; }
+body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif; font-size: 14px; line-height: 1.5; -webkit-font-smoothing: antialiased; min-height: 100vh; }
+
+/* ============= PROTOTYPE CHROME (everything outside the phone) ============= */
+.proto-shell { display: grid; grid-template-columns: 280px 1fr; gap: 0; min-height: 100vh; }
+@media (max-width: 960px) { .proto-shell { grid-template-columns: 1fr; } }
+
+.proto-sidebar { background: var(--page-card-bg); border-right: 1px solid var(--page-divider); padding: 28px 22px; position: sticky; top: 0; height: 100vh; overflow-y: auto; display: flex; flex-direction: column; gap: 16px; }
+@media (max-width: 960px) { .proto-sidebar { position: static; height: auto; max-height: 50vh; border-right: none; border-bottom: 1px solid var(--page-divider); } }
+.proto-sidebar__brand { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
+.proto-sidebar__mark { width: 36px; height: 36px; border-radius: 10px; background: var(--p-30); display: inline-flex; align-items: center; justify-content: center; }
+.proto-sidebar__mark img { width: 70%; height: 70%; }
+.proto-sidebar__name { font-weight: 700; font-size: 17px; letter-spacing: -0.01em; }
+.proto-sidebar__pill { display: inline-flex; padding: 3px 9px; border-radius: 999px; background: linear-gradient(120deg, var(--s-50), var(--p-50), var(--t-50)); color: white; font-weight: 700; font-size: 9.5px; font-family: 'JetBrains Mono', monospace; letter-spacing: 0.06em; text-transform: uppercase; }
+
+.proto-sidebar__back { display: inline-flex; align-items: center; gap: 6px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--page-fg-muted); text-decoration: none; margin-bottom: 4px; }
+.proto-sidebar__back:hover { color: var(--page-accent, var(--s-70)); }
+
+.proto-section-title { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--page-fg-muted); margin: 12px 0 6px; }
+
+.proto-scrubber { display: flex; flex-direction: column; gap: 2px; }
+.proto-scrubber__item { display: grid; grid-template-columns: 44px 1fr; gap: 8px; align-items: center; padding: 7px 10px; border-radius: 8px; cursor: pointer; font-size: 12.5px; transition: background 140ms ease; border: none; background: transparent; color: inherit; font-family: inherit; text-align: left; }
+.proto-scrubber__item:hover { background: rgba(127,127,127,0.08); }
+.proto-scrubber__item.is-active { background: var(--accent-strong); color: var(--on-accent); }
+.proto-scrubber__item.is-active .proto-scrubber__id { color: rgba(255,255,255,0.85); }
+.proto-scrubber__id { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; color: var(--page-fg-muted); letter-spacing: 0.06em; }
+.proto-scrubber__name { font-size: 12.5px; font-weight: 500; }
+
+.proto-sidebar__footer { margin-top: auto; padding-top: 16px; border-top: 1px solid var(--page-divider); font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--page-fg-muted); }
+.proto-sidebar__footer a { color: var(--page-fg-muted); text-decoration: none; border-bottom: 1px dotted currentColor; }
+.proto-sidebar__footer a:hover { color: var(--page-accent, var(--s-70)); }
+
+.proto-theme-toggle { display: inline-flex; align-items: center; gap: 8px; padding: 7px 12px; border-radius: 8px; background: var(--bg-surface-2); border: 1px solid var(--border); color: var(--page-fg-muted); cursor: pointer; font-family: 'JetBrains Mono', monospace; font-size: 11px; align-self: flex-start; }
+.proto-theme-toggle svg { width: 12px; height: 12px; }
+[data-theme="dark"] .proto-theme-toggle .icon-moon { display: none; }
+[data-theme="light"] .proto-theme-toggle .icon-sun { display: none; }
+
+/* ============= STAGE (where the phone sits) ============= */
+.proto-stage { display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding: 48px 24px 64px; gap: 24px; }
+.proto-stage__caption { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--page-fg-muted); letter-spacing: 0.06em; text-transform: uppercase; }
+.proto-stage__caption strong { color: var(--page-fg); }
+
+/* ============= PHONE FRAME (real iPhone 14 size: 393 × 852 inner) ============= */
+.phone {
+  width: 393px; height: 852px; flex-shrink: 0;
+  border-radius: 56px;
+  background: #000;
+  padding: 13px;
+  position: relative;
+  box-shadow: 0 0 0 1.5px #2a2e3a, 0 30px 60px -20px rgba(0,0,0,0.7), 0 16px 32px -16px rgba(0,0,0,0.4);
+}
+.phone::before, .phone::after { content: ''; position: absolute; background: #2a2e3a; }
+.phone::before { left: -3px; top: 110px; width: 3px; height: 30px; border-radius: 3px 0 0 3px; }
+.phone::after { left: -3px; top: 160px; width: 3px; height: 60px; border-radius: 3px 0 0 3px; }
+.phone__inner {
+  width: 100%; height: 100%; background: var(--bg-base); color: var(--text-primary);
+  border-radius: 44px; overflow: hidden; position: relative;
+  display: flex; flex-direction: column;
+}
+.phone__notch {
+  position: absolute; top: 12px; left: 50%; transform: translateX(-50%);
+  width: 120px; height: 32px; background: #000; border-radius: 18px; z-index: 30;
+}
+
+/* Status bar */
+.phone__statusbar {
+  height: 44px; padding: 12px 32px 0;
+  display: flex; align-items: center; justify-content: space-between;
+  font-size: 14px; font-weight: 600; color: var(--text-primary);
+  font-feature-settings: "tnum"; letter-spacing: -0.01em;
+  flex-shrink: 0;
+}
+.phone__statusbar__time { font-weight: 700; }
+.phone__statusbar__right { display: flex; align-items: center; gap: 5px; font-size: 13px; }
+
+/* App-bar (per design-system §10) */
+.phone__topbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 8px 18px 14px; gap: 10px; flex-shrink: 0;
+}
+.phone__mark {
+  width: 32px; height: 32px; border-radius: 9px;
+  background: var(--bg-surface); border: 1px solid var(--border);
+  display: inline-flex; align-items: center; justify-content: center;
+  cursor: pointer; flex-shrink: 0;
+}
+.phone__mark img { width: 65%; height: 65%; }
+/* Mono-light SVG is white; invert it on light backgrounds so the mark stays visible */
+[data-theme="light"] .phone__mark img { filter: invert(1) brightness(0.3); }
+.phone__title { flex: 1; text-align: center; font-size: 14px; font-weight: 600; color: var(--text-primary); letter-spacing: -0.01em; }
+.gc-crisis-pill {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 6px 11px; border-radius: 999px;
+  background: var(--e-50); color: white;
+  border: none; font-family: inherit;
+  font-size: 11.5px; font-weight: 600;
+  cursor: pointer; flex-shrink: 0;
+}
+
+/* Body */
+.ob-body {
+  flex: 1; padding: 4px 18px 18px; overflow-y: auto;
+  display: flex; flex-direction: column; gap: 12px;
+  scrollbar-width: thin;
+}
+.ob-body::-webkit-scrollbar { width: 4px; }
+.ob-body::-webkit-scrollbar-thumb { background: rgba(127,127,127,0.2); border-radius: 4px; }
+
+/* Anna welcome (ON1) */
+.ob-anna-mark { position: relative; width: 88px; height: 88px; border-radius: 22px; background: linear-gradient(135deg, var(--s-30), var(--p-20)); display: inline-flex; align-items: center; justify-content: center; align-self: center; margin: 12px 0 4px; }
+.ob-anna-mark img { width: 60%; height: 60%; }
+.ob-anna-mark__pulse { position: absolute; inset: -7px; border-radius: 28px; border: 2px solid var(--s-50); opacity: 0.5; animation: ob-pulse 2.4s ease-in-out infinite; }
+@keyframes ob-pulse { 0%,100% { transform: scale(1); opacity: 0.5; } 50% { transform: scale(1.06); opacity: 0.2; } }
+.ob-anna-name { font-weight: 700; font-size: 14px; color: var(--text-primary); text-align: center; }
+
+.gc-card { padding: 14px; background: var(--bg-surface); border: 1px solid var(--border); border-radius: 14px; display: flex; gap: 10px; }
+.gc-card--anna { background: linear-gradient(135deg, rgba(133,118,194,0.15), rgba(83,71,146,0.08)); border-color: rgba(133,118,194,0.25); flex-direction: row; align-items: flex-start; gap: 10px; padding: 12px 14px; border-radius: 14px; }
+.gc-card--anna .anna-avatar { width: 28px; height: 28px; border-radius: 50%; background: var(--p-30); display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.gc-card--anna .anna-avatar img { width: 60%; height: 60%; }
+.gc-card--anna .anna-name { font-size: 12px; font-weight: 700; letter-spacing: -0.01em; }
+.gc-card--anna p { font-size: 13px; line-height: 1.5; margin: 2px 0 0; color: var(--text-primary); }
+
+.ob-h { font-size: 22px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.15; color: var(--text-primary); margin: 8px 0 4px; }
+
+.ob-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 7px; }
+.ob-list li { display: grid; grid-template-columns: 28px 1fr; gap: 11px; align-items: center; padding: 10px 13px; background: var(--bg-surface); border: 1px solid var(--border); border-radius: 11px; font-size: 13.5px; color: var(--text-primary); }
+.ob-list__num { width: 28px; height: 28px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 12px; background: var(--accent-strong); color: var(--on-accent); }
+
+/* Bottom CTA area */
+.ob-cta { padding: 14px 18px 24px; border-top: 1px solid var(--border); background: var(--bg-base); flex-shrink: 0; }
+.gc-btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 14px 18px; border-radius: 14px; font-family: inherit; font-size: 15px; font-weight: 600; cursor: pointer; border: 1px solid transparent; transition: transform 120ms ease, background-color 160ms ease; }
+.gc-btn:active { transform: scale(0.98); }
+.gc-btn--primary { background: var(--accent-strong); color: var(--on-accent); }
+.gc-btn--primary:hover { background: var(--s-40); }
+[data-theme="light"] .gc-btn--primary:hover { background: var(--s-30); }
+.gc-btn--ghost { background: transparent; color: var(--text-primary); border-color: var(--border); }
+.gc-btn--ghost:hover { background: rgba(127,127,127,0.06); }
+.gc-btn--ghost:disabled { opacity: 0.35; cursor: not-allowed; }
+.gc-btn--full { width: 100%; }
+
+/* Quiz progress dots */
+.ob-progress { display: flex; gap: 8px; align-items: center; justify-content: center; margin: 4px 0 8px; }
+.ob-progress__step { width: 30px; height: 30px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700; background: var(--bg-surface-2); color: var(--text-secondary); border: 1px solid var(--border); }
+.ob-progress__step.is-done { background: var(--t-50); color: white; border-color: transparent; }
+.ob-progress__step.is-current { background: var(--accent-strong); color: var(--on-accent); border-color: transparent; transform: scale(1.08); }
+
+/* Question card */
+.ob-question { background: var(--bg-surface); border: 1px solid var(--border); border-radius: 14px; padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+.ob-question__num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); }
+.ob-question__title { font-size: 17px; font-weight: 700; line-height: 1.3; color: var(--text-primary); margin: 0; letter-spacing: -0.01em; }
+
+/* PGSI 0–3 scale */
+.ob-scale { display: grid; grid-template-columns: repeat(2, 1fr); gap: 7px; }
+.ob-scale__opt { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; padding: 12px 8px; background: var(--bg-base); border: 1px solid var(--border); border-radius: 11px; cursor: pointer; font-family: inherit; color: var(--text-primary); transition: background 140ms ease; }
+.ob-scale__opt:hover { background: rgba(127,127,127,0.06); }
+.ob-scale__opt.is-on { background: var(--accent-strong); color: var(--on-accent); border-color: var(--accent-strong); }
+.ob-scale__num { font-family: 'JetBrains Mono', monospace; font-size: 18px; font-weight: 700; }
+.ob-scale__label { font-size: 11px; font-weight: 500; text-align: center; }
+
+/* Single-choice list */
+.ob-choices { display: flex; flex-direction: column; gap: 7px; }
+.ob-choice { padding: 12px 14px; background: var(--bg-base); border: 1px solid var(--border); border-radius: 11px; font-family: inherit; font-size: 14px; font-weight: 500; color: var(--text-primary); text-align: left; cursor: pointer; transition: background 140ms ease; }
+.ob-choice:hover { background: rgba(127,127,127,0.06); }
+.ob-choice.is-on { background: var(--accent-strong); color: var(--on-accent); border-color: var(--accent-strong); font-weight: 600; }
+
+/* Multi-checkbox list */
+.ob-checks { display: flex; flex-direction: column; gap: 7px; }
+.ob-check { display: flex; align-items: center; gap: 11px; padding: 11px 14px; background: var(--bg-base); border: 1px solid var(--border); border-radius: 11px; font-size: 14px; color: var(--text-primary); cursor: pointer; transition: background 140ms ease; }
+.ob-check:hover { background: rgba(127,127,127,0.06); }
+.ob-check.is-on { background: var(--accent-strong); color: var(--on-accent); border-color: var(--accent-strong); }
+.gc-checkbox { width: 18px; height: 18px; border-radius: 5px; border: 1.5px solid currentColor; flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center; }
+.ob-check.is-on .gc-checkbox { background: white; border-color: white; color: var(--accent-strong); }
+.ob-check.is-on .gc-checkbox::after { content: '✓'; font-size: 12px; font-weight: 700; }
+
+/* Text input */
+.phone__field { display: flex; flex-direction: column; gap: 6px; }
+.phone__label { font-size: 11.5px; font-weight: 600; color: var(--text-secondary); letter-spacing: 0.02em; }
+.phone__input { padding: 12px 14px; background: var(--bg-base); border: 1px solid var(--border); border-radius: 11px; font-family: inherit; font-size: 15px; color: var(--text-primary); width: 100%; }
+.phone__input:focus { outline: none; border-color: var(--accent-strong); }
+.phone__hint { font-size: 11.5px; color: var(--text-secondary); line-height: 1.4; }
+
+/* Profile hero (ON7) */
+.profile-hero { background: linear-gradient(135deg, var(--s-40), var(--p-50)); color: white; padding: 18px 20px; border-radius: 16px; display: flex; flex-direction: column; gap: 6px; position: relative; overflow: hidden; }
+.profile-hero__kicker { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.8; }
+.profile-hero__name { font-size: 26px; font-weight: 800; letter-spacing: -0.02em; margin: 0; }
+.profile-hero__sub { font-size: 13px; line-height: 1.5; margin: 2px 0 0; opacity: 0.92; }
+.profile-hero__chips { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+.profile-hero__chip { background: rgba(0,0,0,0.22); padding: 4px 10px; border-radius: 999px; font-size: 11px; font-weight: 600; }
+
+.ob-result-list { display: flex; flex-direction: column; gap: 7px; }
+.ob-result-item { display: grid; grid-template-columns: 30px 1fr; gap: 11px; align-items: center; padding: 11px 13px; background: var(--bg-surface); border: 1px solid var(--border); border-radius: 11px; }
+.ob-result-item__icon { width: 30px; height: 30px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; }
+.ob-result-item__t { font-weight: 600; font-size: 13.5px; color: var(--text-primary); line-height: 1.25; }
+.ob-result-item__s { font-size: 11.5px; color: var(--text-secondary); margin-top: 1px; }
+
+/* KYC camera */
+.kyc-camera { background: var(--bg-surface-2); border-radius: 14px; padding: 18px; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.kyc-camera__frame { width: 100%; aspect-ratio: 1.6; border: 2.5px dashed var(--t-60); border-radius: 14px; background: linear-gradient(135deg, #1a3052, #0e1f3a); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; color: rgba(255,255,255,0.92); }
+.kyc-camera__caption { display: inline-flex; align-items: center; gap: 7px; font-size: 12px; color: var(--text-secondary); }
+.kyc-camera__caption::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--t-50); }
+
+/* Liveness oval */
+.kyc-liveness { display: flex; flex-direction: column; align-items: center; gap: 14px; padding: 14px 0; }
+.kyc-liveness__oval { width: 180px; height: 230px; border-radius: 50%/55%; border: 3px solid var(--s-50); background: linear-gradient(135deg, var(--p-20), var(--s-20)); display: flex; align-items: center; justify-content: center; position: relative; }
+.kyc-liveness__face { position: relative; width: 80%; height: 80%; }
+.kyc-liveness__eye { position: absolute; top: 35%; width: 8px; height: 8px; border-radius: 50%; background: white; }
+.kyc-liveness__mouth { position: absolute; top: 60%; left: 50%; transform: translateX(-50%); width: 30%; height: 6px; border-radius: 0 0 14px 14px; background: rgba(255,255,255,0.6); }
+.kyc-liveness__steps { display: flex; flex-direction: column; gap: 5px; align-items: center; }
+.kyc-liveness__step { padding: 6px 12px; border-radius: 999px; font-size: 12px; font-family: 'JetBrains Mono', monospace; color: var(--text-secondary); background: var(--bg-surface-2); }
+.kyc-liveness__step.is-done { background: var(--t-20); color: var(--t-80); }
+.kyc-liveness__step.is-current { background: var(--accent-strong); color: var(--on-accent); }
+
+/* Suit list (KYC result, suitability result) */
+.ob-suit-list { display: flex; flex-direction: column; gap: 7px; }
+.ob-suit-item { display: grid; grid-template-columns: 30px 1fr; gap: 11px; align-items: center; padding: 11px 13px; background: var(--bg-surface); border: 1px solid var(--border); border-radius: 11px; }
+.ob-suit-icon { width: 30px; height: 30px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; flex-shrink: 0; }
+.ob-suit-icon--ok { background: var(--t-90); color: var(--t-30); }
+[data-theme="dark"] .ob-suit-icon--ok { background: var(--t-20); color: var(--t-80); }
+.ob-suit-icon--warn { background: var(--w-90); color: var(--w-30); }
+[data-theme="dark"] .ob-suit-icon--warn { background: var(--w-30); color: var(--w-80); }
+.ob-suit-t { font-weight: 600; font-size: 13.5px; color: var(--text-primary); line-height: 1.25; }
+.ob-suit-s { font-size: 11.5px; color: var(--text-secondary); margin-top: 1px; }
+
+/* Bank explain */
+.ob-explain { display: grid; grid-template-columns: 38px 1fr; gap: 12px; align-items: center; padding: 12px 14px; background: var(--bg-surface); border: 1px solid var(--border); border-radius: 12px; }
+.ob-explain__icon { width: 38px; height: 38px; border-radius: 11px; display: inline-flex; align-items: center; justify-content: center; }
+.ob-explain__icon--t { background: var(--t-90); color: var(--t-30); }
+[data-theme="dark"] .ob-explain__icon--t { background: var(--t-20); color: var(--t-80); }
+.ob-explain__icon--p { background: var(--p-90); color: var(--p-30); }
+[data-theme="dark"] .ob-explain__icon--p { background: var(--p-40); color: var(--p-95); }
+.ob-explain__icon--s { background: var(--s-90); color: var(--s-10); }
+[data-theme="dark"] .ob-explain__icon--s { background: var(--s-20); color: var(--s-80); }
+.ob-explain__t { font-weight: 600; font-size: 14px; color: var(--text-primary); }
+.ob-explain__s { font-size: 12px; color: var(--text-secondary); margin-top: 1px; }
+
+/* Bank list (ON13) */
+.bank-list { display: flex; flex-direction: column; gap: 6px; }
+.bank-row { display: flex; align-items: center; gap: 11px; padding: 11px 14px; background: var(--bg-base); border: 1px solid var(--border); border-radius: 11px; cursor: pointer; transition: background 140ms ease; color: var(--text-primary); font-family: inherit; text-align: left; }
+.bank-row:hover { background: rgba(127,127,127,0.06); }
+.bank-row.is-on { background: var(--accent-strong); color: var(--on-accent); border-color: var(--accent-strong); }
+.bank-row__logo { width: 30px; height: 30px; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0; font-size: 13px; }
+.bank-row__name { font-weight: 600; font-size: 14px; color: inherit; }
+
+/* Vendor badge */
+.vendor-badge { display: inline-flex; align-items: center; gap: 6px; font-size: 11.5px; color: var(--text-secondary); padding: 8px 11px; background: var(--bg-base); border-radius: 8px; border: 1px solid var(--border); }
+.vendor-badge svg { width: 13px; height: 13px; flex-shrink: 0; }
+
+/* Connect progress (ON14) */
+.connect-progress { display: flex; flex-direction: column; gap: 6px; width: 100%; max-width: 280px; }
+.connect-progress__step { padding: 9px 14px; border-radius: 10px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--text-secondary); background: var(--bg-surface-2); border: 1px solid var(--border); }
+.connect-progress__step.is-done { background: var(--t-20); color: var(--t-80); border-color: transparent; }
+.connect-progress__step.is-current { background: var(--accent-strong); color: var(--on-accent); border-color: transparent; }
+
+/* Bank summary (ON15) */
+.ob-bank-summary { background: var(--bg-surface); border: 1px solid var(--border); border-radius: 14px; padding: 14px; display: flex; flex-direction: column; gap: 11px; }
+.ob-bank-summary__head { display: flex; align-items: center; justify-content: space-between; }
+.ob-bank-summary__head__name { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 13.5px; }
+.ob-bank-summary__head__name span { width: 24px; height: 24px; border-radius: 6px; background: #005EB8; color: white; display: inline-flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; }
+.ob-bank-summary__head__meta { font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: var(--text-secondary); }
+.ob-bank-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.ob-bank-stat { padding: 11px 13px; background: var(--bg-base); border: 1px solid var(--border); border-radius: 10px; }
+.ob-bank-stat__n { font-size: 17px; font-weight: 800; letter-spacing: -0.01em; color: var(--text-primary); }
+.ob-bank-stat__l { font-size: 11px; color: var(--text-secondary); margin-top: 2px; }
+
+/* Signpost (ON16 decline) */
+.ob-signpost { display: grid; grid-template-columns: 32px 1fr; gap: 11px; padding: 11px 13px; background: var(--bg-surface); border: 1px solid var(--border); border-radius: 11px; }
+.ob-signpost__num { width: 32px; height: 32px; border-radius: 9px; background: var(--bg-base); display: inline-flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 12px; color: var(--text-secondary); }
+.ob-signpost strong { font-size: 13.5px; color: var(--text-primary); display: block; }
+.ob-signpost__s { font-size: 11.5px; color: var(--text-secondary); margin-top: 1px; }
+
+/* Suitability variant chip */
+.suit-status { display: inline-flex; align-items: center; gap: 7px; padding: 5px 13px 5px 6px; border-radius: 999px; font-size: 11px; font-weight: 700; }
+.suit-status::before { content: ''; width: 9px; height: 9px; border-radius: 50%; background: currentColor; opacity: 0.8; }
+.suit-status--ok { background: var(--t-20); color: var(--t-80); }
+.suit-status--ok::before { background: var(--t-50); opacity: 1; }
+.suit-status--warn { background: var(--w-30); color: var(--w-80); }
+.suit-status--warn::before { background: var(--w-60); opacity: 1; }
+.suit-status--err { background: var(--e-30); color: var(--e-90); }
+.suit-status--err::before { background: var(--e-50); opacity: 1; }
+[data-theme="light"] .suit-status--ok { background: var(--t-90); color: var(--t-30); }
+[data-theme="light"] .suit-status--warn { background: var(--w-90); color: var(--w-30); }
+[data-theme="light"] .suit-status--err { background: var(--e-90); color: var(--e-30); }
+
+/* Decision callout (where decisions log applies) */
+.decision-callout { padding: 11px 13px; background: rgba(133,118,194,0.10); border: 1px solid rgba(133,118,194,0.28); border-radius: 10px; font-size: 11px; color: var(--text-secondary); line-height: 1.5; }
+.decision-callout strong { color: var(--accent); }
+
+/* Sponsor invite (ON6-A) */
+.sponsor-form { display: flex; flex-direction: column; gap: 11px; padding: 14px; background: var(--bg-surface); border: 1px solid var(--border); border-radius: 14px; }
+
+/* SCREEN VISIBILITY */
+.screen { display: none; height: 100%; flex-direction: column; }
+.screen.is-active { display: flex; }
+
+/* Inter-screen transitions */
+.screen { animation: fade-in 220ms ease; }
+@keyframes fade-in { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+/* Wide-screen tweaks: phone scales down a bit on narrow */
+@media (max-width: 720px) {
+  .phone { transform: scale(0.92); transform-origin: top center; }
+}
+@media (max-width: 480px) {
+  .phone { transform: scale(0.78); }
+}
+
+/* Mode-bar above phone */
+.proto-modebar { display: flex; align-items: center; gap: 10px; padding: 10px 16px; background: var(--page-card-bg); border: 1px solid var(--page-divider); border-radius: 12px; font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: var(--page-fg-muted); flex-wrap: wrap; justify-content: center; }
+.proto-modebar__pill { display: inline-flex; padding: 3px 9px; border-radius: 999px; background: var(--bg-surface-2); color: var(--page-fg-muted); }
+.proto-modebar__id { color: var(--page-fg); font-weight: 700; letter-spacing: 0.06em; }
+.proto-modebar__bar { width: 100px; height: 4px; border-radius: 4px; background: var(--bg-surface-2); position: relative; overflow: hidden; }
+.proto-modebar__bar__fill { position: absolute; left: 0; top: 0; bottom: 0; background: linear-gradient(90deg, var(--s-50), var(--t-50)); transition: width 240ms ease; }
+
+/* Nav arrows above phone */
+.proto-arrows { display: flex; align-items: center; gap: 8px; }
+.proto-arrow { width: 36px; height: 36px; border-radius: 10px; background: var(--page-card-bg); border: 1px solid var(--page-divider); color: var(--page-fg-muted); display: inline-flex; align-items: center; justify-content: center; cursor: pointer; transition: background 160ms ease; }
+.proto-arrow:hover { background: var(--bg-surface-2); color: var(--page-fg); }
+.proto-arrow:disabled { opacity: 0.3; cursor: not-allowed; }
+.proto-arrow svg { width: 18px; height: 18px; }
+
+/* Decisions panel under the phone */
+.proto-context { width: 100%; max-width: 420px; padding: 14px 16px; background: var(--page-card-bg); border: 1px solid var(--page-divider); border-radius: 12px; font-size: 12.5px; color: var(--page-fg-muted); line-height: 1.55; }
+.proto-context strong { color: var(--page-fg); }
+.proto-context a { color: var(--page-accent, var(--s-70)); text-decoration: none; border-bottom: 1px dotted currentColor; }
+.proto-context__head { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; font-weight: 700; color: var(--page-fg); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px; }
+</style>
+<script src="flow-chain.js" defer></script>
+</head>
+<body>
+
+<div class="proto-shell">
+
+  <!-- ============= SIDEBAR ============= -->
+  <aside class="proto-sidebar">
+    <div class="proto-sidebar__brand">
+      <span class="proto-sidebar__mark"><img src="../assets/gc-mark-mono-light.svg" alt=""></span>
+      <span>
+        <div class="proto-sidebar__name">GaimControl</div>
+        <span class="proto-sidebar__pill">mobile</span>
+      </span>
+    </div>
+    <a class="proto-sidebar__back" href="index.html">← prototype index</a>
+
+    <button class="proto-theme-toggle" type="button" aria-label="Toggle theme">
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+      <span class="theme-label">Dark</span>
+    </button>
+
+    <div class="proto-section-title">§05 · ON1 – ON16</div>
+    <nav class="proto-scrubber" id="scrubber"></nav>
+
+    <div class="proto-sidebar__footer">
+      Source spec: <a href="../app-ui/05-onboarding-quiz.html">app-ui/05</a><br>
+      Decisions: <a href="../41-decisions-log.html">41 log</a>
+    </div>
+  </aside>
+
+  <!-- ============= STAGE ============= -->
+  <main class="proto-stage">
+
+    <div class="proto-modebar">
+      <span>Screen <span class="proto-modebar__id" id="screenId">ON1</span></span>
+      <span class="proto-modebar__pill" id="screenName">Welcome</span>
+      <div class="proto-modebar__bar"><div class="proto-modebar__bar__fill" id="progressFill" style="width:5%"></div></div>
+      <div class="proto-arrows">
+        <button class="proto-arrow" id="navPrev" aria-label="Previous"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+        <button class="proto-arrow" id="navNext" aria-label="Next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
+      </div>
+    </div>
+
+    <!-- ============= PHONE ============= -->
+    <div class="phone">
+      <div class="phone__notch"></div>
+      <div class="phone__inner">
+        <div class="phone__statusbar">
+          <span class="phone__statusbar__time">9:41</span>
+          <span class="phone__statusbar__right" id="statusbarRight"><span style="display:inline-flex;gap:3px"><span style="width:4px;height:4px;border-radius:50%;background:currentColor"></span><span style="width:4px;height:5px;border-radius:1px;background:currentColor"></span><span style="width:4px;height:6px;border-radius:1px;background:currentColor"></span><span style="width:4px;height:7px;border-radius:1px;background:currentColor"></span></span><span>100%</span></span>
+        </div>
+        <div class="phone__topbar">
+          <span class="phone__mark"><img src="../assets/gc-mark-mono-light.svg" alt=""></span>
+          <span class="phone__title" id="phoneTitle">Welcome</span>
+          <button class="gc-crisis-pill" type="button" aria-label="Help">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7-4.5-9-9.5C2 7 5 4 8 4c1.7 0 3.2.8 4 2 .8-1.2 2.3-2 4-2 3 0 6 3 5 7.5C19 16.5 12 21 12 21z"/></svg>
+            Help
+          </button>
+        </div>
+        <div id="stage" style="flex:1;display:flex;flex-direction:column;min-height:0"></div>
+      </div>
+    </div>
+
+    <!-- ============= CONTEXT PANEL ============= -->
+    <div class="proto-context" id="contextPanel">
+      <div class="proto-context__head">Screen context</div>
+      <div id="contextBody">Loading…</div>
+    </div>
+
+  </main>
+</div>
+
+<!-- ============= SCRIPT ============= -->
+<script>
+/* ====================================================================
+   SCREEN DEFINITIONS
+   Each screen: { id, name, title, statusbar, body, context, cta }
+   `body` is the HTML for the scrolling content area.
+   `cta` is the bottom button row.
+   ==================================================================== */
+
+const ANNA_BUBBLE = (text) => `
+  <div class="gc-card gc-card--anna">
+    <span class="anna-avatar"><img src="../assets/gc-mark-mono-light.svg" alt=""></span>
+    <div>
+      <div class="anna-name">Anna</div>
+      <p>${text}</p>
+    </div>
+  </div>`;
+
+const PROGRESS_DOTS = (current, total = 5, done = []) => {
+  let html = '<div class="ob-progress">';
+  for (let i = 1; i <= total; i++) {
+    if (done.includes(i)) html += `<span class="ob-progress__step is-done">✓</span>`;
+    else if (i === current) html += `<span class="ob-progress__step is-current">${i}</span>`;
+    else html += `<span class="ob-progress__step">${i}</span>`;
+  }
+  html += '</div>';
+  return html;
+};
+
+/* ----- QUIZ DATA (exact from spec) ----- */
+const QUIZ = [
+  // ON2 Demographics — section 1 of 5
+  { section: 1, sectionName: 'Demographics', title: 'Demographics', anna: "Hello, traveller. I'm here to help you navigate this journey. My name is Anna. What's yours?", q: 1, of: 5, qText: "What's your name?", kind: 'text', placeholder: 'First name', value: 'Sam', hint: "I'll use this to make conversations feel like, well, conversations." },
+  { section: 1, sectionName: 'Demographics', title: 'Demographics', anna: "Nice to meet you, Sam. Now a few simple ones — they help me get the picture.", q: 2, of: 5, qText: 'Nice to meet you, Sam. How old are you?', kind: 'choice', options: ['18 – 24', '25 – 34', '35 – 44', '45 – 54', '55 – 64', '65 +', 'Prefer not to answer'], on: 1 },
+  { section: 1, sectionName: 'Demographics', title: 'Demographics', anna: "No wrong answer here.", q: 3, of: 5, qText: 'How do you see yourself in terms of gender?', kind: 'choice', options: ['Guy', 'Gal', 'Non-binary', 'Something else', 'Prefer not to answer'], on: 0 },
+  { section: 1, sectionName: 'Demographics', title: 'Demographics', anna: "Helps me understand your situation a bit.", q: 4, of: 5, qText: "What's your work vibe?", kind: 'choice', options: ['Working for someone else', 'Running my own show', 'Between jobs', 'Hitting the books', 'Enjoying retirement', 'Other / Prefer not'], on: 0 },
+  { section: 1, sectionName: 'Demographics', title: 'Demographics', anna: "Last one in this section. Round numbers are fine.", q: 5, of: 5, qText: 'Yearly income range?', kind: 'choice', options: ['Less than £20k', '£20k – £39k', '£39k – £59k', 'Over £60k', 'Prefer not to answer'], on: 1, nextLabel: 'Next section →' },
+
+  // ON3 Severity — PGSI — section 2 of 5
+  { section: 2, sectionName: 'PGSI · severity', title: 'PGSI · severity', anna: "Nine PGSI questions — the standard NHS measure. Be honest with yourself.", q: 1, of: 9, qText: 'Have you ever felt that you might have a problem with gambling?', kind: 'scale', options: ['No, not me!', 'Sometimes I do', 'Often on my mind', 'Yes, always'], on: 1 },
+  { section: 2, sectionName: 'PGSI · severity', title: 'PGSI · severity', anna: "No judgement, this is just data.", q: 2, of: 9, qText: 'Have people told you that you had a gambling problem?', kind: 'scale', options: ['Not that I recall', 'Some people sometimes', 'Yes, most of the time', 'They always tell me'], on: 0 },
+  { section: 2, sectionName: 'PGSI · severity', title: 'PGSI · severity', anna: "Guilt is information, not a verdict.", q: 3, of: 9, qText: 'Have you ever felt guilty about gambling?', kind: 'scale', options: ['Nope, never', 'Sometimes guilt', 'Often guilty', 'Always guilty'], on: 2 },
+  { section: 2, sectionName: 'PGSI · severity', title: 'PGSI · severity', anna: "The mind and the wallet are connected — checking both.", q: 4, of: 9, qText: 'Health problems like stress or anxiety because of gambling?', kind: 'scale', options: ['No, healthy', 'Sometimes', 'Often', 'Yes, every time'], on: 1 },
+  { section: 2, sectionName: 'PGSI · severity', title: 'PGSI · severity', anna: "Be straight with yourself, even on the awkward ones.", q: 5, of: 9, qText: 'In 12 months, did you bet more than you could afford to lose?', kind: 'scale', options: ['Never', 'Sometimes', 'Most of the time', 'Always'], on: 1 },
+  { section: 2, sectionName: 'PGSI · severity', title: 'PGSI · severity', anna: "Chasing is the most common pattern — knowing helps.", q: 6, of: 9, qText: 'Did you come back another day to win back losses?', kind: 'scale', options: ['No, never', 'Sometimes', 'Most of the time', "It's my routine"], on: 2 },
+  { section: 2, sectionName: 'PGSI · severity', title: 'PGSI · severity', anna: "Sensitive question. There are no wrong answers here.", q: 7, of: 9, qText: 'Have you borrowed money or sold things to bet?', kind: 'scale', options: ['No, never', 'A few times', 'Most of the time', 'Always'], on: 0 },
+  { section: 2, sectionName: 'PGSI · severity', title: 'PGSI · severity', anna: "We can build a path even if it's been tight.", q: 8, of: 9, qText: 'Has gambling put your finances in a tight spot?', kind: 'scale', options: ['No, never', 'Some struggles', 'Most of the time', 'Yes, regularly'], on: 2 },
+  { section: 2, sectionName: 'PGSI · severity', title: 'PGSI · severity', anna: "Last PGSI one. We'll have your score in a moment.", q: 9, of: 9, qText: 'Did you need to bet more to feel the same excitement?', kind: 'scale', options: ['No', 'On occasion', 'Most of the time', 'Always'], on: 1, nextLabel: 'Next section →' },
+
+  // ON4 Situation — section 3 of 5
+  { section: 3, sectionName: 'Situation · debt', title: 'Situation · debt', anna: "Just to understand the landscape — debt isn't shameful, it's information.", q: 1, of: 4, qText: 'Current debt situation?', kind: 'choice', options: ['None', 'Minor', 'Significant', 'Overwhelming', 'I have no idea', 'Prefer not to say'], on: 2 },
+  { section: 3, sectionName: 'Situation · debt', title: 'Situation · debt', anna: "However you handle it now is fine — we'll work from there.", q: 2, of: 4, qText: 'Approach to handling debts?', kind: 'choice', options: ['Detailed planning', 'Pay whatever I can', 'Ignore as long as possible', 'Seek help from family', 'Other', 'Prefer not to say'], on: 1 },
+  { section: 3, sectionName: 'Situation · debt', title: 'Situation · debt', anna: "Co-occurring stuff matters — it changes what works.", q: 3, of: 4, qText: 'Anything else affecting your gambling?', kind: 'choice', options: ['Diagnosed', 'Suspected, not diagnosed', 'None', 'Prefer not to answer'], on: 1 },
+  { section: 3, sectionName: 'Situation · debt', title: 'Situation · debt', anna: "Pattern questions next.", q: 4, of: 4, qText: 'Family history of gambling issues?', kind: 'choice', options: ['Yes', 'No', 'Not sure', 'Prefer not to answer'], on: 2, nextLabel: 'Next section →' },
+
+  // ON5 Patterns — section 4 of 5
+  { section: 4, sectionName: 'Patterns', title: 'Patterns', anna: "The shape of how, when, and why — builds your profile.", q: 1, of: 6, qText: 'What type of gambling do you go for?', kind: 'choice', options: ['Sports betting', 'Casino games', 'Slot machines', 'Stock / crypto trading', 'Other'], on: 0 },
+  { section: 4, sectionName: 'Patterns', title: 'Patterns', anna: "Pick all that apply.", q: 2, of: 6, qText: 'Where do you see ads about gambling?', kind: 'checks', options: ['Outdoor ads', 'TV ads', 'Internet ads', 'Phone ads', 'Social media', 'Streamers', 'Other'], on: [3, 4] },
+  { section: 4, sectionName: 'Patterns', title: 'Patterns', anna: "Channel matters — the friction differs.", q: 3, of: 6, qText: 'How do you usually gamble?', kind: 'choice', options: ['Online from computer', 'Online from phone', 'Physical locations', 'Other'], on: 1 },
+  { section: 4, sectionName: 'Patterns', title: 'Patterns', anna: "Reason informs which tools help.", q: 4, of: 6, qText: 'Main reason for gambling?', kind: 'choice', options: ['Excitement / thrill', 'Win money', 'Recover losses', 'Escape stress', 'Social activity', 'Boredom', 'Other'], on: 0 },
+  { section: 4, sectionName: 'Patterns', title: 'Patterns', anna: "Time of day matters more than people think.", q: 5, of: 6, qText: 'When do you typically gamble?', kind: 'choice', options: ['Morning', 'Day', 'Evening', 'Night', "Doesn't matter"], on: 2 },
+  { section: 4, sectionName: 'Patterns', title: 'Patterns', anna: "Last pattern question.", q: 6, of: 6, qText: 'What about days?', kind: 'choice', options: ['Workdays', 'Weekends', 'Paydays', "Doesn't matter"], on: 2, nextLabel: 'Next section →' },
+
+  // ON6 Help — section 5 of 5
+  { section: 5, sectionName: 'Help-seeking', title: 'Help-seeking', anna: "Anything you've tried — we'll build on what's already working.", q: 1, of: 3, qText: 'Where have you tried support?', kind: 'checks', options: ["I didn't try", 'Private therapy', 'Public therapy (NHS)', 'GamCare / charities', 'GA', 'Apps', 'Friends / Family', 'Online community', 'Self-exclusion'], on: [3, 8] },
+  { section: 5, sectionName: 'Help-seeking', title: 'Help-seeking', anna: "Honesty here helps — it shapes the cadence.", q: 2, of: 3, qText: 'How did that work for you?', kind: 'choice', options: ['Yes, for a while', "No, didn't work", "No, wasn't for me", 'Other'], on: 0 },
+  { section: 5, sectionName: 'Help-seeking', title: 'Help-seeking', anna: "Last question. After this — your pattern.", q: 3, of: 3, qText: "If it didn't suit you, why?", kind: 'checks', options: ['Didn\'t suit my needs', "Didn't relate to people", 'Too expensive', 'Overwhelming', 'Not enough time', 'Schedule fit', 'Other'], on: [4], nextLabel: 'See profile →' }
+];
+
+/* ----- SCREEN LIST (used by scrubber + nav) ----- */
+const SCREENS = [
+  { id: 'ON1', name: 'Welcome', kind: 'on1' },
+  ...QUIZ.map((q, i) => ({ id: `ON${1 + q.section}.${q.q}`, name: `${q.sectionName} · Q${q.q}/${q.of}`, kind: 'quiz', data: q, idx: i })),
+  { id: 'ON6+', name: 'Sponsor invite · A/B', kind: 'sponsor' },
+  { id: 'ON7', name: 'Profile result · Habitual', kind: 'on7' },
+  { id: 'ON8', name: 'KYC · Start', kind: 'on8' },
+  { id: 'ON9', name: 'KYC · Document', kind: 'on9' },
+  { id: 'ON10', name: 'KYC · Liveness', kind: 'on10' },
+  { id: 'ON11', name: 'KYC · Result', kind: 'on11' },
+  { id: 'ON12', name: 'Banking · Intro', kind: 'on12' },
+  { id: 'ON13', name: 'Banking · Select', kind: 'on13' },
+  { id: 'ON14', name: 'Banking · Connecting', kind: 'on14' },
+  { id: 'ON15', name: 'Banking · Result', kind: 'on15' },
+  { id: 'ON16', name: 'Suitability · Service ON', kind: 'on16' },
+];
+
+/* ----- CONTEXT NOTES per screen ----- */
+const CTX = {
+  ON1: '<strong>ON1 Welcome.</strong> Anna intro card with bullet preview of the 5 quiz sections. Single bottom-anchored CTA. Crisis pill top-right always. Source: app-ui/05 §02.',
+  sponsor: '<strong>Sponsor invite — A/B placement.</strong> Per decision <a href="../41-decisions-log.html">ON-04</a>, the invite ships at ON6 (variant A) and at ON21 / Controls (variant B). Users are randomised. Both variants go through the same SP1–SP7 flow in <a href="../15-sponsor-onboarding.html">§15</a>.',
+  ON7: '<strong>ON7 Profile result.</strong> Demo shows the Habitual profile (PGSI 14). Per <a href="../41-decisions-log.html">GEN-01</a>, the clean window is <strong>30 days</strong> (A/B vs 15) — Habitual cohort sees the 30-day callout. Other profiles available in spec; demo is one canonical narrative.',
+  ON8: '<strong>ON8 KYC start.</strong> Algbra runs document capture + liveness + PEP/sanctions. GC never sees raw IDs. Per <a href="../41-decisions-log.html">ON-01</a>, allpay can swap in — UX identical.',
+  ON12: '<strong>ON12 Banking intro.</strong> TrueLayer primary, Yapily backup. Per <a href="../41-decisions-log.html">GEN-06</a>, Experian pre-check is A/B at this step — pre-check all accounts (variant A) vs only first account then continue (variant B).',
+  ON13: '<strong>ON13 Bank select.</strong> Per <a href="../41-decisions-log.html">ON-07</a>, joint-account self-attest checkbox shipped here. Cross-checked against bureau; pass = clear, fail = ops review.',
+  ON16: '<strong>ON16 Suitability.</strong> Soft credit (Experian) + PGSI + profile + 90-day OB + vulnerability flags. Three outcomes — demo shows Service ON. Per <a href="../41-decisions-log.html">ON-06</a>, 100% income coverage from linked accounts is required for streak + loan eligibility.',
+};
+
+/* ----- SCREEN BUILDERS ----- */
+function buildON1() {
+  return {
+    title: 'Welcome', statusbar: '100%',
+    body: `
+      ${ANNA_BUBBLE("Hey — I'm Anna. Before we open your account, five short sections. No right answers, no judgement. ~10 min.")}
+      <div class="ob-anna-mark">
+        <img src="../assets/gc-mark-mono-light.svg" alt="">
+        <span class="ob-anna-mark__pulse"></span>
+      </div>
+      <div class="ob-anna-name">Anna · your coach</div>
+      <h2 class="ob-h">Let's get to know you.</h2>
+      <ul class="ob-list">
+        <li><span class="ob-list__num">1</span><span>A bit about you</span></li>
+        <li><span class="ob-list__num">2</span><span>How gambling shows up</span></li>
+        <li><span class="ob-list__num">3</span><span>Money & obligations</span></li>
+        <li><span class="ob-list__num">4</span><span>Patterns</span></li>
+        <li><span class="ob-list__num">5</span><span>What you've tried</span></li>
+      </ul>`,
+    cta: `<button class="gc-btn gc-btn--primary gc-btn--full" onclick="next()">Start with Anna →</button>`
+  };
+}
+
+function buildQuiz(q) {
+  let dots = [];
+  for (let i = 1; i < q.section; i++) dots.push(i);
+  const progress = PROGRESS_DOTS(q.section, 5, dots);
+
+  let answerHtml = '';
+  if (q.kind === 'text') {
+    answerHtml = `
+      <div class="phone__field">
+        <input class="phone__input" type="text" placeholder="${q.placeholder || ''}" value="${q.value || ''}">
+        <span class="phone__hint">${q.hint || ''}</span>
+      </div>`;
+  } else if (q.kind === 'choice') {
+    answerHtml = '<div class="ob-choices">';
+    q.options.forEach((opt, i) => {
+      const on = i === q.on ? ' is-on' : '';
+      answerHtml += `<button class="ob-choice${on}" onclick="pickOne(this)">${opt}</button>`;
+    });
+    answerHtml += '</div>';
+  } else if (q.kind === 'scale') {
+    answerHtml = '<div class="ob-scale">';
+    q.options.forEach((opt, i) => {
+      const on = i === q.on ? ' is-on' : '';
+      answerHtml += `<button class="ob-scale__opt${on}" onclick="pickOne(this)"><span class="ob-scale__num">${i}</span><span class="ob-scale__label">${opt}</span></button>`;
+    });
+    answerHtml += '</div>';
+  } else if (q.kind === 'checks') {
+    answerHtml = '<div class="ob-checks">';
+    q.options.forEach((opt, i) => {
+      const on = (Array.isArray(q.on) && q.on.includes(i)) ? ' is-on' : '';
+      const cb = on ? '<span class="gc-checkbox"></span>' : '<span class="gc-checkbox"></span>';
+      answerHtml += `<label class="ob-check${on}" onclick="toggleCheck(this)">${cb}${opt}</label>`;
+    });
+    answerHtml += '</div>';
+  }
+
+  return {
+    title: q.title, statusbar: '100%',
+    body: `
+      ${progress}
+      ${ANNA_BUBBLE(q.anna)}
+      <div class="ob-question">
+        <span class="ob-question__num">Question ${q.q} of ${q.of}</span>
+        <h3 class="ob-question__title">${q.qText}</h3>
+        ${answerHtml}
+      </div>`,
+    cta: `
+      <div style="display:flex;gap:8px;align-items:center">
+        <button class="gc-btn gc-btn--ghost" onclick="prev()" style="flex:0 0 auto">← Back</button>
+        <button class="gc-btn gc-btn--primary" style="flex:1" onclick="next()">${q.nextLabel || 'Next →'}</button>
+      </div>`
+  };
+}
+
+function buildSponsor() {
+  return {
+    title: 'Add a sponsor', statusbar: '100%',
+    body: `
+      ${ANNA_BUBBLE("A sponsor is a trusted person — partner, clinician, family member — who can see safety events and authorise certain actions. Optional, but it makes everything stronger.")}
+      <div class="decision-callout">
+        <strong>A/B test:</strong> half of users see this at onboarding (here, variant A). Half see it post-onboarding from Controls / §07 (variant B).
+      </div>
+      <div class="sponsor-form">
+        <div class="phone__field">
+          <span class="phone__label">Sponsor's name</span>
+          <input class="phone__input" type="text" value="Alex Kennedy">
+        </div>
+        <div class="phone__field">
+          <span class="phone__label">Relationship</span>
+          <input class="phone__input" type="text" value="Partner">
+        </div>
+        <div class="phone__field">
+          <span class="phone__label">Sponsor's email</span>
+          <input class="phone__input" type="email" value="alex@example.com">
+          <span class="phone__hint">They'll receive an invite with a link to a tailored explainer page.</span>
+        </div>
+      </div>
+      <button class="gc-btn gc-btn--ghost gc-btn--full" style="font-size:13px;padding:10px" onclick="next()">Skip for now</button>`,
+    cta: `<button class="gc-btn gc-btn--primary gc-btn--full" onclick="next()">Send invite →</button>`
+  };
+}
+
+function buildON7() {
+  return {
+    title: 'Your pattern', statusbar: '100%',
+    body: `
+      ${ANNA_BUBBLE("Pattern fits habitual — frequent, mostly online, chasing losses comes up. Starting point.")}
+      <div class="profile-hero">
+        <span class="profile-hero__kicker">Your pattern</span>
+        <h3 class="profile-hero__name">Habitual</h3>
+        <p class="profile-hero__sub">Default merchant blocks ON. 30-day clean window before loan path unlocks.</p>
+        <div class="profile-hero__chips">
+          <span class="profile-hero__chip">PGSI 14</span>
+          <span class="profile-hero__chip">Eligible</span>
+        </div>
+      </div>
+      <div class="decision-callout">
+        <strong>Decisions log GEN-01:</strong> 30-day clean window is variant A (this user). Variant B (15 days) is in flight as an A/B test.
+      </div>
+      <div class="ob-result-list">
+        <div class="ob-result-item"><span class="ob-result-item__icon ob-suit-icon--ok">✓</span><div><div class="ob-result-item__t">Card blocks ON</div><div class="ob-result-item__s">Gambling MCC refused at terminal</div></div></div>
+        <div class="ob-result-item"><span class="ob-result-item__icon ob-suit-icon--ok">✓</span><div><div class="ob-result-item__t">30-day clean window</div><div class="ob-result-item__s">Unlocks loan + settlement path</div></div></div>
+        <div class="ob-result-item"><span class="ob-result-item__icon ob-suit-icon--ok">✓</span><div><div class="ob-result-item__t">2× per week Anna</div><div class="ob-result-item__s">CBT-based sessions, ~15 min</div></div></div>
+      </div>`,
+    cta: `<button class="gc-btn gc-btn--primary gc-btn--full" onclick="next()">Continue → ID check</button>`
+  };
+}
+
+function buildON8() {
+  return {
+    title: 'Start ID check', statusbar: '8/16',
+    body: `
+      ${ANNA_BUBBLE("Algbra needs to confirm who you are — FCA + AML rules. Three quick steps.")}
+      <div class="gc-card" style="flex-direction:column;gap:11px">
+        <h3 style="font-size:16px;font-weight:700;margin:0;letter-spacing:-0.01em;color:var(--text-primary)">Confirm details</h3>
+        <div class="phone__field"><span class="phone__label">Full legal name</span><input class="phone__input" type="text" value="Sam Kennedy"></div>
+        <div class="phone__field"><span class="phone__label">Date of birth</span><input class="phone__input" type="text" value="14 / 03 / 1994"></div>
+        <div class="phone__field"><span class="phone__label">Home address</span><input class="phone__input" type="text" value="42 Finsbury Park Rd, N4 2JX"></div>
+        <div class="vendor-badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Algbra · FCA #952360
+        </div>
+      </div>`,
+    cta: `<button class="gc-btn gc-btn--primary gc-btn--full" onclick="next()">Start ID check →</button>`
+  };
+}
+
+function buildON9() {
+  return {
+    title: 'Capture document', statusbar: '9/16',
+    body: `
+      ${ANNA_BUBBLE("Hold your passport flat. Frame turns green when good.")}
+      <div class="kyc-camera">
+        <div class="kyc-camera__frame">
+          <span style="font-size:10px;letter-spacing:0.1em;opacity:0.7;font-family:'JetBrains Mono',monospace">PASSPORT · UK</span>
+          <span style="font-size:14px;font-weight:700;color:white;letter-spacing:0.04em">SAM KENNEDY</span>
+        </div>
+        <div class="kyc-camera__caption">Corners detected · hold steady</div>
+      </div>`,
+    cta: `<button class="gc-btn gc-btn--primary gc-btn--full" onclick="next()">Capture →</button>`
+  };
+}
+
+function buildON10() {
+  return {
+    title: 'Liveness selfie', statusbar: '10/16',
+    body: `
+      ${ANNA_BUBBLE("Look ahead, then turn slightly. About 5 seconds.")}
+      <div class="kyc-liveness">
+        <div class="kyc-liveness__oval">
+          <div class="kyc-liveness__face">
+            <span class="kyc-liveness__eye" style="left:30%"></span>
+            <span class="kyc-liveness__eye" style="right:30%"></span>
+            <span class="kyc-liveness__mouth"></span>
+          </div>
+        </div>
+        <div class="kyc-liveness__steps">
+          <div class="kyc-liveness__step is-done">✓ Look ahead</div>
+          <div class="kyc-liveness__step is-current">2 · Slowly turn right</div>
+          <div class="kyc-liveness__step">3 · Blink</div>
+        </div>
+      </div>`,
+    cta: `<button class="gc-btn gc-btn--primary gc-btn--full" onclick="next()">Continue</button>`
+  };
+}
+
+function buildON11() {
+  return {
+    title: "You're verified", statusbar: '11/16',
+    body: `
+      ${ANNA_BUBBLE("Algbra confirmed your identity. Account-opening unlocked.")}
+      <div class="profile-hero" style="background:linear-gradient(135deg, var(--t-30), var(--t-50));">
+        <span class="suit-status suit-status--ok" style="background:rgba(0,0,0,0.22);color:white;align-self:flex-start">Verified</span>
+        <h3 class="profile-hero__name" style="font-size:22px">You're verified.</h3>
+        <p class="profile-hero__sub">Identity matched. No PEP / sanctions. Account opening authorised.</p>
+      </div>
+      <div class="ob-suit-list">
+        <div class="ob-suit-item"><span class="ob-suit-icon ob-suit-icon--ok">✓</span><div><div class="ob-suit-t">Document verified</div><div class="ob-suit-s">UK Passport</div></div></div>
+        <div class="ob-suit-item"><span class="ob-suit-icon ob-suit-icon--ok">✓</span><div><div class="ob-suit-t">Liveness 99.7%</div><div class="ob-suit-s">Anti-spoof pass</div></div></div>
+        <div class="ob-suit-item"><span class="ob-suit-icon ob-suit-icon--ok">✓</span><div><div class="ob-suit-t">Address · Royal Mail PAF</div><div class="ob-suit-s">Confirmed</div></div></div>
+      </div>`,
+    cta: `<button class="gc-btn gc-btn--primary gc-btn--full" onclick="next()">Connect your bank →</button>`
+  };
+}
+
+function buildON12() {
+  return {
+    title: 'Connect your bank', statusbar: '12/16',
+    body: `
+      ${ANNA_BUBBLE("Read-only, 90 days. We see patterns; we never move your money.")}
+      <div class="gc-card" style="flex-direction:column;gap:10px">
+        <h3 style="font-size:16px;font-weight:700;margin:0;letter-spacing:-0.01em;color:var(--text-primary)">Why we ask</h3>
+        <div class="ob-explain">
+          <span class="ob-explain__icon ob-explain__icon--t"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>
+          <div><div class="ob-explain__t">Read-only</div><div class="ob-explain__s">FCA-regulated open banking</div></div>
+        </div>
+        <div class="ob-explain">
+          <span class="ob-explain__icon ob-explain__icon--p"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></span>
+          <div><div class="ob-explain__t">90 days</div><div class="ob-explain__s">Auto-refresh weekly</div></div>
+        </div>
+        <div class="ob-explain">
+          <span class="ob-explain__icon ob-explain__icon--s"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/></svg></span>
+          <div><div class="ob-explain__t">Revoke any time</div><div class="ob-explain__s">Profile → Settings</div></div>
+        </div>
+      </div>
+      <div class="decision-callout">
+        <strong>Decisions log GEN-06:</strong> Experian pre-check A/B. Variant A (this user): every linked account pre-checked at link time. Variant B: first-account-only, batched later.
+      </div>`,
+    cta: `<button class="gc-btn gc-btn--primary gc-btn--full" onclick="next()">Connect your bank →</button>`
+  };
+}
+
+function buildON13() {
+  return {
+    title: 'Choose bank', statusbar: '13/16',
+    body: `
+      ${ANNA_BUBBLE("Pick where most of your money lives.")}
+      <div class="gc-card" style="flex-direction:column;gap:11px">
+        <div class="phone__field"><input class="phone__input" type="text" placeholder="Search…" value="Barc"></div>
+        <div class="bank-list">
+          <button class="bank-row is-on" onclick="pickBank(this, 'Barclays')"><span class="bank-row__logo" style="background:#005EB8;color:white">B</span><span class="bank-row__name">Barclays</span></button>
+          <button class="bank-row" onclick="pickBank(this, 'Barclaycard')"><span class="bank-row__logo" style="background:#0099CC;color:white">B</span><span class="bank-row__name">Barclaycard</span></button>
+          <button class="bank-row" onclick="pickBank(this, 'Barclays Wealth')"><span class="bank-row__logo" style="background:#FF3B30;color:white">B</span><span class="bank-row__name">Barclays Wealth</span></button>
+        </div>
+        <label class="ob-check" onclick="toggleCheck(this)" style="margin-top:2px">
+          <span class="gc-checkbox"></span>
+          <span style="font-size:13px;line-height:1.4">This is a <strong>joint account</strong> &mdash; verify against the named co-holder</span>
+        </label>
+        <div class="vendor-badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          TrueLayer · FCA-AISP
+        </div>
+      </div>
+      <div class="decision-callout">
+        <strong>Decisions log ON-07:</strong> Joint-account self-attest checkbox ships here. Cross-checked against bureau record; pass = clear, fail = ops review.
+      </div>`,
+    cta: `<button class="gc-btn gc-btn--primary gc-btn--full" onclick="next()">Connect Barclays →</button>`
+  };
+}
+
+function buildON14() {
+  return {
+    title: 'Connecting…', statusbar: '14/16',
+    body: `
+      <div class="connecting-tap" onclick="next()" role="button" tabindex="0" style="display:flex;flex-direction:column;align-items:center;gap:16px;padding:28px 16px;border-radius:18px;cursor:pointer;background:var(--bg-surface);border:1px solid var(--border);transition:transform 160ms ease, border-color 160ms ease">
+        <div class="connecting-tap__pulse" style="position:relative;width:80px;height:80px;display:inline-flex;align-items:center;justify-content:center">
+          <span style="position:absolute;inset:0;border-radius:24px;border:2px solid #005EB8;opacity:0.4;animation:ob-pulse 2.4s ease-in-out infinite"></span>
+          <div style="width:64px;height:64px;border-radius:18px;background:linear-gradient(135deg,#005EB8,#003D75);display:inline-flex;align-items:center;justify-content:center;color:white;font-size:24px;font-weight:800;position:relative">B</div>
+        </div>
+        <h3 style="font-size:18px;font-weight:800;letter-spacing:-0.02em;margin:0;text-align:center;color:var(--text-primary)">Opening Barclays securely…</h3>
+        <p style="font-size:13px;color:var(--text-secondary);max-width:280px;text-align:center;margin:0;line-height:1.55">You'll land in your Barclays app for a moment. Approve, then come back.</p>
+        <div class="connect-progress">
+          <div class="connect-progress__step is-done">✓ Authorising</div>
+          <div class="connect-progress__step is-current">→ Opening Barclays</div>
+          <div class="connect-progress__step">Pulling 90 days</div>
+          <div class="connect-progress__step">Categorising</div>
+        </div>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--accent);letter-spacing:0.08em;text-transform:uppercase;margin-top:4px">tap to continue (sim)</span>
+      </div>`,
+    cta: `<button class="gc-btn gc-btn--ghost gc-btn--full" onclick="prev()">Cancel</button>`
+  };
+}
+
+function buildON15() {
+  return {
+    title: 'Bank connected', statusbar: '15/16',
+    body: `
+      ${ANNA_BUBBLE("Got it. 90 days of read-only history. Here's the picture.")}
+      <div class="ob-bank-summary">
+        <div class="ob-bank-summary__head">
+          <span class="ob-bank-summary__head__name"><span>B</span>Barclays · ****4291</span>
+          <span class="ob-bank-summary__head__meta">412 tx</span>
+        </div>
+        <div class="ob-bank-grid">
+          <div class="ob-bank-stat"><div class="ob-bank-stat__n">£8,420</div><div class="ob-bank-stat__l">Gambling spend</div></div>
+          <div class="ob-bank-stat"><div class="ob-bank-stat__n">7</div><div class="ob-bank-stat__l">Merchants</div></div>
+          <div class="ob-bank-stat"><div class="ob-bank-stat__n">£2,140</div><div class="ob-bank-stat__l">Avg income</div></div>
+          <div class="ob-bank-stat"><div class="ob-bank-stat__n">£640</div><div class="ob-bank-stat__l">Debt service</div></div>
+        </div>
+      </div>`,
+    cta: `<button class="gc-btn gc-btn--primary gc-btn--full" onclick="next()">Continue → suitability</button>`
+  };
+}
+
+function buildON16() {
+  return {
+    title: 'Decision', statusbar: '16/16',
+    body: `
+      ${ANNA_BUBBLE("Soft credit + 90-day spending look — we're good to set up your account.")}
+      <div style="display:flex;flex-direction:column;align-items:flex-start;gap:7px">
+        <span class="suit-status suit-status--ok">Service eligible</span>
+        <h2 style="font-size:24px;font-weight:800;letter-spacing:-0.02em;line-height:1;margin:2px 0 0;color:var(--text-primary)">You're in.</h2>
+        <p style="font-size:13px;color:var(--text-secondary);margin:0;line-height:1.55">All GC features turn on. Card, monitoring, Anna's first session.</p>
+      </div>
+      <div class="ob-suit-list">
+        <div class="ob-suit-item"><span class="ob-suit-icon ob-suit-icon--ok">✓</span><div><div class="ob-suit-t">PGSI 14 · service-eligible</div><div class="ob-suit-s">Habitual · blocks default-ON</div></div></div>
+        <div class="ob-suit-item"><span class="ob-suit-icon ob-suit-icon--ok">✓</span><div><div class="ob-suit-t">ID verified · Algbra</div><div class="ob-suit-s">No PEP / sanctions</div></div></div>
+        <div class="ob-suit-item"><span class="ob-suit-icon ob-suit-icon--ok">✓</span><div><div class="ob-suit-t">Credit · Experian soft-pull</div><div class="ob-suit-s">No CCJs · 1 active loan</div></div></div>
+        <div class="ob-suit-item"><span class="ob-suit-icon ob-suit-icon--warn">!</span><div><div class="ob-suit-t">Vulnerability flag</div><div class="ob-suit-s">Daily Anna for 30 days</div></div></div>
+      </div>`,
+    cta: `<button class="gc-btn gc-btn--primary gc-btn--full" onclick="restart()">Open my account →</button>`
+  };
+}
+
+/* ----- BUILDER MAP ----- */
+const builders = {
+  on1: buildON1,
+  sponsor: buildSponsor,
+  on7: buildON7,
+  on8: buildON8, on9: buildON9, on10: buildON10, on11: buildON11,
+  on12: buildON12, on13: buildON13, on14: buildON14, on15: buildON15,
+  on16: buildON16,
+};
+
+/* ----- STATE + NAV ----- */
+let idx = 0;
+
+function render() {
+  const screen = SCREENS[idx];
+  let payload;
+  if (screen.kind === 'quiz') payload = buildQuiz(screen.data);
+  else payload = builders[screen.kind]();
+
+  document.getElementById('phoneTitle').textContent = payload.title;
+  document.getElementById('statusbarRight').innerHTML = `<span style="display:inline-flex;gap:3px"><span style="width:4px;height:4px;border-radius:50%;background:currentColor"></span><span style="width:4px;height:5px;border-radius:1px;background:currentColor"></span><span style="width:4px;height:6px;border-radius:1px;background:currentColor"></span><span style="width:4px;height:7px;border-radius:1px;background:currentColor"></span></span><span>${payload.statusbar}</span>`;
+  document.getElementById('stage').innerHTML = `
+    <div class="screen is-active">
+      <div class="ob-body">${payload.body}</div>
+      <div class="ob-cta">${payload.cta}</div>
+    </div>`;
+
+  // Mode bar
+  document.getElementById('screenId').textContent = screen.id;
+  document.getElementById('screenName').textContent = screen.name;
+  document.getElementById('progressFill').style.width = ((idx + 1) / SCREENS.length * 100) + '%';
+  document.getElementById('navPrev').disabled = idx === 0;
+  document.getElementById('navNext').disabled = idx === SCREENS.length - 1;
+
+  // Scrubber active state
+  document.querySelectorAll('.proto-scrubber__item').forEach((el, i) => {
+    el.classList.toggle('is-active', i === idx);
+    if (i === idx) el.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  });
+
+  // Context panel
+  const ctxKey = screen.kind === 'quiz' ? null : screen.kind;
+  let ctxHtml;
+  if (ctxKey === 'on1') ctxHtml = CTX.ON1;
+  else if (ctxKey === 'sponsor') ctxHtml = CTX.sponsor;
+  else if (ctxKey === 'on7') ctxHtml = CTX.ON7;
+  else if (ctxKey === 'on8' || ctxKey === 'on9' || ctxKey === 'on10' || ctxKey === 'on11') ctxHtml = CTX.ON8;
+  else if (ctxKey === 'on12') ctxHtml = CTX.ON12;
+  else if (ctxKey === 'on13') ctxHtml = CTX.ON13;
+  else if (ctxKey === 'on14' || ctxKey === 'on15') ctxHtml = '<strong>Bank link · TrueLayer.</strong> Read-only consent, 90-day window, auto-refresh weekly. Yapily is the backup AISP if TrueLayer fails.';
+  else if (ctxKey === 'on16') ctxHtml = CTX.ON16;
+  else ctxHtml = `<strong>${screen.name}</strong> — single quiz screen, one question, Back / Next controls at the bottom. All copy and answer options pulled verbatim from app-ui/05.`;
+  document.getElementById('contextBody').innerHTML = ctxHtml;
+}
+
+function next() { if (idx < SCREENS.length - 1) { idx++; render(); } }
+function prev() { if (idx > 0) { idx--; render(); } }
+function go(i) { idx = i; render(); }
+function restart() { idx = 0; render(); }
+
+function pickOne(el) {
+  const parent = el.parentElement;
+  parent.querySelectorAll('.is-on').forEach(s => s.classList.remove('is-on'));
+  el.classList.add('is-on');
+}
+function toggleCheck(el) {
+  el.classList.toggle('is-on');
+}
+function pickBank(el, name) {
+  pickOne(el);
+  const btn = document.querySelector('#stage .gc-btn--primary.gc-btn--full');
+  if (btn) btn.textContent = `Connect ${name} →`;
+}
+
+/* ----- SCRUBBER BUILD ----- */
+function buildScrubber() {
+  const nav = document.getElementById('scrubber');
+  SCREENS.forEach((s, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'proto-scrubber__item';
+    btn.innerHTML = `<span class="proto-scrubber__id">${s.id}</span><span class="proto-scrubber__name">${s.name}</span>`;
+    btn.addEventListener('click', () => go(i));
+    nav.appendChild(btn);
+  });
+}
+
+/* ----- THEME ----- */
+function initTheme() {
+  const root = document.documentElement;
+  const stored = localStorage.getItem('gc-proto-theme');
+  const initial = stored || 'dark';
+  root.setAttribute('data-theme', initial);
+  document.querySelector('.theme-label').textContent = initial === 'dark' ? 'Dark' : 'Light';
+  document.querySelector('.proto-theme-toggle').addEventListener('click', () => {
+    const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    document.querySelector('.theme-label').textContent = next === 'dark' ? 'Dark' : 'Light';
+    try { localStorage.setItem('gc-proto-theme', next); } catch(e) {}
+  });
+}
+
+/* ----- KEYBOARD ----- */
+document.getElementById('navPrev').addEventListener('click', prev);
+document.getElementById('navNext').addEventListener('click', next);
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowRight') next();
+  if (e.key === 'ArrowLeft') prev();
+});
+
+buildScrubber();
+initTheme();
+render();
+</script>
+
+</body>
+</html>

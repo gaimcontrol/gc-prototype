@@ -1,0 +1,836 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GaimControl · Mobile · §06 Banking</title>
+<link rel="icon" href="../assets/gc-favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --p-10:#0B0F1C;--p-20:#161B2D;--p-30:#20273C;--p-40:#354872;--p-50:#4D608C;--p-60:#6B7DA6;--p-70:#8E9DC0;--p-80:#B5BFD9;--p-90:#DCE2F0;--p-95:#ECF0F9;--p-99:#FAFBFE;--p-100:#FFF;
+  --s-10:#28215A;--s-20:#3E3478;--s-30:#534792;--s-40:#6B5DAC;--s-50:#8576C2;--s-60:#9D90D2;--s-70:#B5ACDF;--s-80:#CFC8EA;--s-90:#E8E4F4;
+  --t-10:#0E4A35;--t-20:#1A6047;--t-30:#1F7058;--t-50:#399971;--t-60:#5BB088;--t-80:#ADDCC2;--t-90:#D5EDDF;
+  --w-30:#6B4500;--w-40:#8C5A00;--w-50:#A36A00;--w-60:#C28200;--w-80:#FAB44A;--w-90:#FFDFA8;
+  --e-30:#7A1F1F;--e-50:#C73838;--e-80:#F4A4A4;--e-90:#FBD9D9;
+  --n-30:#43475A;--n-50:#76798A;--n-60:#9094A3;--n-80:#C5C8D2;--n-95:#F1F2F5;--nv-80:#C5C9DD;
+}
+[data-theme="dark"] { --bg-base: var(--p-30); --bg-surface: var(--p-20); --bg-surface-2: var(--p-10); --border: rgba(255,255,255,0.08); --text-primary: var(--n-95); --text-secondary: var(--nv-80); --text-muted: rgba(255,255,255,0.4); --accent: var(--s-70); --accent-strong: var(--s-50); --on-accent: #fff; --page-bg: #0a0e1a; --page-fg: var(--n-95); --page-fg-muted: var(--nv-80); --page-card-bg: var(--p-20); --page-divider: rgba(255,255,255,0.06); }
+[data-theme="light"] { --bg-base: var(--p-99); --bg-surface: #fff; --bg-surface-2: var(--p-95); --border: rgba(22,27,45,0.08); --text-primary: var(--p-20); --text-secondary: var(--n-50); --text-muted: var(--n-50); --accent: var(--p-40); --accent-strong: var(--s-40); --on-accent: #fff; --page-bg: var(--p-95); --page-fg: var(--p-20); --page-fg-muted: var(--n-50); --page-card-bg: #fff; --page-divider: rgba(22,27,45,0.08); }
+* { box-sizing: border-box; }
+html, body { background: var(--page-bg); color: var(--page-fg); margin: 0; transition: background-color 220ms ease, color 220ms ease; }
+body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif; font-size: 14px; line-height: 1.5; -webkit-font-smoothing: antialiased; min-height: 100vh; }
+
+/* SHELL — same as other prototypes */
+.proto-shell { display: grid; grid-template-columns: 280px 1fr; gap: 0; min-height: 100vh; }
+@media (max-width: 960px) { .proto-shell { grid-template-columns: 1fr; } }
+.proto-sidebar { background: var(--page-card-bg); border-right: 1px solid var(--page-divider); padding: 28px 22px; position: sticky; top: 0; height: 100vh; overflow-y: auto; display: flex; flex-direction: column; gap: 16px; }
+@media (max-width: 960px) { .proto-sidebar { position: static; height: auto; max-height: 50vh; border-right: none; border-bottom: 1px solid var(--page-divider); } }
+.proto-sidebar__brand { display: flex; align-items: center; gap: 10px; }
+.proto-sidebar__mark { width: 36px; height: 36px; border-radius: 10px; background: var(--p-30); display: inline-flex; align-items: center; justify-content: center; }
+.proto-sidebar__mark img { width: 70%; height: 70%; }
+.proto-sidebar__name { font-weight: 700; font-size: 17px; letter-spacing: -0.01em; }
+.proto-sidebar__pill { display: inline-flex; padding: 3px 9px; border-radius: 999px; background: linear-gradient(120deg, var(--s-50), var(--p-50), var(--t-50)); color: white; font-weight: 700; font-size: 9.5px; font-family: 'JetBrains Mono', monospace; letter-spacing: 0.06em; text-transform: uppercase; }
+.proto-sidebar__back { display: inline-flex; align-items: center; gap: 6px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--page-fg-muted); text-decoration: none; }
+.proto-sidebar__back:hover { color: var(--page-accent); }
+.proto-section-title { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--page-fg-muted); margin: 12px 0 6px; }
+.proto-scrubber { display: flex; flex-direction: column; gap: 2px; }
+.proto-scrubber__item { display: grid; grid-template-columns: 44px 1fr; gap: 8px; align-items: center; padding: 7px 10px; border-radius: 8px; cursor: pointer; border: none; background: transparent; color: inherit; font-family: inherit; text-align: left; }
+.proto-scrubber__item:hover { background: rgba(127,127,127,0.08); }
+.proto-scrubber__item.is-active { background: var(--accent-strong); color: var(--on-accent); }
+.proto-scrubber__item.is-active .proto-scrubber__id { color: rgba(255,255,255,0.85); }
+.proto-scrubber__id { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; color: var(--page-fg-muted); letter-spacing: 0.06em; }
+.proto-scrubber__name { font-size: 12.5px; font-weight: 500; }
+.proto-sidebar__footer { margin-top: auto; padding-top: 16px; border-top: 1px solid var(--page-divider); font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--page-fg-muted); }
+.proto-sidebar__footer a { color: var(--page-fg-muted); text-decoration: none; border-bottom: 1px dotted currentColor; }
+.proto-theme-toggle { display: inline-flex; align-items: center; gap: 8px; padding: 7px 12px; border-radius: 8px; background: var(--bg-surface-2); border: 1px solid var(--border); color: var(--page-fg-muted); cursor: pointer; font-family: 'JetBrains Mono', monospace; font-size: 11px; align-self: flex-start; }
+.proto-theme-toggle svg { width: 12px; height: 12px; }
+[data-theme="dark"] .proto-theme-toggle .icon-moon { display: none; }
+[data-theme="light"] .proto-theme-toggle .icon-sun { display: none; }
+
+/* STAGE */
+.proto-stage { display: flex; flex-direction: column; align-items: center; padding: 32px 24px 64px; gap: 22px; }
+.proto-modebar { display: flex; align-items: center; gap: 10px; padding: 10px 16px; background: var(--page-card-bg); border: 1px solid var(--page-divider); border-radius: 12px; font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: var(--page-fg-muted); flex-wrap: wrap; justify-content: center; }
+.proto-modebar__pill { display: inline-flex; padding: 3px 9px; border-radius: 999px; background: var(--bg-surface-2); }
+.proto-modebar__id { color: var(--page-fg); font-weight: 700; letter-spacing: 0.06em; }
+.proto-modebar__bar { width: 100px; height: 4px; border-radius: 4px; background: var(--bg-surface-2); position: relative; overflow: hidden; }
+.proto-modebar__bar__fill { position: absolute; left: 0; top: 0; bottom: 0; background: linear-gradient(90deg, var(--s-50), var(--t-50)); transition: width 240ms ease; }
+.proto-arrows { display: flex; align-items: center; gap: 8px; }
+.proto-arrow { width: 36px; height: 36px; border-radius: 10px; background: var(--page-card-bg); border: 1px solid var(--page-divider); color: var(--page-fg-muted); display: inline-flex; align-items: center; justify-content: center; cursor: pointer; }
+.proto-arrow:hover { background: var(--bg-surface-2); color: var(--page-fg); }
+.proto-arrow:disabled { opacity: 0.3; cursor: not-allowed; }
+.proto-arrow svg { width: 18px; height: 18px; }
+
+/* PHONE */
+.phone {
+  width: 393px; height: 852px; flex-shrink: 0;
+  border-radius: 56px; background: #000; padding: 13px; position: relative;
+  box-shadow: 0 0 0 1.5px #2a2e3a, 0 30px 60px -20px rgba(0,0,0,0.7), 0 16px 32px -16px rgba(0,0,0,0.4);
+}
+.phone::before, .phone::after { content: ''; position: absolute; background: #2a2e3a; }
+.phone::before { left: -3px; top: 110px; width: 3px; height: 30px; border-radius: 3px 0 0 3px; }
+.phone::after { left: -3px; top: 160px; width: 3px; height: 60px; border-radius: 3px 0 0 3px; }
+.phone__inner { width: 100%; height: 100%; background: var(--bg-base); color: var(--text-primary); border-radius: 44px; overflow: hidden; position: relative; display: flex; flex-direction: column; }
+.phone__notch { position: absolute; top: 12px; left: 50%; transform: translateX(-50%); width: 120px; height: 32px; background: #000; border-radius: 18px; z-index: 30; }
+
+.phone__statusbar { height: 44px; padding: 12px 32px 0; display: flex; align-items: center; justify-content: space-between; font-size: 14px; font-weight: 600; color: var(--text-primary); font-feature-settings: "tnum"; flex-shrink: 0; }
+.phone__statusbar__right { display: flex; align-items: center; gap: 5px; font-size: 13px; }
+
+.phone__topbar { display: flex; align-items: center; justify-content: space-between; padding: 8px 18px 12px; gap: 10px; flex-shrink: 0; }
+.phone__mark { width: 32px; height: 32px; border-radius: 9px; background: var(--bg-surface); border: 1px solid var(--border); display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.phone__mark img { width: 65%; height: 65%; }
+[data-theme="light"] .phone__mark img { filter: invert(1) brightness(0.3); }
+.phone__back { width: 32px; height: 32px; border-radius: 50%; background: transparent; border: none; color: var(--text-primary); display: inline-flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; }
+.phone__back:hover { background: rgba(127,127,127,0.06); }
+.phone__back svg { width: 20px; height: 20px; }
+.phone__title { flex: 1; text-align: center; font-size: 14.5px; font-weight: 600; color: var(--text-primary); letter-spacing: -0.01em; }
+.gc-crisis-pill { display: inline-flex; align-items: center; gap: 5px; padding: 6px 11px; border-radius: 999px; background: var(--e-50); color: white; border: none; font-family: inherit; font-size: 11.5px; font-weight: 600; cursor: pointer; flex-shrink: 0; }
+.gc-crisis-pill svg { width: 11px; height: 11px; flex-shrink: 0; }
+
+.bk-body { flex: 1; padding: 4px 16px 12px; overflow-y: auto; display: flex; flex-direction: column; gap: 11px; }
+.bk-body::-webkit-scrollbar { width: 4px; }
+.bk-body::-webkit-scrollbar-thumb { background: rgba(127,127,127,0.2); border-radius: 4px; }
+
+/* Card */
+.gc-card { padding: 14px; background: var(--bg-surface); border: 1px solid var(--border); border-radius: 14px; display: flex; flex-direction: column; gap: 8px; }
+.gc-card--anna { background: linear-gradient(135deg, rgba(133,118,194,0.15), rgba(83,71,146,0.08)); border-color: rgba(133,118,194,0.25); flex-direction: row; align-items: center; gap: 10px; padding: 11px 13px; }
+.gc-card--anna .anna-av { width: 30px; height: 30px; border-radius: 50%; background: var(--p-30); display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.gc-card--anna .anna-av img { width: 60%; height: 60%; }
+.gc-card--anna .anna-name { font-size: 12.5px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 1px; }
+.gc-card--anna p { font-size: 13px; line-height: 1.4; margin: 0; color: var(--text-primary); }
+.gc-card--milestone { background: linear-gradient(135deg, var(--s-40), var(--p-40)); color: white; border-color: transparent; }
+.gc-card--milestone p { color: rgba(255,255,255,0.92); }
+.gc-card--alert { background: var(--bg-surface-2); border-left: 3px solid var(--e-50); border-radius: 4px 12px 12px 4px; }
+
+/* Balance card */
+.bk-balance__head { display: flex; justify-content: space-between; align-items: center; }
+.bk-kicker { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); }
+.bk-mask { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-secondary); }
+.bk-amount { font-size: 30px; font-weight: 800; letter-spacing: -0.025em; color: var(--text-primary); line-height: 1; }
+.bk-amount span { font-size: 17px; color: var(--text-secondary); }
+.bk-amount--masked { font-family: 'JetBrains Mono', monospace; font-size: 30px; letter-spacing: 0.08em; }
+.bk-balance__delta { font-size: 12px; font-weight: 600; }
+.bk-balance__delta--pos { color: var(--t-50); }
+.bk-balance__delta--neg { color: var(--w-60); }
+.bk-eye-btn { width: 28px; height: 28px; border-radius: 9px; background: var(--bg-base); border: 1px solid var(--border); display: inline-flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text-secondary); padding: 0; }
+.bk-eye-btn:hover { background: rgba(127,127,127,0.04); color: var(--text-primary); }
+.bk-eye-btn svg { width: 14px; height: 14px; }
+
+/* Sparkline */
+.bk-spark { width: 100%; height: 36px; }
+
+/* Streak dots 30-day grid */
+.bk-streak { display: grid; grid-template-columns: repeat(15, 1fr); gap: 4px; }
+.bk-streak__day { width: 100%; aspect-ratio: 1; border-radius: 3px; background: var(--bg-surface-2); border: 1px solid var(--border); }
+.bk-streak__day.is-clean { background: var(--t-50); border-color: transparent; }
+.bk-streak__day.is-monitoring { background: var(--s-50); border-color: transparent; opacity: 0.85; }
+.bk-streak__day.is-today { box-shadow: 0 0 0 2px var(--accent); }
+
+/* Quick-link grid */
+.bk-quick { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.bk-quick__tile { display: flex; flex-direction: column; align-items: center; gap: 5px; padding: 10px 6px; background: var(--bg-base); border: 1px solid var(--border); border-radius: 11px; cursor: pointer; font-family: inherit; color: var(--text-primary); text-decoration: none; }
+.bk-quick__tile:hover { background: rgba(127,127,127,0.04); }
+.bk-quick__ic { width: 32px; height: 32px; border-radius: 9px; display: inline-flex; align-items: center; justify-content: center; }
+.bk-quick__l { font-size: 10px; font-weight: 600; text-align: center; line-height: 1.2; }
+
+/* Tx row */
+.bk-tx { display: grid; grid-template-columns: 36px 1fr auto; gap: 11px; align-items: center; padding: 10px 0; border-top: 1px solid var(--border); }
+.bk-tx:first-child { border-top: none; }
+.bk-tx__av { width: 36px; height: 36px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; font-size: 13px; flex-shrink: 0; }
+.bk-tx__name { font-size: 14px; font-weight: 600; color: var(--text-primary); }
+.bk-tx__sub { font-size: 11.5px; color: var(--text-secondary); margin-top: 1px; display: flex; align-items: center; gap: 6px; }
+.bk-tx__mcc { font-family: 'JetBrains Mono', monospace; font-size: 10px; padding: 1px 5px; border-radius: 4px; background: var(--bg-surface-2); color: var(--text-muted); }
+.bk-tx__amt { font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 700; color: var(--text-primary); text-align: right; display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
+.bk-tx__amt--pos { color: var(--t-50); }
+.bk-tx__amt--muted { color: var(--text-muted); }
+.bk-tx__flag { font-size: 9px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; padding: 2px 7px; border-radius: 999px; background: var(--e-30); color: var(--e-90); }
+[data-theme="light"] .bk-tx__flag { background: var(--e-90); color: var(--e-30); }
+.bk-tx--blocked .bk-tx__amt { color: var(--text-muted); }
+
+/* Tx stream day header */
+.bk-stream-day { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); padding: 8px 0 4px; }
+
+/* Search + filter chips */
+.bk-search { display: flex; align-items: center; gap: 8px; padding: 9px 13px; background: var(--bg-surface-2); border: 1px solid var(--border); border-radius: 999px; }
+.bk-search svg { width: 14px; height: 14px; color: var(--text-secondary); flex-shrink: 0; }
+.bk-search input { background: transparent; border: none; flex: 1; font-family: inherit; font-size: 13px; color: var(--text-primary); outline: none; }
+.bk-filters { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 4px; margin: 0 -16px; padding-left: 16px; padding-right: 16px; scrollbar-width: none; }
+.bk-filters::-webkit-scrollbar { display: none; }
+.bk-filter { padding: 7px 13px; border-radius: 999px; background: var(--bg-surface-2); border: 1px solid var(--border); font-family: inherit; font-size: 12px; font-weight: 500; color: var(--text-primary); cursor: pointer; white-space: nowrap; flex-shrink: 0; }
+.bk-filter.is-on { background: var(--accent-strong); color: var(--on-accent); border-color: transparent; font-weight: 600; }
+.bk-filter--blocked.is-on { background: var(--e-50); }
+.bk-filter span { font-family: 'JetBrains Mono', monospace; font-size: 11px; opacity: 0.7; margin-left: 4px; }
+
+/* Linked account list */
+.bk-link { display: grid; grid-template-columns: 36px 1fr auto; gap: 12px; align-items: center; padding: 11px 0; border-top: 1px solid var(--border); }
+.bk-link:first-child { border-top: none; }
+.bk-link__logo { width: 36px; height: 36px; border-radius: 10px; background: linear-gradient(135deg, var(--p-30), var(--p-20)); color: white; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; flex-shrink: 0; }
+.bk-link__main { min-width: 0; }
+.bk-link__head { display: flex; gap: 7px; align-items: center; flex-wrap: wrap; }
+.bk-link__name { font-size: 14px; font-weight: 600; color: var(--text-primary); }
+.bk-link__mask { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-secondary); }
+.bk-link__pills { display: flex; gap: 4px; margin-top: 3px; flex-wrap: wrap; }
+.bk-link-pill { font-size: 9.5px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; padding: 2px 7px; border-radius: 999px; }
+.bk-link-pill--primary { background: var(--p-40); color: white; }
+.bk-link-pill--sponsor { background: var(--s-90); color: var(--s-20); }
+[data-theme="dark"] .bk-link-pill--sponsor { background: var(--s-20); color: var(--s-80); }
+.bk-link-pill--warn { background: var(--w-90); color: var(--w-30); }
+[data-theme="dark"] .bk-link-pill--warn { background: var(--w-30); color: var(--w-80); }
+.bk-link-pill--stale { background: var(--n-30); color: var(--n-80); display: inline-flex; align-items: center; gap: 3px; }
+.bk-link-pill--stale::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: currentColor; animation: pulse 1.6s ease-in-out infinite; }
+@keyframes pulse { 0%,100% { opacity: 0.5; } 50% { opacity: 1; } }
+.bk-link__sub { font-size: 11px; color: var(--text-secondary); margin-top: 2px; }
+.bk-link__balance { font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 700; color: var(--text-primary); text-align: right; }
+
+/* Slip cards (Hold state) */
+.bk-slip { display: flex; flex-direction: column; gap: 3px; padding: 11px 0; border-top: 1px solid var(--border); }
+.bk-slip:first-child { border-top: none; padding-top: 0; }
+.bk-slip__pill { display: inline-flex; align-items: center; gap: 5px; padding: 3px 9px; border-radius: 999px; font-size: 10px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; align-self: flex-start; }
+.bk-slip__pill--blocked { background: var(--e-30); color: var(--e-90); }
+[data-theme="light"] .bk-slip__pill--blocked { background: var(--e-90); color: var(--e-30); }
+.bk-slip__pill--notice { background: var(--s-20); color: var(--s-80); }
+[data-theme="light"] .bk-slip__pill--notice { background: var(--s-90); color: var(--s-20); }
+.bk-slip__pill--paused { background: var(--w-30); color: var(--w-80); }
+[data-theme="light"] .bk-slip__pill--paused { background: var(--w-90); color: var(--w-30); }
+.bk-slip__t { font-size: 13px; font-weight: 600; }
+.bk-slip__s { font-size: 11.5px; color: var(--text-secondary); line-height: 1.4; }
+
+/* Spending bars (BK5) */
+.bk-totals { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 7px; }
+.bk-total { padding: 11px 12px; background: var(--bg-base); border: 1px solid var(--border); border-radius: 11px; }
+.bk-total__l { font-size: 10.5px; color: var(--text-secondary); margin-bottom: 3px; }
+.bk-total__n { font-size: 18px; font-weight: 800; letter-spacing: -0.015em; }
+.bk-bar { display: grid; grid-template-columns: 88px 1fr 48px; gap: 9px; align-items: center; padding: 7px 0; }
+.bk-bar__l { font-size: 12.5px; font-weight: 500; }
+.bk-bar__t { height: 8px; background: var(--bg-surface-2); border-radius: 999px; overflow: hidden; }
+.bk-bar__f { height: 100%; border-radius: 999px; }
+.bk-bar__v { font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700; text-align: right; }
+.bk-bar--zero .bk-bar__v { color: var(--t-50); }
+
+/* Tx detail */
+.bk-detail-icon { width: 56px; height: 56px; border-radius: 16px; display: inline-flex; align-items: center; justify-content: center; align-self: center; font-size: 22px; font-weight: 800; color: white; }
+.bk-detail-amt { font-family: 'JetBrains Mono', monospace; font-size: 28px; font-weight: 700; text-align: center; }
+.bk-detail-amt--muted { color: var(--text-muted); }
+.bk-detail-status { display: inline-flex; align-self: center; padding: 4px 11px; border-radius: 999px; font-size: 10.5px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; background: var(--bg-surface-2); color: var(--text-secondary); }
+.bk-detail-status--blocked { background: var(--e-30); color: var(--e-90); }
+[data-theme="light"] .bk-detail-status--blocked { background: var(--e-90); color: var(--e-30); }
+.bk-meta { display: flex; justify-content: space-between; align-items: center; padding: 9px 0; border-top: 1px solid var(--border); font-size: 13px; }
+.bk-meta:first-child { border-top: none; }
+.bk-meta__l { color: var(--text-secondary); }
+.bk-meta__v { color: var(--text-primary); font-weight: 500; }
+.bk-actions { display: flex; flex-direction: column; gap: 7px; }
+.bk-action { display: grid; grid-template-columns: 36px 1fr 14px; gap: 11px; align-items: center; padding: 12px 14px; background: var(--bg-surface); border: 1px solid var(--border); border-radius: 12px; cursor: pointer; font-family: inherit; color: inherit; text-align: left; }
+.bk-action:hover { background: rgba(127,127,127,0.04); border-color: var(--accent); }
+.bk-action__icon { width: 36px; height: 36px; border-radius: 10px; background: var(--bg-surface-2); display: inline-flex; align-items: center; justify-content: center; color: var(--text-primary); }
+.bk-action__icon svg { width: 18px; height: 18px; }
+.bk-action__t { font-size: 13.5px; font-weight: 600; }
+.bk-action__s { font-size: 11.5px; color: var(--text-secondary); margin-top: 1px; }
+.bk-action__chev { color: var(--text-muted); font-size: 18px; line-height: 1; }
+.bk-action--danger { border-color: rgba(199,56,56,0.2); }
+.bk-action--danger .bk-action__icon { background: var(--e-30); color: var(--e-90); }
+[data-theme="light"] .bk-action--danger .bk-action__icon { background: var(--e-90); color: var(--e-30); }
+
+/* Bottom tab bar */
+.phone__tabbar { display: grid; grid-template-columns: repeat(5, 1fr); padding: 8px 8px 22px; border-top: 1px solid var(--border); background: var(--bg-base); flex-shrink: 0; }
+.phone__tab { display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 5px 4px; cursor: pointer; color: var(--text-muted); }
+.phone__tab.is-on { color: var(--accent-strong); }
+.phone__tab svg { width: 22px; height: 22px; }
+.phone__tab span { font-size: 10px; font-weight: 600; }
+
+/* Insight tiles */
+.bk-insight-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; }
+.bk-insight { padding: 11px 12px; background: var(--bg-base); border: 1px solid var(--border); border-radius: 11px; }
+.bk-insight__n { font-size: 18px; font-weight: 800; letter-spacing: -0.015em; }
+.bk-insight__l { font-size: 10.5px; color: var(--text-secondary); margin-top: 2px; }
+
+/* CTA buttons */
+.gc-btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 12px 16px; border-radius: 12px; font-family: inherit; font-size: 13.5px; font-weight: 600; cursor: pointer; border: 1px solid transparent; }
+.gc-btn--primary { background: var(--accent-strong); color: var(--on-accent); }
+.gc-btn--primary:hover { background: var(--s-40); }
+.gc-btn--ghost { background: transparent; color: var(--text-primary); border-color: var(--border); }
+.gc-btn--full { width: 100%; }
+.gc-btn--sm { padding: 8px 12px; font-size: 12px; border-radius: 10px; }
+
+/* CONTEXT panel */
+.proto-context { width: 100%; max-width: 480px; padding: 14px 16px; background: var(--page-card-bg); border: 1px solid var(--page-divider); border-radius: 12px; font-size: 12.5px; color: var(--page-fg-muted); line-height: 1.55; }
+.proto-context strong { color: var(--page-fg); }
+.proto-context a { color: var(--page-accent, var(--s-70)); text-decoration: none; border-bottom: 1px dotted currentColor; }
+.proto-context__head { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; font-weight: 700; color: var(--page-fg); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px; }
+.screen { animation: fade-in 220ms ease; }
+@keyframes fade-in { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+@media (max-width: 720px) { .phone { transform: scale(0.92); transform-origin: top center; } }
+@media (max-width: 480px) { .phone { transform: scale(0.78); } }
+</style>
+<script src="flow-chain.js" defer></script>
+</head>
+<body>
+
+<div class="proto-shell">
+
+  <aside class="proto-sidebar">
+    <div class="proto-sidebar__brand">
+      <span class="proto-sidebar__mark"><img src="../assets/gc-mark-mono-light.svg" alt=""></span>
+      <span>
+        <div class="proto-sidebar__name">GaimControl</div>
+        <span class="proto-sidebar__pill">mobile</span>
+      </span>
+    </div>
+    <a class="proto-sidebar__back" href="index.html">← prototype index</a>
+
+    <button class="proto-theme-toggle" type="button" aria-label="Toggle theme">
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+      <span class="theme-label">Dark</span>
+    </button>
+
+    <div class="proto-section-title">§06 · BK1 – BK5</div>
+    <nav class="proto-scrubber" id="scrubber"></nav>
+
+    <div class="proto-sidebar__footer">
+      Source: <a href="../app-ui/06-banking.html">app-ui/06</a><br>
+      Decisions: <a href="../41-decisions-log.html">BK-01 to BK-07 · GEN-01 · GEN-10</a>
+    </div>
+  </aside>
+
+  <main class="proto-stage">
+
+    <div class="proto-modebar">
+      <span>Screen <span class="proto-modebar__id" id="screenId">BK1</span></span>
+      <span class="proto-modebar__pill" id="screenName">Home · Day 12</span>
+      <div class="proto-modebar__bar"><div class="proto-modebar__bar__fill" id="progressFill" style="width:12%"></div></div>
+      <div class="proto-arrows">
+        <button class="proto-arrow" id="navPrev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+        <button class="proto-arrow" id="navNext"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
+      </div>
+    </div>
+
+    <div class="phone">
+      <div class="phone__notch"></div>
+      <div class="phone__inner">
+        <div class="phone__statusbar">
+          <span>9:41</span>
+          <span class="phone__statusbar__right">
+            <span style="display:inline-flex;gap:3px"><span style="width:4px;height:4px;border-radius:50%;background:currentColor"></span><span style="width:4px;height:5px;border-radius:1px;background:currentColor"></span><span style="width:4px;height:6px;border-radius:1px;background:currentColor"></span><span style="width:4px;height:7px;border-radius:1px;background:currentColor"></span></span>
+            <span>100%</span>
+          </span>
+        </div>
+        <div id="stage" style="flex:1;display:flex;flex-direction:column;min-height:0"></div>
+      </div>
+    </div>
+
+    <div class="proto-context" id="contextPanel">
+      <div class="proto-context__head">Screen context</div>
+      <div id="contextBody"></div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+let balanceVisible = true;
+
+const SCREENS = [
+  { id: 'BK1.a', name: 'Home · Day 12 (mid-streak)', kind: 'bk1_mid', tab: 0 },
+  { id: 'BK1.b', name: 'Home · Day 30 (loan unlock)', kind: 'bk1_unlock', tab: 0 },
+  { id: 'BK1.c', name: 'Home · Relapse Hold', kind: 'bk1_hold', tab: 0 },
+  { id: 'BK2',   name: 'Linked accounts', kind: 'bk2', tab: 1 },
+  { id: 'BK3',   name: 'Activity stream', kind: 'bk3', tab: 3 },
+  { id: 'BK4.a', name: 'Tx detail · Tesco', kind: 'bk4_normal', tab: 1 },
+  { id: 'BK4.b', name: 'Tx detail · Sky Bet blocked', kind: 'bk4_blocked', tab: 1 },
+  { id: 'BK5',   name: 'Spending breakdown', kind: 'bk5', tab: 1 },
+];
+
+const CTX = {
+  bk1_mid: '<strong>BK1 Mid-streak (Day 12 / 30).</strong> Daily-pulse home. Balance with hide/show toggle (decision <a href="../41-decisions-log.html">GEN-10</a>), 30-day streak grid (decision <a href="../41-decisions-log.html">GEN-01</a> — A/B vs 15), blocked-MCC counter, quick-links, recent activity with one blocked decline visible, Anna nudge.',
+  bk1_unlock: '<strong>BK1 Day 30 unlock.</strong> Anna milestone card + full clean streak grid. Per <a href="../41-decisions-log.html">GEN-01</a>, the unlock window is now 30 days (variant A) rather than 15. Loan path review CTA surfaces here.',
+  bk1_hold: '<strong>BK1 Relapse Hold.</strong> Slip caught at the card (£0 left account). Loan auto-paused 7 days. Sponsor notified. Anna compassion-toned nudge. The Hold extension lives in §06 AND §10 per decision <a href="../41-decisions-log.html">BK-03</a>.',
+  bk2: '<strong>BK2 Linked accounts.</strong> Algbra GC card + TrueLayer external accounts. Per-account sponsor visibility pills, primary marker, reauth warning. Per <a href="../41-decisions-log.html">BK-04</a>, stale accounts show a stale badge rather than hide.',
+  bk3: '<strong>BK3 Activity stream.</strong> Search + filter chips (All / Income / Blocked / Subs), chronological day-grouped feed. Blocked-MCC events render inline with the rest of the stream — they\'re part of the recovery story, not hidden.',
+  bk4_normal: '<strong>BK4 Tx detail · normal.</strong> Three actions: Recategorise / Hide from sponsor / Dispute. Sponsor visibility per <a href="../41-decisions-log.html">BK-01</a> defaults to all alerts on — user can hide individual tx with audit trail.',
+  bk4_blocked: '<strong>BK4 Tx detail · blocked.</strong> The card refused; £0 left the account. Two actions: Why blocked / Sponsor disclosure. Sponsor threshold sits at 3 in 7 days flat per <a href="../41-decisions-log.html">BK-01</a>.',
+  bk5: '<strong>BK5 Spending breakdown.</strong> Monthly category bars (gambling at £0 by design), 3-tile totals, 6-month trend with gambling-counterfactual overlay (dashed line shows what the blocked attempts would have cost). Demonstrates the recovery thesis in numbers.',
+};
+
+/* === Reusable atoms === */
+const ANNA = (text) => `
+  <div class="gc-card gc-card--anna">
+    <span class="anna-av"><img src="../assets/gc-mark-mono-light.svg" alt=""></span>
+    <div><div class="anna-name">Anna</div><p>${text}</p></div>
+  </div>`;
+
+const TOPBAR = (title, back = false) => `
+  <div class="phone__topbar">
+    ${back ? `<button class="phone__back" onclick="prev()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>` : `<span class="phone__mark"><img src="../assets/gc-mark-mono-light.svg" alt=""></span>`}
+    <span class="phone__title">${title}</span>
+    <button class="gc-crisis-pill" type="button"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7-4.5-9-9.5C2 7 5 4 8 4c1.7 0 3.2.8 4 2 .8-1.2 2.3-2 4-2 3 0 6 3 5 7.5C19 16.5 12 21 12 21z"/></svg> Help</button>
+  </div>`;
+
+const TABBAR = (active = 0) => {
+  const tabs = [
+    { name: 'Home', svg: '<path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>' },
+    { name: 'Banking', svg: '<rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>' },
+    { name: 'Anna', svg: '<path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/>' },
+    { name: 'Activity', svg: '<path d="M3 3v18h18"/><path d="m7 14 4-4 4 4 5-5"/>' },
+    { name: 'Profile', svg: '<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>' },
+  ];
+  return `<div class="phone__tabbar">${tabs.map((t, i) =>
+    `<div class="phone__tab ${i === active ? 'is-on' : ''}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${t.svg}</svg><span>${t.name}</span></div>`
+  ).join('')}</div>`;
+};
+
+const BALANCE = (amount, mainSize, decimal, delta, deltaCls = 'pos') => {
+  if (!balanceVisible) {
+    return `
+      <div class="gc-card">
+        <div class="bk-balance__head">
+          <span class="bk-kicker">Current</span>
+          <span style="display:flex;gap:7px;align-items:center"><span class="bk-mask">****4291</span>${EYE_BTN()}</span>
+        </div>
+        <div class="bk-amount bk-amount--masked">£•••••</div>
+        <span class="bk-balance__delta bk-balance__delta--${deltaCls}" style="opacity:0.5">balance hidden</span>
+      </div>`;
+  }
+  return `
+    <div class="gc-card">
+      <div class="bk-balance__head">
+        <span class="bk-kicker">Current</span>
+        <span style="display:flex;gap:7px;align-items:center"><span class="bk-mask">****4291</span>${EYE_BTN()}</span>
+      </div>
+      <div class="bk-amount"><span>£</span>${amount}<span>.${decimal}</span></div>
+      <svg class="bk-spark" viewBox="0 0 200 40" preserveAspectRatio="none"><path d="M0 28 Q 20 32 40 24 T 80 18 T 120 22 T 160 12 T 200 16 L 200 40 L 0 40 Z" fill="var(--p-90)" opacity="0.5"/><path d="M0 28 Q 20 32 40 24 T 80 18 T 120 22 T 160 12 T 200 16" fill="none" stroke="var(--p-40)" stroke-width="2"/></svg>
+      <span class="bk-balance__delta bk-balance__delta--${deltaCls}">${delta}</span>
+    </div>`;
+};
+
+const EYE_BTN = () => `<button class="bk-eye-btn" onclick="toggleBalance()" aria-label="Hide balance">${balanceVisible ?
+  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg>` :
+  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/><path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/><line x1="2" x2="22" y1="2" y2="22"/></svg>`}</button>`;
+
+function toggleBalance() { balanceVisible = !balanceVisible; render(); }
+
+/* 30-day streak grid */
+const STREAK_30 = (doneCount, todayIdx) => {
+  let html = '<div class="bk-streak">';
+  for (let i = 0; i < 30; i++) {
+    let cls = '';
+    if (i < doneCount) cls = i < todayIdx ? 'is-clean' : 'is-clean is-today';
+    if (i === todayIdx) cls += ' is-today';
+    html += `<span class="bk-streak__day ${cls}"></span>`;
+  }
+  html += '</div>';
+  return html;
+};
+
+const STREAK_HEAD = (day, total = 30) => `
+  <div style="display:flex;justify-content:space-between;align-items:center">
+    <span class="bk-kicker">Clean window</span>
+    <span style="font-size:12px;color:var(--text-secondary)">Day <strong style="font-size:15px;color:var(--text-primary);font-weight:800">${day}</strong> / ${total}</span>
+  </div>`;
+
+/* === Screen builders === */
+const builders = {
+  bk1_mid: () => `
+    ${TOPBAR('Home')}
+    <div class="bk-body">
+      ${BALANCE('1,204', '45', '+£82 this week', 'pos')}
+      <div class="gc-card" style="gap:7px">
+        ${STREAK_HEAD(12)}
+        ${STREAK_30(12, 11)}
+      </div>
+      <div class="gc-card" style="flex-direction:row;align-items:center;gap:10px">
+        <span style="width:36px;height:36px;border-radius:10px;background:var(--e-30);color:var(--e-90);display:inline-flex;align-items:center;justify-content:center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="10" x="5" y="11" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span>
+        <div style="flex:1">
+          <span class="bk-kicker">Blocked MCC</span>
+          <div style="font-size:22px;font-weight:800;letter-spacing:-0.015em;line-height:1">4</div>
+        </div>
+        <span style="font-size:11px;color:var(--text-secondary);text-align:right;max-width:120px">attempts refused this week</span>
+      </div>
+      <div class="gc-card" style="padding:12px 14px;gap:8px">
+        <h3 style="font-size:13px;font-weight:700;margin:0">Quick links</h3>
+        <div class="bk-quick">
+          <a class="bk-quick__tile" onclick="go(3)"><span class="bk-quick__ic" style="background:var(--p-40);color:white"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg></span><span class="bk-quick__l">Card &amp; controls</span></a>
+          <a class="bk-quick__tile" onclick="go(1)"><span class="bk-quick__ic" style="background:var(--t-20);color:var(--t-80)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v12"/><path d="M16 9.5a2.5 2.5 0 0 0-5 0c0 1.4 1 2 2.5 2.5s2.5 1.1 2.5 2.5a2.5 2.5 0 0 1-5 0"/></svg></span><span class="bk-quick__l">Loan</span></a>
+          <a class="bk-quick__tile"><span class="bk-quick__ic" style="background:var(--s-20);color:var(--s-80)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4.5 6v6c0 5 3.5 9 7.5 10 4-1 7.5-5 7.5-10V6Z"/></svg></span><span class="bk-quick__l">Sponsor</span></a>
+          <a class="bk-quick__tile" onclick="go(7)"><span class="bk-quick__ic" style="background:var(--w-30);color:var(--w-80)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 3v18h18"/><path d="m7 14 4-4 4 4 5-5"/></svg></span><span class="bk-quick__l">Insights</span></a>
+        </div>
+      </div>
+      <div class="gc-card" style="gap:0;padding:13px 14px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+          <h3 style="font-size:13px;font-weight:700;margin:0">Recent activity</h3>
+          <a onclick="go(4)" style="font-size:11.5px;color:var(--accent);text-decoration:none;cursor:pointer">All →</a>
+        </div>
+        <div class="bk-tx" onclick="go(5)" style="cursor:pointer">
+          <span class="bk-tx__av" style="background:#005EB8;color:white">T</span>
+          <div><div class="bk-tx__name">Tesco</div><div class="bk-tx__sub">Today 14:22 · Groceries</div></div>
+          <span class="bk-tx__amt">−£24.10</span>
+        </div>
+        <div class="bk-tx bk-tx--blocked" onclick="go(6)" style="cursor:pointer">
+          <span class="bk-tx__av" style="background:var(--e-30);color:var(--e-90)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="m4.93 4.93 14.14 14.14"/></svg></span>
+          <div><div class="bk-tx__name">Sky Bet</div><div class="bk-tx__sub">Today 11:08 <span class="bk-tx__mcc">MCC 7995</span></div></div>
+          <span class="bk-tx__amt"><span class="bk-tx__flag">blocked</span><span style="color:var(--text-muted)">£0.00</span></span>
+        </div>
+        <div class="bk-tx">
+          <span class="bk-tx__av" style="background:var(--t-80);color:var(--t-20)">P</span>
+          <div><div class="bk-tx__name">Salary · Pret</div><div class="bk-tx__sub">Mon 09:00 · Income</div></div>
+          <span class="bk-tx__amt bk-tx__amt--pos">+£2,140</span>
+        </div>
+      </div>
+      ${ANNA("Four blocked attempts this week — that's the system doing its job. Want a 5-min check-in tonight?")}
+    </div>
+    ${TABBAR(0)}`,
+
+  bk1_unlock: () => `
+    ${TOPBAR('Home · Day 30')}
+    <div class="bk-body">
+      <div class="gc-card gc-card--milestone">
+        <span style="display:inline-flex;align-items:center;gap:6px;padding:3px 11px 3px 4px;border-radius:999px;background:rgba(0,0,0,0.22);font-size:10px;font-weight:700;align-self:flex-start"><span style="width:8px;height:8px;border-radius:50%;background:var(--t-50)"></span>30 / 30 clean</span>
+        <h2 style="font-size:22px;font-weight:800;letter-spacing:-0.025em;line-height:1.1;margin:4px 0 0">You hit 30 clean days.</h2>
+        <p style="font-size:13px;line-height:1.5;margin:0">Your loan-consolidation review is unlocked. Review when you're ready.</p>
+        <div style="display:flex;gap:6px;margin-top:6px;width:100%">
+          <button class="gc-btn gc-btn--sm" style="background:white;color:var(--p-40);flex:1">Review →</button>
+          <button class="gc-btn gc-btn--ghost gc-btn--sm" style="color:white;border-color:rgba(255,255,255,0.3)">Later</button>
+        </div>
+      </div>
+      ${BALANCE('1,418', '92', '+£296 over the streak', 'pos')}
+      <div class="gc-card" style="gap:7px">
+        ${STREAK_HEAD(30)}
+        ${STREAK_30(30, 29)}
+      </div>
+      ${ANNA("Thirty days. We've been talking about what you'd do with consolidation when this moment came. Revisit?")}
+      <div style="font-size:11px;color:var(--text-muted);font-family:'JetBrains Mono',monospace;text-align:center;margin-top:4px">decision GEN-01 · 30-day window (A/B variant A vs 15)</div>
+    </div>
+    ${TABBAR(0)}`,
+
+  bk1_hold: () => `
+    ${TOPBAR('Home · Hold')}
+    <div class="bk-body">
+      <div class="gc-card gc-card--alert" style="border-left-color:var(--w-60)">
+        <span style="display:inline-flex;align-items:center;gap:6px;padding:3px 11px 3px 4px;border-radius:999px;background:var(--w-30);color:var(--w-80);font-size:10px;font-weight:700;align-self:flex-start"><span style="width:8px;height:8px;border-radius:50%;background:var(--w-60)"></span>Relapse Hold · auto</span>
+        <h2 style="font-size:20px;font-weight:800;letter-spacing:-0.02em;line-height:1.15;margin:2px 0 0;color:var(--text-primary)">We caught a slip.</h2>
+        <p style="font-size:12.5px;color:var(--text-secondary);line-height:1.5;margin:0">Refused at the card. Loan paused 7 days. Sponsor notified.</p>
+        <div style="display:flex;gap:6px;margin-top:6px;width:100%">
+          <button class="gc-btn gc-btn--primary gc-btn--sm" style="flex:1">Talk to Anna</button>
+          <button class="gc-btn gc-btn--ghost gc-btn--sm">Why?</button>
+        </div>
+      </div>
+      ${BALANCE('862', '10', '−£140 this week', 'neg')}
+      <div class="gc-card" style="gap:7px">
+        ${STREAK_HEAD(0)}
+        ${STREAK_30(0, 0)}
+      </div>
+      <div class="gc-card" style="padding:13px 14px;gap:0">
+        <h3 style="font-size:13px;font-weight:700;margin:0 0 4px">The slip</h3>
+        <div class="bk-slip">
+          <span class="bk-slip__pill bk-slip__pill--blocked">Refused</span>
+          <div class="bk-slip__t">Sky Bet · 22:14 Fri</div>
+          <div class="bk-slip__s">Card refused at MCC 7995. £0 left your account. No merchant fee.</div>
+        </div>
+        <div class="bk-slip">
+          <span class="bk-slip__pill bk-slip__pill--notice">Sponsor notified</span>
+          <div class="bk-slip__t">Joanna · email + push</div>
+          <div class="bk-slip__s">Sent 22:15 Fri. She's seen it.</div>
+        </div>
+        <div class="bk-slip">
+          <span class="bk-slip__pill bk-slip__pill--paused">Loan paused</span>
+          <div class="bk-slip__t">Interest frozen 7 days</div>
+          <div class="bk-slip__s">Auto-resumes Mon next week. Extension flow lives in §06 + §10.</div>
+        </div>
+      </div>
+      ${ANNA("You didn't fail. The system caught it. When you're ready, let's name what was going on.")}
+    </div>
+    ${TABBAR(0)}`,
+
+  bk2: () => `
+    ${TOPBAR('Accounts')}
+    <div class="bk-body">
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:0 2px">
+        <h3 style="font-size:14px;font-weight:700;margin:0">Connected accounts</h3>
+        <button class="gc-btn gc-btn--primary gc-btn--sm">Add →</button>
+      </div>
+      <div class="gc-card" style="padding:0 14px;gap:0">
+        <div class="bk-link">
+          <div class="bk-link__logo">G</div>
+          <div class="bk-link__main">
+            <div class="bk-link__head"><span class="bk-link__name">GaimControl Card</span><span class="bk-link__mask">****4291</span></div>
+            <div class="bk-link__pills"><span class="bk-link-pill bk-link-pill--primary">Primary</span><span class="bk-link-pill bk-link-pill--sponsor">Sponsor</span></div>
+            <div class="bk-link__sub">GC current · Algbra</div>
+          </div>
+          <span class="bk-link__balance">£1,204.45</span>
+        </div>
+        <div class="bk-link">
+          <div class="bk-link__logo" style="background:#0019A8">B</div>
+          <div class="bk-link__main">
+            <div class="bk-link__head"><span class="bk-link__name">Barclays</span><span class="bk-link__mask">****8810</span></div>
+            <div class="bk-link__pills"><span class="bk-link-pill bk-link-pill--sponsor">Sponsor</span></div>
+            <div class="bk-link__sub">External · current</div>
+          </div>
+          <span class="bk-link__balance">£3,418.92</span>
+        </div>
+        <div class="bk-link">
+          <div class="bk-link__logo" style="background:#FF4F40">M</div>
+          <div class="bk-link__main">
+            <div class="bk-link__head"><span class="bk-link__name">Monzo</span><span class="bk-link__mask">****1147</span></div>
+            <div class="bk-link__pills"><span class="bk-link-pill bk-link-pill--stale">Stale · 26h</span></div>
+            <div class="bk-link__sub">External · pot</div>
+          </div>
+          <span class="bk-link__balance" style="color:var(--text-muted)">£212.40</span>
+        </div>
+        <div class="bk-link">
+          <div class="bk-link__logo" style="background:#0019A8">B</div>
+          <div class="bk-link__main">
+            <div class="bk-link__head"><span class="bk-link__name">Barclaycard</span><span class="bk-link__mask">****5523</span></div>
+            <div class="bk-link__pills"><span class="bk-link-pill bk-link-pill--sponsor">Sponsor</span><span class="bk-link-pill bk-link-pill--warn">Reauth</span></div>
+            <div class="bk-link__sub">External · credit</div>
+          </div>
+          <span class="bk-link__balance">−£642.10</span>
+        </div>
+      </div>
+      <div class="gc-card" style="padding:13px 14px;gap:7px">
+        <h3 style="font-size:13px;font-weight:700;margin:0">Coverage</h3>
+        <div style="font-size:12px;color:var(--text-secondary);line-height:1.5">Linked accounts cover <strong>78%</strong> of self-reported income.</div>
+        <div style="width:100%;height:7px;background:var(--bg-surface-2);border-radius:999px;overflow:hidden"><div style="height:100%;width:78%;background:linear-gradient(90deg,var(--w-60),var(--t-50));border-radius:999px"></div></div>
+        <div style="font-size:11px;color:var(--text-muted);font-family:'JetBrains Mono',monospace">decision ON-06 · 100% required for streak + loan</div>
+      </div>
+      <div style="font-size:11px;color:var(--text-muted);font-family:'JetBrains Mono',monospace;text-align:center">decision BK-04 · stale badge, not hidden</div>
+    </div>
+    ${TABBAR(1)}`,
+
+  bk3: () => `
+    ${TOPBAR('Activity')}
+    <div class="bk-body">
+      <div class="bk-search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        <input type="text" placeholder="Search 412 transactions">
+      </div>
+      <div class="bk-filters">
+        <button class="bk-filter is-on">All <span>412</span></button>
+        <button class="bk-filter">Income</button>
+        <button class="bk-filter bk-filter--blocked">Blocked <span>20</span></button>
+        <button class="bk-filter">Subs</button>
+      </div>
+      <div class="gc-card" style="padding:0 14px;gap:0">
+        <div class="bk-stream-day">Today · Mon</div>
+        <div class="bk-tx" onclick="go(5)" style="cursor:pointer">
+          <span class="bk-tx__av" style="background:#005EB8;color:white">T</span>
+          <div><div class="bk-tx__name">Tesco</div><div class="bk-tx__sub">14:22 · Groceries</div></div>
+          <span class="bk-tx__amt">−£24.10</span>
+        </div>
+        <div class="bk-tx bk-tx--blocked" onclick="go(6)" style="cursor:pointer">
+          <span class="bk-tx__av" style="background:var(--e-30);color:var(--e-90)">S</span>
+          <div><div class="bk-tx__name">Sky Bet</div><div class="bk-tx__sub">11:08 <span class="bk-tx__mcc">MCC 7995</span></div></div>
+          <span class="bk-tx__amt"><span class="bk-tx__flag">blocked</span><span style="color:var(--text-muted)">£0.00</span></span>
+        </div>
+        <div class="bk-tx">
+          <span class="bk-tx__av" style="background:var(--n-80);color:var(--n-30)">P</span>
+          <div><div class="bk-tx__name">Pret</div><div class="bk-tx__sub">08:14 · Food</div></div>
+          <span class="bk-tx__amt">−£4.85</span>
+        </div>
+        <div class="bk-stream-day">Yesterday · Sun</div>
+        <div class="bk-tx">
+          <span class="bk-tx__av" style="background:#0019A8;color:white">T</span>
+          <div><div class="bk-tx__name">TfL</div><div class="bk-tx__sub">22:01 · Transit</div></div>
+          <span class="bk-tx__amt">−£8.30</span>
+        </div>
+        <div class="bk-tx bk-tx--blocked">
+          <span class="bk-tx__av" style="background:var(--e-30);color:var(--e-90)">B</span>
+          <div><div class="bk-tx__name">Bet365</div><div class="bk-tx__sub">20:48 <span class="bk-tx__mcc">MCC 7995</span></div></div>
+          <span class="bk-tx__amt"><span class="bk-tx__flag">blocked</span><span style="color:var(--text-muted)">£0.00</span></span>
+        </div>
+        <div class="bk-tx">
+          <span class="bk-tx__av" style="background:#1DB954;color:white">S</span>
+          <div><div class="bk-tx__name">Spotify</div><div class="bk-tx__sub">09:00 · Subs</div></div>
+          <span class="bk-tx__amt">−£10.99</span>
+        </div>
+      </div>
+      <div class="gc-card" style="padding:13px 14px;gap:7px">
+        <h3 style="font-size:13px;font-weight:700;margin:0">Insights this week</h3>
+        <div class="bk-insight-grid">
+          <div class="bk-insight"><div class="bk-insight__n" style="color:var(--t-50)">£0</div><div class="bk-insight__l">Gambling spend</div></div>
+          <div class="bk-insight"><div class="bk-insight__n">11</div><div class="bk-insight__l">Blocked attempts</div></div>
+        </div>
+      </div>
+    </div>
+    ${TABBAR(3)}`,
+
+  bk4_normal: () => `
+    ${TOPBAR('Tx · Tesco', true)}
+    <div class="bk-body">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:8px;padding:16px 0 4px">
+        <div class="bk-detail-icon" style="background:#005EB8">T</div>
+        <h2 style="font-size:20px;font-weight:800;letter-spacing:-0.02em;margin:0">Tesco · Finsbury Park</h2>
+        <div class="bk-detail-amt">−£24.10</div>
+        <span class="bk-detail-status">Settled · Groceries</span>
+      </div>
+      <div class="gc-card" style="padding:4px 14px;gap:0">
+        <div class="bk-meta"><span class="bk-meta__l">When</span><span class="bk-meta__v">Today, 14:22</span></div>
+        <div class="bk-meta"><span class="bk-meta__l">Card</span><span class="bk-meta__v">GC ****4291</span></div>
+        <div class="bk-meta"><span class="bk-meta__l">MCC</span><span class="bk-meta__v">5411 · Grocery</span></div>
+        <div class="bk-meta"><span class="bk-meta__l">Location</span><span class="bk-meta__v">200m from home</span></div>
+      </div>
+      <div class="bk-actions">
+        <button class="bk-action">
+          <span class="bk-action__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 6h18l-2 13H5z" stroke-linejoin="round"/><path d="m9 6 1-3h4l1 3" stroke-linecap="round"/></svg></span>
+          <div><div class="bk-action__t">Recategorise</div><div class="bk-action__s">Move out of "Groceries"</div></div>
+          <span class="bk-action__chev">›</span>
+        </button>
+        <button class="bk-action">
+          <span class="bk-action__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/><line x1="2" x2="22" y1="2" y2="22"/></svg></span>
+          <div><div class="bk-action__t">Hide from sponsor</div><div class="bk-action__s">Removes from Joanna's view</div></div>
+          <span class="bk-action__chev">›</span>
+        </button>
+        <button class="bk-action bk-action--danger">
+          <span class="bk-action__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg></span>
+          <div><div class="bk-action__t">Dispute / fraud</div><div class="bk-action__s">Refund-eligible if approved</div></div>
+          <span class="bk-action__chev">›</span>
+        </button>
+      </div>
+    </div>
+    ${TABBAR(1)}`,
+
+  bk4_blocked: () => `
+    ${TOPBAR('Tx · Sky Bet', true)}
+    <div class="bk-body">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:8px;padding:16px 0 4px">
+        <div class="bk-detail-icon" style="background:var(--e-30);color:var(--e-90)"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="m4.93 4.93 14.14 14.14"/></svg></div>
+        <h2 style="font-size:20px;font-weight:800;letter-spacing:-0.02em;margin:0">Sky Bet</h2>
+        <div class="bk-detail-amt bk-detail-amt--muted">£0.00</div>
+        <span class="bk-detail-status bk-detail-status--blocked">Refused at card</span>
+      </div>
+      <div class="gc-card" style="padding:4px 14px;gap:0">
+        <div class="bk-meta"><span class="bk-meta__l">Attempted</span><span class="bk-meta__v">£42.00</span></div>
+        <div class="bk-meta"><span class="bk-meta__l">MCC</span><span class="bk-meta__v">7995 · Gambling</span></div>
+        <div class="bk-meta"><span class="bk-meta__l">Result</span><span class="bk-meta__v">Declined · £0 left your account</span></div>
+      </div>
+      <div class="gc-card gc-card--alert" style="border-left-color:var(--e-50);padding:12px 14px">
+        <strong style="font-size:13px;color:var(--text-primary)">You attempted to gamble.</strong>
+        <p style="font-size:11.5px;color:var(--text-secondary);line-height:1.5;margin:0">The card refused. Sponsor isn't flagged unless 3+ in a week (you're at 2).</p>
+      </div>
+      <div class="bk-actions">
+        <button class="bk-action">
+          <span class="bk-action__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></span>
+          <div><div class="bk-action__t">Why was this blocked?</div><div class="bk-action__s">MCC 7995 is on your block list.</div></div>
+          <span class="bk-action__chev">›</span>
+        </button>
+        <button class="bk-action">
+          <span class="bk-action__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></span>
+          <div><div class="bk-action__t">Sponsor disclosure</div><div class="bk-action__s">2 / 3 in 7-day window.</div></div>
+          <span class="bk-action__chev">›</span>
+        </button>
+      </div>
+    </div>
+    ${TABBAR(1)}`,
+
+  bk5: () => `
+    ${TOPBAR('Spending')}
+    <div class="bk-body">
+      <div class="gc-card" style="padding:13px 14px;gap:9px">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <h3 style="font-size:14px;font-weight:700;margin:0">April 2026</h3>
+          <div style="display:flex;gap:6px">
+            <button class="gc-btn gc-btn--ghost gc-btn--sm" style="padding:5px 9px;font-size:11px">←</button>
+            <button class="gc-btn gc-btn--ghost gc-btn--sm" style="padding:5px 9px;font-size:11px">→</button>
+          </div>
+        </div>
+        <div class="bk-totals">
+          <div class="bk-total"><div class="bk-total__l">Spent</div><div class="bk-total__n">£840</div></div>
+          <div class="bk-total"><div class="bk-total__l">Income</div><div class="bk-total__n">£2,140</div></div>
+          <div class="bk-total"><div class="bk-total__l">Saved</div><div class="bk-total__n">£420</div></div>
+        </div>
+        <div>
+          <div class="bk-bar"><span class="bk-bar__l">Groceries</span><span class="bk-bar__t"><span class="bk-bar__f" style="width:62%;background:var(--p-40)"></span></span><span class="bk-bar__v">£280</span></div>
+          <div class="bk-bar"><span class="bk-bar__l">Transit</span><span class="bk-bar__t"><span class="bk-bar__f" style="width:43%;background:var(--t-50)"></span></span><span class="bk-bar__v">£196</span></div>
+          <div class="bk-bar"><span class="bk-bar__l">Food &amp; drink</span><span class="bk-bar__t"><span class="bk-bar__f" style="width:33%;background:var(--s-50)"></span></span><span class="bk-bar__v">£148</span></div>
+          <div class="bk-bar"><span class="bk-bar__l">Bills</span><span class="bk-bar__t"><span class="bk-bar__f" style="width:21%;background:var(--w-60)"></span></span><span class="bk-bar__v">£92</span></div>
+          <div class="bk-bar"><span class="bk-bar__l">Subs</span><span class="bk-bar__t"><span class="bk-bar__f" style="width:18%;background:var(--n-50)"></span></span><span class="bk-bar__v">£74</span></div>
+          <div class="bk-bar bk-bar--zero"><span class="bk-bar__l">Gambling</span><span class="bk-bar__t"><span class="bk-bar__f" style="width:0%;background:var(--e-50)"></span></span><span class="bk-bar__v">£0</span></div>
+        </div>
+      </div>
+      <div class="gc-card" style="padding:13px 14px;gap:8px;cursor:pointer">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <h3 style="font-size:13px;font-weight:700;margin:0">6-month trend ›</h3>
+          <span style="font-size:10px;color:var(--text-secondary)">spend vs gambling counterfactual</span>
+        </div>
+        <svg viewBox="0 0 240 80" preserveAspectRatio="none" style="width:100%;height:80px">
+          <line x1="0" y1="60" x2="240" y2="60" stroke="var(--page-divider)" stroke-dasharray="2 4"/>
+          <line x1="0" y1="40" x2="240" y2="40" stroke="var(--page-divider)" stroke-dasharray="2 4" opacity="0.5"/>
+          <path d="M0 32 L 40 24 L 80 38 L 120 28 L 160 12 L 200 18 L 240 14" fill="none" stroke="var(--p-40)" stroke-width="2.5"/>
+          <path d="M0 70 L 40 62 L 80 74 L 120 58 L 160 20 L 200 4 L 240 4" fill="none" stroke="var(--e-50)" stroke-width="2" stroke-dasharray="3 3" opacity="0.85"/>
+          <text x="0" y="78" font-family="JetBrains Mono" font-size="8" fill="var(--text-muted)">Nov</text>
+          <text x="38" y="78" font-family="JetBrains Mono" font-size="8" fill="var(--text-muted)">Dec</text>
+          <text x="76" y="78" font-family="JetBrains Mono" font-size="8" fill="var(--text-muted)">Jan</text>
+          <text x="118" y="78" font-family="JetBrains Mono" font-size="8" fill="var(--text-muted)">Feb</text>
+          <text x="158" y="78" font-family="JetBrains Mono" font-size="8" fill="var(--text-muted)">Mar</text>
+          <text x="198" y="78" font-family="JetBrains Mono" font-size="8" fill="var(--text-muted)">Apr</text>
+        </svg>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <span style="display:inline-flex;align-items:center;gap:5px;font-size:10.5px;color:var(--text-secondary)"><span style="width:10px;height:2px;background:var(--p-40)"></span>Total spend</span>
+          <span style="display:inline-flex;align-items:center;gap:5px;font-size:10.5px;color:var(--text-secondary)"><span style="width:10px;height:2px;background:var(--e-50)"></span>Gambling (counterfactual)</span>
+        </div>
+        <p style="font-size:11px;color:var(--text-secondary);line-height:1.5;margin:0;padding-top:2px">Gambling fell off after onboarding. Total spend down 7%. Saved by blocks: <strong style="color:var(--text-primary);font-family:'JetBrains Mono',monospace">£2,840</strong>.</p>
+      </div>
+    </div>
+    ${TABBAR(1)}`,
+};
+
+let idx = 0;
+
+function render() {
+  const screen = SCREENS[idx];
+  document.getElementById('stage').innerHTML = `<div class="screen" style="display:flex;flex-direction:column;flex:1;min-height:0">${builders[screen.kind]()}</div>`;
+  document.getElementById('screenId').textContent = screen.id;
+  document.getElementById('screenName').textContent = screen.name;
+  document.getElementById('progressFill').style.width = ((idx + 1) / SCREENS.length * 100) + '%';
+  document.getElementById('navPrev').disabled = idx === 0;
+  document.getElementById('navNext').disabled = idx === SCREENS.length - 1;
+  document.querySelectorAll('.proto-scrubber__item').forEach((el, i) => {
+    el.classList.toggle('is-active', i === idx);
+    if (i === idx) el.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  });
+  document.getElementById('contextBody').innerHTML = CTX[screen.kind] || screen.name;
+}
+
+function next() { if (idx < SCREENS.length - 1) { idx++; render(); } }
+function prev() { if (idx > 0) { idx--; render(); } }
+function go(i) { idx = i; render(); }
+
+function buildScrubber() {
+  const nav = document.getElementById('scrubber');
+  SCREENS.forEach((s, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'proto-scrubber__item';
+    btn.innerHTML = `<span class="proto-scrubber__id">${s.id}</span><span class="proto-scrubber__name">${s.name}</span>`;
+    btn.addEventListener('click', () => go(i));
+    nav.appendChild(btn);
+  });
+}
+
+function initTheme() {
+  const root = document.documentElement;
+  const stored = localStorage.getItem('gc-proto-theme');
+  const initial = stored || 'dark';
+  root.setAttribute('data-theme', initial);
+  document.querySelector('.theme-label').textContent = initial === 'dark' ? 'Dark' : 'Light';
+  document.querySelector('.proto-theme-toggle').addEventListener('click', () => {
+    const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    document.querySelector('.theme-label').textContent = next === 'dark' ? 'Dark' : 'Light';
+    try { localStorage.setItem('gc-proto-theme', next); } catch(e) {}
+  });
+}
+
+document.getElementById('navPrev').addEventListener('click', prev);
+document.getElementById('navNext').addEventListener('click', next);
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowRight') next();
+  if (e.key === 'ArrowLeft') prev();
+});
+
+buildScrubber();
+initTheme();
+render();
+</script>
+
+</body>
+</html>

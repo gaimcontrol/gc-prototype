@@ -1,0 +1,460 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GaimControl · Mobile · §16 Off-boarding</title>
+<link rel="icon" href="../assets/gc-favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --p-10:#0B0F1C;--p-20:#161B2D;--p-30:#20273C;--p-40:#354872;--p-50:#4D608C;--p-60:#6B7DA6;--p-90:#DCE2F0;--p-95:#ECF0F9;--p-99:#FAFBFE;--p-100:#FFF;
+  --s-10:#28215A;--s-20:#3E3478;--s-30:#534792;--s-40:#6B5DAC;--s-50:#8576C2;--s-70:#B5ACDF;--s-80:#CFC8EA;--s-90:#E8E4F4;
+  --t-20:#1A6047;--t-30:#1F7058;--t-50:#399971;--t-60:#5BB088;--t-80:#ADDCC2;--t-90:#D5EDDF;
+  --w-30:#6B4500;--w-60:#C28200;--w-80:#FAB44A;--w-90:#FFDFA8;
+  --e-30:#7A1F1F;--e-50:#C73838;--e-80:#F4A4A4;--e-90:#FBD9D9;
+  --n-50:#76798A;--n-80:#C5C8D2;--n-95:#F1F2F5;--nv-80:#C5C9DD;
+}
+[data-theme="dark"] { --bg-base: var(--p-30); --bg-surface: var(--p-20); --bg-surface-2: var(--p-10); --border: rgba(255,255,255,0.08); --text-primary: var(--n-95); --text-secondary: var(--nv-80); --text-muted: rgba(255,255,255,0.4); --accent: var(--s-70); --accent-strong: var(--s-50); --on-accent: #fff; --page-bg: #0a0e1a; --page-fg: var(--n-95); --page-fg-muted: var(--nv-80); --page-card-bg: var(--p-20); --page-divider: rgba(255,255,255,0.06); }
+[data-theme="light"] { --bg-base: var(--p-99); --bg-surface: #fff; --bg-surface-2: var(--p-95); --border: rgba(22,27,45,0.08); --text-primary: var(--p-20); --text-secondary: var(--n-50); --text-muted: var(--n-50); --accent: var(--p-40); --accent-strong: var(--s-40); --on-accent: #fff; --page-bg: var(--p-95); --page-fg: var(--p-20); --page-fg-muted: var(--n-50); --page-card-bg: #fff; --page-divider: rgba(22,27,45,0.08); }
+* { box-sizing: border-box; }
+html, body { background: var(--page-bg); color: var(--page-fg); margin: 0; transition: background-color 220ms ease, color 220ms ease; }
+body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif; font-size: 14px; line-height: 1.5; -webkit-font-smoothing: antialiased; min-height: 100vh; }
+.proto-shell { display: grid; grid-template-columns: 280px 1fr; gap: 0; min-height: 100vh; }
+@media (max-width: 960px) { .proto-shell { grid-template-columns: 1fr; } }
+.proto-sidebar { background: var(--page-card-bg); border-right: 1px solid var(--page-divider); padding: 28px 22px; position: sticky; top: 0; height: 100vh; overflow-y: auto; display: flex; flex-direction: column; gap: 16px; }
+@media (max-width: 960px) { .proto-sidebar { position: static; height: auto; max-height: 50vh; border-right: none; border-bottom: 1px solid var(--page-divider); } }
+.proto-sidebar__brand { display: flex; align-items: center; gap: 10px; }
+.proto-sidebar__mark { width: 36px; height: 36px; border-radius: 10px; background: var(--p-30); display: inline-flex; align-items: center; justify-content: center; }
+.proto-sidebar__mark img { width: 70%; height: 70%; }
+.proto-sidebar__name { font-weight: 700; font-size: 17px; letter-spacing: -0.01em; }
+.proto-sidebar__pill { display: inline-flex; padding: 3px 9px; border-radius: 999px; background: linear-gradient(120deg, var(--s-50), var(--p-50), var(--t-50)); color: white; font-weight: 700; font-size: 9.5px; font-family: 'JetBrains Mono', monospace; letter-spacing: 0.06em; text-transform: uppercase; }
+.proto-sidebar__back { display: inline-flex; align-items: center; gap: 6px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--page-fg-muted); text-decoration: none; }
+.proto-section-title { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--page-fg-muted); margin: 12px 0 6px; }
+.proto-scrubber { display: flex; flex-direction: column; gap: 2px; }
+.proto-scrubber__item { display: grid; grid-template-columns: 44px 1fr; gap: 8px; align-items: center; padding: 7px 10px; border-radius: 8px; cursor: pointer; border: none; background: transparent; color: inherit; font-family: inherit; text-align: left; }
+.proto-scrubber__item:hover { background: rgba(127,127,127,0.08); }
+.proto-scrubber__item.is-active { background: var(--accent-strong); color: var(--on-accent); }
+.proto-scrubber__item.is-active .proto-scrubber__id { color: rgba(255,255,255,0.85); }
+.proto-scrubber__id { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; color: var(--page-fg-muted); letter-spacing: 0.06em; }
+.proto-scrubber__name { font-size: 12.5px; font-weight: 500; }
+.proto-sidebar__footer { margin-top: auto; padding-top: 16px; border-top: 1px solid var(--page-divider); font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--page-fg-muted); }
+.proto-sidebar__footer a { color: var(--page-fg-muted); text-decoration: none; border-bottom: 1px dotted currentColor; }
+.proto-theme-toggle { display: inline-flex; align-items: center; gap: 8px; padding: 7px 12px; border-radius: 8px; background: var(--bg-surface-2); border: 1px solid var(--border); color: var(--page-fg-muted); cursor: pointer; font-family: 'JetBrains Mono', monospace; font-size: 11px; align-self: flex-start; }
+.proto-theme-toggle svg { width: 12px; height: 12px; }
+[data-theme="dark"] .proto-theme-toggle .icon-moon { display: none; }
+[data-theme="light"] .proto-theme-toggle .icon-sun { display: none; }
+.proto-stage { display: flex; flex-direction: column; align-items: center; padding: 32px 24px 64px; gap: 22px; }
+.proto-modebar { display: flex; align-items: center; gap: 10px; padding: 10px 16px; background: var(--page-card-bg); border: 1px solid var(--page-divider); border-radius: 12px; font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: var(--page-fg-muted); flex-wrap: wrap; justify-content: center; }
+.proto-modebar__pill { display: inline-flex; padding: 3px 9px; border-radius: 999px; background: var(--bg-surface-2); }
+.proto-modebar__id { color: var(--page-fg); font-weight: 700; letter-spacing: 0.06em; }
+.proto-modebar__bar { width: 100px; height: 4px; border-radius: 4px; background: var(--bg-surface-2); position: relative; overflow: hidden; }
+.proto-modebar__bar__fill { position: absolute; left: 0; top: 0; bottom: 0; background: linear-gradient(90deg, var(--s-50), var(--t-50)); transition: width 240ms ease; }
+.proto-arrows { display: flex; align-items: center; gap: 8px; }
+.proto-arrow { width: 36px; height: 36px; border-radius: 10px; background: var(--page-card-bg); border: 1px solid var(--page-divider); color: var(--page-fg-muted); display: inline-flex; align-items: center; justify-content: center; cursor: pointer; }
+.proto-arrow:hover { background: var(--bg-surface-2); color: var(--page-fg); }
+.proto-arrow:disabled { opacity: 0.3; cursor: not-allowed; }
+.proto-arrow svg { width: 18px; height: 18px; }
+.phone { width: 393px; height: 852px; flex-shrink: 0; border-radius: 56px; background: #000; padding: 13px; position: relative; box-shadow: 0 0 0 1.5px #2a2e3a, 0 30px 60px -20px rgba(0,0,0,0.7), 0 16px 32px -16px rgba(0,0,0,0.4); }
+.phone::before, .phone::after { content: ''; position: absolute; background: #2a2e3a; }
+.phone::before { left: -3px; top: 110px; width: 3px; height: 30px; border-radius: 3px 0 0 3px; }
+.phone::after { left: -3px; top: 160px; width: 3px; height: 60px; border-radius: 3px 0 0 3px; }
+.phone__inner { width: 100%; height: 100%; background: var(--bg-base); color: var(--text-primary); border-radius: 44px; overflow: hidden; position: relative; display: flex; flex-direction: column; }
+.phone__notch { position: absolute; top: 12px; left: 50%; transform: translateX(-50%); width: 120px; height: 32px; background: #000; border-radius: 18px; z-index: 30; }
+.phone__statusbar { height: 44px; padding: 12px 32px 0; display: flex; align-items: center; justify-content: space-between; font-size: 14px; font-weight: 600; color: var(--text-primary); font-feature-settings: "tnum"; flex-shrink: 0; }
+.phone__statusbar__right { display: flex; align-items: center; gap: 5px; font-size: 13px; }
+.phone__topbar { display: flex; align-items: center; justify-content: space-between; padding: 8px 18px 12px; gap: 10px; flex-shrink: 0; }
+.phone__back { width: 32px; height: 32px; border-radius: 50%; background: transparent; border: none; color: var(--text-primary); display: inline-flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; }
+.phone__back svg { width: 20px; height: 20px; }
+.phone__title { flex: 1; text-align: center; font-size: 14.5px; font-weight: 600; letter-spacing: -0.01em; }
+.gc-crisis-pill { display: inline-flex; align-items: center; gap: 5px; padding: 6px 11px; border-radius: 999px; background: var(--e-50); color: white; border: none; font-family: inherit; font-size: 11.5px; font-weight: 600; cursor: pointer; flex-shrink: 0; }
+.gc-crisis-pill svg { width: 11px; height: 11px; }
+
+.ob-body { flex: 1; padding: 4px 16px 12px; overflow-y: auto; display: flex; flex-direction: column; gap: 11px; }
+.ob-body::-webkit-scrollbar { width: 4px; }
+.ob-body::-webkit-scrollbar-thumb { background: rgba(127,127,127,0.2); border-radius: 4px; }
+
+.gc-card { padding: 14px; background: var(--bg-surface); border: 1px solid var(--border); border-radius: 14px; display: flex; flex-direction: column; gap: 8px; }
+.gc-card--anna { background: linear-gradient(135deg, rgba(133,118,194,0.15), rgba(83,71,146,0.08)); border-color: rgba(133,118,194,0.25); flex-direction: row; align-items: center; gap: 10px; padding: 11px 13px; }
+.gc-card--anna .anna-av { width: 30px; height: 30px; border-radius: 50%; background: var(--p-30); display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.gc-card--anna .anna-av img { width: 60%; height: 60%; }
+.gc-card--anna p { font-size: 12px; line-height: 1.45; margin: 0; font-style: italic; }
+.gc-card--danger { background: var(--bg-surface-2); border-left: 3px solid var(--e-50); border-radius: 4px 14px 14px 4px; padding: 14px 16px; }
+.gc-card--warn { background: var(--bg-surface-2); border-left: 3px solid var(--w-60); border-radius: 4px 14px 14px 4px; padding: 13px 15px; }
+.gc-card--success { background: linear-gradient(135deg, var(--t-50), var(--t-30)); color: white; border-color: transparent; }
+
+/* OB1 reason picker */
+.ob-reason { display: grid; grid-template-columns: 32px 1fr; gap: 12px; align-items: center; padding: 12px 14px; background: var(--bg-base); border: 1px solid var(--border); border-radius: 12px; cursor: pointer; font-family: inherit; color: inherit; text-align: left; width: 100%; }
+.ob-reason:hover { border-color: var(--accent); }
+.ob-reason.is-on { background: var(--accent-strong); color: white; border-color: transparent; }
+.ob-reason__rdo { width: 20px; height: 20px; border-radius: 50%; border: 1.5px solid var(--text-muted); flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center; }
+.ob-reason.is-on .ob-reason__rdo { border-color: white; }
+.ob-reason.is-on .ob-reason__rdo::after { content: ''; width: 10px; height: 10px; border-radius: 50%; background: white; }
+.ob-reason__t { font-size: 13.5px; font-weight: 600; }
+.ob-reason__s { font-size: 11.5px; opacity: 0.78; margin-top: 1px; }
+
+/* State check */
+.ob-state { display: grid; grid-template-columns: 26px 1fr; gap: 10px; align-items: center; padding: 9px 0; border-top: 1px solid var(--border); }
+.ob-state:first-of-type { border-top: none; padding-top: 0; }
+.ob-state__ic { width: 26px; height: 26px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.ob-state__ic--loan { background: var(--w-30); color: var(--w-80); }
+[data-theme="light"] .ob-state__ic--loan { background: var(--w-90); color: var(--w-30); }
+.ob-state__ic--ok { background: var(--t-20); color: var(--t-80); }
+[data-theme="light"] .ob-state__ic--ok { background: var(--t-90); color: var(--t-30); }
+.ob-state__ic svg { width: 12px; height: 12px; }
+.ob-state__t { font-size: 12.5px; font-weight: 600; }
+.ob-state__s { font-size: 11px; color: var(--text-secondary); margin-top: 1px; }
+
+/* OB2 consequences */
+.ob-conseq { display: grid; grid-template-columns: 26px 1fr; gap: 11px; align-items: flex-start; padding: 10px 0; border-top: 1px solid var(--border); }
+.ob-conseq:first-of-type { border-top: none; padding-top: 0; }
+.ob-conseq__ic { width: 26px; height: 26px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+.ob-conseq__ic--keep { background: var(--t-20); color: var(--t-80); }
+[data-theme="light"] .ob-conseq__ic--keep { background: var(--t-90); color: var(--t-30); }
+.ob-conseq__ic--lose { background: var(--e-30); color: var(--e-90); }
+[data-theme="light"] .ob-conseq__ic--lose { background: var(--e-90); color: var(--e-30); }
+.ob-conseq__ic svg { width: 12px; height: 12px; }
+.ob-conseq__t { font-size: 13px; font-weight: 600; }
+.ob-conseq__s { font-size: 11.5px; color: var(--text-secondary); margin-top: 1px; line-height: 1.45; }
+
+/* OB3a repayment options */
+.ob-opt { padding: 13px 14px; background: var(--bg-base); border: 1px solid var(--border); border-radius: 13px; cursor: pointer; font-family: inherit; color: inherit; text-align: left; width: 100%; display: flex; flex-direction: column; gap: 5px; }
+.ob-opt:hover { border-color: var(--accent); }
+.ob-opt.is-on { border-color: var(--accent-strong); box-shadow: 0 0 0 2px rgba(133,118,194,0.18); }
+.ob-opt__head { display: flex; align-items: center; gap: 8px; }
+.ob-opt__pill { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; padding: 2px 7px; border-radius: 999px; background: var(--accent-strong); color: white; font-weight: 700; letter-spacing: 0.04em; }
+.ob-opt__t { font-size: 14px; font-weight: 700; }
+.ob-opt__s { font-size: 11.5px; color: var(--text-secondary); line-height: 1.5; }
+.ob-opt__meta { display: flex; gap: 11px; margin-top: 3px; font-family: 'JetBrains Mono', monospace; font-size: 10.5px; color: var(--text-muted); }
+.ob-opt__meta strong { color: var(--text-primary); font-weight: 700; }
+
+/* OB3b profile cool-off */
+.ob-prof-tile { padding: 12px 14px; background: var(--bg-base); border: 1px solid var(--border); border-radius: 12px; }
+.ob-prof-tile--mine { border-color: var(--accent-strong); box-shadow: 0 0 0 2px rgba(133,118,194,0.18); }
+.ob-prof-tile__pill { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; padding: 2px 8px; border-radius: 999px; background: var(--bg-surface-2); color: var(--text-muted); font-weight: 700; letter-spacing: 0.05em; }
+.ob-prof-tile--mine .ob-prof-tile__pill { background: var(--accent-strong); color: white; }
+.ob-prof-tile__n { font-size: 22px; font-weight: 800; letter-spacing: -0.02em; margin-top: 4px; }
+.ob-prof-tile__lbl { font-size: 11.5px; color: var(--text-secondary); margin-top: 1px; line-height: 1.4; }
+
+/* OB5 closed final */
+.ob-closed-hero { padding: 24px 18px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 9px; }
+.ob-closed-hero__ic { width: 60px; height: 60px; border-radius: 50%; background: rgba(255,255,255,0.18); display: inline-flex; align-items: center; justify-content: center; }
+.ob-closed-hero__ic svg { width: 30px; height: 30px; }
+.ob-closed-hero h2 { font-size: 21px; font-weight: 800; letter-spacing: -0.02em; margin: 0; }
+.ob-closed-hero p { font-size: 13px; line-height: 1.55; margin: 0; opacity: 0.92; }
+
+.ob-final-step { display: grid; grid-template-columns: 32px 1fr; gap: 12px; align-items: flex-start; padding: 10px 0; border-top: 1px solid var(--border); }
+.ob-final-step:first-of-type { border-top: none; padding-top: 0; }
+.ob-final-step__n { width: 32px; height: 32px; border-radius: 50%; background: var(--t-20); color: var(--t-80); display: inline-flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 12px; flex-shrink: 0; }
+[data-theme="light"] .ob-final-step__n { background: var(--t-90); color: var(--t-30); }
+.ob-final-step__t { font-size: 13px; font-weight: 600; }
+.ob-final-step__s { font-size: 11.5px; color: var(--text-secondary); margin-top: 2px; line-height: 1.45; }
+
+.gc-btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 11px 15px; border-radius: 12px; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; border: 1px solid transparent; text-decoration: none; }
+.gc-btn--primary { background: var(--accent-strong); color: var(--on-accent); }
+.gc-btn--primary:hover { background: var(--s-40); }
+.gc-btn--ghost { background: transparent; color: var(--text-primary); border-color: var(--border); }
+.gc-btn--danger { background: var(--e-50); color: white; }
+.gc-btn--white { background: white; color: var(--p-30); }
+.gc-btn--full { width: 100%; }
+
+.ob-decision { font-size: 11px; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; padding: 8px 12px; background: var(--bg-surface-2); border-radius: 8px; line-height: 1.5; }
+.ob-decision a { color: var(--text-secondary); text-decoration: none; border-bottom: 1px dotted currentColor; }
+
+.proto-context { width: 100%; max-width: 480px; padding: 14px 16px; background: var(--page-card-bg); border: 1px solid var(--page-divider); border-radius: 12px; font-size: 12.5px; color: var(--page-fg-muted); line-height: 1.55; }
+.proto-context strong { color: var(--page-fg); }
+.proto-context a { color: var(--page-accent, var(--s-70)); text-decoration: none; border-bottom: 1px dotted currentColor; }
+.proto-context__head { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; font-weight: 700; color: var(--page-fg); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px; }
+
+.screen { animation: fade-in 220ms ease; }
+@keyframes fade-in { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+@media (max-width: 720px) { .phone { transform: scale(0.92); transform-origin: top center; } }
+@media (max-width: 480px) { .phone { transform: scale(0.78); } }
+</style>
+<script src="flow-chain.js" defer></script>
+</head>
+<body>
+
+<div class="proto-shell">
+
+  <aside class="proto-sidebar">
+    <div class="proto-sidebar__brand">
+      <span class="proto-sidebar__mark"><img src="../assets/gc-mark-mono-light.svg" alt=""></span>
+      <span><div class="proto-sidebar__name">GaimControl</div><span class="proto-sidebar__pill">mobile</span></span>
+    </div>
+    <a class="proto-sidebar__back" href="index.html">← prototype index</a>
+    <button class="proto-theme-toggle" type="button">
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+      <span class="theme-label">Dark</span>
+    </button>
+    <div class="proto-section-title">§16 · OB1 – OB5</div>
+    <nav class="proto-scrubber" id="scrubber"></nav>
+    <div class="proto-sidebar__footer">
+      Source: <a href="../16-offboarding.html">16-offboarding</a><br>
+      Decisions: GEN-04 · PR-06 · PR-07
+    </div>
+  </aside>
+
+  <main class="proto-stage">
+    <div class="proto-modebar">
+      <span>Screen <span class="proto-modebar__id" id="screenId">OB1</span></span>
+      <span class="proto-modebar__pill" id="screenName">Reason + state check</span>
+      <div class="proto-modebar__bar"><div class="proto-modebar__bar__fill" id="progressFill" style="width:20%"></div></div>
+      <div class="proto-arrows">
+        <button class="proto-arrow" id="navPrev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+        <button class="proto-arrow" id="navNext"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
+      </div>
+    </div>
+    <div class="phone">
+      <div class="phone__notch"></div>
+      <div class="phone__inner">
+        <div class="phone__statusbar">
+          <span>9:41</span>
+          <span class="phone__statusbar__right"><span style="display:inline-flex;gap:3px"><span style="width:4px;height:4px;border-radius:50%;background:currentColor"></span><span style="width:4px;height:5px;border-radius:1px;background:currentColor"></span><span style="width:4px;height:6px;border-radius:1px;background:currentColor"></span><span style="width:4px;height:7px;border-radius:1px;background:currentColor"></span></span><span>100%</span></span>
+        </div>
+        <div id="stage" style="flex:1;display:flex;flex-direction:column;min-height:0"></div>
+      </div>
+    </div>
+    <div class="proto-context" id="contextPanel"><div class="proto-context__head">Screen context</div><div id="contextBody"></div></div>
+  </main>
+</div>
+
+<script>
+const SCREENS = [
+  { id: 'OB1', name: 'Reason + state check', kind: 'ob1' },
+  { id: 'OB2', name: 'Consequences · Article 17 up front', kind: 'ob2' },
+  { id: 'OB3a', name: 'Loan path · repayment options', kind: 'ob3a' },
+  { id: 'OB3b', name: 'Profile path · cool-off start', kind: 'ob3b' },
+  { id: 'OB5', name: 'Final · closed + deletion queued', kind: 'ob5' },
+];
+
+const CTX = {
+  ob1: '<strong>OB1 Reason + state check.</strong> Single screen with reason picker (4 options + free text). Backend checks active loan / Hold / sponsor cosigns. Branches to OB2 (existing-loan Path A) or OB3 (profile-based Path B). Three entry points all land here: §12 Profile "Close account" · §11 self-flag · marketing contact form (signed token).',
+  ob2: '<strong>OB2 Consequences.</strong> Per <a href="../41-decisions-log.html">PR-07</a> Article 17 deletion constraint surfaced <em>up front</em>, not buried in a later step. Honest "what you keep, what you lose" matrix. No mid-cascade surprises. Sam has an active loan → Path A.',
+  ob3a: '<strong>OB3a Repayment options · Path A.</strong> Three sub-paths: (a) settle in full now · payoff calculator + DD handoff; (b) wind-down account · banking surface becomes balance + schedule only; (c) talk to ops human · routes to admin queue for tailored plan.',
+  ob3b: '<strong>OB3b Cool-off start · Path B.</strong> Per <a href="../41-decisions-log.html">PR-06</a> length scales by profile · Recreational 30d · Habitual 14d (Sam) · Compulsive 7d. Counterintuitive — shorter for higher-risk because longer prolongs exit friction. Card stays functional during cool-off · "cancel close" one tap away.',
+  ob5: '<strong>OB5 Final · closed + deletion.</strong> Combined end-state for both paths. Loan-path: account suspended, deletion queued for balance-clear. Profile-path: card terminated immediately, Article 17 deletion runs per pre-stated preference (immediate · 30-day · anonymised retention).',
+};
+
+const TOPBAR = (title) => `
+  <div class="phone__topbar">
+    <button class="phone__back" onclick="prev()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
+    <span class="phone__title">${title}</span>
+    <button class="gc-crisis-pill"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7-4.5-9-9.5C2 7 5 4 8 4c1.7 0 3.2.8 4 2 .8-1.2 2.3-2 4-2 3 0 6 3 5 7.5C19 16.5 12 21 12 21z"/></svg></button>
+  </div>`;
+
+const builders = {
+  ob1: () => `
+    ${TOPBAR('Close my account')}
+    <div class="ob-body">
+      <div class="gc-card">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;color:var(--text-muted)">OB1 · §16 off-boarding</span>
+        <h2 style="font-size:20px;font-weight:800;letter-spacing:-0.02em;margin:4px 0 0">Why are you leaving?</h2>
+        <p style="font-size:12.5px;color:var(--text-secondary);line-height:1.5;margin:0">Honest answers help us learn — not gatekeep. Whatever you pick, the close button still works.</p>
+      </div>
+      <button class="ob-reason" onclick="pickReason(this)"><span class="ob-reason__rdo"></span><div><div class="ob-reason__t">I'm done · I don't need it anymore</div><div class="ob-reason__s">Recovery has worked · ready for life without the rails</div></div></button>
+      <button class="ob-reason is-on" onclick="pickReason(this)"><span class="ob-reason__rdo"></span><div><div class="ob-reason__t">Something here isn't working for me</div><div class="ob-reason__s">Product fit · cost · friction · the system feels wrong</div></div></button>
+      <button class="ob-reason" onclick="pickReason(this)"><span class="ob-reason__rdo"></span><div><div class="ob-reason__t">I'm switching to something else</div><div class="ob-reason__s">Another service · clinical programme · self-managed</div></div></button>
+      <button class="ob-reason" onclick="pickReason(this)"><span class="ob-reason__rdo"></span><div><div class="ob-reason__t">I'd rather not say</div><div class="ob-reason__s">All good · we still close it</div></div></button>
+      <div class="gc-card" style="padding:13px 14px">
+        <span class="ob-state__t" style="font-size:12.5px">Anything you'd like to add? (optional)</span>
+        <textarea style="padding:11px 13px;background:var(--bg-base);border:1px solid var(--border);border-radius:11px;font-family:inherit;font-size:13px;color:var(--text-primary);outline:none;resize:vertical;min-height:65px;line-height:1.55"></textarea>
+      </div>
+      <div class="gc-card gc-card--warn">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;color:var(--w-80)">State check · before we continue</span>
+        <div class="ob-state"><span class="ob-state__ic ob-state__ic--loan"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 1 0 0 7h5a3.5 3.5 0 1 1 0 7H6"/></svg></span><div><div class="ob-state__t">Active loan · £8,089 outstanding</div><div class="ob-state__s">LO-289-A1F4 · 35 payments to go · routes to Path A</div></div></div>
+        <div class="ob-state"><span class="ob-state__ic ob-state__ic--ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="ob-state__t">No active Relapse Hold</div><div class="ob-state__s">Last Hold closed 02 May · 12 days clean since</div></div></div>
+        <div class="ob-state"><span class="ob-state__ic ob-state__ic--ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="ob-state__t">No pending sponsor co-signs</div><div class="ob-state__s">Joanna's queue is clear</div></div></div>
+      </div>
+      <div class="gc-card gc-card--anna"><span class="anna-av"><img src="../assets/gc-mark-mono-light.svg" alt=""></span><div><p>"Leaving isn't a failure. Some of the best outcomes here look like graduation. Let's just make sure you know what closing means."</p></div></div>
+      <div style="display:flex;gap:7px;margin-top:auto">
+        <button class="gc-btn gc-btn--ghost" onclick="prev()">Cancel</button>
+        <button class="gc-btn gc-btn--primary" style="flex:1" onclick="next()">Continue · see consequences</button>
+      </div>
+    </div>`,
+
+  ob2: () => `
+    ${TOPBAR('What closing means')}
+    <div class="ob-body">
+      <div class="gc-card gc-card--danger">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;color:var(--e-80)">Article 17 · surfaced up front (PR-07)</span>
+        <h2 style="font-size:19px;font-weight:800;letter-spacing:-0.02em;line-height:1.2;margin:4px 0 0">Right to erasure needs £0 outstanding.</h2>
+        <p style="font-size:12.5px;color:var(--text-secondary);line-height:1.55;margin:0">You owe <strong style="color:var(--text-primary)">£8,089</strong> · FCA + AML record-keeping means we have to hold the loan record until it's settled. Closing now suspends the account; full deletion runs automatically when the balance clears.</p>
+      </div>
+      <div class="gc-card" style="padding:13px 15px">
+        <h3 style="font-size:13.5px;font-weight:700;margin:0 0 2px">What stops</h3>
+        <div class="ob-conseq"><span class="ob-conseq__ic ob-conseq__ic--lose"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6 6 18M6 6l12 12"/></svg></span><div><div class="ob-conseq__t">Anna · daily check-ins · CBT modules</div><div class="ob-conseq__s">Sessions paused immediately · history preserved if you re-enrol within 90 days</div></div></div>
+        <div class="ob-conseq"><span class="ob-conseq__ic ob-conseq__ic--lose"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6 6 18M6 6l12 12"/></svg></span><div><div class="ob-conseq__t">Card · MCC blocks · spending controls</div><div class="ob-conseq__s">Card terminated · safe spend rails gone</div></div></div>
+        <div class="ob-conseq"><span class="ob-conseq__ic ob-conseq__ic--lose"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6 6 18M6 6l12 12"/></svg></span><div><div class="ob-conseq__t">Sponsor digests to Joanna</div><div class="ob-conseq__s">She gets a "Sam has left" note · then nothing further</div></div></div>
+      </div>
+      <div class="gc-card" style="padding:13px 15px">
+        <h3 style="font-size:13.5px;font-weight:700;margin:0 0 2px">What keeps going</h3>
+        <div class="ob-conseq"><span class="ob-conseq__ic ob-conseq__ic--keep"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="ob-conseq__t">Direct debit on the loan</div><div class="ob-conseq__s">£311.20 / month until balance clears · same date · no fees</div></div></div>
+        <div class="ob-conseq"><span class="ob-conseq__ic ob-conseq__ic--keep"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="ob-conseq__t">Crisis line access · §11</div><div class="ob-conseq__s">Help home stays available · phone-only after deletion</div></div></div>
+        <div class="ob-conseq"><span class="ob-conseq__ic ob-conseq__ic--keep"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="ob-conseq__t">Your data export rights</div><div class="ob-conseq__s">GDPR Article 20 export still available · we'll send it free</div></div></div>
+      </div>
+      <div class="gc-card gc-card--warn">
+        <h3 style="font-size:13px;font-weight:700;margin:0">When deletion happens</h3>
+        <ul style="margin:0;padding:0;list-style:none;font-size:12px;color:var(--text-secondary);line-height:1.6;display:flex;flex-direction:column;gap:4px">
+          <li><strong style="color:var(--text-primary)">Today · OB3a Path A:</strong> account suspended · DD continues</li>
+          <li><strong style="color:var(--text-primary)">When £0:</strong> Article 17 deletion runs · email confirmation</li>
+          <li><strong style="color:var(--text-primary)">90 days after close:</strong> if no re-enrol, profile data wiped permanently</li>
+        </ul>
+      </div>
+      <div style="display:flex;gap:7px;margin-top:auto">
+        <button class="gc-btn gc-btn--ghost" onclick="prev()">Back</button>
+        <button class="gc-btn gc-btn--danger" style="flex:1" onclick="next()">I understand · continue</button>
+      </div>
+    </div>`,
+
+  ob3a: () => `
+    ${TOPBAR('Path A · loan')}
+    <div class="ob-body">
+      <div class="gc-card">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;color:var(--text-muted)">OB3a · existing-loan path</span>
+        <h2 style="font-size:18px;font-weight:800;letter-spacing:-0.02em;margin:4px 0 0">How do you want to handle the £8,089?</h2>
+        <p style="font-size:12px;color:var(--text-secondary);line-height:1.5;margin:0">Three options. No fees on any of them.</p>
+      </div>
+      <button class="ob-opt" onclick="pickOpt(this)">
+        <div class="ob-opt__head"><span class="ob-opt__t">Settle in full now</span></div>
+        <div class="ob-opt__s">One-off £8,089 · routes to payoff calculator + DD handoff. Account closes today · Article 17 deletion runs immediately.</div>
+        <div class="ob-opt__meta"><span><strong>~10 min</strong> to settle</span><span><strong>Today</strong> account closed</span></div>
+      </button>
+      <button class="ob-opt is-on" onclick="pickOpt(this)">
+        <div class="ob-opt__head"><span class="ob-opt__pill">Recommended</span><span class="ob-opt__t">Wind-down account</span></div>
+        <div class="ob-opt__s">Card terminated · banking surface replaced with balance + schedule + "close fully when £0" banner. Sponsor suspended · Anna deactivated · DD keeps running. <strong>You can re-open if you change your mind.</strong></div>
+        <div class="ob-opt__meta"><span><strong>35 mo</strong> until £0</span><span><strong>Apr 2029</strong> auto-deletion</span></div>
+      </button>
+      <button class="ob-opt" onclick="pickOpt(this)">
+        <div class="ob-opt__head"><span class="ob-opt__t">Talk to a human · ops team</span></div>
+        <div class="ob-opt__s">If neither option fits — tailored plan, hardship, dispute. Routes to admin queue · response within 1 working day · meanwhile your account stays open.</div>
+        <div class="ob-opt__meta"><span><strong>~1 day</strong> response</span><span><strong>No</strong> commitment</span></div>
+      </button>
+      <div class="gc-card gc-card--warn">
+        <h3 style="font-size:13px;font-weight:700;margin:0">Wind-down account · what it looks like</h3>
+        <ul style="margin:0;padding:0;list-style:none;font-size:11.5px;color:var(--text-secondary);line-height:1.55;display:flex;flex-direction:column;gap:4px">
+          <li>· Banking surface: balance · schedule · next due · "close fully when £0"</li>
+          <li>· Card: terminated · cannot spend · cannot be re-enabled</li>
+          <li>· Statements: monthly to your email · still downloadable</li>
+          <li>· Re-open: contact ops · re-runs KYC light · keeps repayment history</li>
+        </ul>
+      </div>
+      <div class="gc-card gc-card--anna"><span class="anna-av"><img src="../assets/gc-mark-mono-light.svg" alt=""></span><div><p>"Wind-down keeps the rails on the loan while letting you out of the recovery layer. It's the gentlest option · most people pick it."</p></div></div>
+      <div style="display:flex;gap:7px;margin-top:auto">
+        <button class="gc-btn gc-btn--ghost" onclick="prev()">Back</button>
+        <button class="gc-btn gc-btn--danger" style="flex:1" onclick="next()">Start wind-down</button>
+      </div>
+    </div>`,
+
+  ob3b: () => `
+    ${TOPBAR('Path B · no loan')}
+    <div class="ob-body">
+      <div class="gc-card">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;color:var(--text-muted)">OB3b · profile-based path · for users with no active loan</span>
+        <h2 style="font-size:18px;font-weight:800;letter-spacing:-0.02em;margin:4px 0 0">Cool-off · then it's closed.</h2>
+        <p style="font-size:12px;color:var(--text-secondary);line-height:1.5;margin:0">Per <a href="../41-decisions-log.html" style="color:var(--accent);text-decoration:none">PR-06</a> length scales by profile. <strong style="color:var(--text-primary)">Recreational gets the longest window</strong> — leaving is most likely a fit decision and deserves reflection. <strong style="color:var(--text-primary)">Habitual + Compulsive get shorter</strong> — longer windows risk paralysis when the user wants out.</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <div class="ob-prof-tile">
+          <span class="ob-prof-tile__pill">Recreational · P1</span>
+          <div class="ob-prof-tile__n">30 days</div>
+          <div class="ob-prof-tile__lbl">Anna re-entry conversation around day 21 · card + banking active</div>
+        </div>
+        <div class="ob-prof-tile">
+          <span class="ob-prof-tile__pill">Mood-influenced · P3</span>
+          <div class="ob-prof-tile__n">21 days</div>
+          <div class="ob-prof-tile__lbl">Longer · mood-influenced exit may reverse, gives time to land somewhere stable</div>
+        </div>
+        <div class="ob-prof-tile ob-prof-tile--mine">
+          <span class="ob-prof-tile__pill">Habitual · P4 · you</span>
+          <div class="ob-prof-tile__n">14 days</div>
+          <div class="ob-prof-tile__lbl">Default · matches PGSI-mid risk · Anna check-in at day 7 + day 13</div>
+        </div>
+        <div class="ob-prof-tile">
+          <span class="ob-prof-tile__pill">Compulsive · P2</span>
+          <div class="ob-prof-tile__n">7 days</div>
+          <div class="ob-prof-tile__lbl">Shorter · longer window risks paralysis · safeguarding ops contact day 1</div>
+        </div>
+        <div class="ob-prof-tile">
+          <span class="ob-prof-tile__pill">Recovering · P5</span>
+          <div class="ob-prof-tile__n">14 days</div>
+          <div class="ob-prof-tile__lbl">Default · agency + structure · standard cool-off applies</div>
+        </div>
+      </div>
+      <div class="gc-card gc-card--warn">
+        <h3 style="font-size:13px;font-weight:700;margin:0">During the 14 days</h3>
+        <ul style="margin:0;padding:0;list-style:none;font-size:11.5px;color:var(--text-secondary);line-height:1.55;display:flex;flex-direction:column;gap:4px">
+          <li>· Card · banking · Anna · sponsor all still work normally</li>
+          <li>· One tap "cancel close" from anywhere in the app</li>
+          <li>· Anna offers a 5-min talk at day 7 + day 13 (skippable)</li>
+          <li>· Sponsor not notified until cool-off ends</li>
+        </ul>
+      </div>
+      <div class="gc-card gc-card--anna"><span class="anna-av"><img src="../assets/gc-mark-mono-light.svg" alt=""></span><div><p>"Cool-off isn't friction. It's a window where the decision can stay alive and reversible. You can leave on day 14 with no questions — or change your mind on day 13."</p></div></div>
+      <div style="display:flex;gap:7px;margin-top:auto">
+        <button class="gc-btn gc-btn--ghost" onclick="prev()">Back</button>
+        <button class="gc-btn gc-btn--danger" style="flex:1" onclick="next()">Start 14-day cool-off</button>
+      </div>
+    </div>`,
+
+  ob5: () => `
+    ${TOPBAR('Closed')}
+    <div class="ob-body">
+      <div class="gc-card gc-card--success ob-closed-hero">
+        <span class="ob-closed-hero__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+        <h2>Your account is in wind-down.</h2>
+        <p>You can re-open by emailing us. Otherwise it closes itself when the loan clears.</p>
+      </div>
+      <div class="gc-card" style="padding:13px 15px">
+        <h3 style="font-size:13.5px;font-weight:700;margin:0">What happens next</h3>
+        <div class="ob-final-step"><span class="ob-final-step__n">1</span><div><div class="ob-final-step__t">Today · 14 May 2026</div><div class="ob-final-step__s">Card terminated · Anna sessions paused · sponsor digest paused · DD continues normally</div></div></div>
+        <div class="ob-final-step"><span class="ob-final-step__n">2</span><div><div class="ob-final-step__t">Within 30 minutes</div><div class="ob-final-step__s">Confirmation email · GDPR Art. 20 export queued · sent to sam.k@hotmail.co.uk</div></div></div>
+        <div class="ob-final-step"><span class="ob-final-step__n">3</span><div><div class="ob-final-step__t">Within 1 hour</div><div class="ob-final-step__s">Joanna notified · simple "Sam has closed her account" · she keeps her data export rights too</div></div></div>
+        <div class="ob-final-step"><span class="ob-final-step__n">4</span><div><div class="ob-final-step__t">Each month · 30th</div><div class="ob-final-step__s">£311.20 DD runs · statement emailed · balance falls</div></div></div>
+        <div class="ob-final-step"><span class="ob-final-step__n">5</span><div><div class="ob-final-step__t">Apr 2029 · final payment</div><div class="ob-final-step__s">Balance hits £0 · Article 17 deletion runs · final email · all data wiped (you chose "delete immediately")</div></div></div>
+      </div>
+      <div class="gc-card gc-card--warn">
+        <h3 style="font-size:13px;font-weight:700;margin:0">Your deletion preference · set earlier</h3>
+        <div style="display:flex;align-items:center;gap:9px;font-size:12px;color:var(--text-secondary);padding-top:4px"><span style="width:18px;height:18px;border-radius:50%;background:var(--w-60);color:white;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:700">✓</span><strong style="color:var(--text-primary)">Delete immediately on settlement</strong></div>
+        <div style="font-size:11px;color:var(--text-muted);line-height:1.45;padding-top:2px">Alternates were "delete after 30 days" or "retain anonymised for research". Editable until the moment deletion runs.</div>
+      </div>
+      <div class="gc-card gc-card--anna"><span class="anna-av"><img src="../assets/gc-mark-mono-light.svg" alt=""></span><div><p>"58 days clean and a loan paying itself down — you've already done the work. Wind-down isn't the end of the story · just a different chapter."</p></div></div>
+      <div style="display:flex;gap:7px;flex-direction:column;margin-top:auto">
+        <button class="gc-btn gc-btn--white gc-btn--full" style="background:white;color:var(--p-30)">View loan balance</button>
+        <button class="gc-btn gc-btn--ghost gc-btn--full" onclick="go(0)">Changed my mind · re-open</button>
+      </div>
+      <div class="ob-decision">decisions · <a href="../41-decisions-log.html">GEN-04</a> two-path off-boarding · <a href="../41-decisions-log.html">PR-06</a> profile-scaled cool-off · <a href="../41-decisions-log.html">PR-07</a> Art. 17 surfaced up front</div>
+    </div>`,
+};
+
+let idx = 0;
+function pickReason(el) { el.parentElement.querySelectorAll('.is-on').forEach(s => s.classList.remove('is-on')); el.classList.add('is-on'); }
+function pickOpt(el) { el.parentElement.querySelectorAll('.is-on').forEach(s => s.classList.remove('is-on')); el.classList.add('is-on'); }
+
+function render() {
+  const screen = SCREENS[idx];
+  document.getElementById('stage').innerHTML = `<div class="screen" style="display:flex;flex-direction:column;flex:1;min-height:0">${builders[screen.kind]()}</div>`;
+  document.getElementById('screenId').textContent = screen.id;
+  document.getElementById('screenName').textContent = screen.name;
+  document.getElementById('progressFill').style.width = ((idx + 1) / SCREENS.length * 100) + '%';
+  document.getElementById('navPrev').disabled = idx === 0;
+  document.getElementById('navNext').disabled = idx === SCREENS.length - 1;
+  document.querySelectorAll('.proto-scrubber__item').forEach((el, i) => { el.classList.toggle('is-active', i === idx); if (i === idx) el.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); });
+  document.getElementById('contextBody').innerHTML = CTX[screen.kind] || screen.name;
+}
+function next() { if (idx < SCREENS.length - 1) { idx++; render(); } }
+function prev() { if (idx > 0) { idx--; render(); } }
+function go(i) { idx = i; render(); }
+function buildScrubber() { const nav = document.getElementById('scrubber'); SCREENS.forEach((s, i) => { const btn = document.createElement('button'); btn.className = 'proto-scrubber__item'; btn.innerHTML = `<span class="proto-scrubber__id">${s.id}</span><span class="proto-scrubber__name">${s.name}</span>`; btn.addEventListener('click', () => go(i)); nav.appendChild(btn); }); }
+function initTheme() { const root = document.documentElement; const stored = localStorage.getItem('gc-proto-theme'); const initial = stored || 'dark'; root.setAttribute('data-theme', initial); document.querySelector('.theme-label').textContent = initial === 'dark' ? 'Dark' : 'Light'; document.querySelector('.proto-theme-toggle').addEventListener('click', () => { const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; root.setAttribute('data-theme', next); document.querySelector('.theme-label').textContent = next === 'dark' ? 'Dark' : 'Light'; try { localStorage.setItem('gc-proto-theme', next); } catch(e) {} }); }
+document.getElementById('navPrev').addEventListener('click', prev);
+document.getElementById('navNext').addEventListener('click', next);
+document.addEventListener('keydown', (e) => { if (e.key === 'ArrowRight') next(); if (e.key === 'ArrowLeft') prev(); });
+buildScrubber(); initTheme(); render();
+</script>
+
+</body>
+</html>

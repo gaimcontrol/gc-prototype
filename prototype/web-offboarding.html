@@ -1,0 +1,619 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GaimControl · Web · §16 Off-boarding</title>
+<link rel="icon" href="../assets/gc-favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --p-10:#0B0F1C;--p-20:#161B2D;--p-30:#20273C;--p-40:#354872;--p-50:#4D608C;--p-60:#6B7DA6;--p-90:#DCE2F0;--p-95:#ECF0F9;--p-99:#FAFBFE;--p-100:#FFF;
+  --s-10:#28215A;--s-20:#3E3478;--s-30:#534792;--s-40:#6B5DAC;--s-50:#8576C2;--s-70:#B5ACDF;--s-80:#CFC8EA;--s-90:#E8E4F4;
+  --t-20:#1A6047;--t-30:#1F7058;--t-50:#399971;--t-60:#5BB088;--t-80:#ADDCC2;--t-90:#D5EDDF;
+  --w-30:#6B4500;--w-60:#C28200;--w-80:#FAB44A;--w-90:#FFDFA8;
+  --e-30:#7A1F1F;--e-50:#C73838;--e-80:#F4A4A4;--e-90:#FBD9D9;
+  --n-50:#76798A;--n-80:#C5C8D2;--n-95:#F1F2F5;--nv-80:#C5C9DD;
+}
+[data-theme="dark"] { --bg-base: var(--p-30); --bg-surface: var(--p-20); --bg-surface-2: var(--p-10); --border: rgba(255,255,255,0.08); --text-primary: var(--n-95); --text-secondary: var(--nv-80); --text-muted: rgba(255,255,255,0.4); --accent: var(--s-70); --accent-strong: var(--s-50); --on-accent: #fff; --page-bg: #0a0e1a; --page-fg: var(--n-95); --page-fg-muted: var(--nv-80); --page-card-bg: var(--p-20); --page-divider: rgba(255,255,255,0.06); }
+[data-theme="light"] { --bg-base: var(--p-99); --bg-surface: #fff; --bg-surface-2: var(--p-95); --border: rgba(22,27,45,0.08); --text-primary: var(--p-20); --text-secondary: var(--n-50); --text-muted: var(--n-50); --accent: var(--p-40); --accent-strong: var(--s-40); --on-accent: #fff; --page-bg: var(--p-95); --page-fg: var(--p-20); --page-fg-muted: var(--n-50); --page-card-bg: #fff; --page-divider: rgba(22,27,45,0.08); }
+* { box-sizing: border-box; }
+html, body { background: var(--page-bg); color: var(--page-fg); margin: 0; transition: background-color 220ms ease, color 220ms ease; }
+body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif; font-size: 14px; line-height: 1.5; -webkit-font-smoothing: antialiased; min-height: 100vh; }
+
+.proto-shell { display: grid; grid-template-columns: 280px 1fr; gap: 0; min-height: 100vh; }
+@media (max-width: 1100px) { .proto-shell { grid-template-columns: 1fr; } }
+.proto-sidebar { background: var(--page-card-bg); border-right: 1px solid var(--page-divider); padding: 28px 22px; position: sticky; top: 0; height: 100vh; overflow-y: auto; display: flex; flex-direction: column; gap: 16px; }
+@media (max-width: 1100px) { .proto-sidebar { position: static; height: auto; max-height: 50vh; border-right: none; border-bottom: 1px solid var(--page-divider); } }
+.proto-sidebar__brand { display: flex; align-items: center; gap: 10px; }
+.proto-sidebar__mark { width: 36px; height: 36px; border-radius: 10px; background: var(--p-30); display: inline-flex; align-items: center; justify-content: center; }
+.proto-sidebar__mark img { width: 70%; height: 70%; }
+.proto-sidebar__name { font-weight: 700; font-size: 17px; letter-spacing: -0.01em; }
+.proto-sidebar__pill { display: inline-flex; padding: 3px 9px; border-radius: 999px; background: linear-gradient(120deg, var(--s-50), var(--p-50), var(--t-50)); color: white; font-weight: 700; font-size: 9.5px; font-family: 'JetBrains Mono', monospace; letter-spacing: 0.06em; text-transform: uppercase; }
+.proto-sidebar__back { display: inline-flex; align-items: center; gap: 6px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--page-fg-muted); text-decoration: none; }
+.proto-section-title { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--page-fg-muted); margin: 12px 0 6px; }
+.proto-scrubber { display: flex; flex-direction: column; gap: 2px; }
+.proto-scrubber__item { display: grid; grid-template-columns: 44px 1fr; gap: 8px; align-items: center; padding: 7px 10px; border-radius: 8px; cursor: pointer; border: none; background: transparent; color: inherit; font-family: inherit; text-align: left; }
+.proto-scrubber__item:hover { background: rgba(127,127,127,0.08); }
+.proto-scrubber__item.is-active { background: var(--accent-strong); color: var(--on-accent); }
+.proto-scrubber__item.is-active .proto-scrubber__id { color: rgba(255,255,255,0.85); }
+.proto-scrubber__id { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; color: var(--page-fg-muted); letter-spacing: 0.06em; }
+.proto-scrubber__name { font-size: 12.5px; font-weight: 500; }
+.proto-sidebar__footer { margin-top: auto; padding-top: 16px; border-top: 1px solid var(--page-divider); font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--page-fg-muted); }
+.proto-sidebar__footer a { color: var(--page-fg-muted); text-decoration: none; border-bottom: 1px dotted currentColor; }
+.proto-theme-toggle { display: inline-flex; align-items: center; gap: 8px; padding: 7px 12px; border-radius: 8px; background: var(--bg-surface-2); border: 1px solid var(--border); color: var(--page-fg-muted); cursor: pointer; font-family: 'JetBrains Mono', monospace; font-size: 11px; align-self: flex-start; }
+.proto-theme-toggle svg { width: 12px; height: 12px; }
+[data-theme="dark"] .proto-theme-toggle .icon-moon { display: none; }
+[data-theme="light"] .proto-theme-toggle .icon-sun { display: none; }
+
+.proto-stage { display: flex; flex-direction: column; align-items: center; padding: 32px 24px 64px; gap: 18px; }
+.proto-modebar { display: flex; align-items: center; gap: 10px; padding: 10px 16px; background: var(--page-card-bg); border: 1px solid var(--page-divider); border-radius: 12px; font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: var(--page-fg-muted); flex-wrap: wrap; justify-content: center; }
+.proto-modebar__pill { display: inline-flex; padding: 3px 9px; border-radius: 999px; background: var(--bg-surface-2); }
+.proto-modebar__id { color: var(--page-fg); font-weight: 700; letter-spacing: 0.06em; }
+.proto-modebar__bar { width: 100px; height: 4px; border-radius: 4px; background: var(--bg-surface-2); position: relative; overflow: hidden; }
+.proto-modebar__bar__fill { position: absolute; left: 0; top: 0; bottom: 0; background: linear-gradient(90deg, var(--s-50), var(--t-50)); transition: width 240ms ease; }
+.proto-arrows { display: flex; align-items: center; gap: 8px; }
+.proto-arrow { width: 36px; height: 36px; border-radius: 10px; background: var(--page-card-bg); border: 1px solid var(--page-divider); color: var(--page-fg-muted); display: inline-flex; align-items: center; justify-content: center; cursor: pointer; }
+.proto-arrow:hover { background: var(--bg-surface-2); color: var(--page-fg); }
+.proto-arrow:disabled { opacity: 0.3; cursor: not-allowed; }
+.proto-arrow svg { width: 18px; height: 18px; }
+
+.browser { width: 100%; max-width: 1380px; background: var(--bg-base); border-radius: 18px; overflow: hidden; border: 1px solid var(--border); box-shadow: 0 24px 60px -20px rgba(0,0,0,0.45), 0 8px 24px -12px rgba(0,0,0,0.25); }
+[data-theme="light"] .browser { box-shadow: 0 24px 60px -20px rgba(22,27,45,0.18), 0 8px 24px -12px rgba(22,27,45,0.08); }
+.browser__chrome { display: flex; align-items: center; gap: 14px; padding: 12px 16px; background: var(--p-20); border-bottom: 1px solid var(--border); }
+[data-theme="light"] .browser__chrome { background: var(--n-95); }
+.browser__dots { display: inline-flex; gap: 7px; flex-shrink: 0; }
+.browser__dot { width: 11px; height: 11px; border-radius: 50%; }
+.browser__dot:nth-child(1) { background: #FF5F57; } .browser__dot:nth-child(2) { background: #FEBC2E; } .browser__dot:nth-child(3) { background: #28C840; }
+.browser__url { flex: 1; background: var(--bg-base); border: 1px solid var(--border); border-radius: 7px; padding: 6px 14px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--text-secondary); text-align: center; display: flex; align-items: center; justify-content: center; gap: 8px; }
+.browser__url svg { width: 12px; height: 12px; opacity: 0.7; flex-shrink: 0; }
+.browser__viewport { background: var(--bg-base); min-height: 820px; max-height: 820px; position: relative; color: var(--text-primary); display: grid; grid-template-columns: 240px 1fr; }
+
+.appnav { background: var(--bg-surface); border-right: 1px solid var(--border); padding: 20px 16px; display: flex; flex-direction: column; gap: 16px; }
+[data-theme="light"] .appnav { background: var(--bg-surface-2); border-right: 1px solid rgba(22,27,45,0.12); }
+[data-theme="light"] .appnav__item { color: var(--p-40); }
+[data-theme="light"] .appnav__subitem { color: var(--p-50); }
+[data-theme="light"] .appnav__user-sub { color: var(--p-50); }
+.appnav__brand { display: flex; align-items: center; gap: 10px; padding: 4px 4px 12px; border-bottom: 1px solid var(--border); margin-bottom: 4px; }
+.appnav__mark { width: 32px; height: 32px; border-radius: 9px; background: var(--p-30); display: inline-flex; align-items: center; justify-content: center; }
+.appnav__mark img { width: 70%; height: 70%; }
+.appnav__name { font-weight: 700; font-size: 15px; letter-spacing: -0.01em; }
+.appnav__user { display: flex; align-items: center; gap: 10px; padding: 8px 8px; border-radius: 10px; background: var(--bg-base); }
+.appnav__avatar { width: 32px; height: 32px; border-radius: 50%; background: var(--accent-strong); color: white; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; font-size: 13px; }
+.appnav__user-name { font-size: 13px; font-weight: 600; }
+.appnav__user-sub { font-size: 11px; color: var(--text-secondary); }
+.appnav__list { display: flex; flex-direction: column; gap: 2px; }
+.appnav__item { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 10px; cursor: pointer; color: var(--text-secondary); text-decoration: none; font-size: 13.5px; font-weight: 500; }
+.appnav__item:hover { background: var(--bg-base); color: var(--text-primary); }
+.appnav__item.is-on { background: var(--accent-strong); color: var(--on-accent); font-weight: 600; }
+.appnav__item.is-disabled { opacity: 0.35; cursor: not-allowed; }
+.appnav__item svg { width: 18px; height: 18px; flex-shrink: 0; }
+.appnav__subnav { padding: 4px 0 4px 28px; display: flex; flex-direction: column; gap: 1px; border-left: 1px solid var(--border); margin: 2px 0 2px 22px; }
+.appnav__subitem { padding: 7px 12px; border-radius: 8px; font-size: 12.5px; font-weight: 500; color: var(--text-secondary); cursor: pointer; }
+.appnav__subitem.is-on { background: var(--bg-base); color: var(--accent); font-weight: 600; }
+.appnav__help { margin-top: auto; padding: 14px; border-radius: 12px; background: var(--bg-base); border: 1px solid var(--border); }
+
+.main { padding: 28px 36px 40px; overflow-y: auto; max-height: 820px; }
+.main::-webkit-scrollbar { width: 6px; }
+.main::-webkit-scrollbar-thumb { background: rgba(127,127,127,0.2); border-radius: 6px; }
+.main__head { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; margin-bottom: 22px; flex-wrap: wrap; }
+.main__title { font-size: 28px; font-weight: 800; letter-spacing: -0.02em; margin: 0; }
+.main__sub { font-size: 13.5px; color: var(--text-secondary); margin: 4px 0 0; max-width: 70ch; }
+
+.gc-card { padding: 20px; background: var(--bg-surface); border: 1px solid var(--border); border-radius: 16px; display: flex; flex-direction: column; gap: 12px; }
+.gc-card--anna { background: linear-gradient(135deg, rgba(133,118,194,0.12), rgba(83,71,146,0.06)); border-color: rgba(133,118,194,0.25); flex-direction: row; align-items: flex-start; gap: 14px; padding: 16px 20px; }
+.gc-card--anna .anna-av { width: 38px; height: 38px; border-radius: 50%; background: var(--p-30); display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.gc-card--anna .anna-av img { width: 60%; height: 60%; }
+.gc-card--anna .anna-name { font-size: 13px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 2px; }
+.gc-card--anna strong { display: block; font-size: 14px; margin-bottom: 4px; }
+.gc-card--anna p { font-size: 13.5px; line-height: 1.55; margin: 0; }
+.gc-card--danger { background: var(--bg-surface-2); border-left: 4px solid var(--e-50); border-radius: 6px 16px 16px 6px; padding: 22px 24px; }
+.gc-card--warn { background: var(--bg-surface-2); border-left: 4px solid var(--w-60); border-radius: 6px 16px 16px 6px; padding: 22px 24px; }
+.gc-card--success { background: linear-gradient(135deg, var(--t-50), var(--t-30)); color: white; border-color: transparent; padding: 28px; }
+
+.row-2 { display: grid; grid-template-columns: 2fr 1fr; gap: 16px; align-items: start; }
+.row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; align-items: stretch; }
+.stack { display: flex; flex-direction: column; gap: 16px; }
+@media (max-width: 1000px) { .row-2 { grid-template-columns: 1fr; } .row-3 { grid-template-columns: 1fr; } }
+
+/* OB1 reason */
+.ob-reason { display: grid; grid-template-columns: 28px 1fr; gap: 14px; align-items: center; padding: 16px 18px; background: var(--bg-base); border: 1px solid var(--border); border-radius: 12px; cursor: pointer; font-family: inherit; color: inherit; text-align: left; width: 100%; }
+.ob-reason:hover { border-color: var(--accent); }
+.ob-reason.is-on { background: var(--accent-strong); color: white; border-color: transparent; }
+.ob-reason__rdo { width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid var(--text-muted); flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center; }
+.ob-reason.is-on .ob-reason__rdo { border-color: white; }
+.ob-reason.is-on .ob-reason__rdo::after { content: ''; width: 12px; height: 12px; border-radius: 50%; background: white; }
+.ob-reason__t { font-size: 14.5px; font-weight: 700; }
+.ob-reason__s { font-size: 12.5px; opacity: 0.78; margin-top: 2px; }
+
+/* state check */
+.ob-state { display: grid; grid-template-columns: 32px 1fr auto; gap: 12px; align-items: center; padding: 12px 0; border-top: 1px solid var(--border); }
+.ob-state:first-of-type { border-top: none; padding-top: 0; }
+.ob-state__ic { width: 32px; height: 32px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.ob-state__ic--loan { background: var(--w-30); color: var(--w-80); }
+[data-theme="light"] .ob-state__ic--loan { background: var(--w-90); color: var(--w-30); }
+.ob-state__ic--ok { background: var(--t-20); color: var(--t-80); }
+[data-theme="light"] .ob-state__ic--ok { background: var(--t-90); color: var(--t-30); }
+.ob-state__ic svg { width: 14px; height: 14px; }
+.ob-state__t { font-size: 13.5px; font-weight: 600; }
+.ob-state__s { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
+.ob-state__pill { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; font-weight: 700; padding: 3px 9px; border-radius: 999px; letter-spacing: 0.04em; }
+.ob-state__pill--path { background: var(--accent-strong); color: white; }
+
+/* OB2 consequences */
+.ob-conseq { display: grid; grid-template-columns: 32px 1fr; gap: 14px; align-items: flex-start; padding: 12px 0; border-top: 1px solid var(--border); }
+.ob-conseq:first-of-type { border-top: none; padding-top: 0; }
+.ob-conseq__ic { width: 32px; height: 32px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+.ob-conseq__ic--keep { background: var(--t-20); color: var(--t-80); }
+[data-theme="light"] .ob-conseq__ic--keep { background: var(--t-90); color: var(--t-30); }
+.ob-conseq__ic--lose { background: var(--e-30); color: var(--e-90); }
+[data-theme="light"] .ob-conseq__ic--lose { background: var(--e-90); color: var(--e-30); }
+.ob-conseq__ic svg { width: 14px; height: 14px; }
+.ob-conseq__t { font-size: 14px; font-weight: 600; }
+.ob-conseq__s { font-size: 12.5px; color: var(--text-secondary); margin-top: 2px; line-height: 1.5; }
+
+/* OB3a path A options */
+.ob-opt { padding: 22px; background: var(--bg-base); border: 1px solid var(--border); border-radius: 14px; cursor: pointer; font-family: inherit; color: inherit; text-align: left; width: 100%; display: flex; flex-direction: column; gap: 8px; }
+.ob-opt:hover { border-color: var(--accent); }
+.ob-opt.is-on { border-color: var(--accent-strong); box-shadow: 0 0 0 3px rgba(133,118,194,0.18); }
+.ob-opt__head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.ob-opt__pill { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; padding: 3px 10px; border-radius: 999px; background: var(--accent-strong); color: white; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; }
+.ob-opt__t { font-size: 17px; font-weight: 800; letter-spacing: -0.01em; }
+.ob-opt__s { font-size: 13px; color: var(--text-secondary); line-height: 1.55; margin: 0; }
+.ob-opt__meta { display: flex; gap: 18px; margin-top: 4px; font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: var(--text-muted); }
+.ob-opt__meta strong { color: var(--text-primary); font-weight: 700; }
+
+/* OB3b profile cool-off */
+.ob-prof-grid { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr; gap: 12px; }
+@media (max-width: 1200px) { .ob-prof-grid { grid-template-columns: 1fr 1fr 1fr; } }
+@media (max-width: 700px) { .ob-prof-grid { grid-template-columns: 1fr 1fr; } }
+.ob-prof-tile { padding: 16px 18px; background: var(--bg-base); border: 1px solid var(--border); border-radius: 14px; display: flex; flex-direction: column; gap: 6px; }
+.ob-prof-tile--mine { border-color: var(--accent-strong); box-shadow: 0 0 0 3px rgba(133,118,194,0.18); }
+.ob-prof-tile__pill { font-family: 'JetBrains Mono', monospace; font-size: 10px; padding: 3px 9px; border-radius: 999px; background: var(--bg-surface-2); color: var(--text-muted); font-weight: 700; letter-spacing: 0.05em; align-self: flex-start; }
+.ob-prof-tile--mine .ob-prof-tile__pill { background: var(--accent-strong); color: white; }
+.ob-prof-tile__n { font-size: 32px; font-weight: 800; letter-spacing: -0.02em; line-height: 1; margin-top: 4px; }
+.ob-prof-tile__d { font-size: 11px; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; text-transform: uppercase; letter-spacing: 0.05em; }
+.ob-prof-tile__lbl { font-size: 12px; color: var(--text-secondary); margin-top: 2px; line-height: 1.45; }
+
+/* OB5 closed final */
+.ob-final-hero { padding: 36px 40px; display: flex; align-items: center; gap: 22px; }
+.ob-final-hero__ic { width: 64px; height: 64px; border-radius: 50%; background: rgba(255,255,255,0.18); display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.ob-final-hero__ic svg { width: 32px; height: 32px; }
+.ob-final-hero h2 { font-size: 30px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; margin: 0; }
+.ob-final-hero p { font-size: 15px; line-height: 1.55; margin: 6px 0 0; opacity: 0.92; max-width: 60ch; }
+
+.ob-final-step { display: grid; grid-template-columns: 40px 1fr; gap: 14px; align-items: flex-start; padding: 14px 0; border-top: 1px solid var(--border); }
+.ob-final-step:first-of-type { border-top: none; padding-top: 0; }
+.ob-final-step__n { width: 40px; height: 40px; border-radius: 50%; background: var(--t-20); color: var(--t-80); display: inline-flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 14px; flex-shrink: 0; }
+[data-theme="light"] .ob-final-step__n { background: var(--t-90); color: var(--t-30); }
+.ob-final-step__t { font-size: 14.5px; font-weight: 700; }
+.ob-final-step__when { font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: var(--text-muted); margin-bottom: 3px; letter-spacing: 0.04em; text-transform: uppercase; }
+.ob-final-step__s { font-size: 12.5px; color: var(--text-secondary); margin-top: 3px; line-height: 1.5; }
+
+.gc-btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 12px 20px; border-radius: 12px; font-family: inherit; font-size: 14px; font-weight: 600; cursor: pointer; border: 1px solid transparent; text-decoration: none; }
+.gc-btn--primary { background: var(--accent-strong); color: var(--on-accent); }
+.gc-btn--primary:hover { background: var(--s-40); }
+.gc-btn--ghost { background: transparent; color: var(--text-primary); border-color: var(--border); }
+.gc-btn--danger { background: var(--e-50); color: white; }
+.gc-btn--white { background: white; color: var(--p-30); }
+.gc-btn--lg { padding: 14px 26px; font-size: 15px; border-radius: 14px; }
+.gc-btn--full { width: 100%; }
+
+.ob-decision { font-size: 12px; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; padding: 12px 16px; background: var(--bg-surface-2); border-radius: 10px; line-height: 1.5; }
+.ob-decision a { color: var(--accent); text-decoration: none; }
+
+.proto-context { width: 100%; max-width: 1380px; padding: 16px 20px; background: var(--page-card-bg); border: 1px solid var(--page-divider); border-radius: 12px; font-size: 13px; color: var(--page-fg-muted); line-height: 1.55; }
+.proto-context strong { color: var(--page-fg); }
+.proto-context a { color: var(--page-accent, var(--s-70)); text-decoration: none; border-bottom: 1px dotted currentColor; }
+.proto-context__head { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; color: var(--page-fg); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px; }
+
+.screen { animation: fade-in 220ms ease; }
+@keyframes fade-in { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+</style>
+<script src="flow-chain.js" defer></script>
+</head>
+<body>
+
+<div class="proto-shell">
+
+  <aside class="proto-sidebar">
+    <div class="proto-sidebar__brand">
+      <span class="proto-sidebar__mark"><img src="../assets/gc-mark-mono-light.svg" alt=""></span>
+      <span>
+        <div class="proto-sidebar__name">GaimControl</div>
+        <span class="proto-sidebar__pill">web</span>
+      </span>
+    </div>
+    <a class="proto-sidebar__back" href="index.html">← prototype index</a>
+    <button class="proto-theme-toggle" type="button" aria-label="Toggle theme">
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+      <span class="theme-label">Dark</span>
+    </button>
+    <div class="proto-section-title">§16 · OB1 – OB5</div>
+    <nav class="proto-scrubber" id="scrubber"></nav>
+    <div class="proto-sidebar__footer">Source: <a href="../16-offboarding.html">16-offboarding</a><br>Decisions: GEN-04 · PR-06 · PR-07</div>
+  </aside>
+
+  <main class="proto-stage">
+
+    <div class="proto-modebar">
+      <span>Screen <span class="proto-modebar__id" id="screenId">OB1</span></span>
+      <span class="proto-modebar__pill" id="screenName">Reason + state check</span>
+      <div class="proto-modebar__bar"><div class="proto-modebar__bar__fill" id="progressFill" style="width:20%"></div></div>
+      <div class="proto-arrows">
+        <button class="proto-arrow" id="navPrev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+        <button class="proto-arrow" id="navNext"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
+      </div>
+    </div>
+
+    <div class="browser">
+      <div class="browser__chrome">
+        <span class="browser__dots"><span class="browser__dot"></span><span class="browser__dot"></span><span class="browser__dot"></span></span>
+        <span class="browser__url">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          <span id="browserUrl">app.gaimcontrol.com/profile/close</span>
+        </span>
+      </div>
+      <div class="browser__viewport" id="viewport"></div>
+    </div>
+
+    <div class="proto-context" id="contextPanel">
+      <div class="proto-context__head">Screen context</div>
+      <div id="contextBody"></div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+const SCREENS = [
+  { id: 'OB1', name: 'Reason + state check', kind: 'ob1', url: '/profile/close' },
+  { id: 'OB2', name: 'Consequences · Article 17 up front', kind: 'ob2', url: '/profile/close/consequences' },
+  { id: 'OB3a', name: 'Loan path · repayment options', kind: 'ob3a', url: '/profile/close/loan' },
+  { id: 'OB3b', name: 'Profile path · cool-off start', kind: 'ob3b', url: '/profile/close/cool-off' },
+  { id: 'OB5', name: 'Final · closed + deletion queued', kind: 'ob5', url: '/profile/close/done' },
+];
+
+const CTX = {
+  ob1: '<strong>OB1 Reason + state check.</strong> Single screen with reason picker (4 options + free text). Three entry points all land here per §16.1: §12 Profile "Close my account" tile · §11 safeguarding self-flag with "I want to leave" reason code · marketing-site contact-form with signed token. Backend state check determines path: active loan → Path A · no active loan → Path B.',
+  ob2: '<strong>OB2 Consequences.</strong> Per <a href="../41-decisions-log.html">PR-07</a> the Article 17 deletion constraint ("full deletion requires £0 outstanding") is surfaced <em>before</em> any commit — old flow buried it mid-cascade and people were surprised. Honest "what stops, what keeps going" breakdown.',
+  ob3a: '<strong>OB3a Loan path · repayment options.</strong> Three options: (a) settle in full now · payoff calculator + DD handoff · same-day close; (b) wind-down account · banking surface becomes balance + schedule only · auto-close on settlement; (c) talk to ops · routes to admin queue for tailored plan, hardship, dispute.',
+  ob3b: '<strong>OB3b Profile path · cool-off.</strong> Per <a href="../41-decisions-log.html">PR-06</a> length scales by profile: P1 Recreational 30d · P3 Mood-influenced 21d · P4 Habitual 14d · P5 Recovering 14d · P2 Compulsive 7d. Counterintuitive — shorter for higher-risk because longer windows risk paralysis. Card stays functional during cool-off; cancel close any time.',
+  ob5: '<strong>OB5 Final · closed + deletion.</strong> Combined end-state. Path A: account suspended, deletion queued for balance-clear (Apr 2029 on current schedule). Path B: card terminated immediately, Article 17 deletion runs per pre-stated preference (immediate · 30-day · anonymised retention). Final email + audit log entry retained.',
+};
+
+const APPNAV = (subOn) => `
+  <aside class="appnav">
+    <div class="appnav__brand">
+      <span class="appnav__mark"><img src="../assets/gc-mark-mono-light.svg" alt=""></span>
+      <span class="appnav__name">GaimControl</span>
+    </div>
+    <div class="appnav__user">
+      <span class="appnav__avatar">S</span>
+      <div><div class="appnav__user-name">Sam Kennedy</div><div class="appnav__user-sub">Habitual · Day 58</div></div>
+    </div>
+    <nav class="appnav__list">
+      <a class="appnav__item is-disabled"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>Home</a>
+      <a class="appnav__item is-disabled"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Banking</a>
+      <a class="appnav__item is-disabled"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg>Anna</a>
+      <a class="appnav__item is-disabled"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m7 14 4-4 4 4 5-5"/></svg>Activity</a>
+      <a class="appnav__item is-on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>Profile</a>
+      <div class="appnav__subnav">
+        <a class="appnav__subitem">Settings home</a>
+        <a class="appnav__subitem">Personal info</a>
+        <a class="appnav__subitem">Notifications</a>
+        <a class="appnav__subitem">Sponsor</a>
+        <a class="appnav__subitem">Download data</a>
+        <a class="appnav__subitem is-on">Close account</a>
+      </div>
+    </nav>
+    <div class="appnav__help">
+      <div style="font-size:12px;font-weight:700;margin-bottom:3px">Need help?</div>
+      <div style="font-size:11px;color:var(--text-secondary);line-height:1.4">Anna's always there. Crisis line is one tap away.</div>
+    </div>
+  </aside>`;
+
+const ANNA = (title, body) => `
+  <div class="gc-card gc-card--anna">
+    <span class="anna-av"><img src="../assets/gc-mark-mono-light.svg" alt=""></span>
+    <div><div class="anna-name">Anna</div>${title ? `<strong>${title}</strong>` : ''}<p>${body}</p></div>
+  </div>`;
+
+const PAGE = (title, sub, content) => `
+  <div class="screen" style="display:contents">
+    ${APPNAV()}
+    <div class="main">
+      <div class="main__head"><div><h1 class="main__title">${title}</h1>${sub ? `<p class="main__sub">${sub}</p>` : ''}</div></div>
+      ${content}
+    </div>
+  </div>`;
+
+const builders = {
+  ob1: () => PAGE('Close my account', 'Honest answers help us learn — not gatekeep. Whatever you pick, the close button still works.', `
+    <div class="row-2">
+      <div class="stack">
+        <div class="gc-card">
+          <h3 style="font-size:16px;font-weight:700;margin:0">Why are you leaving?</h3>
+          <button class="ob-reason" onclick="pickReason(this)"><span class="ob-reason__rdo"></span><div><div class="ob-reason__t">I'm done · I don't need it anymore</div><div class="ob-reason__s">Recovery has worked · ready for life without the rails</div></div></button>
+          <button class="ob-reason is-on" onclick="pickReason(this)"><span class="ob-reason__rdo"></span><div><div class="ob-reason__t">Something here isn't working for me</div><div class="ob-reason__s">Product fit · cost · friction · the system feels wrong</div></div></button>
+          <button class="ob-reason" onclick="pickReason(this)"><span class="ob-reason__rdo"></span><div><div class="ob-reason__t">I'm switching to something else</div><div class="ob-reason__s">Another service · clinical programme · self-managed</div></div></button>
+          <button class="ob-reason" onclick="pickReason(this)"><span class="ob-reason__rdo"></span><div><div class="ob-reason__t">I'd rather not say</div><div class="ob-reason__s">All good · we still close it</div></div></button>
+        </div>
+        <div class="gc-card">
+          <h3 style="font-size:14px;font-weight:700;margin:0">Anything you'd like to add? (optional)</h3>
+          <textarea style="padding:12px 14px;background:var(--bg-base);border:1px solid var(--border);border-radius:11px;font-family:inherit;font-size:13.5px;color:var(--text-primary);outline:none;resize:vertical;min-height:90px;line-height:1.55;width:100%"></textarea>
+          <p style="font-size:11.5px;color:var(--text-muted);margin:0">Goes to the off-boarding survey — read by humans on the product team, not used to slow you down.</p>
+        </div>
+      </div>
+      <div class="stack">
+        <div class="gc-card gc-card--warn">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;color:var(--w-80);align-self:flex-start">State check · before continue</span>
+          <h3 style="font-size:15px;font-weight:700;margin:4px 0 4px">Your account today</h3>
+          <div class="ob-state">
+            <span class="ob-state__ic ob-state__ic--loan"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 1 0 0 7h5a3.5 3.5 0 1 1 0 7H6"/></svg></span>
+            <div><div class="ob-state__t">Active loan · £8,089 outstanding</div><div class="ob-state__s">LO-289-A1F4 · 35 payments to go</div></div>
+            <span class="ob-state__pill ob-state__pill--path">Path A</span>
+          </div>
+          <div class="ob-state">
+            <span class="ob-state__ic ob-state__ic--ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg></span>
+            <div><div class="ob-state__t">No active Relapse Hold</div><div class="ob-state__s">Last Hold closed 02 May · 12 days clean since</div></div>
+          </div>
+          <div class="ob-state">
+            <span class="ob-state__ic ob-state__ic--ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg></span>
+            <div><div class="ob-state__t">No pending sponsor co-signs</div><div class="ob-state__s">Joanna's queue is clear</div></div>
+          </div>
+        </div>
+        ${ANNA("Leaving isn't a failure.", "Some of the best outcomes here look like graduation. Let's just make sure you know what closing means before you commit.")}
+        <div style="display:flex;gap:10px">
+          <button class="gc-btn gc-btn--ghost gc-btn--full">Cancel</button>
+          <button class="gc-btn gc-btn--primary gc-btn--full" onclick="next()">Continue →</button>
+        </div>
+      </div>
+    </div>`),
+
+  ob2: () => PAGE('What closing means', 'Honest "what you keep, what you lose" — surfaced up front so nothing surprises you in the cascade.', `
+    <div class="stack">
+      <div class="gc-card gc-card--danger">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;color:var(--e-80);align-self:flex-start">Article 17 · surfaced up front (PR-07)</span>
+        <h2 style="font-size:24px;font-weight:800;letter-spacing:-0.02em;line-height:1.2;margin:6px 0 0">Right to erasure needs £0 outstanding.</h2>
+        <p style="font-size:14px;color:var(--text-secondary);line-height:1.55;margin:0;max-width:65ch">You owe <strong style="color:var(--text-primary)">£8,089</strong> on loan LO-289-A1F4. FCA + AML record-keeping requires us to hold the loan record until it's settled. Closing today suspends the account; full deletion runs automatically when the balance clears. <strong style="color:var(--text-primary)">This used to be buried in step 4 — now it's step 2.</strong></p>
+      </div>
+      <div class="row-2">
+        <div class="gc-card">
+          <h3 style="font-size:17px;font-weight:700;margin:0 0 4px">What stops · today</h3>
+          <div class="ob-conseq"><span class="ob-conseq__ic ob-conseq__ic--lose"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6 6 18M6 6l12 12"/></svg></span><div><div class="ob-conseq__t">Anna · daily check-ins · CBT modules</div><div class="ob-conseq__s">Sessions paused immediately. History preserved if you re-enrol within 90 days; permanent wipe after that.</div></div></div>
+          <div class="ob-conseq"><span class="ob-conseq__ic ob-conseq__ic--lose"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6 6 18M6 6l12 12"/></svg></span><div><div class="ob-conseq__t">Card · MCC blocks · spending controls</div><div class="ob-conseq__s">Card terminated · cannot be re-enabled. Safe-spend rails (gambling MCC block, alcohol block, channel limits) all gone.</div></div></div>
+          <div class="ob-conseq"><span class="ob-conseq__ic ob-conseq__ic--lose"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6 6 18M6 6l12 12"/></svg></span><div><div class="ob-conseq__t">Sponsor digests to Joanna</div><div class="ob-conseq__s">She gets a final "Sam has closed her account" note · then nothing further. Joanna's own data is retained per her own export rights.</div></div></div>
+          <div class="ob-conseq"><span class="ob-conseq__ic ob-conseq__ic--lose"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6 6 18M6 6l12 12"/></svg></span><div><div class="ob-conseq__t">Sponsor authorisations (co-sign queue)</div><div class="ob-conseq__s">No future transfers above threshold · the rail itself goes</div></div></div>
+        </div>
+        <div class="gc-card">
+          <h3 style="font-size:17px;font-weight:700;margin:0 0 4px">What keeps going</h3>
+          <div class="ob-conseq"><span class="ob-conseq__ic ob-conseq__ic--keep"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="ob-conseq__t">Direct debit on the loan</div><div class="ob-conseq__s">£311.20 / month · same date · no fees · runs until balance clears</div></div></div>
+          <div class="ob-conseq"><span class="ob-conseq__ic ob-conseq__ic--keep"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="ob-conseq__t">Monthly loan statements</div><div class="ob-conseq__s">Email-only · balance + paid + remaining</div></div></div>
+          <div class="ob-conseq"><span class="ob-conseq__ic ob-conseq__ic--keep"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="ob-conseq__t">Crisis line access · §11</div><div class="ob-conseq__s">Help home stays available · phone numbers + helplines still reachable from web</div></div></div>
+          <div class="ob-conseq"><span class="ob-conseq__ic ob-conseq__ic--keep"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="ob-conseq__t">Your GDPR Article 20 export rights</div><div class="ob-conseq__s">We send the ZIP free during close · you can request again any time before deletion</div></div></div>
+        </div>
+      </div>
+      <div class="gc-card gc-card--warn">
+        <h3 style="font-size:16px;font-weight:700;margin:0">When deletion actually happens</h3>
+        <div class="row-3">
+          <div style="padding:14px;background:var(--bg-base);border-radius:12px"><div style="font-size:11px;font-family:'JetBrains Mono',monospace;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em">Today</div><div style="font-size:15px;font-weight:700;margin-top:3px">Account suspended</div><div style="font-size:12px;color:var(--text-secondary);margin-top:3px;line-height:1.45">Recovery layer turned off · DD continues · email confirmation</div></div>
+          <div style="padding:14px;background:var(--bg-base);border-radius:12px"><div style="font-size:11px;font-family:'JetBrains Mono',monospace;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em">When £0</div><div style="font-size:15px;font-weight:700;margin-top:3px">Article 17 runs</div><div style="font-size:12px;color:var(--text-secondary);margin-top:3px;line-height:1.45">Auto-deletion per your stated preference · final email · audit log entry kept</div></div>
+          <div style="padding:14px;background:var(--bg-base);border-radius:12px"><div style="font-size:11px;font-family:'JetBrains Mono',monospace;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em">After 90 days</div><div style="font-size:15px;font-weight:700;margin-top:3px">Profile cache cleared</div><div style="font-size:12px;color:var(--text-secondary);margin-top:3px;line-height:1.45">If no re-enrol · 90-day grace lets you come back without re-doing onboarding</div></div>
+        </div>
+      </div>
+      <div style="display:flex;gap:10px;justify-content:flex-end">
+        <button class="gc-btn gc-btn--ghost gc-btn--lg" onclick="prev()">Back · reconsider</button>
+        <button class="gc-btn gc-btn--danger gc-btn--lg" onclick="next()">I understand · continue to options</button>
+      </div>
+    </div>`),
+
+  ob3a: () => PAGE('How do you want to handle £8,089?', 'Path A · existing-loan path. Three options · no fees on any of them.', `
+    <div class="stack">
+      <div class="row-3">
+        <button class="ob-opt" onclick="pickOpt(this)">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-muted);letter-spacing:0.05em;text-transform:uppercase">Option 1</span>
+          <div class="ob-opt__head"><span class="ob-opt__t">Settle in full now</span></div>
+          <p class="ob-opt__s">One-off payment of £8,089. Routes to payoff calculator + DD handoff. Account closes today; Article 17 deletion runs immediately. Cleanest exit.</p>
+          <div class="ob-opt__meta"><span><strong>~10 min</strong> · to settle</span><span><strong>Today</strong> · closed</span></div>
+        </button>
+        <button class="ob-opt is-on" onclick="pickOpt(this)">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-muted);letter-spacing:0.05em;text-transform:uppercase">Option 2</span>
+          <div class="ob-opt__head"><span class="ob-opt__pill">Recommended</span><span class="ob-opt__t">Wind-down account</span></div>
+          <p class="ob-opt__s">Card terminated. Banking surface replaced with balance + schedule + "close fully when £0" banner. Sponsor suspended. Anna deactivated. DD keeps running. <strong>You can re-open if you change your mind.</strong></p>
+          <div class="ob-opt__meta"><span><strong>35 mo</strong> · until £0</span><span><strong>Apr 2029</strong> · auto-deletion</span></div>
+        </button>
+        <button class="ob-opt" onclick="pickOpt(this)">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-muted);letter-spacing:0.05em;text-transform:uppercase">Option 3</span>
+          <div class="ob-opt__head"><span class="ob-opt__t">Talk to a human · ops team</span></div>
+          <p class="ob-opt__s">If neither option fits — tailored plan, hardship, dispute. Routes to admin queue (§13). Response within 1 working day. Account stays open while you wait.</p>
+          <div class="ob-opt__meta"><span><strong>~1 day</strong> · response</span><span><strong>No</strong> · commitment</span></div>
+        </button>
+      </div>
+      <div class="row-2">
+        <div class="gc-card">
+          <h3 style="font-size:16px;font-weight:700;margin:0 0 4px">Wind-down account · what it looks like</h3>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;padding-top:6px">
+            <div style="padding:12px 14px;background:var(--bg-base);border-radius:11px"><div style="font-size:11px;font-family:'JetBrains Mono',monospace;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em">Banking surface</div><div style="font-size:13px;font-weight:600;margin-top:3px">Balance · schedule · next due · "close fully when £0" banner</div></div>
+            <div style="padding:12px 14px;background:var(--bg-base);border-radius:11px"><div style="font-size:11px;font-family:'JetBrains Mono',monospace;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em">Card</div><div style="font-size:13px;font-weight:600;margin-top:3px">Terminated · cannot spend · cannot be re-enabled</div></div>
+            <div style="padding:12px 14px;background:var(--bg-base);border-radius:11px"><div style="font-size:11px;font-family:'JetBrains Mono',monospace;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em">Statements</div><div style="font-size:13px;font-weight:600;margin-top:3px">Monthly · email-only · still downloadable</div></div>
+            <div style="padding:12px 14px;background:var(--bg-base);border-radius:11px"><div style="font-size:11px;font-family:'JetBrains Mono',monospace;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em">Re-open</div><div style="font-size:13px;font-weight:600;margin-top:3px">Contact ops · light KYC re-run · keeps repayment history</div></div>
+          </div>
+        </div>
+        <div class="stack">
+          ${ANNA("Wind-down is the gentlest exit.", "It keeps the rails on the loan while letting you out of the recovery layer. Most people who reach this screen pick option 2 — it's reversible and there's no fee.")}
+          <button class="gc-btn gc-btn--danger gc-btn--lg gc-btn--full" onclick="next()">Start wind-down · option 2</button>
+          <button class="gc-btn gc-btn--ghost gc-btn--full" onclick="prev()">Back</button>
+        </div>
+      </div>
+    </div>`),
+
+  ob3b: () => PAGE('Cool-off · then it\'s closed', 'Path B · profile-based path for users with no active loan. Length scales by profile per PR-06.', `
+    <div class="stack">
+      <div class="gc-card gc-card--warn">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;color:var(--w-80);align-self:flex-start">Counterintuitive · explained</span>
+        <h3 style="font-size:18px;font-weight:700;margin:4px 0 0">Recreational users get the longest cool-off. Compulsive get the shortest.</h3>
+        <p style="font-size:13px;color:var(--text-secondary);line-height:1.55;margin:0;max-width:65ch">Per <a href="../41-decisions-log.html" style="color:var(--accent)">PR-06</a>. A Recreational user leaving is most likely a genuine product-fit decision and deserves reflection time. A Habitual or Compulsive user leaving may be leaving to gamble freely — shorter cool-off honours their agency without prolonging exit friction.</p>
+      </div>
+      <div class="ob-prof-grid">
+        <div class="ob-prof-tile">
+          <span class="ob-prof-tile__pill">P1 · Recreational</span>
+          <div class="ob-prof-tile__n">30 d</div>
+          <div class="ob-prof-tile__d">Cool-off</div>
+          <div class="ob-prof-tile__lbl">Anna re-entry conversation around day 21 · card + banking active throughout</div>
+        </div>
+        <div class="ob-prof-tile">
+          <span class="ob-prof-tile__pill">P3 · Mood-influenced</span>
+          <div class="ob-prof-tile__n">21 d</div>
+          <div class="ob-prof-tile__d">Cool-off</div>
+          <div class="ob-prof-tile__lbl">Longer · mood-influenced exit may reverse · time to land somewhere stable</div>
+        </div>
+        <div class="ob-prof-tile ob-prof-tile--mine">
+          <span class="ob-prof-tile__pill">P4 · Habitual · you</span>
+          <div class="ob-prof-tile__n">14 d</div>
+          <div class="ob-prof-tile__d">Cool-off · default</div>
+          <div class="ob-prof-tile__lbl">PGSI-mid risk · Anna check-in at day 7 + day 13</div>
+        </div>
+        <div class="ob-prof-tile">
+          <span class="ob-prof-tile__pill">P5 · Recovering</span>
+          <div class="ob-prof-tile__n">14 d</div>
+          <div class="ob-prof-tile__d">Cool-off · default</div>
+          <div class="ob-prof-tile__lbl">Agency + structure · standard cool-off applies</div>
+        </div>
+        <div class="ob-prof-tile">
+          <span class="ob-prof-tile__pill">P2 · Compulsive</span>
+          <div class="ob-prof-tile__n">7 d</div>
+          <div class="ob-prof-tile__d">Cool-off</div>
+          <div class="ob-prof-tile__lbl">Shorter · longer windows risk paralysis · safeguarding ops contact day 1</div>
+        </div>
+      </div>
+      <div class="row-2">
+        <div class="gc-card">
+          <h3 style="font-size:16px;font-weight:700;margin:0 0 4px">During the 14 days</h3>
+          <div class="ob-conseq" style="padding:10px 0"><span class="ob-conseq__ic ob-conseq__ic--keep"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="ob-conseq__t">Card · banking · Anna · sponsor all work normally</div><div class="ob-conseq__s">No degraded experience · the system stays on</div></div></div>
+          <div class="ob-conseq" style="padding:10px 0"><span class="ob-conseq__ic ob-conseq__ic--keep"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="ob-conseq__t">One-tap "cancel close" from anywhere</div><div class="ob-conseq__s">Top of every screen · never more than one tap away</div></div></div>
+          <div class="ob-conseq" style="padding:10px 0"><span class="ob-conseq__ic ob-conseq__ic--keep"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="ob-conseq__t">Anna offers 5-min talk · day 7 + day 13</div><div class="ob-conseq__s">Both skippable · she won't push</div></div></div>
+          <div class="ob-conseq" style="padding:10px 0"><span class="ob-conseq__ic ob-conseq__ic--keep"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="ob-conseq__t">Sponsor not notified until cool-off ends</div><div class="ob-conseq__s">No awkward "I'm thinking about closing" digest mid-window</div></div></div>
+        </div>
+        <div class="stack">
+          ${ANNA("Cool-off isn't friction.", "It's a window where the decision can stay alive and reversible. You can leave on day 14 with no questions — or change your mind on day 13. Both are valid.")}
+          <button class="gc-btn gc-btn--danger gc-btn--lg gc-btn--full" onclick="next()">Start 14-day cool-off</button>
+          <button class="gc-btn gc-btn--ghost gc-btn--full" onclick="prev()">Back</button>
+        </div>
+      </div>
+    </div>`),
+
+  ob5: () => PAGE('Wind-down started', 'Confirmation · what happens next · how to come back if you change your mind.', `
+    <div class="stack">
+      <div class="gc-card gc-card--success ob-final-hero">
+        <span class="ob-final-hero__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+        <div>
+          <h2>Your GaimControl account is in wind-down.</h2>
+          <p>You can re-open by emailing us at any point. Otherwise the account closes itself when the loan clears in Apr 2029 — Article 17 deletion runs automatically.</p>
+        </div>
+      </div>
+      <div class="row-2">
+        <div class="gc-card">
+          <h3 style="font-size:17px;font-weight:700;margin:0 0 4px">What happens next</h3>
+          <div class="ob-final-step">
+            <span class="ob-final-step__n">1</span>
+            <div><div class="ob-final-step__when">Today · 14 May 2026 · 09:41</div><div class="ob-final-step__t">Account suspended · card terminated</div><div class="ob-final-step__s">Anna sessions paused. Sponsor digest paused. Banking surface replaced with the wind-down view (balance + schedule only).</div></div>
+          </div>
+          <div class="ob-final-step">
+            <span class="ob-final-step__n">2</span>
+            <div><div class="ob-final-step__when">Within 30 minutes</div><div class="ob-final-step__t">Confirmation email · GDPR Art. 20 export queued</div><div class="ob-final-step__s">ZIP delivered to sam.k@hotmail.co.uk · ~7 MB · JSON + PDF summary · same as if you'd requested in §12 PR5.</div></div>
+          </div>
+          <div class="ob-final-step">
+            <span class="ob-final-step__n">3</span>
+            <div><div class="ob-final-step__when">Within 1 hour</div><div class="ob-final-step__t">Joanna notified</div><div class="ob-final-step__s">Simple "Sam has closed her account" · sponsor relationship suspended · she keeps her own data export rights.</div></div>
+          </div>
+          <div class="ob-final-step">
+            <span class="ob-final-step__n">4</span>
+            <div><div class="ob-final-step__when">30 May 2026 · 09:00 · then monthly</div><div class="ob-final-step__t">£311.20 DD runs automatically</div><div class="ob-final-step__s">No late fee · no surprise. Monthly statement to your email · balance falls.</div></div>
+          </div>
+          <div class="ob-final-step">
+            <span class="ob-final-step__n">5</span>
+            <div><div class="ob-final-step__when">Apr 2029 · final payment</div><div class="ob-final-step__t">Balance hits £0 · Article 17 deletion runs</div><div class="ob-final-step__s">Final email confirmation · all profile + KYC + chat data wiped per your preference. Audit log entry retained (anonymised).</div></div>
+          </div>
+        </div>
+        <div class="stack">
+          <div class="gc-card gc-card--warn">
+            <h3 style="font-size:14px;font-weight:700;margin:0">Deletion preference · set earlier</h3>
+            <div style="display:flex;align-items:center;gap:10px;font-size:13px;padding-top:4px"><span style="width:24px;height:24px;border-radius:50%;background:var(--w-60);color:white;display:inline-flex;align-items:center;justify-content:center;font-size:13px;font-weight:700">✓</span><strong style="color:var(--text-primary)">Delete immediately on settlement</strong></div>
+            <div style="font-size:12px;color:var(--text-muted);line-height:1.5;padding-top:2px">Alternates were "delete after 30 days" or "retain anonymised for research". Editable until the moment deletion runs.</div>
+          </div>
+          <div class="gc-card">
+            <h3 style="font-size:14px;font-weight:700;margin:0">If you re-open</h3>
+            <p style="font-size:12.5px;color:var(--text-secondary);line-height:1.55;margin:0">Within 90 days · light re-KYC + welcome back · keeps loan history + Anna context. After 90 days · full onboarding again.</p>
+          </div>
+          ${ANNA("58 days clean and a loan paying itself down.", "You've already done the work. Wind-down isn't the end of the story · just a different chapter. The door's not locked.")}
+          <button class="gc-btn gc-btn--white gc-btn--full">View loan balance</button>
+          <button class="gc-btn gc-btn--ghost gc-btn--full" onclick="go(0)">Changed my mind · re-open</button>
+          <div class="ob-decision">decisions · <a href="../41-decisions-log.html">GEN-04</a> two-path · <a href="../41-decisions-log.html">PR-06</a> profile-scaled cool-off · <a href="../41-decisions-log.html">PR-07</a> Art. 17 up front</div>
+        </div>
+      </div>
+    </div>`),
+};
+
+let idx = 0;
+function pickReason(el) { el.parentElement.querySelectorAll('.is-on').forEach(s => s.classList.remove('is-on')); el.classList.add('is-on'); }
+function pickOpt(el) { el.parentElement.querySelectorAll('.is-on').forEach(s => s.classList.remove('is-on')); el.classList.add('is-on'); }
+
+function render() {
+  const screen = SCREENS[idx];
+  document.getElementById('viewport').innerHTML = builders[screen.kind]();
+  document.getElementById('browserUrl').textContent = 'app.gaimcontrol.com' + screen.url;
+  document.getElementById('screenId').textContent = screen.id;
+  document.getElementById('screenName').textContent = screen.name;
+  document.getElementById('progressFill').style.width = ((idx + 1) / SCREENS.length * 100) + '%';
+  document.getElementById('navPrev').disabled = idx === 0;
+  document.getElementById('navNext').disabled = idx === SCREENS.length - 1;
+  document.querySelectorAll('.proto-scrubber__item').forEach((el, i) => {
+    el.classList.toggle('is-active', i === idx);
+    if (i === idx) el.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  });
+  document.getElementById('contextBody').innerHTML = CTX[screen.kind] || screen.name;
+}
+
+function next() { if (idx < SCREENS.length - 1) { idx++; render(); } }
+function prev() { if (idx > 0) { idx--; render(); } }
+function go(i) { idx = i; render(); }
+
+function buildScrubber() {
+  const nav = document.getElementById('scrubber');
+  SCREENS.forEach((s, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'proto-scrubber__item';
+    btn.innerHTML = `<span class="proto-scrubber__id">${s.id}</span><span class="proto-scrubber__name">${s.name}</span>`;
+    btn.addEventListener('click', () => go(i));
+    nav.appendChild(btn);
+  });
+}
+
+function initTheme() {
+  const root = document.documentElement;
+  const stored = localStorage.getItem('gc-proto-theme');
+  const initial = stored || 'dark';
+  root.setAttribute('data-theme', initial);
+  document.querySelector('.theme-label').textContent = initial === 'dark' ? 'Dark' : 'Light';
+  document.querySelector('.proto-theme-toggle').addEventListener('click', () => {
+    const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    document.querySelector('.theme-label').textContent = next === 'dark' ? 'Dark' : 'Light';
+    try { localStorage.setItem('gc-proto-theme', next); } catch(e) {}
+  });
+}
+
+document.getElementById('navPrev').addEventListener('click', prev);
+document.getElementById('navNext').addEventListener('click', next);
+document.addEventListener('keydown', (e) => { if (e.key === 'ArrowRight') next(); if (e.key === 'ArrowLeft') prev(); });
+buildScrubber();
+initTheme();
+render();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GaimControl · Full web prototype</title>
+<link rel="icon" href="../assets/gc-favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --p-10:#0B0F1C;--p-20:#161B2D;--p-30:#20273C;--p-40:#354872;--p-50:#4D608C;--p-60:#6B7DA6;--p-99:#FAFBFE;--p-100:#FFF;
+  --s-50:#8576C2;--s-70:#B5ACDF;
+  --t-20:#1A6047;--t-50:#399971;--t-80:#ADDCC2;--t-90:#D5EDDF;--t-30:#1F7058;
+  --w-30:#6B4500;--w-80:#FAB44A;--w-90:#FFDFA8;--w-60:#C28200;
+  --n-50:#76798A;--n-95:#F1F2F5;--nv-80:#C5C9DD;
+}
+[data-theme="dark"] { --page-bg: #0a0e1a; --page-fg: var(--n-95); --page-fg-muted: var(--nv-80); --page-card-bg: var(--p-20); --page-card-bg-2: var(--p-10); --page-divider: rgba(255,255,255,0.06); --page-accent: var(--s-70); }
+[data-theme="light"] { --page-bg: var(--p-99); --page-fg: var(--p-20); --page-fg-muted: var(--n-50); --page-card-bg: var(--p-100); --page-card-bg-2: #f4f5f9; --page-divider: rgba(22,27,45,0.08); --page-accent: var(--p-40); }
+* { box-sizing: border-box; }
+html, body { background: var(--page-bg); color: var(--page-fg); margin: 0; }
+body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif; font-size: 15px; line-height: 1.55; -webkit-font-smoothing: antialiased; padding: 64px 24px 96px; max-width: 920px; margin: 0 auto; }
+.gc-header { display: flex; align-items: center; gap: 12px; padding: 4px 0 24px; border-bottom: 1px solid var(--page-divider); margin-bottom: 32px; }
+.gc-header__mark { width: 44px; height: 44px; border-radius: 12px; background: var(--p-30); display: inline-flex; align-items: center; justify-content: center; }
+.gc-header__mark img { width: 70%; height: 70%; }
+.gc-header__name { font-weight: 700; font-size: 22px; letter-spacing: -0.01em; }
+.gc-header__pill { display: inline-flex; padding: 5px 12px; border-radius: 999px; background: linear-gradient(120deg, var(--s-50), var(--p-50), var(--t-50)); color: white; font-weight: 700; font-size: 11.5px; font-family: 'JetBrains Mono', monospace; letter-spacing: 0.06em; text-transform: uppercase; }
+a.back { display: inline-flex; align-items: center; gap: 6px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--page-fg-muted); text-decoration: none; margin-bottom: 24px; }
+a.back:hover { color: var(--page-accent); }
+.subhead { display: inline-flex; align-items: center; gap: 14px; font-family: 'JetBrains Mono', monospace; font-size: 11.5px; font-weight: 600; letter-spacing: 0.14em; color: var(--page-fg-muted); text-transform: uppercase; margin-bottom: 28px; }
+.subhead::before { content: ''; width: 24px; height: 3px; background: linear-gradient(90deg, var(--s-50), var(--p-50), var(--t-50)); border-radius: 2px; }
+h1 { font-family: 'Inter', sans-serif; font-size: 64px; font-weight: 800; line-height: 0.95; letter-spacing: -0.045em; margin: 0 0 24px; }
+@media (max-width: 720px) { h1 { font-size: 44px; } }
+.gradient { background: linear-gradient(120deg, var(--s-50) 0%, var(--p-60) 38%, var(--t-50) 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.lede { font-size: 16px; color: var(--page-fg-muted); max-width: 62ch; margin: 0 0 32px; }
+.status-card { padding: 24px; background: var(--page-card-bg); border: 1px solid var(--page-divider); border-radius: 14px; margin: 32px 0; }
+.status-card__head { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+.status-card__icon { width: 40px; height: 40px; border-radius: 11px; background: var(--w-30); color: var(--w-80); display: inline-flex; align-items: center; justify-content: center; }
+[data-theme="light"] .status-card__icon { background: var(--w-90); color: var(--w-30); }
+.status-card__title { font-size: 17px; font-weight: 700; }
+.status-card__sub { font-size: 13.5px; color: var(--page-fg-muted); line-height: 1.55; max-width: 64ch; }
+.progress-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 18px; }
+@media (max-width: 720px) { .progress-row { grid-template-columns: 1fr; } }
+.progress-stat { padding: 14px 16px; background: var(--page-card-bg-2); border-radius: 11px; }
+.progress-stat__n { font-size: 24px; font-weight: 800; letter-spacing: -0.02em; }
+.progress-stat__l { font-size: 11.5px; color: var(--page-fg-muted); margin-top: 2px; font-family: 'JetBrains Mono', monospace; letter-spacing: 0.04em; text-transform: uppercase; }
+.flows-list { display: flex; flex-direction: column; gap: 8px; margin-top: 24px; }
+.flow-row { display: grid; grid-template-columns: 44px 1fr auto; gap: 14px; align-items: center; padding: 14px 18px; background: var(--page-card-bg); border: 1px solid var(--page-divider); border-radius: 11px; text-decoration: none; color: inherit; }
+.flow-row__num { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: var(--page-fg-muted); }
+.flow-row__name { font-weight: 600; font-size: 15px; }
+.flow-row__sub { font-size: 12.5px; color: var(--page-fg-muted); margin-top: 1px; }
+.flow-row__pill { display: inline-flex; align-items: center; gap: 5px; padding: 4px 11px; border-radius: 999px; font-family: 'JetBrains Mono', monospace; font-size: 10.5px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
+.flow-row__pill::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+.flow-row__pill--planned { background: rgba(127,127,127,0.10); color: var(--page-fg-muted); }
+footer { color: var(--page-fg-muted); font-size: 12px; font-family: 'JetBrains Mono', monospace; margin-top: 56px; }
+footer a { color: var(--page-accent); text-decoration: none; }
+</style>
+<script src="flow-chain.js" defer></script>
+</head>
+<body>
+
+<header class="gc-header">
+  <span class="gc-header__mark"><img src="../assets/gc-mark-mono-light.svg" alt=""></span>
+  <span class="gc-header__name">GaimControl</span>
+  <span class="gc-header__pill">web · full</span>
+</header>
+
+<a class="back" href="index.html">← prototype index</a>
+
+<div class="subhead">Web · full prototype</div>
+<h1>End-to-end <span class="gradient">web</span>.</h1>
+<p class="lede">Every flow in the web-ui paradigm: left sidenav with Banking expanding into Overview / Cards / Accounts / Spending / Sponsor sub-nav, larger Anna chat surface, plus the web-only surfaces — admin (§13), sponsor dash (§15), marketing site (§14). Builds after mobile sign-off so the two demos can be screenshotted side-by-side.</p>
+
+<div class="status-card">
+  <div class="status-card__head">
+    <span class="status-card__icon">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+    </span>
+    <div>
+      <div class="status-card__title">All web surfaces ready</div>
+      <div class="status-card__sub">All 13 web surfaces ready: 11 consumer flows (§04 → §16) + §13 Admin console + §14 Marketing site with custom illustrations, 6 profile UTM landers, and the sponsor/lender explainer.</div>
+    </div>
+  </div>
+  <div class="progress-row">
+    <div class="progress-stat"><div class="progress-stat__n">13 / 13</div><div class="progress-stat__l">Web surfaces ready</div></div>
+    <div class="progress-stat"><div class="progress-stat__n">100%</div><div class="progress-stat__l">Coverage</div></div>
+  </div>
+</div>
+
+<!-- Tour CTA -->
+<div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;padding:22px 24px;margin:24px 0 32px;background:linear-gradient(135deg,rgba(133,118,194,0.16),rgba(57,153,113,0.10));border:1px solid var(--page-divider);border-radius:16px">
+  <div style="flex:1;min-width:240px">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--page-fg-muted);margin-bottom:4px">Combined prototype · click-through tour</div>
+    <div style="font-size:17px;font-weight:700;letter-spacing:-0.01em">Start at §04 Auth · the sticky top bar moves you through all 13 web surfaces.</div>
+    <div style="font-size:12.5px;color:var(--page-fg-muted);margin-top:6px;line-height:1.55">Use the prev/next buttons at the very top, click any §xx pill to jump, or press <kbd style="font-family:'JetBrains Mono',monospace;font-size:10.5px;padding:1px 6px;border-radius:4px;background:var(--page-card-bg-2);border:1px solid var(--page-divider)">Shift</kbd> + <kbd style="font-family:'JetBrains Mono',monospace;font-size:10.5px;padding:1px 6px;border-radius:4px;background:var(--page-card-bg-2);border:1px solid var(--page-divider)">←</kbd>/<kbd style="font-family:'JetBrains Mono',monospace;font-size:10.5px;padding:1px 6px;border-radius:4px;background:var(--page-card-bg-2);border:1px solid var(--page-divider)">→</kbd> to step between flows.</div>
+  </div>
+  <a href="web-auth.html" style="display:inline-flex;align-items:center;gap:8px;padding:14px 24px;border-radius:13px;background:linear-gradient(120deg,var(--s-50),var(--p-50),var(--t-50));color:white;text-decoration:none;font-weight:700;font-size:15px;letter-spacing:-0.005em;box-shadow:0 10px 28px -10px rgba(133,118,194,0.55)">Start tour →</a>
+</div>
+
+<a class="flow-row" href="web-auth.html" style="border-color:var(--t-50);text-decoration:none;color:inherit"><span class="flow-row__num">§04</span><div><div class="flow-row__name">Auth &amp; session</div><div class="flow-row__sub">AU1–6 · 6 screens · email/phone + OTP, rotating product story, magic link, recovery, passcode</div></div><span class="flow-row__pill" style="background:var(--t-20);color:var(--t-80)">Ready · open →</span></a>
+<a class="flow-row" href="web-onboarding.html" style="border-color:var(--t-50);text-decoration:none;color:inherit"><span class="flow-row__num">§05</span><div><div class="flow-row__name">Onboarding intake</div><div class="flow-row__sub">ON1–16 · Anna-led quiz · KYC · bank link · 39 screens</div></div><span class="flow-row__pill" style="background:var(--t-20);color:var(--t-80)">Ready · open →</span></a>
+<a class="flow-row" href="web-banking.html" style="border-color:var(--t-50);text-decoration:none;color:inherit"><span class="flow-row__num">§06</span><div><div class="flow-row__name">Banking dashboard</div><div class="flow-row__sub">BK1–5 · 8 screens · sidenav + Banking sub-nav · 3 home states · transactions · spending trend</div></div><span class="flow-row__pill" style="background:var(--t-20);color:var(--t-80)">Ready · open →</span></a>
+<a class="flow-row" href="web-cards.html" style="border-color:var(--t-50);text-decoration:none;color:inherit"><span class="flow-row__num">§07</span><div><div class="flow-row__name">Card controls + sponsor</div><div class="flow-row__sub">CC1–7 · 7 screens · card setup, MCC blocks, channels, Gamban, Gamstop, sponsor permissions, sponsor invite</div></div><span class="flow-row__pill" style="background:var(--t-20);color:var(--t-80)">Ready · open →</span></a>
+<a class="flow-row" href="web-anna.html" style="border-color:var(--t-50);text-decoration:none;color:inherit"><span class="flow-row__num">§08</span><div><div class="flow-row__name">Anna chat &amp; CBT</div><div class="flow-row__sub">AN1–8 · 8 screens · larger chat surface · 4 CBT sessions · daily check-ins</div></div><span class="flow-row__pill" style="background:var(--t-20);color:var(--t-80)">Ready · open →</span></a>
+<a class="flow-row" href="web-loan.html" style="border-color:var(--t-50);text-decoration:none;color:inherit"><span class="flow-row__num">§09</span><div><div class="flow-row__name">Loan offer + SECCI</div><div class="flow-row__sub">LO1–5 · 5 screens · offer · SECCI · affordability · sign · Experian ReFi settlement</div></div><span class="flow-row__pill" style="background:var(--t-20);color:var(--t-80)">Ready · open →</span></a>
+<a class="flow-row" href="web-repayment.html" style="border-color:var(--t-50);text-decoration:none;color:inherit"><span class="flow-row__num">§10</span><div><div class="flow-row__name">Repayment + Relapse Hold</div><div class="flow-row__sub">RP1–5 · 5 screens · dashboard · payment day · auto + manual Hold · CONC 6.7.27</div></div><span class="flow-row__pill" style="background:var(--t-20);color:var(--t-80)">Ready · open →</span></a>
+<a class="flow-row" href="web-safeguarding.html" style="border-color:var(--t-50);text-decoration:none;color:inherit"><span class="flow-row__num">§11</span><div><div class="flow-row__name">Safeguarding &amp; crisis</div><div class="flow-row__sub">SF1–4 · 4 screens · Help home + crisis ladder · helplines detail · FCA vulnerability self-report · sponsor templates</div></div><span class="flow-row__pill" style="background:var(--t-20);color:var(--t-80)">Ready · open →</span></a>
+<a class="flow-row" href="web-profile.html" style="border-color:var(--t-50);text-decoration:none;color:inherit"><span class="flow-row__num">§12</span><div><div class="flow-row__name">Profile &amp; settings</div><div class="flow-row__sub">PR1–6 · 6 screens · settings home · personal · 5-section notif · sponsor · GDPR Art. 20 export · close-account (Art. 17)</div></div><span class="flow-row__pill" style="background:var(--t-20);color:var(--t-80)">Ready · open →</span></a>
+<a class="flow-row" href="web-admin.html" style="border-color:var(--t-50);text-decoration:none;color:inherit"><span class="flow-row__num">§13</span><div><div class="flow-row__name">Admin console <span style="color:var(--page-fg-muted);font-weight:500">· web only · admin.gaimcontrol.com</span></div><div class="flow-row__sub">AD1–7 · 7 screens · queues + customer detail + four-eyes overrides (request + approve) + FCA Consumer Duty vulnerability register + weekly FCA SFTP reports + 7-year read-only audit log</div></div><span class="flow-row__pill" style="background:var(--t-20);color:var(--t-80)">Ready · open →</span></a>
+<a class="flow-row" href="web-marketing.html" style="border-color:var(--t-50);text-decoration:none;color:inherit"><span class="flow-row__num">§14</span><div><div class="flow-row__name">Marketing site <span style="color:var(--page-fg-muted);font-weight:500">· web only · gaimcontrol.com</span></div><div class="flow-row__sub">MK1–8 · 8 pages · Home with orbit illustration + 3-pillar block + stats + quote + CTA · How it works · Contact with crisis triage · Company + team + FCA Sandbox · FAQs accordion · Privacy/Legal · 6 profile UTM landers (P1–P6 with custom mood illustrations) · sponsor/lender explainer</div></div><span class="flow-row__pill" style="background:var(--t-20);color:var(--t-80)">Ready · open →</span></a>
+<a class="flow-row" href="web-sponsor-onboarding.html" style="border-color:var(--t-50);text-decoration:none;color:inherit"><span class="flow-row__num">§15</span><div><div class="flow-row__name">Sponsor onboarding + dash</div><div class="flow-row__sub">SP1 user-side invite + SP3 explainer + SP4 Vouchsafe KYC + SP5 TrueLayer open banking + SP6 sponsor dashboard + SP7 user management · 6 screens · two URL contexts (app + sponsor.gaimcontrol.com)</div></div><span class="flow-row__pill" style="background:var(--t-20);color:var(--t-80)">Ready · open →</span></a>
+<a class="flow-row" href="web-offboarding.html" style="border-color:var(--t-50);text-decoration:none;color:inherit"><span class="flow-row__num">§16</span><div><div class="flow-row__name">Off-boarding flows</div><div class="flow-row__sub">OB1–5 · 5 screens · reason + state check · Art. 17 consequences up front · loan path A (3 options) + profile path B (5-tier cool-off) · auto-deletion timeline</div></div><span class="flow-row__pill" style="background:var(--t-20);color:var(--t-80)">Ready · open →</span></a>
+
+<footer>
+  web-prototype · v1.0 · 2026-05-15 · all 13 web surfaces ready ·
+  back to <a href="index.html">index</a> · <a href="../00-index.html">spec</a>
+</footer>
+
+<script>
+(function(){
+  var root = document.documentElement;
+  var stored; try { stored = localStorage.getItem('gc-theme'); } catch(e){}
+  root.setAttribute('data-theme', stored || 'dark');
+})();
+</script>
+
+</body>
+</html>

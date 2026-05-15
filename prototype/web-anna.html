@@ -1,0 +1,668 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GaimControl · Web · §08 Anna chat &amp; CBT</title>
+<link rel="icon" href="../assets/gc-favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --p-10:#0B0F1C;--p-20:#161B2D;--p-30:#20273C;--p-40:#354872;--p-50:#4D608C;--p-60:#6B7DA6;--p-90:#DCE2F0;--p-95:#ECF0F9;--p-99:#FAFBFE;--p-100:#FFF;
+  --s-10:#28215A;--s-20:#3E3478;--s-30:#534792;--s-40:#6B5DAC;--s-50:#8576C2;--s-70:#B5ACDF;--s-80:#CFC8EA;--s-90:#E8E4F4;
+  --t-20:#1A6047;--t-30:#1F7058;--t-50:#399971;--t-60:#5BB088;--t-80:#ADDCC2;--t-90:#D5EDDF;
+  --w-30:#6B4500;--w-60:#C28200;--w-80:#FAB44A;--w-90:#FFDFA8;
+  --e-30:#7A1F1F;--e-50:#C73838;--e-80:#F4A4A4;--e-90:#FBD9D9;
+  --n-50:#76798A;--n-80:#C5C8D2;--n-95:#F1F2F5;--nv-80:#C5C9DD;
+}
+[data-theme="dark"] { --bg-base: var(--p-30); --bg-surface: var(--p-20); --bg-surface-2: var(--p-10); --border: rgba(255,255,255,0.08); --text-primary: var(--n-95); --text-secondary: var(--nv-80); --text-muted: rgba(255,255,255,0.4); --accent: var(--s-70); --accent-strong: var(--s-50); --on-accent: #fff; --page-bg: #0a0e1a; --page-fg: var(--n-95); --page-fg-muted: var(--nv-80); --page-card-bg: var(--p-20); --page-divider: rgba(255,255,255,0.06); }
+[data-theme="light"] { --bg-base: var(--p-99); --bg-surface: #fff; --bg-surface-2: var(--p-95); --border: rgba(22,27,45,0.08); --text-primary: var(--p-20); --text-secondary: var(--n-50); --text-muted: var(--n-50); --accent: var(--p-40); --accent-strong: var(--s-40); --on-accent: #fff; --page-bg: var(--p-95); --page-fg: var(--p-20); --page-fg-muted: var(--n-50); --page-card-bg: #fff; --page-divider: rgba(22,27,45,0.08); }
+* { box-sizing: border-box; }
+html, body { background: var(--page-bg); color: var(--page-fg); margin: 0; transition: background-color 220ms ease, color 220ms ease; }
+body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif; font-size: 14px; line-height: 1.5; -webkit-font-smoothing: antialiased; min-height: 100vh; }
+
+.proto-shell { display: grid; grid-template-columns: 280px 1fr; gap: 0; min-height: 100vh; }
+@media (max-width: 1100px) { .proto-shell { grid-template-columns: 1fr; } }
+.proto-sidebar { background: var(--page-card-bg); border-right: 1px solid var(--page-divider); padding: 28px 22px; position: sticky; top: 0; height: 100vh; overflow-y: auto; display: flex; flex-direction: column; gap: 16px; }
+@media (max-width: 1100px) { .proto-sidebar { position: static; height: auto; max-height: 50vh; border-right: none; border-bottom: 1px solid var(--page-divider); } }
+.proto-sidebar__brand { display: flex; align-items: center; gap: 10px; }
+.proto-sidebar__mark { width: 36px; height: 36px; border-radius: 10px; background: var(--p-30); display: inline-flex; align-items: center; justify-content: center; }
+.proto-sidebar__mark img { width: 70%; height: 70%; }
+.proto-sidebar__name { font-weight: 700; font-size: 17px; letter-spacing: -0.01em; }
+.proto-sidebar__pill { display: inline-flex; padding: 3px 9px; border-radius: 999px; background: linear-gradient(120deg, var(--s-50), var(--p-50), var(--t-50)); color: white; font-weight: 700; font-size: 9.5px; font-family: 'JetBrains Mono', monospace; letter-spacing: 0.06em; text-transform: uppercase; }
+.proto-sidebar__back { display: inline-flex; align-items: center; gap: 6px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--page-fg-muted); text-decoration: none; }
+.proto-sidebar__back:hover { color: var(--page-accent); }
+.proto-section-title { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--page-fg-muted); margin: 12px 0 6px; }
+.proto-scrubber { display: flex; flex-direction: column; gap: 2px; }
+.proto-scrubber__item { display: grid; grid-template-columns: 44px 1fr; gap: 8px; align-items: center; padding: 7px 10px; border-radius: 8px; cursor: pointer; border: none; background: transparent; color: inherit; font-family: inherit; text-align: left; }
+.proto-scrubber__item:hover { background: rgba(127,127,127,0.08); }
+.proto-scrubber__item.is-active { background: var(--accent-strong); color: var(--on-accent); }
+.proto-scrubber__item.is-active .proto-scrubber__id { color: rgba(255,255,255,0.85); }
+.proto-scrubber__id { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; color: var(--page-fg-muted); letter-spacing: 0.06em; }
+.proto-scrubber__name { font-size: 12.5px; font-weight: 500; }
+.proto-sidebar__footer { margin-top: auto; padding-top: 16px; border-top: 1px solid var(--page-divider); font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--page-fg-muted); }
+.proto-sidebar__footer a { color: var(--page-fg-muted); text-decoration: none; border-bottom: 1px dotted currentColor; }
+.proto-theme-toggle { display: inline-flex; align-items: center; gap: 8px; padding: 7px 12px; border-radius: 8px; background: var(--bg-surface-2); border: 1px solid var(--border); color: var(--page-fg-muted); cursor: pointer; font-family: 'JetBrains Mono', monospace; font-size: 11px; align-self: flex-start; }
+.proto-theme-toggle svg { width: 12px; height: 12px; }
+[data-theme="dark"] .proto-theme-toggle .icon-moon { display: none; }
+[data-theme="light"] .proto-theme-toggle .icon-sun { display: none; }
+
+.proto-stage { display: flex; flex-direction: column; align-items: center; padding: 32px 24px 64px; gap: 18px; }
+.proto-modebar { display: flex; align-items: center; gap: 10px; padding: 10px 16px; background: var(--page-card-bg); border: 1px solid var(--page-divider); border-radius: 12px; font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: var(--page-fg-muted); flex-wrap: wrap; justify-content: center; }
+.proto-modebar__pill { display: inline-flex; padding: 3px 9px; border-radius: 999px; background: var(--bg-surface-2); }
+.proto-modebar__id { color: var(--page-fg); font-weight: 700; letter-spacing: 0.06em; }
+.proto-modebar__bar { width: 100px; height: 4px; border-radius: 4px; background: var(--bg-surface-2); position: relative; overflow: hidden; }
+.proto-modebar__bar__fill { position: absolute; left: 0; top: 0; bottom: 0; background: linear-gradient(90deg, var(--s-50), var(--t-50)); transition: width 240ms ease; }
+.proto-arrows { display: flex; align-items: center; gap: 8px; }
+.proto-arrow { width: 36px; height: 36px; border-radius: 10px; background: var(--page-card-bg); border: 1px solid var(--page-divider); color: var(--page-fg-muted); display: inline-flex; align-items: center; justify-content: center; cursor: pointer; }
+.proto-arrow:hover { background: var(--bg-surface-2); color: var(--page-fg); }
+.proto-arrow:disabled { opacity: 0.3; cursor: not-allowed; }
+.proto-arrow svg { width: 18px; height: 18px; }
+
+.browser { width: 100%; max-width: 1380px; background: var(--bg-base); border-radius: 18px; overflow: hidden; border: 1px solid var(--border); box-shadow: 0 24px 60px -20px rgba(0,0,0,0.45), 0 8px 24px -12px rgba(0,0,0,0.25); }
+[data-theme="light"] .browser { box-shadow: 0 24px 60px -20px rgba(22,27,45,0.18), 0 8px 24px -12px rgba(22,27,45,0.08); }
+.browser__chrome { display: flex; align-items: center; gap: 14px; padding: 12px 16px; background: var(--p-20); border-bottom: 1px solid var(--border); }
+[data-theme="light"] .browser__chrome { background: var(--n-95); }
+.browser__dots { display: inline-flex; gap: 7px; flex-shrink: 0; }
+.browser__dot { width: 11px; height: 11px; border-radius: 50%; }
+.browser__dot:nth-child(1) { background: #FF5F57; } .browser__dot:nth-child(2) { background: #FEBC2E; } .browser__dot:nth-child(3) { background: #28C840; }
+.browser__url { flex: 1; background: var(--bg-base); border: 1px solid var(--border); border-radius: 7px; padding: 6px 14px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--text-secondary); text-align: center; display: flex; align-items: center; justify-content: center; gap: 8px; }
+.browser__url svg { width: 12px; height: 12px; opacity: 0.7; flex-shrink: 0; }
+.browser__viewport { background: var(--bg-base); min-height: 800px; max-height: 800px; position: relative; color: var(--text-primary); display: grid; grid-template-columns: 240px 1fr; }
+
+.appnav { background: var(--bg-surface); border-right: 1px solid var(--border); padding: 20px 16px; display: flex; flex-direction: column; gap: 16px; }
+[data-theme="light"] .appnav { background: var(--bg-surface-2); border-right: 1px solid rgba(22,27,45,0.12); }
+[data-theme="light"] .appnav__item { color: var(--p-40); }
+[data-theme="light"] .appnav__item:hover { color: var(--p-20); }
+[data-theme="light"] .appnav__subitem { color: var(--p-50); }
+[data-theme="light"] .appnav__subitem:hover { color: var(--p-20); }
+[data-theme="light"] .appnav__user-sub { color: var(--p-50); }
+[data-theme="light"] .appnav .appnav__help div:nth-of-type(2) { color: var(--p-50); }
+.appnav__brand { display: flex; align-items: center; gap: 10px; padding: 4px 4px 12px; border-bottom: 1px solid var(--border); margin-bottom: 4px; }
+.appnav__mark { width: 32px; height: 32px; border-radius: 9px; background: var(--p-30); display: inline-flex; align-items: center; justify-content: center; }
+.appnav__mark img { width: 70%; height: 70%; }
+.appnav__name { font-weight: 700; font-size: 15px; letter-spacing: -0.01em; }
+.appnav__user { display: flex; align-items: center; gap: 10px; padding: 8px 8px; border-radius: 10px; background: var(--bg-base); }
+.appnav__avatar { width: 32px; height: 32px; border-radius: 50%; background: var(--accent-strong); color: white; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; font-size: 13px; }
+.appnav__user-name { font-size: 13px; font-weight: 600; }
+.appnav__user-sub { font-size: 11px; color: var(--text-secondary); }
+.appnav__list { display: flex; flex-direction: column; gap: 2px; }
+.appnav__item { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 10px; cursor: pointer; color: var(--text-secondary); text-decoration: none; font-size: 13.5px; font-weight: 500; }
+.appnav__item:hover { background: var(--bg-base); color: var(--text-primary); }
+.appnav__item.is-on { background: var(--accent-strong); color: var(--on-accent); font-weight: 600; }
+.appnav__item.is-disabled { opacity: 0.35; cursor: not-allowed; }
+.appnav__item.is-disabled:hover { background: transparent; color: var(--text-secondary); }
+.appnav__item svg { width: 18px; height: 18px; flex-shrink: 0; }
+.appnav__subnav { padding: 4px 0 4px 28px; display: flex; flex-direction: column; gap: 1px; border-left: 1px solid var(--border); margin: 2px 0 2px 22px; }
+.appnav__subitem { padding: 7px 12px; border-radius: 8px; font-size: 12.5px; font-weight: 500; color: var(--text-secondary); cursor: pointer; }
+.appnav__subitem:hover { background: var(--bg-base); color: var(--text-primary); }
+.appnav__subitem.is-on { background: var(--bg-base); color: var(--accent); font-weight: 600; }
+.appnav__subitem.is-disabled { opacity: 0.35; cursor: not-allowed; }
+.appnav__help { margin-top: auto; padding: 14px 14px; border-radius: 12px; background: var(--bg-base); border: 1px solid var(--border); }
+.gc-crisis-btn { width: 100%; padding: 9px 12px; border-radius: 10px; background: var(--e-50); color: white; border: none; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 6px; margin-top: 8px; }
+.gc-crisis-btn svg { width: 14px; height: 14px; }
+
+.main { padding: 32px 40px 40px; overflow-y: auto; max-height: 800px; }
+.main::-webkit-scrollbar { width: 6px; }
+.main::-webkit-scrollbar-thumb { background: rgba(127,127,127,0.2); border-radius: 6px; }
+.main__head { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 24px; }
+.main__title { font-size: 28px; font-weight: 800; letter-spacing: -0.02em; margin: 0; }
+.main__sub { font-size: 13.5px; color: var(--text-secondary); margin: 4px 0 0; }
+
+.gc-card { padding: 20px; background: var(--bg-surface); border: 1px solid var(--border); border-radius: 16px; display: flex; flex-direction: column; gap: 12px; }
+.gc-card--anna-big { background: linear-gradient(135deg, var(--s-40), var(--p-40)); border-color: transparent; color: white; padding: 28px; }
+.gc-card--complete { background: linear-gradient(135deg, var(--t-50), var(--t-30)); color: white; border-color: transparent; padding: 24px; }
+
+.row-2 { display: grid; grid-template-columns: 2fr 1fr; gap: 16px; align-items: start; }
+.row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+.stack { display: flex; flex-direction: column; gap: 16px; }
+@media (max-width: 1000px) { .row-2 { grid-template-columns: 1fr; } }
+
+.an-anna-hero { display: flex; align-items: center; gap: 14px; }
+.an-anna-av { width: 52px; height: 52px; border-radius: 50%; background: rgba(255,255,255,0.18); display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; backdrop-filter: blur(8px); }
+.an-anna-av img { width: 60%; height: 60%; }
+.an-anna-name { font-size: 22px; font-weight: 800; letter-spacing: -0.015em; }
+.an-anna-meta { font-size: 13px; opacity: 0.85; margin-top: 3px; }
+
+.an-pill { display: inline-flex; align-items: center; gap: 7px; padding: 4px 12px 4px 5px; border-radius: 999px; font-size: 11.5px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; align-self: flex-start; background: rgba(0,0,0,0.22); color: white; }
+.an-pill::before { content: ''; width: 9px; height: 9px; border-radius: 50%; background: rgba(255,255,255,0.85); }
+
+.an-cbt-row { display: grid; grid-template-columns: 40px 1fr 16px; gap: 13px; align-items: center; padding: 12px 0; border-top: 1px solid var(--border); cursor: pointer; }
+.an-cbt-row:first-of-type { border-top: none; padding-top: 0; }
+.an-cbt-num { width: 40px; height: 40px; border-radius: 12px; background: var(--bg-surface-2); border: 1px solid var(--border); display: inline-flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 14px; color: var(--text-secondary); }
+.an-cbt-row.is-done .an-cbt-num { background: var(--t-50); color: white; border-color: transparent; }
+.an-cbt-row.is-active .an-cbt-num { background: var(--accent-strong); color: white; border-color: transparent; }
+.an-cbt-row.is-locked .an-cbt-num { color: var(--text-muted); }
+.an-cbt-row.is-locked { cursor: not-allowed; opacity: 0.6; }
+.an-cbt-t { font-size: 14.5px; font-weight: 600; }
+.an-cbt-s { font-size: 12px; color: var(--text-secondary); margin-top: 1px; }
+.an-cbt-chev { color: var(--text-muted); font-size: 18px; }
+.an-cbt-chev svg { width: 14px; height: 14px; }
+
+.an-daily-row { display: grid; grid-template-columns: 40px 1fr; gap: 13px; align-items: center; padding: 12px 0; border-top: 1px solid var(--border); cursor: pointer; }
+.an-daily-row:first-of-type { border-top: none; padding-top: 0; }
+.an-daily-ic { width: 40px; height: 40px; border-radius: 11px; display: inline-flex; align-items: center; justify-content: center; }
+.an-daily-ic svg { width: 20px; height: 20px; }
+.an-daily-t { font-size: 14.5px; font-weight: 600; }
+.an-daily-row.is-done .an-daily-t::after { content: ' ✓'; color: var(--t-50); font-weight: 700; }
+.an-daily-s { font-size: 12px; color: var(--text-secondary); margin-top: 1px; }
+.an-daily-row.is-due .an-daily-s { color: var(--w-60); font-weight: 600; }
+
+/* Chat — bigger surface for web */
+.an-chat-wrap { display: grid; grid-template-rows: 1fr auto; gap: 0; height: 640px; max-width: 760px; margin: 0 auto; width: 100%; background: var(--bg-surface); border: 1px solid var(--border); border-radius: 18px; overflow: hidden; }
+.an-chat-list { padding: 24px 28px; overflow-y: auto; display: flex; flex-direction: column; gap: 14px; }
+.an-chat-sys { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; text-align: center; padding: 6px 0; }
+.an-msg { display: grid; grid-template-columns: 36px 1fr; gap: 10px; align-items: flex-end; }
+.an-msg--user { grid-template-columns: 1fr 36px; }
+.an-msg__av { width: 36px; height: 36px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0; }
+.an-msg__av--anna { background: var(--p-30); }
+.an-msg__av--anna img { width: 60%; height: 60%; }
+.an-msg__av--user { background: var(--s-50); color: white; }
+.an-msg__col { display: flex; flex-direction: column; gap: 4px; min-width: 0; max-width: 70%; }
+.an-msg--user .an-msg__col { margin-left: auto; align-items: flex-end; }
+.an-msg__meta { display: flex; align-items: center; gap: 7px; font-size: 11.5px; color: var(--text-muted); padding: 0 6px; }
+.an-msg__meta strong { color: var(--text-secondary); font-weight: 700; }
+.an-bubble { padding: 12px 16px; border-radius: 18px; font-size: 14.5px; line-height: 1.5; }
+.an-bubble--anna { background: var(--bg-base); border: 1px solid var(--border); border-bottom-left-radius: 5px; }
+.an-bubble--user { background: var(--accent-strong); color: var(--on-accent); border-bottom-right-radius: 5px; }
+.an-replies { display: flex; gap: 6px; padding: 5px 0 0; flex-wrap: wrap; }
+.an-reply { padding: 8px 14px; border-radius: 999px; background: var(--bg-base); border: 1px solid var(--accent-strong); color: var(--accent); font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; }
+.an-thinking { display: inline-flex; align-items: center; gap: 10px; padding: 11px 16px; border-radius: 18px 18px 18px 5px; background: var(--bg-base); border: 1px solid var(--border); font-size: 13px; color: var(--text-secondary); }
+.an-thinking__dots { display: inline-flex; gap: 4px; }
+.an-thinking__dots span { width: 6px; height: 6px; border-radius: 50%; background: var(--s-50); animation: an-pulse 1.4s infinite; }
+.an-thinking__dots span:nth-child(2) { animation-delay: 0.2s; }
+.an-thinking__dots span:nth-child(3) { animation-delay: 0.4s; }
+@keyframes an-pulse { 0%,100% { opacity: 0.4; } 50% { opacity: 1; } }
+.an-composer { display: grid; grid-template-columns: 36px 1fr 36px; gap: 10px; align-items: center; padding: 14px 18px; border-top: 1px solid var(--border); background: var(--bg-surface); }
+.an-composer__attach, .an-composer__send { width: 36px; height: 36px; border-radius: 50%; background: var(--bg-base); border: 1px solid var(--border); color: var(--text-secondary); display: inline-flex; align-items: center; justify-content: center; cursor: pointer; }
+.an-composer__send { background: var(--accent-strong); color: var(--on-accent); border-color: transparent; }
+.an-composer__send svg, .an-composer__attach svg { width: 15px; height: 15px; }
+.an-composer__input { padding: 11px 18px; background: var(--bg-base); border: 1px solid var(--border); border-radius: 999px; font-family: inherit; font-size: 14px; color: var(--text-primary); resize: none; }
+.an-composer__input:focus { outline: none; border-color: var(--accent-strong); }
+
+/* CBT plan + steps */
+.an-plan-row { display: grid; grid-template-columns: 32px 1fr; gap: 13px; align-items: center; padding: 9px 0; }
+.an-plan-n { width: 32px; height: 32px; border-radius: 50%; background: var(--bg-surface-2); border: 1px solid var(--border); display: inline-flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 13px; color: var(--text-secondary); }
+.an-plan-t { font-size: 14px; font-weight: 600; }
+.an-plan-s { font-size: 12px; color: var(--text-secondary); margin-top: 1px; }
+.an-steps { display: flex; gap: 6px; }
+.an-step { flex: 1; height: 6px; border-radius: 999px; background: var(--bg-surface-2); border: 1px solid var(--border); }
+.an-step.is-done { background: var(--t-50); border-color: transparent; }
+.an-step.is-active { background: var(--accent-strong); border-color: transparent; }
+
+/* Worksheet chips */
+.an-chip-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.an-chip { display: flex; align-items: center; gap: 10px; padding: 14px 16px; background: var(--bg-base); border: 1px solid var(--border); border-radius: 12px; font-family: inherit; font-size: 13.5px; font-weight: 500; color: var(--text-primary); cursor: pointer; text-align: left; }
+.an-chip.is-on { background: var(--accent-strong); color: var(--on-accent); border-color: transparent; font-weight: 600; }
+.an-chip > span:first-child { font-size: 18px; flex-shrink: 0; }
+.an-quote { background: linear-gradient(135deg, rgba(133,118,194,0.12), rgba(83,71,146,0.06)); border: 1px solid rgba(133,118,194,0.25); border-radius: 14px; padding: 16px 20px; font-size: 14px; font-style: italic; line-height: 1.5; }
+.an-quote::before { content: '"'; color: var(--accent); margin-right: 3px; }
+
+/* Session complete */
+.an-sum { display: flex; justify-content: space-between; align-items: center; padding: 11px 0; border-top: 1px solid var(--border); font-size: 13.5px; }
+.an-sum:first-of-type { border-top: none; padding-top: 0; }
+.an-sum-l { color: var(--text-secondary); }
+.an-sum-v { font-weight: 600; }
+.an-journal { width: 100%; min-height: 100px; padding: 13px 16px; background: var(--bg-base); border: 1px solid var(--border); border-radius: 12px; font-family: inherit; font-size: 13.5px; color: var(--text-primary); line-height: 1.55; resize: none; }
+.an-journal:focus { outline: none; border-color: var(--accent-strong); }
+.an-digest { background: var(--bg-surface-2); border: 1px solid var(--border); border-radius: 12px; padding: 14px 18px; display: flex; flex-direction: column; gap: 7px; }
+.an-digest__head { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; padding: 3px 10px; border-radius: 999px; background: var(--s-20); color: var(--s-80); align-self: flex-start; letter-spacing: 0.04em; text-transform: uppercase; font-weight: 700; }
+[data-theme="light"] .an-digest__head { background: var(--s-90); color: var(--s-20); }
+.an-digest__head svg { width: 10px; height: 10px; }
+.an-digest p { font-size: 13.5px; line-height: 1.5; margin: 0; font-style: italic; }
+.an-digest__note { font-size: 11.5px; color: var(--text-muted); margin-top: 4px; }
+
+/* Daily */
+.an-daily-head { display: flex; align-items: flex-start; gap: 12px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+.an-daily-ic-lg { width: 52px; height: 52px; border-radius: 13px; display: inline-flex; align-items: center; justify-content: center; }
+.an-daily-ic-lg svg { width: 26px; height: 26px; }
+.an-mood-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
+.an-mood-btn { display: flex; flex-direction: column; align-items: center; gap: 5px; padding: 16px 8px; background: var(--bg-base); border: 1px solid var(--border); border-radius: 13px; font-family: inherit; cursor: pointer; color: var(--text-primary); }
+.an-mood-btn.is-on { background: var(--accent-strong); color: var(--on-accent); border-color: transparent; }
+.an-mood-btn > span:first-child { font-size: 26px; }
+.an-mood-btn > span:last-child { font-size: 13px; font-weight: 700; }
+.an-urge-track { position: relative; width: 100%; height: 14px; background: linear-gradient(90deg, var(--t-50), var(--w-60), var(--e-50)); border-radius: 999px; }
+.an-urge-marker { position: absolute; top: -6px; bottom: -6px; width: 4px; background: var(--text-primary); border-radius: 2px; box-shadow: 0 0 0 3px var(--bg-base); }
+.an-urge-scale { display: flex; justify-content: space-between; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-muted); margin-top: 6px; }
+.an-urge-readout { text-align: right; font-family: 'JetBrains Mono', monospace; font-size: 22px; font-weight: 700; margin-top: 4px; }
+.an-grat-row { display: grid; grid-template-columns: 32px 1fr; gap: 12px; align-items: center; }
+.an-grat-n { width: 32px; height: 32px; border-radius: 50%; background: var(--t-20); color: var(--t-80); display: inline-flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; }
+[data-theme="light"] .an-grat-n { background: var(--t-90); color: var(--t-30); }
+.an-grat-input { background: var(--bg-base); border: 1px solid var(--border); border-radius: 11px; padding: 12px 16px; font-family: inherit; font-size: 14px; color: var(--text-primary); }
+
+.gc-btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 12px 20px; border-radius: 12px; font-family: inherit; font-size: 14px; font-weight: 600; cursor: pointer; border: 1px solid transparent; }
+.gc-btn--primary { background: var(--accent-strong); color: var(--on-accent); }
+.gc-btn--primary:hover { background: var(--s-40); }
+.gc-btn--ghost { background: transparent; color: var(--text-primary); border-color: var(--border); }
+.gc-btn--ghost:hover { background: rgba(127,127,127,0.06); }
+.gc-btn--white { background: white; color: var(--p-30); }
+.gc-btn--lg { padding: 14px 26px; font-size: 15px; border-radius: 14px; }
+.gc-btn--full { width: 100%; }
+
+.an-decision { font-size: 12px; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; padding: 12px 16px; background: var(--bg-surface-2); border-radius: 10px; line-height: 1.5; }
+.an-decision a { color: var(--accent); text-decoration: none; }
+
+.proto-context { width: 100%; max-width: 1380px; padding: 16px 20px; background: var(--page-card-bg); border: 1px solid var(--page-divider); border-radius: 12px; font-size: 13px; color: var(--page-fg-muted); line-height: 1.55; }
+.proto-context strong { color: var(--page-fg); }
+.proto-context a { color: var(--page-accent, var(--s-70)); text-decoration: none; border-bottom: 1px dotted currentColor; }
+.proto-context__head { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; color: var(--page-fg); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px; }
+
+.screen { animation: fade-in 220ms ease; }
+@keyframes fade-in { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+</style>
+<script src="flow-chain.js" defer></script>
+</head>
+<body>
+
+<div class="proto-shell">
+
+  <aside class="proto-sidebar">
+    <div class="proto-sidebar__brand">
+      <span class="proto-sidebar__mark"><img src="../assets/gc-mark-mono-light.svg" alt=""></span>
+      <span>
+        <div class="proto-sidebar__name">GaimControl</div>
+        <span class="proto-sidebar__pill">web</span>
+      </span>
+    </div>
+    <a class="proto-sidebar__back" href="index.html">← prototype index</a>
+    <button class="proto-theme-toggle" type="button" aria-label="Toggle theme">
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+      <span class="theme-label">Dark</span>
+    </button>
+    <div class="proto-section-title">§08 · AN1 – AN8</div>
+    <nav class="proto-scrubber" id="scrubber"></nav>
+    <div class="proto-sidebar__footer">Source: <a href="../web-ui/08-anna-cbt.html">web-ui/08</a></div>
+  </aside>
+
+  <main class="proto-stage">
+
+    <div class="proto-modebar">
+      <span>Screen <span class="proto-modebar__id" id="screenId">AN1</span></span>
+      <span class="proto-modebar__pill" id="screenName">Anna home</span>
+      <div class="proto-modebar__bar"><div class="proto-modebar__bar__fill" id="progressFill" style="width:13%"></div></div>
+      <div class="proto-arrows">
+        <button class="proto-arrow" id="navPrev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+        <button class="proto-arrow" id="navNext"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
+      </div>
+    </div>
+
+    <div class="browser">
+      <div class="browser__chrome">
+        <span class="browser__dots"><span class="browser__dot"></span><span class="browser__dot"></span><span class="browser__dot"></span></span>
+        <span class="browser__url">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          <span id="browserUrl">app.gaimcontrol.com/anna</span>
+        </span>
+      </div>
+      <div class="browser__viewport" id="viewport"></div>
+    </div>
+
+    <div class="proto-context" id="contextPanel">
+      <div class="proto-context__head">Screen context</div>
+      <div id="contextBody"></div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+const SCREENS = [
+  { id: 'AN1', name: 'Anna home', kind: 'an1', url: '/anna' },
+  { id: 'AN2', name: 'Active chat', kind: 'an2', url: '/anna/chat' },
+  { id: 'AN3', name: 'CBT S1 · intro', kind: 'an3', url: '/anna/cbt/s1' },
+  { id: 'AN4', name: 'CBT in-flow · worksheet', kind: 'an4', url: '/anna/cbt/s3/worksheet' },
+  { id: 'AN5', name: 'Session complete', kind: 'an5', url: '/anna/cbt/s3/complete' },
+  { id: 'AN6', name: 'Daily · mood', kind: 'an6', url: '/anna/daily/mood' },
+  { id: 'AN7', name: 'Daily · urge check', kind: 'an7', url: '/anna/daily/urge' },
+  { id: 'AN8', name: 'Daily · gratitude', kind: 'an8', url: '/anna/daily/gratitude' },
+];
+
+const CTX = {
+  an1: '<strong>AN1 Anna home.</strong> Chat preview + 4 CBT sessions (Awareness · Goals · Attitude · Focus, weekly cadence) + today\'s daily check-ins. Sessions 1–4 are by clinical lead Alan Curley. Web layout splits hero + today summary 2-up.',
+  an2: '<strong>AN2 Active chat.</strong> Larger chat surface than mobile per spec — fixed 760px max-width with composer pinned. Per <a href="../41-decisions-log.html">AN-01</a> crisis-language uses chat LLM safety + reviewed prompt. Per <a href="../41-decisions-log.html">AN-04</a> voice mode post-MVP. Per <a href="../41-decisions-log.html">AN-07</a> flagged threads route to in-house clinical via admin dash.',
+  an3: '<strong>AN3 CBT S1 Awareness intro.</strong> Every session is 4 beats: Mood-in → guided exercise → worksheet → Mood-out. ~25 min total. Web shows hero + plan side-by-side.',
+  an4: '<strong>AN4 CBT in-flow worksheet.</strong> S3 step 3 · Triggers. Picker grid + inline Anna observation.',
+  an5: '<strong>AN5 Session complete.</strong> Mood-out delta, worksheet summary, journal entry, sponsor digest preview. Per <a href="../41-decisions-log.html">AN-05</a> the digest is editable but <strong>not dismissible</strong>.',
+  an6: '<strong>AN6 Daily mood.</strong> 1–5 scale, twice daily, 30 sec.',
+  an7: '<strong>AN7 Daily urge check.</strong> 0–10 slider. At 7+, surfaces 3 actions: 5-min Anna talk, Tell sponsor, Walk.',
+  an8: '<strong>AN8 Daily gratitude.</strong> Optional evening check-in, ~2 min, 3 small things.',
+};
+
+const APPNAV = () => `
+  <aside class="appnav">
+    <div class="appnav__brand">
+      <span class="appnav__mark"><img src="../assets/gc-mark-mono-light.svg" alt=""></span>
+      <span class="appnav__name">GaimControl</span>
+    </div>
+    <div class="appnav__user">
+      <span class="appnav__avatar">S</span>
+      <div><div class="appnav__user-name">Sam Kennedy</div><div class="appnav__user-sub">Habitual · Day 12</div></div>
+    </div>
+    <nav class="appnav__list">
+      <a class="appnav__item is-disabled" title="Out of scope"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>Home</a>
+      <a class="appnav__item is-disabled" title="§06 Banking — open the banking prototype"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Banking</a>
+      <a class="appnav__item is-on" style="cursor:pointer" onclick="go(0)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg>Anna</a>
+      <a class="appnav__item is-disabled"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m7 14 4-4 4 4 5-5"/></svg>Activity</a>
+      <a class="appnav__item is-disabled"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>Profile</a>
+    </nav>
+    <div class="appnav__help">
+      <div style="font-size:12px;font-weight:700;margin-bottom:3px">Need help?</div>
+      <div style="font-size:11px;color:var(--text-secondary);line-height:1.4">Anna's always there. Crisis line is one tap away.</div>
+      <button class="gc-crisis-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7-4.5-9-9.5C2 7 5 4 8 4c1.7 0 3.2.8 4 2 .8-1.2 2.3-2 4-2 3 0 6 3 5 7.5C19 16.5 12 21 12 21z"/></svg>Get help now</button>
+    </div>
+  </aside>`;
+
+const PAGE = (title, sub, content) => `
+  <div class="screen" style="display:contents">
+    ${APPNAV()}
+    <div class="main">
+      <div class="main__head"><div><h1 class="main__title">${title}</h1>${sub ? `<p class="main__sub">${sub}</p>` : ''}</div></div>
+      ${content}
+    </div>
+  </div>`;
+
+const builders = {
+  an1: () => PAGE('Anna', 'Your CBT coach · S3 Attitude tonight · 21:00', `
+    <div class="row-2">
+      <div class="stack">
+        <div class="gc-card gc-card--anna-big">
+          <div class="an-anna-hero">
+            <span class="an-anna-av"><img src="../assets/gc-mark-mono-light.svg" alt=""></span>
+            <div><div class="an-anna-name">Anna</div><div class="an-anna-meta">21 conversations · 2 sessions done · always here</div></div>
+          </div>
+          <p style="font-size:16px;line-height:1.6;margin:8px 0 0;max-width:50ch">"You're 6 days in. Want to talk through tonight, or come back tomorrow?"</p>
+          <div style="display:flex;gap:10px;margin-top:8px">
+            <button class="gc-btn gc-btn--white gc-btn--lg" onclick="go(1)">Open chat</button>
+            <button class="gc-btn gc-btn--ghost gc-btn--lg" style="color:white;border-color:rgba(255,255,255,0.3)">Skip tonight</button>
+          </div>
+        </div>
+        <div class="gc-card">
+          <h3 style="font-size:15px;font-weight:700;margin:0">CBT · weekly cadence</h3>
+          <div class="an-cbt-row is-done"><span class="an-cbt-num">S1</span><div><div class="an-cbt-t">Awareness</div><div class="an-cbt-s">Done · mood 2 → 3 · 25 min</div></div><span class="an-cbt-chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span></div>
+          <div class="an-cbt-row is-done"><span class="an-cbt-num">S2</span><div><div class="an-cbt-t">Goals</div><div class="an-cbt-s">Done · mood 3 → 4 · 22 min</div></div><span class="an-cbt-chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span></div>
+          <div class="an-cbt-row is-active" onclick="go(2)"><span class="an-cbt-num">S3</span><div><div class="an-cbt-t">Attitude</div><div class="an-cbt-s">Tonight 21:00 · ~25 min</div></div><span class="an-cbt-chev">›</span></div>
+          <div class="an-cbt-row is-locked"><span class="an-cbt-num">S4</span><div><div class="an-cbt-t">Focus</div><div class="an-cbt-s">Locked · unlocks next week</div></div><span class="an-cbt-chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="10" x="5" y="11" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span></div>
+        </div>
+      </div>
+      <div class="stack">
+        <div class="gc-card">
+          <h3 style="font-size:15px;font-weight:700;margin:0">Today</h3>
+          <div class="an-daily-row is-done" onclick="go(5)"><span class="an-daily-ic" style="background:var(--p-40);color:var(--p-95)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/></svg></span><div><div class="an-daily-t">Mood</div><div class="an-daily-s">3/5 · logged 09:14</div></div></div>
+          <div class="an-daily-row is-due" onclick="go(6)"><span class="an-daily-ic" style="background:var(--w-30);color:var(--w-80)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l2 2"/></svg></span><div><div class="an-daily-t">Urge check</div><div class="an-daily-s">Due now</div></div></div>
+          <div class="an-daily-row" onclick="go(7)"><span class="an-daily-ic" style="background:var(--t-20);color:var(--t-80)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 21s-7-4.5-9-9.5C2 7 5 4 8 4c1.7 0 3.2.8 4 2 .8-1.2 2.3-2 4-2 3 0 6 3 5 7.5C19 16.5 12 21 12 21z"/></svg></span><div><div class="an-daily-t">Gratitude</div><div class="an-daily-s">Optional · evening · 2 min</div></div></div>
+        </div>
+        <div class="gc-card" style="background:rgba(133,118,194,0.06);border-color:rgba(133,118,194,0.25)">
+          <h3 style="font-size:14px;font-weight:700;margin:0;color:var(--accent)">Privileged · sponsor-blind</h3>
+          <p style="font-size:13px;color:var(--text-secondary);line-height:1.55;margin:0">Anna chat content is private. Joanna sees session-completion summaries via the digest (not dismissible per <a href="../41-decisions-log.html" style="color:var(--accent);text-decoration:none">AN-05</a>) — never transcripts.</p>
+        </div>
+      </div>
+    </div>`),
+
+  an2: () => PAGE('Anna · chat', 'CBT S3 · Attitude · started 21:14', `
+    <div class="an-chat-wrap">
+      <div class="an-chat-list">
+        <div class="an-chat-sys">Today, 21:14 · CBT S3 · Attitude</div>
+        <div class="an-msg">
+          <span class="an-msg__av an-msg__av--anna"><img src="../assets/gc-mark-mono-light.svg" alt=""></span>
+          <div class="an-msg__col">
+            <div class="an-msg__meta"><strong>Anna</strong><span>21:14</span></div>
+            <div class="an-bubble an-bubble--anna">Hey — tonight is on attitude. Take it slow with me?</div>
+          </div>
+        </div>
+        <div class="an-msg an-msg--user">
+          <div class="an-msg__col">
+            <div class="an-msg__meta"><strong>You</strong><span>21:14</span></div>
+            <div class="an-bubble an-bubble--user">yeah ok</div>
+          </div>
+          <span class="an-msg__av an-msg__av--user">SK</span>
+        </div>
+        <div class="an-msg">
+          <span class="an-msg__av an-msg__av--anna"><img src="../assets/gc-mark-mono-light.svg" alt=""></span>
+          <div class="an-msg__col">
+            <div class="an-msg__meta"><strong>Anna</strong><span>21:14</span></div>
+            <div class="an-bubble an-bubble--anna">How are you feeling? 1 = bad, 5 = good.</div>
+            <div class="an-replies"><button class="an-reply">1</button><button class="an-reply">2</button><button class="an-reply">3</button><button class="an-reply">4</button><button class="an-reply">5</button></div>
+          </div>
+        </div>
+        <div class="an-msg an-msg--user">
+          <div class="an-msg__col">
+            <div class="an-msg__meta"><strong>You</strong><span>21:15</span></div>
+            <div class="an-bubble an-bubble--user">2</div>
+          </div>
+          <span class="an-msg__av an-msg__av--user">SK</span>
+        </div>
+        <div class="an-msg">
+          <span class="an-msg__av an-msg__av--anna"><img src="../assets/gc-mark-mono-light.svg" alt=""></span>
+          <div class="an-msg__col">
+            <div class="an-msg__meta"><strong>Anna</strong><span style="color:var(--accent)">thinking…</span></div>
+            <div class="an-thinking"><span class="an-thinking__dots"><span></span><span></span><span></span></span><span>checking last week's mood pattern</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="an-composer">
+        <button class="an-composer__attach"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg></button>
+        <textarea class="an-composer__input" placeholder="Write to Anna…" rows="1"></textarea>
+        <button class="an-composer__send" onclick="next()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg></button>
+      </div>
+    </div>`),
+
+  an3: () => PAGE('S1 · Awareness', 'CBT 1 of 4 · ~25 min · clinical lead: Alan Curley', `
+    <div class="row-2">
+      <div class="stack">
+        <div class="gc-card gc-card--anna-big">
+          <span class="an-pill">CBT 1 of 4 · ~25 min</span>
+          <h2 style="font-size:36px;font-weight:800;letter-spacing:-0.025em;line-height:1.05;margin:6px 0 0">Awareness</h2>
+          <p style="font-size:15px;line-height:1.6;margin:0;max-width:50ch">Spotting the patterns before changing them. Tonight we name what the body and head do before the urge shows up.</p>
+          <div style="display:flex;gap:7px;flex-wrap:wrap;margin-top:6px">
+            <span style="padding:5px 14px;border-radius:999px;background:rgba(255,255,255,0.18);font-size:12px;font-weight:600">Triggers</span>
+            <span style="padding:5px 14px;border-radius:999px;background:rgba(255,255,255,0.18);font-size:12px;font-weight:600">Body signals</span>
+            <span style="padding:5px 14px;border-radius:999px;background:rgba(255,255,255,0.18);font-size:12px;font-weight:600">Naming the urge</span>
+          </div>
+          <div style="display:flex;gap:10px;margin-top:14px">
+            <button class="gc-btn gc-btn--white gc-btn--lg" onclick="next()">Start</button>
+            <button class="gc-btn gc-btn--ghost gc-btn--lg" style="color:white;border-color:rgba(255,255,255,0.3)">Read overview</button>
+          </div>
+        </div>
+      </div>
+      <div class="stack">
+        <div class="gc-card">
+          <h3 style="font-size:15px;font-weight:700;margin:0 0 4px">Tonight's plan · 4 beats</h3>
+          <div class="an-plan-row"><span class="an-plan-n">1</span><div><div class="an-plan-t">Mood-in</div><div class="an-plan-s">1–5 · 30 sec</div></div></div>
+          <div class="an-plan-row"><span class="an-plan-n">2</span><div><div class="an-plan-t">Guided exercise</div><div class="an-plan-s">Anna prompts · ~10 min</div></div></div>
+          <div class="an-plan-row"><span class="an-plan-n">3</span><div><div class="an-plan-t">Worksheet</div><div class="an-plan-s">Saved to journal</div></div></div>
+          <div class="an-plan-row"><span class="an-plan-n">4</span><div><div class="an-plan-t">Mood-out</div><div class="an-plan-s">Track the delta</div></div></div>
+        </div>
+        <div class="an-decision">Curriculum · Alan Curley · S1 Awareness · S2 Goals · S3 Attitude · S4 Focus</div>
+      </div>
+    </div>`),
+
+  an4: () => PAGE('S3 · worksheet', 'Step 3 of 4 · Triggers', `
+    <div style="max-width:780px;margin:0 auto">
+      <div class="an-steps" style="margin-bottom:18px">
+        <div class="an-step is-done"></div>
+        <div class="an-step is-done"></div>
+        <div class="an-step is-active"></div>
+        <div class="an-step"></div>
+      </div>
+      <div class="gc-card" style="padding:28px;gap:14px">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted)">Step 3 · Triggers</span>
+        <h3 style="font-size:22px;font-weight:700;letter-spacing:-0.015em;line-height:1.25;margin:0">What was happening 30 min before?</h3>
+        <p style="font-size:14px;color:var(--text-secondary);line-height:1.5;margin:0">Pick the ones that match. More than one is fine.</p>
+        <div class="an-chip-grid">
+          <button class="an-chip is-on" onclick="toggleChip(this)"><span>🌙</span><span>Alone, late</span></button>
+          <button class="an-chip is-on" onclick="toggleChip(this)"><span>📱</span><span>Phone in hand</span></button>
+          <button class="an-chip" onclick="toggleChip(this)"><span>🍷</span><span>Drinking</span></button>
+          <button class="an-chip" onclick="toggleChip(this)"><span>💸</span><span>Money tight</span></button>
+          <button class="an-chip is-on" onclick="toggleChip(this)"><span>😞</span><span>Low mood</span></button>
+          <button class="an-chip" onclick="toggleChip(this)"><span>⚽</span><span>Big match on</span></button>
+        </div>
+      </div>
+      <div class="an-quote" style="margin-top:16px">Alone, late + low mood — same as last Sunday. Let's hold that for a minute.</div>
+      <div style="display:flex;gap:10px;margin-top:18px;justify-content:flex-end">
+        <button class="gc-btn gc-btn--ghost">Back</button>
+        <button class="gc-btn gc-btn--primary gc-btn--lg" onclick="next()">Next →</button>
+      </div>
+    </div>`),
+
+  an5: () => PAGE('S3 complete', 'Mood 2 → 4 · 22 minutes · saved to journal', `
+    <div class="row-2">
+      <div class="stack">
+        <div class="gc-card gc-card--complete">
+          <span class="an-pill">
+            <span style="display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;border-radius:50%;background:white;color:var(--t-30)"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+            S3 complete · Attitude
+          </span>
+          <h2 style="font-size:32px;font-weight:800;letter-spacing:-0.02em;line-height:1.1;margin:8px 0 0">You did the work tonight.</h2>
+          <p style="font-size:15px;line-height:1.55;margin:0">22 min · mood 2 → 4. Anna will nudge earlier on Sundays now.</p>
+        </div>
+        <div class="gc-card">
+          <h3 style="font-size:15px;font-weight:700;margin:0">What we covered</h3>
+          <div class="an-sum"><span class="an-sum-l">Trigger</span><span class="an-sum-v">Alone late · low mood</span></div>
+          <div class="an-sum"><span class="an-sum-l">Reframe</span><span class="an-sum-v">"I'm tired, not weak."</span></div>
+          <div class="an-sum"><span class="an-sum-l">Plan</span><span class="an-sum-v">Text Joanna · walk · chat</span></div>
+          <div class="an-sum"><span class="an-sum-l">Mood</span><span class="an-sum-v" style="color:var(--t-50)">2 → 4</span></div>
+        </div>
+      </div>
+      <div class="stack">
+        <div class="gc-card">
+          <h3 style="font-size:15px;font-weight:700;margin:0">Journal entry</h3>
+          <textarea class="an-journal">Tonight felt like a 2 but I named it. The reframe felt corny when I said it but I think it's actually true.</textarea>
+        </div>
+        <div class="an-digest">
+          <span class="an-digest__head"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 4.5 6v6c0 5 3.5 9 7.5 10 4-1 7.5-5 7.5-10V6Z"/></svg> Sponsor digest preview</span>
+          <p>"Sam completed S3 (Attitude). Mood 2 → 4. Pattern: Sunday evenings."</p>
+          <div class="an-digest__note">Editable per session · not dismissible (decision <a href="../41-decisions-log.html" style="color:var(--accent);text-decoration:none">AN-05</a>). Sponsor never sees transcripts.</div>
+        </div>
+        <button class="gc-btn gc-btn--primary gc-btn--lg gc-btn--full" onclick="go(0)">Back to Anna home</button>
+      </div>
+    </div>`),
+
+  an6: () => PAGE('Mood', 'Twice daily · 30 seconds · feeds Anna\'s pattern-spotting', `
+    <div style="max-width:560px;margin:0 auto">
+      <div class="gc-card" style="padding:28px;gap:18px">
+        <div class="an-daily-head">
+          <span class="an-daily-ic-lg" style="background:var(--p-40);color:var(--p-95)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" x2="9" y1="9" y2="9"/><line x1="15" x2="15" y1="9" y2="9"/></svg></span>
+          <div><h3 style="font-size:18px;font-weight:700;margin:0">Mood</h3><div style="font-size:13px;color:var(--text-secondary);margin-top:3px">Twice daily · 30 sec</div></div>
+        </div>
+        <p style="font-size:16px;line-height:1.5;margin:0;color:var(--text-primary)">"On a scale of 1 to 5, how are you?"</p>
+        <div class="an-mood-grid">
+          <button class="an-mood-btn" onclick="pickMood(this)"><span>😞</span><span>1</span></button>
+          <button class="an-mood-btn" onclick="pickMood(this)"><span>😕</span><span>2</span></button>
+          <button class="an-mood-btn is-on" onclick="pickMood(this)"><span>😐</span><span>3</span></button>
+          <button class="an-mood-btn" onclick="pickMood(this)"><span>🙂</span><span>4</span></button>
+          <button class="an-mood-btn" onclick="pickMood(this)"><span>😄</span><span>5</span></button>
+        </div>
+        <p style="font-size:12px;color:var(--text-muted);margin:0">Logged 09:14 · next 18:30</p>
+        <button class="gc-btn gc-btn--primary gc-btn--lg gc-btn--full" onclick="next()">Save</button>
+      </div>
+    </div>`),
+
+  an7: () => PAGE('Urge check', 'When the wave shows up · 1 minute', `
+    <div style="max-width:560px;margin:0 auto">
+      <div class="gc-card" style="padding:28px;gap:18px">
+        <div class="an-daily-head">
+          <span class="an-daily-ic-lg" style="background:var(--w-30);color:var(--w-80)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/><path d="M12 8v4l2 2"/></svg></span>
+          <div><h3 style="font-size:18px;font-weight:700;margin:0">Urge check</h3><div style="font-size:13px;color:var(--text-secondary);margin-top:3px">When the wave shows up · 1 min</div></div>
+        </div>
+        <p style="font-size:16px;line-height:1.5;margin:0">"How strong is the pull right now?"</p>
+        <div>
+          <div class="an-urge-track"><div class="an-urge-marker" style="left:65%"></div></div>
+          <div class="an-urge-scale"><span>1</span><span>3</span><span>5</span><span>7</span><span>9</span></div>
+          <div class="an-urge-readout">7 / 10</div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px;padding-top:8px;border-top:1px solid var(--border)">
+          <button class="gc-btn gc-btn--primary gc-btn--lg" onclick="go(1)">Anna · 5-min talk</button>
+          <div style="display:flex;gap:8px">
+            <button class="gc-btn gc-btn--ghost" style="flex:1">Tell Joanna</button>
+            <button class="gc-btn gc-btn--ghost" style="flex:1">Walk · 5 min</button>
+          </div>
+        </div>
+      </div>
+      <div class="an-decision" style="margin-top:16px">Decision <a href="../41-decisions-log.html">AN-06</a> · daily gamification confirmed — urge checks count toward streaks</div>
+    </div>`),
+
+  an8: () => PAGE('Gratitude', 'Evening · optional · 2 min · 3 small things', `
+    <div style="max-width:560px;margin:0 auto">
+      <div class="gc-card" style="padding:28px;gap:18px">
+        <div class="an-daily-head">
+          <span class="an-daily-ic-lg" style="background:var(--t-20);color:var(--t-80)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 21s-7-4.5-9-9.5C2 7 5 4 8 4c1.7 0 3.2.8 4 2 .8-1.2 2.3-2 4-2 3 0 6 3 5 7.5C19 16.5 12 21 12 21z"/></svg></span>
+          <div><h3 style="font-size:18px;font-weight:700;margin:0">Gratitude</h3><div style="font-size:13px;color:var(--text-secondary);margin-top:3px">Evening · optional · 2 min</div></div>
+        </div>
+        <p style="font-size:16px;line-height:1.5;margin:0">"Three small things from today."</p>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div class="an-grat-row"><span class="an-grat-n">1</span><input class="an-grat-input" type="text" placeholder="Specific. A coffee, a phone call."></div>
+          <div class="an-grat-row"><span class="an-grat-n">2</span><input class="an-grat-input" type="text" placeholder="Repeats are fine."></div>
+          <div class="an-grat-row"><span class="an-grat-n">3</span><input class="an-grat-input" type="text" placeholder="If you blank, leave it."></div>
+        </div>
+        <button class="gc-btn gc-btn--primary gc-btn--lg gc-btn--full" onclick="go(0)">Save · back to Anna</button>
+      </div>
+    </div>`),
+};
+
+let idx = 0;
+
+function pickMood(el) { el.parentElement.querySelectorAll('.is-on').forEach(s => s.classList.remove('is-on')); el.classList.add('is-on'); }
+function toggleChip(el) { el.classList.toggle('is-on'); }
+
+function render() {
+  const screen = SCREENS[idx];
+  document.getElementById('viewport').innerHTML = builders[screen.kind]();
+  document.getElementById('browserUrl').textContent = 'app.gaimcontrol.com' + screen.url;
+  document.getElementById('screenId').textContent = screen.id;
+  document.getElementById('screenName').textContent = screen.name;
+  document.getElementById('progressFill').style.width = ((idx + 1) / SCREENS.length * 100) + '%';
+  document.getElementById('navPrev').disabled = idx === 0;
+  document.getElementById('navNext').disabled = idx === SCREENS.length - 1;
+  document.querySelectorAll('.proto-scrubber__item').forEach((el, i) => {
+    el.classList.toggle('is-active', i === idx);
+    if (i === idx) el.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  });
+  document.getElementById('contextBody').innerHTML = CTX[screen.kind] || screen.name;
+}
+
+function next() { if (idx < SCREENS.length - 1) { idx++; render(); } }
+function prev() { if (idx > 0) { idx--; render(); } }
+function go(i) { idx = i; render(); }
+
+function buildScrubber() {
+  const nav = document.getElementById('scrubber');
+  SCREENS.forEach((s, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'proto-scrubber__item';
+    btn.innerHTML = `<span class="proto-scrubber__id">${s.id}</span><span class="proto-scrubber__name">${s.name}</span>`;
+    btn.addEventListener('click', () => go(i));
+    nav.appendChild(btn);
+  });
+}
+
+function initTheme() {
+  const root = document.documentElement;
+  const stored = localStorage.getItem('gc-proto-theme');
+  const initial = stored || 'dark';
+  root.setAttribute('data-theme', initial);
+  document.querySelector('.theme-label').textContent = initial === 'dark' ? 'Dark' : 'Light';
+  document.querySelector('.proto-theme-toggle').addEventListener('click', () => {
+    const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    document.querySelector('.theme-label').textContent = next === 'dark' ? 'Dark' : 'Light';
+    try { localStorage.setItem('gc-proto-theme', next); } catch(e) {}
+  });
+}
+
+document.getElementById('navPrev').addEventListener('click', prev);
+document.getElementById('navNext').addEventListener('click', next);
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowRight') next();
+  if (e.key === 'ArrowLeft') prev();
+});
+
+buildScrubber();
+initTheme();
+render();
+</script>
+
+</body>
+</html>

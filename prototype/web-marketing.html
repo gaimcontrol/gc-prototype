@@ -1,0 +1,1353 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GaimControl · Web · §14 Marketing site</title>
+<link rel="icon" href="../assets/gc-favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --p-10:#0B0F1C;--p-20:#161B2D;--p-30:#20273C;--p-40:#354872;--p-50:#4D608C;--p-60:#6B7DA6;--p-70:#8E9DC0;--p-80:#B5BFD9;--p-90:#DCE2F0;--p-95:#ECF0F9;--p-99:#FAFBFE;--p-100:#FFF;
+  --s-10:#28215A;--s-20:#3E3478;--s-30:#534792;--s-40:#6B5DAC;--s-50:#8576C2;--s-60:#9D90D2;--s-70:#B5ACDF;--s-80:#CFC8EA;--s-90:#E8E4F4;--s-95:#F4F1FB;
+  --t-10:#0E4A35;--t-20:#1A6047;--t-30:#1F7058;--t-40:#2A8060;--t-50:#399971;--t-60:#5BB088;--t-70:#82C7A4;--t-80:#ADDCC2;--t-90:#D5EDDF;--t-95:#EBF6F0;
+  --w-30:#6B4500;--w-60:#C28200;--w-80:#FAB44A;--w-90:#FFDFA8;
+  --e-30:#7A1F1F;--e-50:#C73838;--e-80:#F4A4A4;--e-90:#FBD9D9;
+  --n-50:#76798A;--n-80:#C5C8D2;--n-95:#F1F2F5;--nv-80:#C5C9DD;
+}
+[data-theme="dark"] { --bg-base: var(--p-30); --bg-surface: var(--p-20); --bg-surface-2: var(--p-10); --border: rgba(255,255,255,0.08); --border-strong: rgba(255,255,255,0.16); --text-primary: var(--n-95); --text-secondary: var(--nv-80); --text-muted: rgba(255,255,255,0.45); --accent: var(--s-70); --accent-strong: var(--s-50); --on-accent: #fff; --page-bg: #0a0e1a; --page-fg: var(--n-95); --page-fg-muted: var(--nv-80); --page-card-bg: var(--p-20); --page-divider: rgba(255,255,255,0.06); --hero-bg: radial-gradient(at 20% 10%, rgba(133,118,194,0.18) 0, transparent 50%), radial-gradient(at 90% 80%, rgba(57,153,113,0.16) 0, transparent 50%), var(--p-30); }
+[data-theme="light"] { --bg-base: var(--p-99); --bg-surface: #fff; --bg-surface-2: var(--p-95); --border: rgba(22,27,45,0.08); --border-strong: rgba(22,27,45,0.16); --text-primary: var(--p-20); --text-secondary: var(--n-50); --text-muted: var(--n-50); --accent: var(--p-40); --accent-strong: var(--s-40); --on-accent: #fff; --page-bg: var(--p-95); --page-fg: var(--p-20); --page-fg-muted: var(--n-50); --page-card-bg: #fff; --page-divider: rgba(22,27,45,0.08); --hero-bg: radial-gradient(at 20% 10%, rgba(133,118,194,0.14) 0, transparent 50%), radial-gradient(at 90% 80%, rgba(57,153,113,0.12) 0, transparent 50%), var(--p-99); }
+* { box-sizing: border-box; }
+html, body { background: var(--page-bg); color: var(--page-fg); margin: 0; transition: background-color 220ms ease, color 220ms ease; }
+body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif; font-size: 15px; line-height: 1.5; -webkit-font-smoothing: antialiased; min-height: 100vh; }
+
+/* Proto shell */
+.proto-shell { display: grid; grid-template-columns: 280px 1fr; gap: 0; min-height: 100vh; }
+@media (max-width: 1100px) { .proto-shell { grid-template-columns: 1fr; } }
+.proto-sidebar { background: var(--page-card-bg); border-right: 1px solid var(--page-divider); padding: 28px 22px; position: sticky; top: 0; height: 100vh; overflow-y: auto; display: flex; flex-direction: column; gap: 16px; }
+@media (max-width: 1100px) { .proto-sidebar { position: static; height: auto; max-height: 50vh; border-right: none; border-bottom: 1px solid var(--page-divider); } }
+.proto-sidebar__brand { display: flex; align-items: center; gap: 10px; }
+.proto-sidebar__mark { width: 36px; height: 36px; border-radius: 10px; background: var(--p-30); display: inline-flex; align-items: center; justify-content: center; }
+.proto-sidebar__mark img { width: 70%; height: 70%; }
+.proto-sidebar__name { font-weight: 700; font-size: 17px; letter-spacing: -0.01em; }
+.proto-sidebar__pill { display: inline-flex; padding: 3px 9px; border-radius: 999px; background: linear-gradient(120deg, var(--s-50), var(--p-50), var(--t-50)); color: white; font-weight: 700; font-size: 9.5px; font-family: 'JetBrains Mono', monospace; letter-spacing: 0.06em; text-transform: uppercase; }
+.proto-sidebar__back { display: inline-flex; align-items: center; gap: 6px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--page-fg-muted); text-decoration: none; }
+.proto-section-title { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--page-fg-muted); margin: 12px 0 6px; }
+.proto-scrubber { display: flex; flex-direction: column; gap: 2px; }
+.proto-scrubber__item { display: grid; grid-template-columns: 44px 1fr; gap: 8px; align-items: center; padding: 7px 10px; border-radius: 8px; cursor: pointer; border: none; background: transparent; color: inherit; font-family: inherit; text-align: left; }
+.proto-scrubber__item:hover { background: rgba(127,127,127,0.08); }
+.proto-scrubber__item.is-active { background: var(--accent-strong); color: var(--on-accent); }
+.proto-scrubber__item.is-active .proto-scrubber__id { color: rgba(255,255,255,0.85); }
+.proto-scrubber__id { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; color: var(--page-fg-muted); letter-spacing: 0.06em; }
+.proto-scrubber__name { font-size: 12.5px; font-weight: 500; }
+.proto-sidebar__footer { margin-top: auto; padding-top: 16px; border-top: 1px solid var(--page-divider); font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--page-fg-muted); }
+.proto-sidebar__footer a { color: var(--page-fg-muted); text-decoration: none; border-bottom: 1px dotted currentColor; }
+.proto-theme-toggle { display: inline-flex; align-items: center; gap: 8px; padding: 7px 12px; border-radius: 8px; background: var(--bg-surface-2); border: 1px solid var(--border); color: var(--page-fg-muted); cursor: pointer; font-family: 'JetBrains Mono', monospace; font-size: 11px; align-self: flex-start; }
+.proto-theme-toggle svg { width: 12px; height: 12px; }
+[data-theme="dark"] .proto-theme-toggle .icon-moon { display: none; }
+[data-theme="light"] .proto-theme-toggle .icon-sun { display: none; }
+
+.proto-stage { display: flex; flex-direction: column; align-items: center; padding: 32px 24px 64px; gap: 18px; }
+.proto-modebar { display: flex; align-items: center; gap: 10px; padding: 10px 16px; background: var(--page-card-bg); border: 1px solid var(--page-divider); border-radius: 12px; font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: var(--page-fg-muted); flex-wrap: wrap; justify-content: center; }
+.proto-modebar__pill { display: inline-flex; padding: 3px 9px; border-radius: 999px; background: var(--bg-surface-2); }
+.proto-modebar__id { color: var(--page-fg); font-weight: 700; letter-spacing: 0.06em; }
+.proto-modebar__bar { width: 100px; height: 4px; border-radius: 4px; background: var(--bg-surface-2); position: relative; overflow: hidden; }
+.proto-modebar__bar__fill { position: absolute; left: 0; top: 0; bottom: 0; background: linear-gradient(90deg, var(--s-50), var(--t-50)); transition: width 240ms ease; }
+.proto-arrows { display: flex; align-items: center; gap: 8px; }
+.proto-arrow { width: 36px; height: 36px; border-radius: 10px; background: var(--page-card-bg); border: 1px solid var(--page-divider); color: var(--page-fg-muted); display: inline-flex; align-items: center; justify-content: center; cursor: pointer; }
+.proto-arrow:hover { background: var(--bg-surface-2); color: var(--page-fg); }
+.proto-arrow:disabled { opacity: 0.3; cursor: not-allowed; }
+.proto-arrow svg { width: 18px; height: 18px; }
+
+/* Browser frame */
+.browser { width: 100%; max-width: 1380px; background: var(--bg-base); border-radius: 18px; overflow: hidden; border: 1px solid var(--border); box-shadow: 0 24px 60px -20px rgba(0,0,0,0.45), 0 8px 24px -12px rgba(0,0,0,0.25); }
+[data-theme="light"] .browser { box-shadow: 0 24px 60px -20px rgba(22,27,45,0.18), 0 8px 24px -12px rgba(22,27,45,0.08); }
+.browser__chrome { display: flex; align-items: center; gap: 14px; padding: 12px 16px; background: var(--p-20); border-bottom: 1px solid var(--border); }
+[data-theme="light"] .browser__chrome { background: var(--n-95); }
+.browser__dots { display: inline-flex; gap: 7px; flex-shrink: 0; }
+.browser__dot { width: 11px; height: 11px; border-radius: 50%; }
+.browser__dot:nth-child(1) { background: #FF5F57; } .browser__dot:nth-child(2) { background: #FEBC2E; } .browser__dot:nth-child(3) { background: #28C840; }
+.browser__url { flex: 1; background: var(--bg-base); border: 1px solid var(--border); border-radius: 7px; padding: 6px 14px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--text-secondary); text-align: center; display: flex; align-items: center; justify-content: center; gap: 8px; }
+.browser__url svg { width: 12px; height: 12px; opacity: 0.7; flex-shrink: 0; }
+.browser__viewport { background: var(--bg-base); min-height: 820px; max-height: 820px; position: relative; color: var(--text-primary); overflow-y: auto; }
+.browser__viewport::-webkit-scrollbar { width: 6px; }
+.browser__viewport::-webkit-scrollbar-thumb { background: rgba(127,127,127,0.2); border-radius: 6px; }
+
+/* ──────────── MARKETING SITE STYLES ──────────── */
+/* Brand-wide marketing layout */
+.mk { display: flex; flex-direction: column; min-height: 820px; }
+
+/* Public top-nav */
+.mk-nav { display: flex; align-items: center; gap: 32px; padding: 18px 36px; border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 20; background: var(--bg-base); backdrop-filter: blur(20px); }
+[data-theme="dark"] .mk-nav { background: rgba(32,39,60,0.85); }
+.mk-nav__brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text-primary); flex-shrink: 0; }
+.mk-nav__mark { width: 32px; height: 32px; border-radius: 9px; background: var(--p-30); display: inline-flex; align-items: center; justify-content: center; }
+.mk-nav__mark img { width: 70%; height: 70%; }
+.mk-nav__name { font-weight: 800; font-size: 17px; letter-spacing: -0.02em; }
+.mk-nav__links { display: flex; gap: 4px; }
+.mk-nav__link { padding: 8px 14px; font-size: 14px; font-weight: 500; color: var(--text-secondary); text-decoration: none; border-radius: 8px; cursor: pointer; }
+.mk-nav__link:hover { color: var(--text-primary); background: rgba(127,127,127,0.06); }
+.mk-nav__link.is-on { color: var(--text-primary); font-weight: 600; }
+.mk-nav__cta { margin-left: auto; display: flex; gap: 10px; align-items: center; }
+.mk-nav__login { font-size: 13.5px; font-weight: 600; color: var(--text-primary); text-decoration: none; padding: 8px 14px; }
+.mk-btn { display: inline-flex; align-items: center; justify-content: center; gap: 7px; padding: 11px 20px; border-radius: 12px; font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer; border: 1px solid transparent; text-decoration: none; transition: transform 160ms ease, background-color 160ms ease; }
+.mk-btn:hover { transform: translateY(-1px); }
+.mk-btn--primary { background: var(--p-30); color: white; }
+.mk-btn--primary:hover { background: var(--p-20); }
+[data-theme="light"] .mk-btn--primary { background: var(--p-30); }
+.mk-btn--gradient { background: linear-gradient(120deg, var(--s-50), var(--p-50), var(--t-50)); color: white; box-shadow: 0 8px 24px -10px rgba(133,118,194,0.5); }
+.mk-btn--gradient:hover { box-shadow: 0 12px 28px -10px rgba(133,118,194,0.65); }
+.mk-btn--ghost { background: transparent; color: var(--text-primary); border-color: var(--border-strong); }
+.mk-btn--ghost:hover { background: rgba(127,127,127,0.05); }
+.mk-btn--lg { padding: 15px 28px; font-size: 16px; border-radius: 14px; }
+.mk-btn--xl { padding: 18px 34px; font-size: 17px; border-radius: 14px; }
+
+/* Hero · MK1 */
+.mk-hero { position: relative; padding: 80px 60px 100px; background: var(--hero-bg); overflow: hidden; }
+.mk-hero__bg-orb { position: absolute; pointer-events: none; opacity: 0.6; }
+.mk-hero__bg-orb--1 { top: -120px; right: -80px; width: 420px; height: 420px; background: radial-gradient(circle, rgba(133,118,194,0.45), transparent 65%); }
+.mk-hero__bg-orb--2 { bottom: -180px; left: -100px; width: 540px; height: 540px; background: radial-gradient(circle, rgba(57,153,113,0.32), transparent 65%); }
+.mk-hero__container { display: grid; grid-template-columns: 1.2fr 1fr; gap: 60px; align-items: center; max-width: 1200px; margin: 0 auto; position: relative; z-index: 2; }
+@media (max-width: 900px) { .mk-hero__container { grid-template-columns: 1fr; } }
+.mk-eyebrow { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border-radius: 999px; background: rgba(133,118,194,0.16); color: var(--s-70); font-family: 'JetBrains Mono', monospace; font-size: 11.5px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
+[data-theme="light"] .mk-eyebrow { background: var(--s-95); color: var(--s-40); }
+.mk-eyebrow::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--t-50); animation: pulse 2.4s ease-in-out infinite; }
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+.mk-hero__h1 { font-size: 76px; font-weight: 900; letter-spacing: -0.04em; line-height: 0.95; margin: 22px 0 24px; max-width: 14ch; }
+@media (max-width: 900px) { .mk-hero__h1 { font-size: 56px; } }
+.mk-grad { background: linear-gradient(120deg, var(--s-50) 0%, var(--p-60) 38%, var(--t-50) 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+[data-theme="light"] .mk-grad { background: linear-gradient(120deg, var(--s-40), var(--p-40), var(--t-40)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.mk-hero__p { font-size: 19px; line-height: 1.55; color: var(--text-secondary); max-width: 52ch; margin: 0 0 36px; }
+.mk-hero__cta-row { display: flex; gap: 14px; flex-wrap: wrap; }
+.mk-hero__trust { display: flex; align-items: center; gap: 22px; margin-top: 36px; flex-wrap: wrap; padding-top: 28px; border-top: 1px solid var(--border); }
+.mk-hero__trust-item { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); display: flex; align-items: center; gap: 8px; }
+.mk-hero__trust-item svg { width: 14px; height: 14px; color: var(--t-50); }
+
+/* Hero illustration */
+.mk-hero__art { position: relative; aspect-ratio: 1/1; max-width: 480px; margin-left: auto; }
+.mk-hero__art svg { width: 100%; height: 100%; filter: drop-shadow(0 24px 48px rgba(133,118,194,0.18)); }
+
+/* Sections */
+.mk-section { padding: 90px 60px; position: relative; }
+.mk-section__container { max-width: 1200px; margin: 0 auto; }
+.mk-section--bg { background: var(--bg-surface); }
+[data-theme="dark"] .mk-section--bg { background: rgba(0,0,0,0.18); }
+.mk-section__h2 { font-size: 48px; font-weight: 800; letter-spacing: -0.03em; line-height: 1.05; margin: 0 0 20px; max-width: 22ch; }
+@media (max-width: 900px) { .mk-section__h2 { font-size: 36px; } }
+.mk-section__p { font-size: 18px; color: var(--text-secondary); line-height: 1.6; max-width: 60ch; margin: 0 0 56px; }
+.mk-section__head { text-align: center; margin: 0 auto 60px; max-width: 700px; }
+.mk-section__head .mk-section__h2 { margin: 16px auto 16px; }
+.mk-section__head .mk-section__p { margin: 0 auto; }
+
+/* 3-pillar grid */
+.mk-pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+@media (max-width: 900px) { .mk-pillars { grid-template-columns: 1fr; } }
+.mk-pillar { padding: 36px 30px; border-radius: 20px; background: var(--bg-surface); border: 1px solid var(--border); display: flex; flex-direction: column; gap: 14px; transition: transform 240ms ease, border-color 240ms ease, box-shadow 240ms ease; }
+.mk-pillar:hover { transform: translateY(-4px); border-color: var(--accent); box-shadow: 0 24px 48px -20px rgba(0,0,0,0.25); }
+.mk-pillar__icon { width: 64px; height: 64px; border-radius: 16px; display: inline-flex; align-items: center; justify-content: center; position: relative; }
+.mk-pillar__icon svg { width: 60%; height: 60%; }
+.mk-pillar--banking .mk-pillar__icon { background: linear-gradient(135deg, var(--s-50), var(--s-20)); color: white; }
+.mk-pillar--therapy .mk-pillar__icon { background: linear-gradient(135deg, var(--p-50), var(--p-30)); color: white; }
+.mk-pillar--account .mk-pillar__icon { background: linear-gradient(135deg, var(--t-50), var(--t-20)); color: white; }
+.mk-pillar__tag { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); }
+.mk-pillar__h { font-size: 22px; font-weight: 800; letter-spacing: -0.01em; margin: 0; }
+.mk-pillar__d { font-size: 14.5px; color: var(--text-secondary); line-height: 1.6; margin: 0; }
+.mk-pillar__link { display: inline-flex; align-items: center; gap: 6px; font-size: 13.5px; font-weight: 700; color: var(--accent); text-decoration: none; margin-top: 4px; }
+.mk-pillar__link:hover { gap: 10px; }
+
+/* Stats row */
+.mk-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; }
+@media (max-width: 900px) { .mk-stats { grid-template-columns: 1fr 1fr; } }
+.mk-stat { text-align: left; padding: 24px 26px; background: var(--bg-surface); border: 1px solid var(--border); border-radius: 16px; }
+.mk-stat__n { font-size: 48px; font-weight: 900; letter-spacing: -0.03em; line-height: 1; background: linear-gradient(120deg, var(--s-50), var(--t-50)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.mk-stat__l { font-size: 13.5px; color: var(--text-secondary); margin-top: 10px; line-height: 1.5; }
+
+/* Quote */
+.mk-quote { padding: 60px; border-radius: 24px; background: linear-gradient(135deg, var(--s-20), var(--p-30) 80%); color: white; position: relative; overflow: hidden; }
+[data-theme="light"] .mk-quote { background: linear-gradient(135deg, var(--p-30), var(--s-30)); }
+.mk-quote::before { content: '"'; position: absolute; top: -20px; left: 40px; font-family: 'Inter', serif; font-size: 200px; font-weight: 900; color: rgba(255,255,255,0.1); line-height: 1; }
+.mk-quote__t { font-size: 26px; font-weight: 600; line-height: 1.4; letter-spacing: -0.01em; max-width: 28ch; position: relative; z-index: 2; }
+.mk-quote__author { display: flex; align-items: center; gap: 14px; margin-top: 28px; }
+.mk-quote__author-av { width: 44px; height: 44px; border-radius: 50%; background: rgba(255,255,255,0.18); display: inline-flex; align-items: center; justify-content: center; font-weight: 800; }
+.mk-quote__author-name { font-weight: 700; font-size: 15px; }
+.mk-quote__author-role { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; opacity: 0.78; letter-spacing: 0.06em; text-transform: uppercase; margin-top: 2px; }
+
+/* Big CTA strip */
+.mk-cta { padding: 60px; border-radius: 24px; background: linear-gradient(135deg, var(--s-50), var(--p-40) 50%, var(--t-50)); color: white; text-align: center; position: relative; overflow: hidden; }
+.mk-cta::before, .mk-cta::after { content: ''; position: absolute; border-radius: 50%; background: radial-gradient(circle, rgba(255,255,255,0.18), transparent 70%); }
+.mk-cta::before { top: -160px; left: -100px; width: 380px; height: 380px; }
+.mk-cta::after { bottom: -180px; right: -120px; width: 460px; height: 460px; }
+.mk-cta__h { font-size: 42px; font-weight: 900; letter-spacing: -0.03em; line-height: 1.05; margin: 0; position: relative; z-index: 2; }
+.mk-cta__p { font-size: 17px; line-height: 1.55; opacity: 0.92; margin: 16px auto 36px; max-width: 50ch; position: relative; z-index: 2; }
+.mk-cta__btns { display: inline-flex; gap: 12px; flex-wrap: wrap; justify-content: center; position: relative; z-index: 2; }
+.mk-btn--white { background: white; color: var(--p-30); }
+.mk-btn--white:hover { background: var(--p-95); }
+.mk-btn--ghost-light { background: rgba(255,255,255,0.15); color: white; border-color: rgba(255,255,255,0.25); }
+
+/* Footer */
+.mk-footer { padding: 60px; border-top: 1px solid var(--border); background: var(--bg-surface-2); }
+.mk-footer__container { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr; gap: 40px; }
+@media (max-width: 900px) { .mk-footer__container { grid-template-columns: 1fr 1fr; } }
+.mk-footer__brand-h { font-size: 16px; font-weight: 800; margin: 0 0 10px; }
+.mk-footer__brand-p { font-size: 13px; color: var(--text-secondary); line-height: 1.55; max-width: 32ch; }
+.mk-footer__col-h { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin: 0 0 14px; }
+.mk-footer__col-link { display: block; padding: 4px 0; font-size: 13px; color: var(--text-secondary); text-decoration: none; }
+.mk-footer__col-link:hover { color: var(--text-primary); }
+.mk-footer__bottom { max-width: 1200px; margin: 40px auto 0; padding-top: 22px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; font-size: 12px; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; flex-wrap: wrap; gap: 14px; }
+
+/* MK2 · How it works */
+.mk-step { display: grid; grid-template-columns: 80px 1fr 1fr; gap: 32px; align-items: center; padding: 36px 0; border-top: 1px solid var(--border); }
+.mk-step:first-of-type { border-top: none; }
+@media (max-width: 900px) { .mk-step { grid-template-columns: 1fr; gap: 18px; } }
+.mk-step__n { font-family: 'JetBrains Mono', monospace; font-size: 72px; font-weight: 900; line-height: 1; color: transparent; -webkit-text-stroke: 1.5px var(--accent); letter-spacing: -0.02em; }
+.mk-step__h { font-size: 28px; font-weight: 800; letter-spacing: -0.02em; margin: 0 0 8px; }
+.mk-step__p { font-size: 15px; color: var(--text-secondary); line-height: 1.6; margin: 0; }
+.mk-step__art { aspect-ratio: 4/3; border-radius: 18px; background: var(--bg-surface); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; padding: 22px; }
+.mk-step__art svg { width: 100%; height: 100%; }
+
+/* MK3 contact */
+.mk-contact-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 56px; align-items: start; }
+@media (max-width: 900px) { .mk-contact-grid { grid-template-columns: 1fr; } }
+.mk-form { display: flex; flex-direction: column; gap: 16px; padding: 36px; background: var(--bg-surface); border: 1px solid var(--border); border-radius: 18px; }
+.mk-form__field { display: flex; flex-direction: column; gap: 5px; }
+.mk-form__label { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-muted); }
+.mk-form__input { padding: 12px 14px; font-family: inherit; font-size: 14.5px; background: var(--bg-base); border: 1px solid var(--border); border-radius: 10px; color: var(--text-primary); outline: none; width: 100%; }
+.mk-form__input:focus { border-color: var(--accent); }
+.mk-form__textarea { padding: 12px 14px; font-family: inherit; font-size: 14.5px; background: var(--bg-base); border: 1px solid var(--border); border-radius: 10px; color: var(--text-primary); outline: none; width: 100%; resize: vertical; min-height: 130px; line-height: 1.55; }
+
+.mk-info-card { padding: 26px 28px; border-radius: 16px; background: var(--bg-surface); border: 1px solid var(--border); }
+.mk-info-card--crisis { background: linear-gradient(135deg, var(--e-30), var(--p-30)); color: white; border-color: transparent; }
+[data-theme="light"] .mk-info-card--crisis { background: linear-gradient(135deg, var(--e-50), var(--e-30)); }
+.mk-info-card__h { font-size: 17px; font-weight: 800; margin: 0; }
+.mk-info-card__p { font-size: 13.5px; line-height: 1.6; color: var(--text-secondary); margin: 8px 0 0; }
+.mk-info-card--crisis .mk-info-card__p { color: rgba(255,255,255,0.9); }
+.mk-info-card__line { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-top: 1px solid var(--border); margin-top: 10px; font-size: 13.5px; }
+.mk-info-card--crisis .mk-info-card__line { border-top-color: rgba(255,255,255,0.18); }
+.mk-info-card__line-n { font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 14px; }
+
+/* MK4 company */
+.mk-team-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+@media (max-width: 900px) { .mk-team-grid { grid-template-columns: 1fr 1fr; } }
+.mk-team-card { padding: 22px; background: var(--bg-surface); border: 1px solid var(--border); border-radius: 16px; }
+.mk-team-card__av { width: 64px; height: 64px; border-radius: 50%; background: linear-gradient(135deg, var(--s-50), var(--p-40)); color: white; display: inline-flex; align-items: center; justify-content: center; font-weight: 800; font-size: 22px; }
+.mk-team-card__name { font-size: 16px; font-weight: 700; margin: 14px 0 4px; }
+.mk-team-card__role { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-muted); letter-spacing: 0.04em; }
+.mk-team-card__bio { font-size: 12.5px; color: var(--text-secondary); margin-top: 10px; line-height: 1.55; }
+
+.mk-partner-strip { display: flex; flex-wrap: wrap; gap: 20px; align-items: center; justify-content: center; padding: 30px 24px; background: var(--bg-surface); border: 1px solid var(--border); border-radius: 14px; }
+.mk-partner { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: var(--text-secondary); letter-spacing: 0.05em; padding: 8px 16px; border: 1px solid var(--border); border-radius: 8px; }
+
+/* MK5 FAQs */
+.mk-faq-cats { display: flex; gap: 8px; margin-bottom: 32px; flex-wrap: wrap; }
+.mk-faq-cat { padding: 8px 16px; border-radius: 999px; border: 1px solid var(--border); background: var(--bg-surface); font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; color: var(--text-primary); }
+.mk-faq-cat.is-on { background: var(--p-30); color: white; border-color: transparent; }
+.mk-faq-item { padding: 22px 26px; background: var(--bg-surface); border: 1px solid var(--border); border-radius: 12px; margin-bottom: 10px; cursor: pointer; }
+.mk-faq-item.is-open { border-color: var(--accent); }
+.mk-faq-item__q { display: flex; justify-content: space-between; align-items: center; gap: 16px; font-size: 16px; font-weight: 700; }
+.mk-faq-item__q svg { width: 18px; height: 18px; color: var(--text-secondary); transition: transform 220ms ease; flex-shrink: 0; }
+.mk-faq-item.is-open .mk-faq-item__q svg { transform: rotate(45deg); }
+.mk-faq-item__a { font-size: 14px; line-height: 1.6; color: var(--text-secondary); margin: 12px 0 0; }
+.mk-faq-item:not(.is-open) .mk-faq-item__a { display: none; }
+
+/* MK6 legal */
+.mk-legal-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+@media (max-width: 900px) { .mk-legal-grid { grid-template-columns: 1fr; } }
+.mk-legal-card { padding: 26px 28px; background: var(--bg-surface); border: 1px solid var(--border); border-radius: 16px; display: flex; flex-direction: column; gap: 8px; transition: transform 200ms ease, border-color 200ms ease; cursor: pointer; }
+.mk-legal-card:hover { transform: translateY(-3px); border-color: var(--accent); }
+.mk-legal-card__icon { width: 38px; height: 38px; border-radius: 10px; background: var(--bg-surface-2); display: inline-flex; align-items: center; justify-content: center; color: var(--accent); margin-bottom: 4px; }
+.mk-legal-card__icon svg { width: 18px; height: 18px; }
+.mk-legal-card__t { font-size: 16px; font-weight: 700; margin: 0; }
+.mk-legal-card__d { font-size: 12.5px; color: var(--text-secondary); line-height: 1.55; }
+.mk-legal-card__meta { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; color: var(--text-muted); padding-top: 8px; border-top: 1px solid var(--border); margin-top: 4px; letter-spacing: 0.04em; }
+
+/* MK7 profile landers */
+.mk-lander-hero { padding: 70px 60px; border-radius: 24px; position: relative; overflow: hidden; display: grid; grid-template-columns: 1.2fr 1fr; gap: 40px; align-items: center; }
+@media (max-width: 900px) { .mk-lander-hero { grid-template-columns: 1fr; padding: 40px 30px; } }
+.mk-lander-hero--p1 { background: linear-gradient(135deg, rgba(82,201,162,0.16), rgba(133,118,194,0.08)); }
+.mk-lander-hero--p2 { background: linear-gradient(135deg, rgba(133,118,194,0.18), rgba(57,153,113,0.10)); }
+.mk-lander-hero--p3 { background: linear-gradient(135deg, rgba(255,180,80,0.16), rgba(133,118,194,0.10)); }
+.mk-lander-hero--p4 { background: linear-gradient(135deg, rgba(255,140,80,0.16), rgba(199,56,56,0.10)); }
+.mk-lander-hero--p5 { background: linear-gradient(135deg, rgba(57,153,113,0.20), rgba(133,118,194,0.10)); }
+.mk-lander-hero--p6 { background: linear-gradient(135deg, rgba(118,121,138,0.16), rgba(53,72,114,0.10)); }
+.mk-lander-pill { display: inline-flex; align-items: center; gap: 7px; padding: 5px 14px; border-radius: 999px; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; background: rgba(255,255,255,0.12); color: var(--text-primary); align-self: flex-start; }
+[data-theme="light"] .mk-lander-pill { background: rgba(22,27,45,0.08); }
+.mk-lander-h { font-size: 52px; font-weight: 900; letter-spacing: -0.03em; line-height: 1.05; margin: 16px 0 16px; max-width: 14ch; }
+@media (max-width: 900px) { .mk-lander-h { font-size: 38px; } }
+.mk-lander-p { font-size: 17px; color: var(--text-secondary); line-height: 1.55; max-width: 48ch; margin: 0 0 28px; }
+.mk-lander-utm { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; padding: 4px 10px; border-radius: 6px; background: var(--bg-surface-2); color: var(--text-muted); align-self: flex-start; margin-top: 22px; }
+.mk-lander-art { aspect-ratio: 1/1; max-width: 380px; margin: 0 auto; position: relative; }
+
+/* Profile selector strip */
+.mk-profile-tabs { display: flex; gap: 6px; padding: 6px; background: var(--bg-surface-2); border-radius: 14px; max-width: 880px; margin: 0 auto 40px; flex-wrap: wrap; justify-content: center; }
+.mk-profile-tab { padding: 9px 14px; border-radius: 9px; border: none; background: transparent; cursor: pointer; font-family: inherit; font-size: 12.5px; font-weight: 600; color: var(--text-secondary); }
+.mk-profile-tab:hover { color: var(--text-primary); }
+.mk-profile-tab.is-on { background: var(--bg-surface); color: var(--text-primary); box-shadow: 0 1px 2px rgba(0,0,0,0.08); }
+
+/* MK8 explainer */
+.mk-explainer-hero { padding: 80px 60px; border-radius: 24px; background: linear-gradient(135deg, var(--p-30), var(--s-30) 70%); color: white; text-align: center; position: relative; overflow: hidden; }
+.mk-explainer-hero::before { content: ''; position: absolute; top: -200px; left: 50%; transform: translateX(-50%); width: 800px; height: 800px; background: radial-gradient(circle, rgba(133,118,194,0.35), transparent 60%); pointer-events: none; }
+.mk-explainer-tag { display: inline-flex; padding: 6px 14px; border-radius: 999px; background: rgba(255,255,255,0.18); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; position: relative; z-index: 2; }
+.mk-explainer-h { font-size: 60px; font-weight: 900; letter-spacing: -0.04em; line-height: 1.02; margin: 22px auto; max-width: 18ch; position: relative; z-index: 2; }
+@media (max-width: 900px) { .mk-explainer-h { font-size: 42px; } }
+.mk-explainer-p { font-size: 18px; line-height: 1.55; opacity: 0.92; max-width: 56ch; margin: 0 auto 40px; position: relative; z-index: 2; }
+
+.mk-context { width: 100%; max-width: 1380px; padding: 16px 20px; background: var(--page-card-bg); border: 1px solid var(--page-divider); border-radius: 12px; font-size: 13px; color: var(--page-fg-muted); line-height: 1.55; }
+.mk-context strong { color: var(--page-fg); }
+.mk-context a { color: var(--page-accent, var(--s-70)); text-decoration: none; border-bottom: 1px dotted currentColor; }
+.mk-context__head { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; color: var(--page-fg); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px; }
+
+.screen { animation: fade-in 240ms ease; }
+@keyframes fade-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+/* Float animation for hero illustrations */
+@keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+.float-1 { animation: float 6s ease-in-out infinite; }
+.float-2 { animation: float 7s ease-in-out infinite -1s; }
+.float-3 { animation: float 8s ease-in-out infinite -2s; }
+@keyframes orbit { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+.orbit-slow { animation: orbit 24s linear infinite; transform-origin: center; }
+</style>
+<script src="flow-chain.js" defer></script>
+</head>
+<body>
+
+<div class="proto-shell">
+
+  <aside class="proto-sidebar">
+    <div class="proto-sidebar__brand">
+      <span class="proto-sidebar__mark"><img src="../assets/gc-mark-mono-light.svg" alt=""></span>
+      <span>
+        <div class="proto-sidebar__name">GaimControl</div>
+        <span class="proto-sidebar__pill">web · marketing</span>
+      </span>
+    </div>
+    <a class="proto-sidebar__back" href="index.html">← prototype index</a>
+    <button class="proto-theme-toggle" type="button" aria-label="Toggle theme">
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+      <span class="theme-label">Dark</span>
+    </button>
+    <div class="proto-section-title">§14 · MK1 – MK8</div>
+    <nav class="proto-scrubber" id="scrubber"></nav>
+    <div class="proto-sidebar__footer">Source: <a href="../14-marketing-site.html">14-marketing-site</a><br>Public · gaimcontrol.com · no auth<br>Brand: §01 · Design system: §02</div>
+  </aside>
+
+  <main class="proto-stage">
+
+    <div class="proto-modebar">
+      <span>Screen <span class="proto-modebar__id" id="screenId">MK1</span></span>
+      <span class="proto-modebar__pill" id="screenName">Home · top of funnel</span>
+      <div class="proto-modebar__bar"><div class="proto-modebar__bar__fill" id="progressFill" style="width:13%"></div></div>
+      <div class="proto-arrows">
+        <button class="proto-arrow" id="navPrev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+        <button class="proto-arrow" id="navNext"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
+      </div>
+    </div>
+
+    <div class="browser">
+      <div class="browser__chrome">
+        <span class="browser__dots"><span class="browser__dot"></span><span class="browser__dot"></span><span class="browser__dot"></span></span>
+        <span class="browser__url">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          <span id="browserUrl">gaimcontrol.com</span>
+        </span>
+      </div>
+      <div class="browser__viewport" id="viewport"></div>
+    </div>
+
+    <div class="mk-context" id="contextPanel">
+      <div class="mk-context__head">Screen context</div>
+      <div id="contextBody"></div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+const SCREENS = [
+  { id: 'MK1', name: 'Home · top of funnel', kind: 'mk1', url: '/' },
+  { id: 'MK2', name: 'How it Works', kind: 'mk2', url: '/how-it-works' },
+  { id: 'MK3', name: 'Contact · crisis triage', kind: 'mk3', url: '/contact' },
+  { id: 'MK4', name: 'Company · team + mission', kind: 'mk4', url: '/company' },
+  { id: 'MK5', name: 'Help &amp; FAQs', kind: 'mk5', url: '/help' },
+  { id: 'MK6', name: 'Privacy &amp; legal', kind: 'mk6', url: '/legal' },
+  { id: 'MK7', name: 'Profile UTM landers', kind: 'mk7', url: '/start/habitual?utm_source=meta&utm_campaign=q2-2026' },
+  { id: 'MK8', name: 'Explainer · sponsor &amp; lender', kind: 'mk8', url: '/welcome' },
+];
+
+const CTX = {
+  mk1: '<strong>MK1 Home.</strong> Top-of-funnel landing. Hero states the recovery thesis in plain language. Three-pillar block (banking · therapy · accountability). Social proof + clinical credentials. Single primary CTA: "Take the 2-minute assessment" → enters onboarding quiz at ON1.',
+  mk2: '<strong>MK2 How it Works.</strong> Product walk-through for visitors who want depth before signing up. 30-day clean window · Anna sessions · the loan path · sponsor model. Cross-links to §11 safeguarding and FCA Sandbox page on the regulator\'s site.',
+  mk3: '<strong>MK3 Contact.</strong> Email + form · routes to hello@gaimcontrol.com via Customer.io. <strong>Crisis-language triage:</strong> if form body trips keywords (suicide / harm / urgent / can\'t go on), success page surfaces helplines (Samaritans · NHS 111 · GamCare · 999) BEFORE the "we\'ll get back to you" copy.',
+  mk4: '<strong>MK4 Company.</strong> Team · mission · regulatory status. Names FCA Sandbox cohort + partner lenders (Algbra, TrueLayer, Vouchsafe, Experian ReFi). Links to Sandbox announcement once public.',
+  mk5: '<strong>MK5 Help &amp; FAQs.</strong> Categorised accordion: eligibility · data we pull · what sponsors see · missing a payment · closing your account. Search across all entries. Each answer cross-links to the in-app help screen where relevant.',
+  mk6: '<strong>MK6 Privacy &amp; legal.</strong> Privacy policy (GDPR) · cookie policy · T&amp;Cs · vulnerable-customer policy · complaints handling (FOS routing). Versioned with effective-date headers. Canonical source for in-app links from §12 Profile.',
+  mk7: '<strong>MK7 Profile UTM landers.</strong> Six paid-acquisition pages — one per profile (P1 Recreational · P2 Habitual · P3 Mood-influenced · P4 At-risk · P5 Recovering · P6 Declined). Same skeleton, different copy + hero + social proof. UTM params flow to onboarding so cohort behaviour ties back to campaign.',
+  mk8: '<strong>MK8 Explainer.</strong> Single canonical "what is GaimControl?" landing. Lender-partner referrals AND sponsor-invite emails both link here — separate landers would diverge over time. User\'s first name + relationship are merged in from the signed token in the URL.',
+};
+
+// ────────── SVG ILLUSTRATIONS ──────────
+
+const HERO_ORBIT = () => `
+  <svg viewBox="0 0 480 480" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="g-purple" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8576C2"/><stop offset="1" stop-color="#3E3478"/></linearGradient>
+      <linearGradient id="g-teal" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#5BB088"/><stop offset="1" stop-color="#1F7058"/></linearGradient>
+      <linearGradient id="g-navy" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#354872"/><stop offset="1" stop-color="#161B2D"/></linearGradient>
+      <radialGradient id="g-glow"><stop offset="0" stop-color="#8576C2" stop-opacity="0.55"/><stop offset="1" stop-color="#8576C2" stop-opacity="0"/></radialGradient>
+    </defs>
+    <!-- bg glow -->
+    <circle cx="240" cy="240" r="200" fill="url(#g-glow)"/>
+    <!-- outer orbit -->
+    <g class="orbit-slow" style="transform-origin:240px 240px">
+      <circle cx="240" cy="240" r="180" fill="none" stroke="rgba(133,118,194,0.25)" stroke-width="1.5" stroke-dasharray="2 5"/>
+      <circle cx="420" cy="240" r="11" fill="url(#g-teal)"/>
+    </g>
+    <!-- middle orbit -->
+    <g class="orbit-slow" style="transform-origin:240px 240px;animation-direction:reverse;animation-duration:18s">
+      <circle cx="240" cy="240" r="135" fill="none" stroke="rgba(57,153,113,0.3)" stroke-width="1.5"/>
+      <circle cx="105" cy="240" r="14" fill="url(#g-purple)"/>
+    </g>
+    <!-- inner orbit -->
+    <g class="orbit-slow" style="transform-origin:240px 240px;animation-duration:14s">
+      <circle cx="240" cy="240" r="92" fill="none" stroke="rgba(133,118,194,0.4)" stroke-width="2"/>
+      <circle cx="240" cy="148" r="10" fill="#FFF"/>
+    </g>
+    <!-- central card -->
+    <g class="float-1">
+      <rect x="180" y="200" width="120" height="80" rx="14" fill="url(#g-navy)" stroke="rgba(255,255,255,0.12)"/>
+      <circle cx="200" cy="218" r="5" fill="#5BB088"/>
+      <rect x="200" y="245" width="60" height="3" rx="1.5" fill="rgba(255,255,255,0.6)"/>
+      <rect x="200" y="253" width="80" height="3" rx="1.5" fill="rgba(255,255,255,0.3)"/>
+      <rect x="200" y="261" width="40" height="3" rx="1.5" fill="rgba(255,255,255,0.3)"/>
+    </g>
+    <!-- shield icon -->
+    <g class="float-2" transform="translate(58 90)">
+      <path d="M30 4 L8 14 L8 32 C8 46 30 56 30 56 C30 56 52 46 52 32 L52 14 Z" fill="rgba(255,255,255,0.95)" stroke="#1F7058" stroke-width="1.5"/>
+      <path d="M20 30 L27 37 L42 22" stroke="#1F7058" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+    <!-- streak counter -->
+    <g class="float-3" transform="translate(360 100)">
+      <rect width="84" height="38" rx="10" fill="rgba(57,153,113,0.18)" stroke="rgba(57,153,113,0.4)"/>
+      <text x="42" y="25" text-anchor="middle" font-family="JetBrains Mono" font-size="14" font-weight="800" fill="#5BB088">Day 58 ↑</text>
+    </g>
+    <!-- chat bubble -->
+    <g class="float-2" transform="translate(60 360)">
+      <path d="M0 14 C0 6 6 0 14 0 L86 0 C94 0 100 6 100 14 L100 36 C100 44 94 50 86 50 L36 50 L20 64 L20 50 L14 50 C6 50 0 44 0 36 Z" fill="rgba(255,255,255,0.95)" stroke="rgba(133,118,194,0.3)"/>
+      <circle cx="22" cy="25" r="3" fill="#8576C2"/>
+      <circle cx="50" cy="25" r="3" fill="#8576C2"/>
+      <circle cx="78" cy="25" r="3" fill="#8576C2"/>
+    </g>
+    <!-- sponsor card -->
+    <g class="float-1" transform="translate(330 330)">
+      <rect width="100" height="64" rx="12" fill="rgba(255,255,255,0.95)" stroke="rgba(83,71,146,0.2)"/>
+      <circle cx="22" cy="20" r="10" fill="url(#g-purple)"/>
+      <circle cx="44" cy="20" r="10" fill="url(#g-teal)"/>
+      <rect x="14" y="40" width="72" height="3" rx="1.5" fill="rgba(0,0,0,0.4)"/>
+      <rect x="14" y="48" width="50" height="3" rx="1.5" fill="rgba(0,0,0,0.25)"/>
+    </g>
+  </svg>`;
+
+const ICON_BANK = () => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="13" rx="2"/><line x1="3" y1="11" x2="21" y2="11"/><path d="M9 16h2"/></svg>`;
+const ICON_THERAPY = () => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg>`;
+const ICON_ACCOUNT = () => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4.5 6v6c0 5 3.5 9 7.5 10 4-1 7.5-5 7.5-10V6Z"/><path d="M9 12l2 2 4-4"/></svg>`;
+
+const ART_CARD = () => `
+  <svg viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg">
+    <defs><linearGradient id="acg1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#354872"/><stop offset="1" stop-color="#161B2D"/></linearGradient></defs>
+    <rect x="20" y="30" width="160" height="100" rx="14" fill="url(#acg1)"/>
+    <circle cx="40" cy="50" r="6" fill="#5BB088"/>
+    <rect x="40" y="100" width="80" height="4" rx="2" fill="rgba(255,255,255,0.6)"/>
+    <rect x="40" y="110" width="120" height="4" rx="2" fill="rgba(255,255,255,0.3)"/>
+    <text x="40" y="80" font-family="JetBrains Mono" font-size="14" font-weight="800" fill="rgba(255,255,255,0.95)">****  8810</text>
+    <!-- blocked stamp -->
+    <g transform="translate(120 38) rotate(8)">
+      <rect width="60" height="22" rx="5" fill="#C73838"/>
+      <text x="30" y="15" text-anchor="middle" font-family="JetBrains Mono" font-size="10" font-weight="800" fill="white">BLOCKED</text>
+    </g>
+  </svg>`;
+
+const ART_CALENDAR = () => `
+  <svg viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg">
+    <defs><linearGradient id="cg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#5BB088"/><stop offset="1" stop-color="#1F7058"/></linearGradient></defs>
+    <rect x="20" y="20" width="160" height="120" rx="14" fill="none" stroke="rgba(127,127,127,0.25)" stroke-width="1.5"/>
+    <rect x="20" y="20" width="160" height="24" rx="14" fill="url(#cg)"/>
+    <text x="100" y="36" text-anchor="middle" font-family="Inter" font-size="11" font-weight="700" fill="white">30 DAYS CLEAN</text>
+    ${Array.from({length: 30}).map((_, i) => {
+      const row = Math.floor(i / 7);
+      const col = i % 7;
+      const x = 32 + col * 22;
+      const y = 56 + row * 18;
+      return `<rect x="${x}" y="${y}" width="14" height="14" rx="3" fill="${i < 28 ? '#5BB088' : 'rgba(127,127,127,0.18)'}"/>`;
+    }).join('')}
+    <text x="100" y="135" text-anchor="middle" font-family="JetBrains Mono" font-size="11" font-weight="700" fill="#5BB088">Day 28 · streak alive</text>
+  </svg>`;
+
+const ART_CHAT = () => `
+  <svg viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg">
+    <defs><linearGradient id="chg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8576C2"/><stop offset="1" stop-color="#534792"/></linearGradient></defs>
+    <!-- bubble 1 (from Anna · left) -->
+    <g>
+      <path d="M14 20 C14 14 18 10 24 10 L92 10 C98 10 102 14 102 20 L102 38 C102 44 98 48 92 48 L36 48 L24 58 L24 48 C18 48 14 44 14 38 Z" fill="url(#chg)"/>
+      <rect x="24" y="22" width="60" height="3" rx="1.5" fill="rgba(255,255,255,0.7)"/>
+      <rect x="24" y="30" width="40" height="3" rx="1.5" fill="rgba(255,255,255,0.5)"/>
+    </g>
+    <!-- bubble 2 (from user · right) -->
+    <g transform="translate(80 70)">
+      <path d="M14 14 C14 8 18 4 24 4 L92 4 C98 4 102 8 102 14 L102 32 C102 38 98 42 92 42 L80 42 L92 52 L92 42 C92 42 102 38 102 32 Z" fill="rgba(127,127,127,0.18)"/>
+      <rect x="24" y="16" width="46" height="3" rx="1.5" fill="currentColor" opacity="0.65"/>
+      <rect x="24" y="24" width="64" height="3" rx="1.5" fill="currentColor" opacity="0.45"/>
+    </g>
+    <text x="14" y="142" font-family="JetBrains Mono" font-size="11" font-weight="700" fill="#8576C2">Anna · CBT-trained · always 1-tap away</text>
+  </svg>`;
+
+const ART_LOAN = () => `
+  <svg viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg">
+    <defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#8576C2"/><stop offset="1" stop-color="#5BB088"/></linearGradient></defs>
+    <text x="100" y="30" text-anchor="middle" font-family="JetBrains Mono" font-size="11" font-weight="700" fill="currentColor" opacity="0.5">CONSOLIDATION PATH</text>
+    <!-- chaos lines (multiple debts) -->
+    <g transform="translate(20 50)">
+      <rect width="50" height="14" rx="4" fill="rgba(199,56,56,0.32)"/>
+      <text x="6" y="10" font-family="JetBrains Mono" font-size="8" fill="#C73838">Klarna £680</text>
+    </g>
+    <g transform="translate(20 70)">
+      <rect width="58" height="14" rx="4" fill="rgba(199,56,56,0.32)"/>
+      <text x="6" y="10" font-family="JetBrains Mono" font-size="8" fill="#C73838">Skybet £1,420</text>
+    </g>
+    <g transform="translate(20 90)">
+      <rect width="46" height="14" rx="4" fill="rgba(199,56,56,0.32)"/>
+      <text x="6" y="10" font-family="JetBrains Mono" font-size="8" fill="#C73838">Card £2,200</text>
+    </g>
+    <g transform="translate(20 110)">
+      <rect width="54" height="14" rx="4" fill="rgba(199,56,56,0.32)"/>
+      <text x="6" y="10" font-family="JetBrains Mono" font-size="8" fill="#C73838">Loan £4,100</text>
+    </g>
+    <!-- arrow -->
+    <path d="M85 80 L115 80" stroke="url(#lg)" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    <polygon points="115,80 108,76 108,84" fill="#5BB088"/>
+    <!-- one consolidated loan -->
+    <g transform="translate(120 60)">
+      <rect width="62" height="44" rx="8" fill="url(#lg)"/>
+      <text x="31" y="20" text-anchor="middle" font-family="Inter" font-size="9" font-weight="700" fill="white">ONE LOAN</text>
+      <text x="31" y="35" text-anchor="middle" font-family="JetBrains Mono" font-size="11" font-weight="800" fill="white">£8,400</text>
+    </g>
+    <text x="100" y="140" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="currentColor" opacity="0.65">19.9% · 36 mo · Experian ReFi</text>
+  </svg>`;
+
+const ART_SPONSOR = () => `
+  <svg viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="sg1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8576C2"/><stop offset="1" stop-color="#534792"/></linearGradient>
+      <linearGradient id="sg2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#5BB088"/><stop offset="1" stop-color="#1F7058"/></linearGradient>
+    </defs>
+    <!-- arc connecting -->
+    <path d="M52 100 Q100 30 148 100" stroke="url(#sg1)" stroke-width="2" fill="none" stroke-dasharray="3 5"/>
+    <!-- user -->
+    <g transform="translate(35 75)">
+      <circle cx="17" cy="14" r="14" fill="url(#sg1)"/>
+      <text x="17" y="18" text-anchor="middle" font-family="Inter" font-size="11" font-weight="800" fill="white">S</text>
+      <text x="17" y="46" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="currentColor" opacity="0.7">SAM · USER</text>
+    </g>
+    <!-- sponsor -->
+    <g transform="translate(131 75)">
+      <circle cx="17" cy="14" r="14" fill="url(#sg2)"/>
+      <text x="17" y="18" text-anchor="middle" font-family="Inter" font-size="11" font-weight="800" fill="white">J</text>
+      <text x="17" y="46" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="currentColor" opacity="0.7">JOANNA · SPONSOR</text>
+    </g>
+    <!-- shield in middle -->
+    <g transform="translate(85 38)">
+      <path d="M15 0 L0 5 L0 16 C0 24 15 30 15 30 C15 30 30 24 30 16 L30 5 Z" fill="rgba(255,255,255,0.95)"/>
+      <path d="M9 15 L13 19 L22 11" stroke="#1F7058" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+    <text x="100" y="140" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="currentColor" opacity="0.65">One-way mirror · she sees enough to care</text>
+  </svg>`;
+
+// Profile mood SVGs for MK7 landers
+const ART_P1 = () => `<svg viewBox="0 0 380 380" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="p1g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#82C7A4"/><stop offset="1" stop-color="#5BB088"/></linearGradient></defs><circle cx="190" cy="190" r="170" fill="url(#p1g)" opacity="0.18"/><g transform="translate(110 110) rotate(-12)" class="float-1"><rect width="160" height="160" rx="28" fill="rgba(255,255,255,0.95)" stroke="rgba(82,201,162,0.3)"/><circle cx="50" cy="50" r="9" fill="#82C7A4"/><circle cx="110" cy="50" r="9" fill="#82C7A4"/><circle cx="50" cy="110" r="9" fill="#82C7A4"/><circle cx="110" cy="110" r="9" fill="#82C7A4"/><circle cx="80" cy="80" r="9" fill="#82C7A4"/></g><g transform="translate(70 230) rotate(15)" class="float-2"><circle r="36" fill="#5BB088" opacity="0.18"/><text text-anchor="middle" y="6" font-family="JetBrains Mono" font-size="12" font-weight="700" fill="#1F7058">RARE</text></g></svg>`;
+
+const ART_P2 = () => `<svg viewBox="0 0 380 380" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="p2g"><stop offset="0" stop-color="#8576C2"/><stop offset="1" stop-color="#534792"/></linearGradient></defs><circle cx="190" cy="190" r="170" fill="#8576C2" opacity="0.18"/><g transform="translate(95 95)" class="float-1"><circle cx="95" cy="95" r="90" fill="none" stroke="rgba(133,118,194,0.4)" stroke-width="2"/><circle cx="95" cy="95" r="70" fill="none" stroke="rgba(133,118,194,0.3)" stroke-width="1.5" stroke-dasharray="4 6"/><circle cx="95" cy="95" r="48" fill="url(#p2g)"/><text x="95" y="100" text-anchor="middle" font-family="JetBrains Mono" font-size="14" font-weight="800" fill="white">30/30</text></g><g transform="translate(140 30)" class="float-3"><rect width="100" height="34" rx="10" fill="rgba(255,255,255,0.96)" stroke="rgba(133,118,194,0.4)"/><text x="50" y="22" text-anchor="middle" font-family="JetBrains Mono" font-size="11" font-weight="800" fill="#534792">DAY 58 ↑</text></g></svg>`;
+
+const ART_P3 = () => `<svg viewBox="0 0 380 380" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="p3g"><stop offset="0" stop-color="#FAB44A"/><stop offset="1" stop-color="#C28200"/></linearGradient></defs><circle cx="190" cy="190" r="170" fill="#FAB44A" opacity="0.16"/><g transform="translate(80 110)" class="float-1"><ellipse cx="110" cy="60" rx="100" ry="44" fill="rgba(255,255,255,0.96)" stroke="rgba(194,130,0,0.3)"/><ellipse cx="60" cy="80" rx="55" ry="30" fill="rgba(255,255,255,0.96)" stroke="rgba(194,130,0,0.3)"/><path d="M50 110 L52 130 M75 110 L77 134 M100 110 L102 130 M125 110 L127 132 M150 110 L152 128" stroke="#8576C2" stroke-width="2.5" stroke-linecap="round"/></g><g transform="translate(150 250)" class="float-2"><circle r="22" fill="url(#p3g)"/><text text-anchor="middle" y="6" font-family="Inter" font-size="13" font-weight="800" fill="white">CBT</text></g></svg>`;
+
+const ART_P4 = () => `<svg viewBox="0 0 380 380" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="p4g"><stop offset="0" stop-color="#C73838"/><stop offset="1" stop-color="#7A1F1F"/></linearGradient></defs><circle cx="190" cy="190" r="170" fill="#C73838" opacity="0.14"/><g transform="translate(110 90)" class="float-1"><path d="M80 0 L160 130 L0 130 Z" fill="rgba(255,255,255,0.96)" stroke="url(#p4g)" stroke-width="2.5"/><text x="80" y="80" text-anchor="middle" font-family="Inter" font-size="42" font-weight="900" fill="#C73838">!</text></g><g transform="translate(70 240)" class="float-2"><rect width="120" height="36" rx="10" fill="rgba(255,255,255,0.96)" stroke="rgba(199,56,56,0.3)"/><text x="60" y="22" text-anchor="middle" font-family="JetBrains Mono" font-size="11" font-weight="700" fill="#7A1F1F">999 · Samaritans · 111</text></g></svg>`;
+
+const ART_P5 = () => `<svg viewBox="0 0 380 380" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="p5g"><stop offset="0" stop-color="#5BB088"/><stop offset="1" stop-color="#1F7058"/></linearGradient></defs><circle cx="190" cy="190" r="170" fill="#5BB088" opacity="0.18"/><g transform="translate(140 60)" class="float-1"><path d="M50 0 L50 90 M50 90 Q30 80 20 60 Q15 40 30 35 Q40 50 50 90 M50 90 Q70 80 80 60 Q85 40 70 35 Q60 50 50 90" stroke="url(#p5g)" stroke-width="3" fill="rgba(82,201,162,0.3)" stroke-linejoin="round"/><circle cx="50" cy="90" r="6" fill="#1F7058"/></g><g transform="translate(85 240)" class="float-3"><rect width="210" height="40" rx="12" fill="rgba(255,255,255,0.96)" stroke="rgba(31,112,88,0.35)"/><text x="105" y="18" text-anchor="middle" font-family="Inter" font-size="11" font-weight="700" fill="#1F7058">LOAN · £8,400 · 19.9% · 36 mo</text><text x="105" y="32" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#5BB088">Hold safety net · 1/year</text></g></svg>`;
+
+const ART_P6 = () => `<svg viewBox="0 0 380 380" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="p6g"><stop offset="0" stop-color="#76798A"/><stop offset="1" stop-color="#354872"/></linearGradient></defs><circle cx="190" cy="190" r="170" fill="#76798A" opacity="0.14"/><g transform="translate(95 100)" class="float-1"><path d="M90 0 C140 0 170 30 170 75 C170 120 140 150 90 150 C40 150 10 120 10 75 C10 30 40 0 90 0 Z" fill="rgba(255,255,255,0.95)" stroke="rgba(118,121,138,0.4)" stroke-width="2"/><path d="M55 75 L125 75 M55 75 L70 60 M55 75 L70 90" stroke="url(#p6g)" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g><text x="190" y="285" text-anchor="middle" font-family="JetBrains Mono" font-size="11" font-weight="700" fill="currentColor" opacity="0.6">SOFT HAND-OFF</text><text x="190" y="305" text-anchor="middle" font-family="Inter" font-size="14" font-weight="700" fill="currentColor">→ GamCare · 0808 8020 133</text></svg>`;
+
+// ────────── NAV builder ──────────
+const NAV = (active) => `
+  <nav class="mk-nav">
+    <a class="mk-nav__brand" onclick="go(0)">
+      <span class="mk-nav__mark"><img src="../assets/gc-mark-mono-light.svg" alt=""></span>
+      <span class="mk-nav__name">GaimControl</span>
+    </a>
+    <div class="mk-nav__links">
+      <a class="mk-nav__link ${active==='mk1'?'is-on':''}" onclick="go(0)">Home</a>
+      <a class="mk-nav__link ${active==='mk2'?'is-on':''}" onclick="go(1)">How it works</a>
+      <a class="mk-nav__link ${active==='mk4'?'is-on':''}" onclick="go(3)">Company</a>
+      <a class="mk-nav__link ${active==='mk5'?'is-on':''}" onclick="go(4)">Help</a>
+      <a class="mk-nav__link ${active==='mk3'?'is-on':''}" onclick="go(2)">Contact</a>
+    </div>
+    <div class="mk-nav__cta">
+      <a class="mk-nav__login">Sign in</a>
+      <a class="mk-btn mk-btn--gradient">Take the assessment</a>
+    </div>
+  </nav>`;
+
+const FOOTER = () => `
+  <footer class="mk-footer">
+    <div class="mk-footer__container">
+      <div>
+        <div class="mk-footer__brand-h">GaimControl</div>
+        <p class="mk-footer__brand-p">Banking that helps you stop gambling. Built with clinicians, regulated by the FCA Sandbox.</p>
+      </div>
+      <div>
+        <h5 class="mk-footer__col-h">Product</h5>
+        <a class="mk-footer__col-link" onclick="go(1)">How it works</a>
+        <a class="mk-footer__col-link" onclick="go(6)">For your profile</a>
+        <a class="mk-footer__col-link" onclick="go(7)">For sponsors</a>
+        <a class="mk-footer__col-link">Pricing</a>
+      </div>
+      <div>
+        <h5 class="mk-footer__col-h">Company</h5>
+        <a class="mk-footer__col-link" onclick="go(3)">Mission</a>
+        <a class="mk-footer__col-link" onclick="go(3)">Team</a>
+        <a class="mk-footer__col-link">Press</a>
+        <a class="mk-footer__col-link">Careers</a>
+      </div>
+      <div>
+        <h5 class="mk-footer__col-h">Support</h5>
+        <a class="mk-footer__col-link" onclick="go(4)">FAQs</a>
+        <a class="mk-footer__col-link" onclick="go(2)">Contact</a>
+        <a class="mk-footer__col-link">Crisis helplines</a>
+        <a class="mk-footer__col-link">Status</a>
+      </div>
+      <div>
+        <h5 class="mk-footer__col-h">Legal</h5>
+        <a class="mk-footer__col-link" onclick="go(5)">Privacy</a>
+        <a class="mk-footer__col-link" onclick="go(5)">Cookies</a>
+        <a class="mk-footer__col-link" onclick="go(5)">Terms</a>
+        <a class="mk-footer__col-link" onclick="go(5)">Vulnerable customer</a>
+      </div>
+    </div>
+    <div class="mk-footer__bottom">
+      <span>© 2026 GaimControl Ltd · FCA Sandbox · Reg 287442</span>
+      <span>Banking via Algbra · Open banking via TrueLayer</span>
+    </div>
+  </footer>`;
+
+// ────────── PAGE BUILDERS ──────────
+const builders = {
+
+  mk1: () => `
+    <div class="screen mk">
+      ${NAV('mk1')}
+      <section class="mk-hero">
+        <div class="mk-hero__bg-orb mk-hero__bg-orb--1"></div>
+        <div class="mk-hero__bg-orb mk-hero__bg-orb--2"></div>
+        <div class="mk-hero__container">
+          <div>
+            <span class="mk-eyebrow">FCA Sandbox · Cohort 9 · 2026</span>
+            <h1 class="mk-hero__h1">Banking that <span class="mk-grad">helps you stop.</span></h1>
+            <p class="mk-hero__p">The first UK current account designed around gambling recovery. CBT-trained AI coach, a real sponsor, MCC-blocked card, and a consolidation loan only if you actually need it.</p>
+            <div class="mk-hero__cta-row">
+              <a class="mk-btn mk-btn--gradient mk-btn--xl">Take the 2-minute assessment →</a>
+              <a class="mk-btn mk-btn--ghost mk-btn--xl" onclick="go(1)">See how it works</a>
+            </div>
+            <div class="mk-hero__trust">
+              <span class="mk-hero__trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2 4.5 6v6c0 5 3.5 9 7.5 10 4-1 7.5-5 7.5-10V6Z"/></svg>FCA-authorised</span>
+              <span class="mk-hero__trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>GamCare partner</span>
+              <span class="mk-hero__trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Clinically built</span>
+              <span class="mk-hero__trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>NHS-aligned CBT</span>
+            </div>
+          </div>
+          <div class="mk-hero__art">${HERO_ORBIT()}</div>
+        </div>
+      </section>
+
+      <section class="mk-section">
+        <div class="mk-section__container">
+          <div class="mk-section__head">
+            <span class="mk-eyebrow">Three pillars · one current account</span>
+            <h2 class="mk-section__h2">Recovery isn't one thing.<br>So neither is the product.</h2>
+            <p class="mk-section__p">Most gambling-recovery tools treat money OR mind OR people. We needed something that held all three at once — because that's what relapse actually looks like.</p>
+          </div>
+          <div class="mk-pillars">
+            <div class="mk-pillar mk-pillar--banking">
+              <span class="mk-pillar__icon">${ICON_BANK()}</span>
+              <span class="mk-pillar__tag">Pillar 1</span>
+              <h3 class="mk-pillar__h">Banking</h3>
+              <p class="mk-pillar__d">A real current account. MCC 7995 blocked at the network. 30-day clean window unlocks features. Sponsor co-sign on big transfers. Spend rails calibrated to your profile.</p>
+              <a class="mk-pillar__link" onclick="go(1)">See the banking flow →</a>
+            </div>
+            <div class="mk-pillar mk-pillar--therapy">
+              <span class="mk-pillar__icon">${ICON_THERAPY()}</span>
+              <span class="mk-pillar__tag">Pillar 2</span>
+              <h3 class="mk-pillar__h">Therapy</h3>
+              <p class="mk-pillar__d">Anna — a CBT-trained AI coach. 1-tap to talk anytime. Weekly structured sessions: urge-surfing, distortion work, gratitude practice. Crisis-language detection that opens the right surface, not Anna.</p>
+              <a class="mk-pillar__link" onclick="go(1)">Meet Anna →</a>
+            </div>
+            <div class="mk-pillar mk-pillar--account">
+              <span class="mk-pillar__icon">${ICON_ACCOUNT()}</span>
+              <span class="mk-pillar__tag">Pillar 3</span>
+              <h3 class="mk-pillar__h">Accountability</h3>
+              <p class="mk-pillar__d">A real human sponsor — KYC'd, named, in the loop. They see your milestones, not your day-to-day. Pre-written messages bypass the chat layer when writing is hard. Up to 3 sponsors per user.</p>
+              <a class="mk-pillar__link" onclick="go(7)">For sponsors →</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="mk-section mk-section--bg">
+        <div class="mk-section__container">
+          <div class="mk-section__head">
+            <span class="mk-eyebrow">The numbers, plainly</span>
+            <h2 class="mk-section__h2">Built on UK clinical evidence.</h2>
+          </div>
+          <div class="mk-stats">
+            <div class="mk-stat"><div class="mk-stat__n">2.5m</div><div class="mk-stat__l">UK adults at risk from gambling (Gambling Commission, 2024)</div></div>
+            <div class="mk-stat"><div class="mk-stat__n">£1.4bn</div><div class="mk-stat__l">Annual UK gambling-related debt held by mainstream banks</div></div>
+            <div class="mk-stat"><div class="mk-stat__n">41%</div><div class="mk-stat__l">Of GamCare callers report unsupportive existing bank tools</div></div>
+            <div class="mk-stat"><div class="mk-stat__n">2026</div><div class="mk-stat__l">FCA Sandbox Cohort 9 · live testing with safeguards</div></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="mk-section">
+        <div class="mk-section__container">
+          <div class="mk-quote">
+            <p class="mk-quote__t">"I'd tried three apps. None of them held the bank account too. When the card refused the bet at the till, I cried in the queue. That was the day I started keeping count."</p>
+            <div class="mk-quote__author">
+              <span class="mk-quote__author-av">PR</span>
+              <div>
+                <div class="mk-quote__author-name">Pre-launch testers · 14 of 14</div>
+                <div class="mk-quote__author-role">Anonymous · names withheld · names withheld</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="mk-section">
+        <div class="mk-section__container">
+          <div class="mk-cta">
+            <h2 class="mk-cta__h">It starts with a 2-minute check.</h2>
+            <p class="mk-cta__p">We use your answers to assign one of six recovery profiles — Recreational to Compulsive — and route the whole experience around what you actually need. No credit check at this stage.</p>
+            <div class="mk-cta__btns">
+              <a class="mk-btn mk-btn--white mk-btn--xl">Take the assessment</a>
+              <a class="mk-btn mk-btn--ghost-light mk-btn--xl" onclick="go(1)">First show me how it works</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      ${FOOTER()}
+    </div>`,
+
+  mk2: () => `
+    <div class="screen mk">
+      ${NAV('mk2')}
+      <section class="mk-hero" style="padding:60px 60px 40px">
+        <div class="mk-hero__bg-orb mk-hero__bg-orb--1" style="width:300px;height:300px;top:-80px;right:80px"></div>
+        <div class="mk-hero__container" style="grid-template-columns:1fr;max-width:780px;text-align:center">
+          <div>
+            <span class="mk-eyebrow">How it works · ~7 minute read</span>
+            <h1 class="mk-hero__h1" style="font-size:64px;margin:18px auto;text-align:center;max-width:none">From <span class="mk-grad">onboarding</span> to <span class="mk-grad">graduation.</span></h1>
+            <p class="mk-hero__p" style="margin:0 auto 28px">Six milestones · roughly six months to graduation. We've drawn out what happens between them, exactly. No vague.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="mk-section">
+        <div class="mk-section__container">
+          <div class="mk-step">
+            <span class="mk-step__n">01</span>
+            <div>
+              <h3 class="mk-step__h">22 questions · 2 minutes</h3>
+              <p class="mk-step__p">You take the onboarding quiz — Anna asks one question at a time. Your answers assign one of six recovery profiles (Recreational → Compulsive). The product is calibrated from here. <strong>No credit check yet.</strong></p>
+            </div>
+            <div class="mk-step__art" style="background:linear-gradient(135deg,rgba(133,118,194,0.15),rgba(83,71,146,0.05))">${ART_CHAT()}</div>
+          </div>
+          <div class="mk-step">
+            <span class="mk-step__n">02</span>
+            <div>
+              <h3 class="mk-step__h">Banking + the clean window</h3>
+              <p class="mk-step__p">Card opens with MCC 7995 (gambling) blocked at the network — not the app. The first 30 days are the clean window: streak counter, milestone unlocks, sponsor digest each month. No betting tx will go through. None.</p>
+            </div>
+            <div class="mk-step__art" style="background:linear-gradient(135deg,rgba(57,153,113,0.18),rgba(31,112,88,0.08))">${ART_CARD()}</div>
+          </div>
+          <div class="mk-step">
+            <span class="mk-step__n">03</span>
+            <div>
+              <h3 class="mk-step__h">Anna · CBT, not chitchat</h3>
+              <p class="mk-step__p">A CBT-trained AI coach. Daily 5-minute check-ins (mood / urge / gratitude — rotating). Weekly structured sessions from a curriculum a clinician wrote. Crisis-language detection opens a 5-rung helpline ladder before Anna — fastest reach to a human in distress.</p>
+            </div>
+            <div class="mk-step__art" style="background:linear-gradient(135deg,rgba(133,118,194,0.18),rgba(83,71,146,0.08))">${ART_CALENDAR()}</div>
+          </div>
+          <div class="mk-step">
+            <span class="mk-step__n">04</span>
+            <div>
+              <h3 class="mk-step__h">Loan · only when it's the right one</h3>
+              <p class="mk-step__p">If you have gambling-related debt scattered across cards and BNPLs, GaimControl can refinance it into one fixed loan. Underwritten by Algbra, settled via Experian ReFi. Fully FCA SECCI-disclosed. <strong>Relapse Hold</strong> built in: if the system detects a betting attempt, repayment pauses for 7 days, no late fee, no credit impact.</p>
+            </div>
+            <div class="mk-step__art" style="background:linear-gradient(135deg,rgba(82,201,162,0.14),rgba(31,112,88,0.06))">${ART_LOAN()}</div>
+          </div>
+          <div class="mk-step">
+            <span class="mk-step__n">05</span>
+            <div>
+              <h3 class="mk-step__h">Sponsor · a real human, KYC'd</h3>
+              <p class="mk-step__p">You name someone — partner, sibling, clinician, sober friend. They do their own light KYC (~10 minutes). They see your milestones and Hold notices, never your transactions or Anna chats. They can co-sign transfers above your threshold. Up to 3 sponsors per user.</p>
+            </div>
+            <div class="mk-step__art" style="background:linear-gradient(135deg,rgba(82,201,162,0.14),rgba(83,71,146,0.10))">${ART_SPONSOR()}</div>
+          </div>
+          <div class="mk-step">
+            <span class="mk-step__n">06</span>
+            <div>
+              <h3 class="mk-step__h">Graduation — or wind-down</h3>
+              <p class="mk-step__p">The whole product is designed to be left. Six months in we re-take a 6-question delta quiz. If your profile has shifted to Recovering or Recreational, we'll start removing rails on your terms. Closing the account is one button (with a cool-off that scales by profile). Nothing is locked.</p>
+            </div>
+            <div class="mk-step__art" style="background:linear-gradient(135deg,rgba(82,201,162,0.18),rgba(255,180,80,0.10))">${ART_CALENDAR()}</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="mk-section mk-section--bg">
+        <div class="mk-section__container">
+          <div class="mk-cta">
+            <h2 class="mk-cta__h">All six steps, one product.</h2>
+            <p class="mk-cta__p">The assessment is free. The whole flow is designed for you to be able to leave at any point — including 5 minutes into the quiz.</p>
+            <div class="mk-cta__btns">
+              <a class="mk-btn mk-btn--white mk-btn--xl">Take the assessment</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      ${FOOTER()}
+    </div>`,
+
+  mk3: () => `
+    <div class="screen mk">
+      ${NAV('mk3')}
+      <section class="mk-section" style="padding-top:60px">
+        <div class="mk-section__container">
+          <div class="mk-section__head" style="margin-bottom:48px">
+            <span class="mk-eyebrow">Contact us</span>
+            <h2 class="mk-section__h2">Get in touch.</h2>
+            <p class="mk-section__p">Email us · hello@gaimcontrol.com · or use the form. Replies within one working day Mon–Fri.</p>
+          </div>
+          <div class="mk-contact-grid">
+            <form class="mk-form" onsubmit="event.preventDefault()">
+              <div class="mk-form__field">
+                <span class="mk-form__label">Your name</span>
+                <input class="mk-form__input" placeholder="What should we call you?">
+              </div>
+              <div class="mk-form__field">
+                <span class="mk-form__label">Email</span>
+                <input class="mk-form__input" type="email" placeholder="you@example.com">
+              </div>
+              <div class="mk-form__field">
+                <span class="mk-form__label">What's this about?</span>
+                <select class="mk-form__input">
+                  <option>General question</option>
+                  <option>Press / partnerships</option>
+                  <option>Support · existing account</option>
+                  <option>Complaint</option>
+                  <option>I'm struggling right now</option>
+                </select>
+              </div>
+              <div class="mk-form__field">
+                <span class="mk-form__label">Message</span>
+                <textarea class="mk-form__textarea" placeholder="What's going on? We read every one."></textarea>
+              </div>
+              <div style="display:flex;gap:10px;align-items:center;padding:10px 0">
+                <label style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text-secondary)"><input type="checkbox"> I accept the <a href="#" onclick="go(5)" style="color:var(--accent)">privacy policy</a></label>
+              </div>
+              <button class="mk-btn mk-btn--gradient mk-btn--lg">Send message</button>
+            </form>
+            <div style="display:flex;flex-direction:column;gap:14px">
+              <div class="mk-info-card mk-info-card--crisis">
+                <span style="display:inline-flex;padding:4px 10px;border-radius:999px;background:rgba(255,255,255,0.22);font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;align-self:flex-start">If you're struggling right now</span>
+                <h3 class="mk-info-card__h" style="margin:6px 0 0;color:white">Talk to someone in minutes — not days.</h3>
+                <p class="mk-info-card__p">A reply from us tomorrow is too slow when tonight is the problem. These numbers are faster than us, free, and trained for exactly this.</p>
+                <div class="mk-info-card__line"><span class="mk-info-card__line-n">999</span><span>Police, ambulance, fire · immediate danger</span></div>
+                <div class="mk-info-card__line"><span class="mk-info-card__line-n">116 123</span><span>Samaritans · 24/7 free</span></div>
+                <div class="mk-info-card__line"><span class="mk-info-card__line-n">111</span><span>NHS · urgent non-emergency</span></div>
+                <div class="mk-info-card__line"><span class="mk-info-card__line-n" style="font-size:12px">0808 8020 133</span><span>GamCare · UK gambling helpline</span></div>
+              </div>
+              <div class="mk-info-card">
+                <h3 class="mk-info-card__h">How we handle this form</h3>
+                <p class="mk-info-card__p" style="color:var(--text-secondary)"><strong>Crisis-language detection:</strong> if your message contains keywords (suicide / harm / urgent / can't go on / tonight), the success page surfaces the helplines above <em>before</em> "we'll get back to you" copy. We err generous on what counts.</p>
+                <p class="mk-info-card__p" style="color:var(--text-secondary)">Form is read by humans on the Customer.io support inbox. Never piped to a model. Replies within 1 working day.</p>
+              </div>
+              <div class="mk-info-card">
+                <h3 class="mk-info-card__h">Or just email</h3>
+                <p class="mk-info-card__p"><strong>hello@gaimcontrol.com</strong><br><strong>support@gaimcontrol.com</strong> · existing customers<br><strong>press@gaimcontrol.com</strong> · journalists<br><strong>compliance@gaimcontrol.com</strong> · regulators</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      ${FOOTER()}
+    </div>`,
+
+  mk4: () => `
+    <div class="screen mk">
+      ${NAV('mk4')}
+      <section class="mk-hero" style="padding:70px 60px 50px">
+        <div class="mk-hero__bg-orb mk-hero__bg-orb--2" style="bottom:auto;top:100px;left:40%"></div>
+        <div class="mk-hero__container" style="grid-template-columns:1fr;max-width:780px;text-align:center">
+          <div>
+            <span class="mk-eyebrow">Company · est. 2025</span>
+            <h1 class="mk-hero__h1" style="font-size:60px;text-align:center;margin:18px auto;max-width:none">Built by people who needed it.<br><span class="mk-grad">Or watched someone who did.</span></h1>
+            <p class="mk-hero__p" style="margin:0 auto">GaimControl exists because the conventional banks treat gambling like any other category. Our founders' experience said: that's the gap.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="mk-section">
+        <div class="mk-section__container">
+          <div class="mk-section__head"><span class="mk-eyebrow">Mission</span><h2 class="mk-section__h2">Make recovery the path of least resistance.</h2><p class="mk-section__p">We don't think gambling is the user's failure. We think it's a system problem · the financial system, the entertainment system, the support system. We're fixing the financial corner. The rest will follow.</p></div>
+        </div>
+      </section>
+
+      <section class="mk-section mk-section--bg">
+        <div class="mk-section__container">
+          <div class="mk-section__head"><span class="mk-eyebrow">The team</span><h2 class="mk-section__h2">Twelve people. Most of you's heard of one.</h2></div>
+          <div class="mk-team-grid">
+            <div class="mk-team-card">
+              <span class="mk-team-card__av">JP</span>
+              <h4 class="mk-team-card__name">JP · CEO &amp; founder</h4>
+              <div class="mk-team-card__role">ex-banking · 15y</div>
+              <p class="mk-team-card__bio">Started GaimControl after his brother. Built consumer fintech at three London banks. The product thesis is his.</p>
+            </div>
+            <div class="mk-team-card">
+              <span class="mk-team-card__av">FA</span>
+              <h4 class="mk-team-card__name">Fara · CTO (contract)</h4>
+              <div class="mk-team-card__role">ex-staff eng · 12y</div>
+              <p class="mk-team-card__bio">Joins late April 2026 to take the product to MVP. Background in distributed systems and AI safety.</p>
+            </div>
+            <div class="mk-team-card">
+              <span class="mk-team-card__av">AC</span>
+              <h4 class="mk-team-card__name">Alan · clinical lead</h4>
+              <div class="mk-team-card__role">CBT psychotherapist</div>
+              <p class="mk-team-card__bio">Wrote the CBT curriculum that Anna runs. Twenty years treating addiction at NHS and private. Names what the model can and can't do.</p>
+            </div>
+            <div class="mk-team-card">
+              <span class="mk-team-card__av">LD</span>
+              <h4 class="mk-team-card__name">Lalin · design lead</h4>
+              <div class="mk-team-card__role">consumer fintech</div>
+              <p class="mk-team-card__bio">Took the brand, the UI system, and the mood of the product from "fintech" to "feels like someone cares". Award-cleaned.</p>
+            </div>
+            <div class="mk-team-card">
+              <span class="mk-team-card__av">DG</span>
+              <h4 class="mk-team-card__name">Diego · games &amp; behaviour</h4>
+              <div class="mk-team-card__role">gamification research</div>
+              <p class="mk-team-card__bio">Tuned the milestone system, the streak counter, the gentle nudges. Knows where motivation breaks.</p>
+            </div>
+            <div class="mk-team-card">
+              <span class="mk-team-card__av">+7</span>
+              <h4 class="mk-team-card__name">7 more · engineering, ops, compliance</h4>
+              <div class="mk-team-card__role">distributed UK</div>
+              <p class="mk-team-card__bio">Engineers, customer-support, compliance, and one ex-FCA examiner. Names visible to investors and partners on request.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="mk-section">
+        <div class="mk-section__container">
+          <div class="mk-section__head"><span class="mk-eyebrow">Regulatory + partners</span><h2 class="mk-section__h2">FCA Sandbox · Cohort 9 · 2026.</h2><p class="mk-section__p">Live testing inside the regulator's framework. Real customers, real safeguards, real reporting cadence. The Sandbox lets us ship without two-year approval cycles, and lets the FCA see exactly how we behave under stress.</p></div>
+          <div class="mk-partner-strip">
+            <span class="mk-partner">FCA Sandbox</span>
+            <span class="mk-partner">Algbra · BaaS</span>
+            <span class="mk-partner">TrueLayer · open banking</span>
+            <span class="mk-partner">Vouchsafe · KYC</span>
+            <span class="mk-partner">Experian ReFi</span>
+            <span class="mk-partner">GamCare partner</span>
+            <span class="mk-partner">Mastercard</span>
+            <span class="mk-partner">Customer.io</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="mk-section">
+        <div class="mk-section__container">
+          <div class="mk-cta">
+            <h2 class="mk-cta__h">Want to talk to a human?</h2>
+            <p class="mk-cta__p">Press, partners, regulators, would-be sponsors — we read every email. Try us.</p>
+            <div class="mk-cta__btns"><a class="mk-btn mk-btn--white mk-btn--xl" onclick="go(2)">Contact</a></div>
+          </div>
+        </div>
+      </section>
+
+      ${FOOTER()}
+    </div>`,
+
+  mk5: () => `
+    <div class="screen mk">
+      ${NAV('mk5')}
+      <section class="mk-section" style="padding-top:70px">
+        <div class="mk-section__container">
+          <div class="mk-section__head" style="margin-bottom:36px">
+            <span class="mk-eyebrow">Help &amp; FAQs</span>
+            <h2 class="mk-section__h2">Questions we've heard a lot.</h2>
+            <p class="mk-section__p">If yours isn't here, <a onclick="go(2)" style="color:var(--accent);font-weight:600">drop us a line</a> — every email becomes a future FAQ entry.</p>
+          </div>
+          <div style="max-width:680px;margin:0 auto 28px">
+            <div style="display:flex;align-items:center;gap:10px;padding:13px 18px;background:var(--bg-surface);border:1px solid var(--border);border-radius:14px">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" opacity="0.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <input style="flex:1;border:none;background:transparent;outline:none;font-family:inherit;font-size:15px;color:var(--text-primary)" placeholder="Search questions · eligibility · sponsor · data · payments…">
+            </div>
+          </div>
+          <div class="mk-faq-cats" style="justify-content:center">
+            <button class="mk-faq-cat is-on">All</button>
+            <button class="mk-faq-cat">Eligibility</button>
+            <button class="mk-faq-cat">Banking</button>
+            <button class="mk-faq-cat">Anna · therapy</button>
+            <button class="mk-faq-cat">Sponsor</button>
+            <button class="mk-faq-cat">Loan</button>
+            <button class="mk-faq-cat">Data &amp; privacy</button>
+            <button class="mk-faq-cat">Closing your account</button>
+          </div>
+          <div style="max-width:760px;margin:0 auto">
+            <div class="mk-faq-item is-open" onclick="this.classList.toggle('is-open')">
+              <div class="mk-faq-item__q"><span>Who is GaimControl for?</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+              <p class="mk-faq-item__a">UK adults who recognise gambling as a problem they want help with. After the 2-min assessment we sort users into six profiles. If you're at the lower-risk end ("Recreational") we still serve you — preventatively. If you're at the higher-risk end ("Compulsive") we route harder, with shorter cool-offs and more safeguarding contact. If you don't qualify at all, we say so honestly and hand off to GamCare.</p>
+            </div>
+            <div class="mk-faq-item" onclick="this.classList.toggle('is-open')">
+              <div class="mk-faq-item__q"><span>Do I need to take a loan to use GaimControl?</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+              <p class="mk-faq-item__a">No. The loan exists for users with scattered gambling-related debt who want one fixed payment. If you don't need it, you don't take it. The banking, Anna, and sponsor are independent of any lending decision.</p>
+            </div>
+            <div class="mk-faq-item" onclick="this.classList.toggle('is-open')">
+              <div class="mk-faq-item__q"><span>What does my sponsor actually see?</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+              <p class="mk-faq-item__a">Milestones, streak status, payment progress, Relapse Hold notices, your direct messages. Never: transactions, MCC blocks, Anna chat content (sponsor-blind by design), vulnerability flags, location. They get a monthly digest unless something safety-relevant happens.</p>
+            </div>
+            <div class="mk-faq-item" onclick="this.classList.toggle('is-open')">
+              <div class="mk-faq-item__q"><span>Can the sponsor block my card or stop me leaving?</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+              <p class="mk-faq-item__a">No. Sponsor powers are always opt-in by you, and closing your account is always user-initiated. The sponsor model is a one-way mirror — they see, they don't decide.</p>
+            </div>
+            <div class="mk-faq-item" onclick="this.classList.toggle('is-open')">
+              <div class="mk-faq-item__q"><span>What happens if I miss a payment on the loan?</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+              <p class="mk-faq-item__a">No late fee, ever. If the system detects a betting attempt around the same time, repayment auto-pauses for 7 days (we call it a Relapse Hold). No credit-file impact — recorded with the Experian "contractual hold" code, not as missed.</p>
+            </div>
+            <div class="mk-faq-item" onclick="this.classList.toggle('is-open')">
+              <div class="mk-faq-item__q"><span>What data do you pull?</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+              <p class="mk-faq-item__a">Open banking (with consent · 90-day re-consent per FCA): your existing bank balances and transactions, so we can do affordability and detect gambling spend patterns. We don't pull contacts, location, or device sensors. Full breakdown lives in our <a onclick="go(5)" style="color:var(--accent)">privacy policy</a>.</p>
+            </div>
+            <div class="mk-faq-item" onclick="this.classList.toggle('is-open')">
+              <div class="mk-faq-item__q"><span>How do I close my account?</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+              <p class="mk-faq-item__a">Profile → Close account. If you have an active loan, you can pause-and-pay (wind-down · 35 months) or settle in full now (no early-settlement fee). If you don't, there's a profile-scaled cool-off (7 to 30 days) then closure. Full deletion (GDPR Article 17) runs automatically once any loan is fully settled.</p>
+            </div>
+            <div class="mk-faq-item" onclick="this.classList.toggle('is-open')">
+              <div class="mk-faq-item__q"><span>Is Anna a real therapist?</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+              <p class="mk-faq-item__a">No. Anna is an AI coach trained on a CBT curriculum written by our clinical lead Alan (CBT psychotherapist · 20y). For acute crisis or active suicidality, Anna routes you to a 5-rung crisis ladder (999 / Samaritans / NHS 111 / GamCare / a sponsor) before continuing the conversation. She isn't a replacement for human therapy — she's the layer between you and it.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+      ${FOOTER()}
+    </div>`,
+
+  mk6: () => `
+    <div class="screen mk">
+      ${NAV('mk6')}
+      <section class="mk-section" style="padding-top:70px">
+        <div class="mk-section__container">
+          <div class="mk-section__head" style="margin-bottom:48px">
+            <span class="mk-eyebrow">Privacy &amp; legal</span>
+            <h2 class="mk-section__h2">All the documents.<br>Versioned. Dated.</h2>
+            <p class="mk-section__p">These are the canonical sources. Every in-app link from §12 Profile (Privacy · Terms · Vulnerability policy) routes here.</p>
+          </div>
+          <div class="mk-legal-grid">
+            <a class="mk-legal-card">
+              <span class="mk-legal-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>
+              <h3 class="mk-legal-card__t">Privacy policy</h3>
+              <p class="mk-legal-card__d">What we collect, how we use it, who we share it with, your GDPR rights (Articles 15-22).</p>
+              <span class="mk-legal-card__meta">v3.2 · effective 14 Apr 2026</span>
+            </a>
+            <a class="mk-legal-card">
+              <span class="mk-legal-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 8L14 14L12 11L4 18"/><path d="M14 8H21V14"/></svg></span>
+              <h3 class="mk-legal-card__t">Cookie policy</h3>
+              <p class="mk-legal-card__d">Strictly-necessary + analytics. No advertising cookies, ever. Customer.io for transactional only.</p>
+              <span class="mk-legal-card__meta">v1.4 · effective 14 Apr 2026</span>
+            </a>
+            <a class="mk-legal-card">
+              <span class="mk-legal-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></span>
+              <h3 class="mk-legal-card__t">Terms &amp; conditions</h3>
+              <p class="mk-legal-card__d">Account terms. Loan terms (separate SECCI on application). FCA-mandated disclosure rules.</p>
+              <span class="mk-legal-card__meta">v2.0 · effective 01 May 2026</span>
+            </a>
+            <a class="mk-legal-card">
+              <span class="mk-legal-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 7L12 3L4 7L12 11L20 7Z"/><path d="M4 7v6l8 4 8-4V7"/><path d="M12 11v10"/></svg></span>
+              <h3 class="mk-legal-card__t">Vulnerable customer policy</h3>
+              <p class="mk-legal-card__d">FCA CONC App 1.4. The five drivers (Health · Life event · Resilience · Capability · Coercion). What changes when you flag.</p>
+              <span class="mk-legal-card__meta">v1.1 · effective 14 Apr 2026</span>
+            </a>
+            <a class="mk-legal-card">
+              <span class="mk-legal-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>
+              <h3 class="mk-legal-card__t">Complaints handling</h3>
+              <p class="mk-legal-card__d">DISP rules. How to raise · resolution timeline · FOS escalation rights at 8 weeks.</p>
+              <span class="mk-legal-card__meta">v1.3 · effective 14 Apr 2026</span>
+            </a>
+            <a class="mk-legal-card">
+              <span class="mk-legal-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></span>
+              <h3 class="mk-legal-card__t">Open-banking consent</h3>
+              <p class="mk-legal-card__d">PSD2 · TrueLayer AISP. 90-day re-consent cycle. What we read, what we don't, how to revoke at any time.</p>
+              <span class="mk-legal-card__meta">v1.2 · effective 14 Apr 2026</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section class="mk-section mk-section--bg">
+        <div class="mk-section__container">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:36px;max-width:1000px;margin:0 auto">
+            <div class="mk-info-card" style="padding:28px 32px">
+              <h3 class="mk-info-card__h">Your data, in one ZIP</h3>
+              <p class="mk-info-card__p">GDPR Article 20 portability — JSON for machines, PDF summary for humans. Algbra credit-decision algorithm output is excluded under Article 22 (standard for credit decisioning).</p>
+              <p class="mk-info-card__p" style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-muted)">Request via §12 Profile → Download my data</p>
+            </div>
+            <div class="mk-info-card" style="padding:28px 32px">
+              <h3 class="mk-info-card__h">Article 17 · right to erasure</h3>
+              <p class="mk-info-card__p">Surfaced up-front in close-account because FCA loan retention applies until balance is £0. Surprising users mid-cascade is the bug, not the feature.</p>
+              <p class="mk-info-card__p" style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-muted)">See §16 off-boarding flow</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      ${FOOTER()}
+    </div>`,
+
+  mk7: () => `
+    <div class="screen mk">
+      ${NAV('mk7')}
+      <section class="mk-section" style="padding-top:50px;padding-bottom:36px">
+        <div class="mk-section__container">
+          <div class="mk-section__head" style="margin-bottom:20px">
+            <span class="mk-eyebrow">Paid acquisition · UTM landers</span>
+            <h2 class="mk-section__h2" style="margin-top:8px">One landing page per profile.</h2>
+            <p class="mk-section__p">Same skeleton, very different copy. Pick a profile below to see the lander a campaign would route to.</p>
+          </div>
+          <div class="mk-profile-tabs" id="profileTabs">
+            <button class="mk-profile-tab" data-prof="p1" onclick="setProf('p1')">P1 · Recreational</button>
+            <button class="mk-profile-tab is-on" data-prof="p2" onclick="setProf('p2')">P2 · Habitual</button>
+            <button class="mk-profile-tab" data-prof="p3" onclick="setProf('p3')">P3 · Mood-influenced</button>
+            <button class="mk-profile-tab" data-prof="p4" onclick="setProf('p4')">P4 · At-risk</button>
+            <button class="mk-profile-tab" data-prof="p5" onclick="setProf('p5')">P5 · Recovering</button>
+            <button class="mk-profile-tab" data-prof="p6" onclick="setProf('p6')">P6 · Declined</button>
+          </div>
+          <div id="profileContent"></div>
+        </div>
+      </section>
+      ${FOOTER()}
+    </div>`,
+
+  mk8: () => `
+    <div class="screen mk">
+      ${NAV('mk8')}
+      <section class="mk-section" style="padding-top:60px">
+        <div class="mk-section__container">
+          <div class="mk-explainer-hero">
+            <span class="mk-explainer-tag">Welcome · Joanna</span>
+            <h1 class="mk-explainer-h">Your sister Sam asked you to <span style="color:#FAB44A">have her back.</span></h1>
+            <p class="mk-explainer-p">GaimControl is the banking + therapy + accountability system Sam's using for her gambling recovery. Being her sponsor means seeing her milestones, hearing if something goes off, and (optionally) co-signing her bigger transfers. You'll never see her transactions or Anna chats.</p>
+            <div class="mk-cta__btns">
+              <a class="mk-btn mk-btn--white mk-btn--xl">Sponsor Sam · ~8 minutes →</a>
+              <a class="mk-btn mk-btn--ghost-light mk-btn--xl">I can't right now</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="mk-section">
+        <div class="mk-section__container">
+          <div class="mk-section__head"><span class="mk-eyebrow">What you'll do · 4 quick steps</span><h2 class="mk-section__h2">Eight minutes today.<br>Then occasional.</h2></div>
+          <div class="mk-pillars" style="grid-template-columns:repeat(4,1fr);gap:14px">
+            <div class="mk-pillar mk-pillar--therapy" style="padding:26px 22px">
+              <span class="mk-pillar__icon" style="width:48px;height:48px;border-radius:12px">${ICON_THERAPY()}</span>
+              <span class="mk-pillar__tag">Step 1 · 3 min</span>
+              <h3 class="mk-pillar__h" style="font-size:17px">Read this page</h3>
+              <p class="mk-pillar__d" style="font-size:13px">Understand what sponsorship means. Decide if you want to. No pressure.</p>
+            </div>
+            <div class="mk-pillar mk-pillar--banking" style="padding:26px 22px">
+              <span class="mk-pillar__icon" style="width:48px;height:48px;border-radius:12px">${ICON_BANK()}</span>
+              <span class="mk-pillar__tag">Step 2 · 3 min</span>
+              <h3 class="mk-pillar__h" style="font-size:17px">Light KYC</h3>
+              <p class="mk-pillar__d" style="font-size:13px">Vouchsafe · same as Sam used. Name, DOB, ID, selfie. No income check.</p>
+            </div>
+            <div class="mk-pillar mk-pillar--account" style="padding:26px 22px">
+              <span class="mk-pillar__icon" style="width:48px;height:48px;border-radius:12px">${ICON_ACCOUNT()}</span>
+              <span class="mk-pillar__tag">Step 3 · 2 min</span>
+              <h3 class="mk-pillar__h" style="font-size:17px">Bank link</h3>
+              <p class="mk-pillar__d" style="font-size:13px">TrueLayer · any account in your own name. Liveness + AML only. We don't look at your spending.</p>
+            </div>
+            <div class="mk-pillar mk-pillar--therapy" style="padding:26px 22px">
+              <span class="mk-pillar__icon" style="width:48px;height:48px;border-radius:12px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg></span>
+              <span class="mk-pillar__tag">Step 4 · done</span>
+              <h3 class="mk-pillar__h" style="font-size:17px">Active</h3>
+              <p class="mk-pillar__d" style="font-size:13px">Land on your sponsor dashboard. First digest from Sam arrives in ~30 days.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="mk-section mk-section--bg">
+        <div class="mk-section__container">
+          <div class="mk-section__head"><span class="mk-eyebrow">What you'll see · what you won't</span><h2 class="mk-section__h2">A one-way mirror by design.</h2><p class="mk-section__p">Sponsorship works because the user can be honest with their AI coach without that honesty leaking. You're the safety net, not the surveillance camera.</p></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:1000px;margin:0 auto">
+            <div class="mk-info-card" style="padding:30px 32px">
+              <h3 class="mk-info-card__h" style="color:var(--t-50)">You'll see</h3>
+              <ul style="list-style:none;padding:0;margin:14px 0 0;display:flex;flex-direction:column;gap:10px;font-size:14px;color:var(--text-secondary);line-height:1.55">
+                <li>✓ Monthly digest · streak status · payment progress</li>
+                <li>✓ Relapse Hold notices · when system pauses repayment</li>
+                <li>✓ Sam's direct messages to you · pre-written templates or free text</li>
+                <li>✓ Loan SECCI (pre-contract terms) by default · per decision LO-07</li>
+                <li>✓ Per-MCC spend categories (groceries · subscriptions · alcohol) · no merchants</li>
+                <li>✓ Auth-required transfers above her threshold</li>
+              </ul>
+            </div>
+            <div class="mk-info-card" style="padding:30px 32px">
+              <h3 class="mk-info-card__h" style="color:var(--e-50)">You won't see</h3>
+              <ul style="list-style:none;padding:0;margin:14px 0 0;display:flex;flex-direction:column;gap:10px;font-size:14px;color:var(--text-secondary);line-height:1.55">
+                <li>✗ Verbatim Anna chat content · sponsor-blind by design (AN-05)</li>
+                <li>✗ Individual transactions or merchant names</li>
+                <li>✗ Her linked third-party bank accounts (Monzo / Barclays · separate)</li>
+                <li>✗ Vulnerability flags she's set · unless she chooses to share</li>
+                <li>✗ Her location · device · IP</li>
+                <li>✗ Power to initiate a Relapse Hold or close her account</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="mk-section">
+        <div class="mk-section__container">
+          <div class="mk-cta">
+            <h2 class="mk-cta__h">Ready when you are.</h2>
+            <p class="mk-cta__p">If you can't — even now — that's a fair answer. Sam gets a polite ack and we close the loop. Some people aren't sponsor material, and that's not failure.</p>
+            <div class="mk-cta__btns">
+              <a class="mk-btn mk-btn--white mk-btn--xl">Sponsor Sam · 8 min</a>
+              <a class="mk-btn mk-btn--ghost-light mk-btn--xl">Decline politely</a>
+            </div>
+          </div>
+        </div>
+      </section>
+      ${FOOTER()}
+    </div>`,
+};
+
+// MK7 profile content variants
+const PROFILES = {
+  p1: { color: 'p1', pill: 'Profile 1 · Recreational', h: `You're not in trouble. Let's keep it that way.`, p: `Most people who land on GaimControl don't need the heavy rails. If your gambling is occasional and social, this is the preventative layer — the early-warning system that means you never need a heavier intervention. Light by design.`, art: ART_P1, utm: '/start/recreational?utm_source=meta&utm_campaign=preventative&utm_content=lighter-touch' },
+  p2: { color: 'p2', pill: 'Profile 2 · Habitual', h: `You know the pattern. We hold the line.`, p: `When play is regular and the spend creeps, willpower alone isn't enough — the rails are. The 30-day clean window, the streak counter, the sponsor digest. Structured, predictable, gentle. Every milestone is real.`, art: ART_P2, utm: '/start/habitual?utm_source=meta&utm_campaign=streak&utm_content=30-day-window' },
+  p3: { color: 'p3', pill: 'Profile 3 · Mood-influenced', h: `When the day is dark, the urge climbs.`, p: `For users where play correlates with mood — stress, anger, boredom, after-arguments. Anna's curriculum leans heavy on CBT distortion work and urge-surfing — the in-the-moment tools designed for exactly this. Daily check-ins catch the early dip.`, art: ART_P3, utm: '/start/mood?utm_source=meta&utm_campaign=cbt&utm_content=urge-surfing' },
+  p4: { color: 'p4', pill: 'Profile 4 · At-risk', h: `Step away. No financial penalty.`, p: `If your indicators are high, GaimControl might not be the right starting point — but the right starting point exists. We route you to GamCare, NHS 111, and Samaritans with the same care we'd take if you stayed. The decision to step away is the right one as often as the decision to start.`, art: ART_P4, utm: '/start/at-risk?utm_source=meta&utm_campaign=safeguarding&utm_content=helplines-first' },
+  p5: { color: 'p5', pill: 'Profile 5 · Recovering', h: `Consolidate the debt. Keep the safety net.`, p: `For users in recovery with scattered gambling-related debt — Klarna BNPL, the maxed card, the overdraft. Refinance into one fixed loan, no late fee ever, automatic Relapse Hold if the system detects a slip. The loan is the consolidation tool. The Hold is the safety net.`, art: ART_P5, utm: '/start/recovering?utm_source=meta&utm_campaign=consolidate&utm_content=loan-plus-hold' },
+  p6: { color: 'p6', pill: 'Profile 6 · Declined', h: `This isn't the right product. Here's what is.`, p: `Sometimes the honest answer is "not us". For users whose assessment suggests another product or service would help more, we hand off — to GamCare, to your GP, to debt-management charities. The handoff is warm and named, not a generic 404. If your situation changes, you can come back.`, art: ART_P6, utm: '/start/declined?utm_source=meta&utm_campaign=handoff&utm_content=gamcare-first' },
+};
+
+function renderProfile(prof) {
+  const p = PROFILES[prof];
+  const html = `
+    <div class="mk-lander-hero mk-lander-hero--${p.color}">
+      <div>
+        <span class="mk-lander-pill">${p.pill}</span>
+        <h1 class="mk-lander-h">${p.h}</h1>
+        <p class="mk-lander-p">${p.p}</p>
+        <div class="mk-hero__cta-row">
+          <a class="mk-btn mk-btn--gradient mk-btn--xl">Take the 2-minute assessment →</a>
+          <a class="mk-btn mk-btn--ghost mk-btn--xl" onclick="go(1)">How it works</a>
+        </div>
+        <span class="mk-lander-utm">utm · gaimcontrol.com${p.utm}</span>
+      </div>
+      <div class="mk-lander-art">${p.art()}</div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-top:24px">
+      <div class="mk-info-card" style="padding:22px 24px">
+        <h4 class="mk-info-card__h" style="font-size:14px">Same skeleton</h4>
+        <p class="mk-info-card__p">Hero · pillars · social proof · CTA. So the brand stays consistent · so analytics can compare cohorts cleanly.</p>
+      </div>
+      <div class="mk-info-card" style="padding:22px 24px">
+        <h4 class="mk-info-card__h" style="font-size:14px">Different copy + art</h4>
+        <p class="mk-info-card__p">Each profile gets its own headline, sub-copy, palette, and hero illustration. Reflects the audience, not a generic.</p>
+      </div>
+      <div class="mk-info-card" style="padding:22px 24px">
+        <h4 class="mk-info-card__h" style="font-size:14px">UTM → onboarding</h4>
+        <p class="mk-info-card__p"><code style="font-family:'JetBrains Mono',monospace;font-size:11px">utm_source · utm_campaign · utm_content</code> flow into onboarding analytics. Cohort behaviour ties back to campaign.</p>
+      </div>
+    </div>
+  `;
+  document.getElementById('profileContent').innerHTML = html;
+  document.querySelectorAll('.mk-profile-tab').forEach(t => t.classList.toggle('is-on', t.dataset.prof === prof));
+}
+
+function setProf(prof) { renderProfile(prof); }
+
+// ────────── render ──────────
+let idx = 0;
+
+function render() {
+  const screen = SCREENS[idx];
+  const vp = document.getElementById('viewport');
+  vp.scrollTop = 0;
+  vp.innerHTML = builders[screen.kind]();
+  document.getElementById('browserUrl').textContent = 'gaimcontrol.com' + screen.url;
+  document.getElementById('screenId').textContent = screen.id;
+  document.getElementById('screenName').innerHTML = screen.name;
+  document.getElementById('progressFill').style.width = ((idx + 1) / SCREENS.length * 100) + '%';
+  document.getElementById('navPrev').disabled = idx === 0;
+  document.getElementById('navNext').disabled = idx === SCREENS.length - 1;
+  document.querySelectorAll('.proto-scrubber__item').forEach((el, i) => {
+    el.classList.toggle('is-active', i === idx);
+    if (i === idx) el.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  });
+  document.getElementById('contextBody').innerHTML = CTX[screen.kind] || screen.name;
+  if (screen.kind === 'mk7') renderProfile('p2');
+}
+
+function next() { if (idx < SCREENS.length - 1) { idx++; render(); } }
+function prev() { if (idx > 0) { idx--; render(); } }
+function go(i) { idx = i; render(); }
+
+function buildScrubber() {
+  const nav = document.getElementById('scrubber');
+  SCREENS.forEach((s, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'proto-scrubber__item';
+    btn.innerHTML = `<span class="proto-scrubber__id">${s.id}</span><span class="proto-scrubber__name">${s.name}</span>`;
+    btn.addEventListener('click', () => go(i));
+    nav.appendChild(btn);
+  });
+}
+
+function initTheme() {
+  const root = document.documentElement;
+  const stored = localStorage.getItem('gc-proto-theme');
+  const initial = stored || 'dark';
+  root.setAttribute('data-theme', initial);
+  document.querySelector('.theme-label').textContent = initial === 'dark' ? 'Dark' : 'Light';
+  document.querySelector('.proto-theme-toggle').addEventListener('click', () => {
+    const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    document.querySelector('.theme-label').textContent = next === 'dark' ? 'Dark' : 'Light';
+    try { localStorage.setItem('gc-proto-theme', next); } catch(e) {}
+  });
+}
+
+document.getElementById('navPrev').addEventListener('click', prev);
+document.getElementById('navNext').addEventListener('click', next);
+document.addEventListener('keydown', (e) => { if (e.key === 'ArrowRight') next(); if (e.key === 'ArrowLeft') prev(); });
+buildScrubber();
+initTheme();
+render();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,601 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GaimControl · Web · §09 Loan offer &amp; SECCI</title>
+<link rel="icon" href="../assets/gc-favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --p-10:#0B0F1C;--p-20:#161B2D;--p-30:#20273C;--p-40:#354872;--p-50:#4D608C;--p-60:#6B7DA6;--p-90:#DCE2F0;--p-95:#ECF0F9;--p-99:#FAFBFE;--p-100:#FFF;
+  --s-10:#28215A;--s-20:#3E3478;--s-30:#534792;--s-40:#6B5DAC;--s-50:#8576C2;--s-70:#B5ACDF;--s-80:#CFC8EA;--s-90:#E8E4F4;
+  --t-20:#1A6047;--t-30:#1F7058;--t-50:#399971;--t-60:#5BB088;--t-80:#ADDCC2;--t-90:#D5EDDF;
+  --w-30:#6B4500;--w-60:#C28200;--w-80:#FAB44A;--w-90:#FFDFA8;
+  --e-30:#7A1F1F;--e-50:#C73838;--e-90:#FBD9D9;
+  --n-50:#76798A;--n-80:#C5C8D2;--n-95:#F1F2F5;--nv-80:#C5C9DD;
+}
+[data-theme="dark"] { --bg-base: var(--p-30); --bg-surface: var(--p-20); --bg-surface-2: var(--p-10); --border: rgba(255,255,255,0.08); --text-primary: var(--n-95); --text-secondary: var(--nv-80); --text-muted: rgba(255,255,255,0.4); --accent: var(--s-70); --accent-strong: var(--s-50); --on-accent: #fff; --page-bg: #0a0e1a; --page-fg: var(--n-95); --page-fg-muted: var(--nv-80); --page-card-bg: var(--p-20); --page-divider: rgba(255,255,255,0.06); }
+[data-theme="light"] { --bg-base: var(--p-99); --bg-surface: #fff; --bg-surface-2: var(--p-95); --border: rgba(22,27,45,0.08); --text-primary: var(--p-20); --text-secondary: var(--n-50); --text-muted: var(--n-50); --accent: var(--p-40); --accent-strong: var(--s-40); --on-accent: #fff; --page-bg: var(--p-95); --page-fg: var(--p-20); --page-fg-muted: var(--n-50); --page-card-bg: #fff; --page-divider: rgba(22,27,45,0.08); }
+* { box-sizing: border-box; }
+html, body { background: var(--page-bg); color: var(--page-fg); margin: 0; transition: background-color 220ms ease, color 220ms ease; }
+body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif; font-size: 14px; line-height: 1.5; -webkit-font-smoothing: antialiased; min-height: 100vh; }
+
+.proto-shell { display: grid; grid-template-columns: 280px 1fr; gap: 0; min-height: 100vh; }
+@media (max-width: 1100px) { .proto-shell { grid-template-columns: 1fr; } }
+.proto-sidebar { background: var(--page-card-bg); border-right: 1px solid var(--page-divider); padding: 28px 22px; position: sticky; top: 0; height: 100vh; overflow-y: auto; display: flex; flex-direction: column; gap: 16px; }
+@media (max-width: 1100px) { .proto-sidebar { position: static; height: auto; max-height: 50vh; border-right: none; border-bottom: 1px solid var(--page-divider); } }
+.proto-sidebar__brand { display: flex; align-items: center; gap: 10px; }
+.proto-sidebar__mark { width: 36px; height: 36px; border-radius: 10px; background: var(--p-30); display: inline-flex; align-items: center; justify-content: center; }
+.proto-sidebar__mark img { width: 70%; height: 70%; }
+.proto-sidebar__name { font-weight: 700; font-size: 17px; letter-spacing: -0.01em; }
+.proto-sidebar__pill { display: inline-flex; padding: 3px 9px; border-radius: 999px; background: linear-gradient(120deg, var(--s-50), var(--p-50), var(--t-50)); color: white; font-weight: 700; font-size: 9.5px; font-family: 'JetBrains Mono', monospace; letter-spacing: 0.06em; text-transform: uppercase; }
+.proto-sidebar__back { display: inline-flex; align-items: center; gap: 6px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--page-fg-muted); text-decoration: none; }
+.proto-sidebar__back:hover { color: var(--page-accent); }
+.proto-section-title { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--page-fg-muted); margin: 12px 0 6px; }
+.proto-scrubber { display: flex; flex-direction: column; gap: 2px; }
+.proto-scrubber__item { display: grid; grid-template-columns: 44px 1fr; gap: 8px; align-items: center; padding: 7px 10px; border-radius: 8px; cursor: pointer; border: none; background: transparent; color: inherit; font-family: inherit; text-align: left; }
+.proto-scrubber__item:hover { background: rgba(127,127,127,0.08); }
+.proto-scrubber__item.is-active { background: var(--accent-strong); color: var(--on-accent); }
+.proto-scrubber__item.is-active .proto-scrubber__id { color: rgba(255,255,255,0.85); }
+.proto-scrubber__id { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; color: var(--page-fg-muted); letter-spacing: 0.06em; }
+.proto-scrubber__name { font-size: 12.5px; font-weight: 500; }
+.proto-sidebar__footer { margin-top: auto; padding-top: 16px; border-top: 1px solid var(--page-divider); font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--page-fg-muted); }
+.proto-sidebar__footer a { color: var(--page-fg-muted); text-decoration: none; border-bottom: 1px dotted currentColor; }
+.proto-theme-toggle { display: inline-flex; align-items: center; gap: 8px; padding: 7px 12px; border-radius: 8px; background: var(--bg-surface-2); border: 1px solid var(--border); color: var(--page-fg-muted); cursor: pointer; font-family: 'JetBrains Mono', monospace; font-size: 11px; align-self: flex-start; }
+.proto-theme-toggle svg { width: 12px; height: 12px; }
+[data-theme="dark"] .proto-theme-toggle .icon-moon { display: none; }
+[data-theme="light"] .proto-theme-toggle .icon-sun { display: none; }
+
+.proto-stage { display: flex; flex-direction: column; align-items: center; padding: 32px 24px 64px; gap: 18px; }
+.proto-modebar { display: flex; align-items: center; gap: 10px; padding: 10px 16px; background: var(--page-card-bg); border: 1px solid var(--page-divider); border-radius: 12px; font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: var(--page-fg-muted); flex-wrap: wrap; justify-content: center; }
+.proto-modebar__pill { display: inline-flex; padding: 3px 9px; border-radius: 999px; background: var(--bg-surface-2); }
+.proto-modebar__id { color: var(--page-fg); font-weight: 700; letter-spacing: 0.06em; }
+.proto-modebar__bar { width: 100px; height: 4px; border-radius: 4px; background: var(--bg-surface-2); position: relative; overflow: hidden; }
+.proto-modebar__bar__fill { position: absolute; left: 0; top: 0; bottom: 0; background: linear-gradient(90deg, var(--s-50), var(--t-50)); transition: width 240ms ease; }
+.proto-arrows { display: flex; align-items: center; gap: 8px; }
+.proto-arrow { width: 36px; height: 36px; border-radius: 10px; background: var(--page-card-bg); border: 1px solid var(--page-divider); color: var(--page-fg-muted); display: inline-flex; align-items: center; justify-content: center; cursor: pointer; }
+.proto-arrow:hover { background: var(--bg-surface-2); color: var(--page-fg); }
+.proto-arrow:disabled { opacity: 0.3; cursor: not-allowed; }
+.proto-arrow svg { width: 18px; height: 18px; }
+
+.browser { width: 100%; max-width: 1380px; background: var(--bg-base); border-radius: 18px; overflow: hidden; border: 1px solid var(--border); box-shadow: 0 24px 60px -20px rgba(0,0,0,0.45), 0 8px 24px -12px rgba(0,0,0,0.25); }
+[data-theme="light"] .browser { box-shadow: 0 24px 60px -20px rgba(22,27,45,0.18), 0 8px 24px -12px rgba(22,27,45,0.08); }
+.browser__chrome { display: flex; align-items: center; gap: 14px; padding: 12px 16px; background: var(--p-20); border-bottom: 1px solid var(--border); }
+[data-theme="light"] .browser__chrome { background: var(--n-95); }
+.browser__dots { display: inline-flex; gap: 7px; flex-shrink: 0; }
+.browser__dot { width: 11px; height: 11px; border-radius: 50%; }
+.browser__dot:nth-child(1) { background: #FF5F57; } .browser__dot:nth-child(2) { background: #FEBC2E; } .browser__dot:nth-child(3) { background: #28C840; }
+.browser__url { flex: 1; background: var(--bg-base); border: 1px solid var(--border); border-radius: 7px; padding: 6px 14px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--text-secondary); text-align: center; display: flex; align-items: center; justify-content: center; gap: 8px; }
+.browser__url svg { width: 12px; height: 12px; opacity: 0.7; flex-shrink: 0; }
+.browser__viewport { background: var(--bg-base); min-height: 800px; max-height: 800px; position: relative; color: var(--text-primary); display: grid; grid-template-columns: 240px 1fr; }
+
+.appnav { background: var(--bg-surface); border-right: 1px solid var(--border); padding: 20px 16px; display: flex; flex-direction: column; gap: 16px; }
+[data-theme="light"] .appnav { background: var(--bg-surface-2); border-right: 1px solid rgba(22,27,45,0.12); }
+[data-theme="light"] .appnav__item { color: var(--p-40); }
+[data-theme="light"] .appnav__item:hover { color: var(--p-20); }
+[data-theme="light"] .appnav__subitem { color: var(--p-50); }
+[data-theme="light"] .appnav__subitem:hover { color: var(--p-20); }
+[data-theme="light"] .appnav__user-sub { color: var(--p-50); }
+[data-theme="light"] .appnav .appnav__help div:nth-of-type(2) { color: var(--p-50); }
+.appnav__brand { display: flex; align-items: center; gap: 10px; padding: 4px 4px 12px; border-bottom: 1px solid var(--border); margin-bottom: 4px; }
+.appnav__mark { width: 32px; height: 32px; border-radius: 9px; background: var(--p-30); display: inline-flex; align-items: center; justify-content: center; }
+.appnav__mark img { width: 70%; height: 70%; }
+.appnav__name { font-weight: 700; font-size: 15px; letter-spacing: -0.01em; }
+.appnav__user { display: flex; align-items: center; gap: 10px; padding: 8px 8px; border-radius: 10px; background: var(--bg-base); }
+.appnav__avatar { width: 32px; height: 32px; border-radius: 50%; background: var(--accent-strong); color: white; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; font-size: 13px; }
+.appnav__user-name { font-size: 13px; font-weight: 600; }
+.appnav__user-sub { font-size: 11px; color: var(--text-secondary); }
+.appnav__list { display: flex; flex-direction: column; gap: 2px; }
+.appnav__item { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 10px; cursor: pointer; color: var(--text-secondary); text-decoration: none; font-size: 13.5px; font-weight: 500; }
+.appnav__item:hover { background: var(--bg-base); color: var(--text-primary); }
+.appnav__item.is-on { background: var(--accent-strong); color: var(--on-accent); font-weight: 600; }
+.appnav__item.is-disabled { opacity: 0.35; cursor: not-allowed; }
+.appnav__item.is-disabled:hover { background: transparent; color: var(--text-secondary); }
+.appnav__item svg { width: 18px; height: 18px; flex-shrink: 0; }
+.appnav__subnav { padding: 4px 0 4px 28px; display: flex; flex-direction: column; gap: 1px; border-left: 1px solid var(--border); margin: 2px 0 2px 22px; }
+.appnav__subitem { padding: 7px 12px; border-radius: 8px; font-size: 12.5px; font-weight: 500; color: var(--text-secondary); cursor: pointer; }
+.appnav__subitem:hover { background: var(--bg-base); color: var(--text-primary); }
+.appnav__subitem.is-on { background: var(--bg-base); color: var(--accent); font-weight: 600; }
+.appnav__subitem.is-disabled { opacity: 0.35; cursor: not-allowed; }
+.appnav__help { margin-top: auto; padding: 14px 14px; border-radius: 12px; background: var(--bg-base); border: 1px solid var(--border); }
+.gc-crisis-btn { width: 100%; padding: 9px 12px; border-radius: 10px; background: var(--e-50); color: white; border: none; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 6px; margin-top: 8px; }
+.gc-crisis-btn svg { width: 14px; height: 14px; }
+
+.main { padding: 32px 40px 40px; overflow-y: auto; max-height: 800px; }
+.main::-webkit-scrollbar { width: 6px; }
+.main::-webkit-scrollbar-thumb { background: rgba(127,127,127,0.2); border-radius: 6px; }
+.main__head { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 24px; }
+.main__title { font-size: 28px; font-weight: 800; letter-spacing: -0.02em; margin: 0; }
+.main__sub { font-size: 13.5px; color: var(--text-secondary); margin: 4px 0 0; }
+
+.gc-card { padding: 20px; background: var(--bg-surface); border: 1px solid var(--border); border-radius: 16px; display: flex; flex-direction: column; gap: 12px; }
+.gc-card--milestone { background: linear-gradient(135deg, var(--s-40), var(--p-40)); color: white; border-color: transparent; padding: 28px; }
+.gc-card--complete { background: linear-gradient(135deg, var(--t-50), var(--t-30)); color: white; border-color: transparent; padding: 28px; }
+.gc-card--alert { background: var(--bg-surface-2); border-left: 4px solid var(--w-60); border-radius: 6px 16px 16px 6px; padding: 14px 18px; gap: 4px; }
+.gc-card--anna { background: linear-gradient(135deg, rgba(133,118,194,0.12), rgba(83,71,146,0.06)); border-color: rgba(133,118,194,0.25); flex-direction: row; align-items: center; gap: 14px; padding: 16px 20px; }
+.gc-card--anna .anna-av { width: 38px; height: 38px; border-radius: 50%; background: var(--p-30); display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.gc-card--anna .anna-av img { width: 60%; height: 60%; }
+.gc-card--anna .anna-name { font-size: 13px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 2px; }
+.gc-card--anna p { font-size: 14px; line-height: 1.5; margin: 0; }
+
+.row-2 { display: grid; grid-template-columns: 2fr 1fr; gap: 16px; align-items: start; }
+.row-2-equal { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-items: start; }
+.stack { display: flex; flex-direction: column; gap: 16px; }
+@media (max-width: 1000px) { .row-2, .row-2-equal { grid-template-columns: 1fr; } }
+
+.lo-pill { display: inline-flex; align-items: center; gap: 7px; padding: 4px 13px 4px 5px; border-radius: 999px; font-size: 11.5px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; align-self: flex-start; background: rgba(0,0,0,0.22); color: white; }
+.lo-pill::before { content: ''; width: 10px; height: 10px; border-radius: 50%; background: var(--t-50); }
+
+.lo-amt-row { display: flex; gap: 36px; padding-top: 14px; border-top: 1px solid rgba(255,255,255,0.18); margin-top: 8px; }
+.lo-amt-l { font-size: 11.5px; font-family: 'JetBrains Mono', monospace; text-transform: uppercase; letter-spacing: 0.08em; opacity: 0.75; }
+.lo-amt-n { font-size: 42px; font-weight: 800; letter-spacing: -0.025em; line-height: 1; margin-top: 6px; }
+.lo-amt-n span { font-size: 22px; opacity: 0.75; }
+.lo-amt-n .lo-amt-suf { font-size: 14px; margin-left: 4px; opacity: 0.8; }
+
+.lo-fig { display: flex; justify-content: space-between; align-items: center; padding: 11px 0; border-top: 1px solid var(--border); font-size: 14px; }
+.lo-fig:first-of-type { border-top: none; padding-top: 0; }
+.lo-fig-l { color: var(--text-secondary); }
+.lo-fig-v { font-weight: 600; }
+
+.lo-cred { display: grid; grid-template-columns: 44px 1fr auto; gap: 14px; align-items: center; padding: 12px 0; border-top: 1px solid var(--border); }
+.lo-cred:first-of-type { border-top: none; padding-top: 0; }
+.lo-cred__logo { width: 44px; height: 44px; border-radius: 11px; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; font-size: 17px; }
+.lo-cred__name { font-size: 15px; font-weight: 600; }
+.lo-cred__sub { font-size: 12.5px; color: var(--text-secondary); margin-top: 2px; }
+.lo-cred__amt { font-family: 'JetBrains Mono', monospace; font-size: 15.5px; font-weight: 700; }
+
+.lo-secci { padding: 14px 0; border-top: 1px solid var(--border); }
+.lo-secci:first-of-type { border-top: none; padding-top: 0; }
+.lo-secci h4 { font-size: 12px; font-weight: 700; margin: 0 0 6px; color: var(--accent); font-family: 'JetBrains Mono', monospace; letter-spacing: 0.05em; text-transform: uppercase; }
+.lo-secci p { font-size: 13.5px; line-height: 1.6; margin: 0; }
+.lo-secci .mono { font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 15px; }
+.lo-secci a { color: var(--accent); text-decoration: none; border-bottom: 1px dotted currentColor; }
+
+.lo-sponsor-note { display: inline-flex; align-items: center; gap: 7px; padding: 5px 12px; border-radius: 999px; background: var(--s-20); color: var(--s-80); align-self: flex-start; font-size: 11px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; }
+[data-theme="light"] .lo-sponsor-note { background: var(--s-90); color: var(--s-20); }
+.lo-sponsor-note svg { width: 11px; height: 11px; }
+
+.lo-budg-head { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 8px; border-bottom: 1px solid var(--border); margin-bottom: 4px; }
+.lo-budg-head h3 { font-size: 15px; font-weight: 700; margin: 0; }
+.lo-budg-head__n { font-family: 'JetBrains Mono', monospace; font-size: 17px; font-weight: 700; }
+.lo-budg-head__n span { font-size: 12px; color: var(--text-muted); }
+.lo-budg { display: grid; grid-template-columns: 1fr auto 44px; gap: 14px; align-items: center; padding: 11px 0; border-top: 1px solid var(--border); }
+.lo-budg:first-of-type { border-top: none; padding-top: 4px; }
+.lo-budg__t { font-size: 14px; font-weight: 600; }
+.lo-budg__s { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
+.lo-budg__a { font-family: 'JetBrains Mono', monospace; font-size: 14.5px; font-weight: 700; }
+.lo-budg--strike .lo-budg__t, .lo-budg--strike .lo-budg__s, .lo-budg--strike .lo-budg__a { text-decoration: line-through; color: var(--text-muted); }
+
+.gc-toggle { width: 44px; height: 26px; background: var(--bg-surface-2); border: 1px solid var(--border); border-radius: 999px; position: relative; flex-shrink: 0; cursor: pointer; }
+.gc-toggle::after { content: ''; position: absolute; top: 2px; left: 2px; width: 20px; height: 20px; background: var(--text-muted); border-radius: 50%; transition: transform 160ms ease, background 160ms ease; }
+.gc-toggle.is-on { background: var(--accent); border-color: transparent; }
+.gc-toggle.is-on::after { transform: translateX(18px); background: white; }
+
+.lo-sum-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.lo-sum-card { padding: 14px 16px; background: var(--bg-base); border: 1px solid var(--border); border-radius: 12px; }
+.lo-sum-card__l { font-size: 12px; color: var(--text-secondary); }
+.lo-sum-card__n { font-size: 22px; font-weight: 800; margin-top: 4px; letter-spacing: -0.015em; }
+.lo-sum-card--total { grid-column: 1 / -1; background: var(--t-90); border-color: transparent; }
+[data-theme="dark"] .lo-sum-card--total { background: var(--t-20); }
+.lo-sum-card--total .lo-sum-card__l { color: var(--t-30); }
+[data-theme="dark"] .lo-sum-card--total .lo-sum-card__l { color: var(--t-80); }
+.lo-sum-card--total .lo-sum-card__n { font-size: 36px; color: var(--t-30); }
+[data-theme="dark"] .lo-sum-card--total .lo-sum-card__n { color: var(--t-60); }
+
+.lo-sign-row { display: flex; justify-content: space-between; align-items: center; padding: 11px 0; border-top: 1px solid var(--border); font-size: 14px; }
+.lo-sign-row:first-of-type { border-top: none; padding-top: 0; }
+.lo-sign-row__l { color: var(--text-secondary); }
+.lo-sign-row__v { font-weight: 600; text-align: right; }
+
+.lo-attest { display: grid; grid-template-columns: 24px 1fr; gap: 12px; align-items: flex-start; padding: 10px 0; cursor: pointer; }
+.gc-checkbox { width: 20px; height: 20px; border-radius: 5px; border: 1.5px solid var(--text-muted); flex-shrink: 0; margin-top: 1px; display: inline-flex; align-items: center; justify-content: center; }
+.gc-checkbox--on { background: var(--accent-strong); border-color: var(--accent-strong); }
+.gc-checkbox--on::after { content: '✓'; font-size: 13px; font-weight: 700; color: white; }
+.lo-attest span:last-child { font-size: 13.5px; line-height: 1.5; }
+.lo-sign-input { width: 100%; padding: 14px 18px; background: white; border: 1px solid var(--accent-strong); border-radius: 11px; font-family: 'Caveat', 'Brush Script MT', cursive; font-size: 28px; color: var(--p-20); font-style: italic; }
+
+.lo-tl { display: grid; grid-template-columns: 16px 1fr auto; gap: 14px; align-items: flex-start; padding: 11px 0; position: relative; }
+.lo-tl::before { content: ''; position: absolute; left: 7px; top: 24px; bottom: -11px; width: 1.5px; background: var(--border); }
+.lo-tl:last-child::before { display: none; }
+.lo-tl__d { width: 16px; height: 16px; border-radius: 50%; background: var(--bg-surface-2); border: 2px solid var(--border); position: relative; z-index: 2; margin-top: 2px; }
+.lo-tl--done .lo-tl__d { background: var(--t-50); border-color: transparent; }
+.lo-tl--current .lo-tl__d { background: var(--accent-strong); border-color: transparent; box-shadow: 0 0 0 5px rgba(133,118,194,0.2); }
+.lo-tl__t { font-size: 14px; font-weight: 600; }
+.lo-tl__s { font-size: 12.5px; color: var(--text-secondary); margin-top: 2px; font-family: 'JetBrains Mono', monospace; }
+.lo-tl__time { font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: var(--text-muted); text-align: right; }
+.lo-tl--done .lo-tl__t { color: var(--text-secondary); }
+
+.gc-btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 12px 20px; border-radius: 12px; font-family: inherit; font-size: 14px; font-weight: 600; cursor: pointer; border: 1px solid transparent; }
+.gc-btn--primary { background: var(--accent-strong); color: var(--on-accent); }
+.gc-btn--primary:hover { background: var(--s-40); }
+.gc-btn--ghost { background: transparent; color: var(--text-primary); border-color: var(--border); }
+.gc-btn--ghost:hover { background: rgba(127,127,127,0.06); }
+.gc-btn--white { background: white; color: var(--p-30); }
+.gc-btn--lg { padding: 14px 26px; font-size: 15px; border-radius: 14px; }
+.gc-btn--full { width: 100%; }
+
+.lo-decision { font-size: 12px; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; padding: 12px 16px; background: var(--bg-surface-2); border-radius: 10px; line-height: 1.5; }
+.lo-decision a { color: var(--accent); text-decoration: none; }
+
+.proto-context { width: 100%; max-width: 1380px; padding: 16px 20px; background: var(--page-card-bg); border: 1px solid var(--page-divider); border-radius: 12px; font-size: 13px; color: var(--page-fg-muted); line-height: 1.55; }
+.proto-context strong { color: var(--page-fg); }
+.proto-context a { color: var(--page-accent, var(--s-70)); text-decoration: none; border-bottom: 1px dotted currentColor; }
+.proto-context__head { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; color: var(--page-fg); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px; }
+
+.screen { animation: fade-in 220ms ease; }
+@keyframes fade-in { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+</style>
+<script src="flow-chain.js" defer></script>
+</head>
+<body>
+
+<div class="proto-shell">
+
+  <aside class="proto-sidebar">
+    <div class="proto-sidebar__brand">
+      <span class="proto-sidebar__mark"><img src="../assets/gc-mark-mono-light.svg" alt=""></span>
+      <span>
+        <div class="proto-sidebar__name">GaimControl</div>
+        <span class="proto-sidebar__pill">web</span>
+      </span>
+    </div>
+    <a class="proto-sidebar__back" href="index.html">← prototype index</a>
+    <button class="proto-theme-toggle" type="button" aria-label="Toggle theme">
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+      <span class="theme-label">Dark</span>
+    </button>
+    <div class="proto-section-title">§09 · LO1 – LO5</div>
+    <nav class="proto-scrubber" id="scrubber"></nav>
+    <div class="proto-sidebar__footer">Source: <a href="../web-ui/09-loan-offer.html">web-ui/09</a></div>
+  </aside>
+
+  <main class="proto-stage">
+
+    <div class="proto-modebar">
+      <span>Screen <span class="proto-modebar__id" id="screenId">LO1</span></span>
+      <span class="proto-modebar__pill" id="screenName">Offer summary</span>
+      <div class="proto-modebar__bar"><div class="proto-modebar__bar__fill" id="progressFill" style="width:20%"></div></div>
+      <div class="proto-arrows">
+        <button class="proto-arrow" id="navPrev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+        <button class="proto-arrow" id="navNext"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
+      </div>
+    </div>
+
+    <div class="browser">
+      <div class="browser__chrome">
+        <span class="browser__dots"><span class="browser__dot"></span><span class="browser__dot"></span><span class="browser__dot"></span></span>
+        <span class="browser__url">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          <span id="browserUrl">app.gaimcontrol.com/banking/loan</span>
+        </span>
+      </div>
+      <div class="browser__viewport" id="viewport"></div>
+    </div>
+
+    <div class="proto-context" id="contextPanel">
+      <div class="proto-context__head">Screen context</div>
+      <div id="contextBody"></div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+const SCREENS = [
+  { id: 'LO1', name: 'Offer summary', kind: 'lo1', url: '/banking/loan' },
+  { id: 'LO2', name: 'SECCI', kind: 'lo2', url: '/banking/loan/secci' },
+  { id: 'LO3', name: 'Affordability', kind: 'lo3', url: '/banking/loan/affordability' },
+  { id: 'LO4', name: 'Sign & accept', kind: 'lo4', url: '/banking/loan/sign' },
+  { id: 'LO5', name: 'Settled', kind: 'lo5', url: '/banking/loan/settled' },
+];
+
+const CTX = {
+  lo1: '<strong>LO1 Offer summary.</strong> Opens from the BK1 Day-30 unlock card. £8,400 @ 19.9% over 36 months. Per <a href="../41-decisions-log.html">LO-01</a> GC is the direct lender (FCA Sandbox); Algbra issues the card. Per <a href="../41-decisions-log.html">LO-04</a> Phase 1 informal cap is £10k. Per <a href="../41-decisions-log.html">LO-05</a> creditors settled via Experian ReFi only.',
+  lo2: '<strong>LO2 SECCI.</strong> CONC 4.2 mandated form, rendered in regulator order for like-for-like comparison. Per <a href="../41-decisions-log.html">LO-07</a> sponsor sees SECCI by default (Joanna received same form at 21:02).',
+  lo3: '<strong>LO3 Affordability.</strong> CONC 5.2A.4 fresh check pre-filled from linked accounts. £645 disposable after new loan — well above FCA "sustainable" 5% threshold (£107).',
+  lo4: '<strong>LO4 Sign &amp; accept.</strong> 14-day RTW + 24h pre-settlement cool-off. Per <a href="../41-decisions-log.html">LO-06</a> post-settlement withdrawals handled by internal cool-off (no statutory 30-day repayment surprise). Relapse Hold clause 11 contractual.',
+  lo5: '<strong>LO5 Settled.</strong> Experian ReFi paid creditors in 13 minutes. Funds never reach the user — feature, not side effect. First repayment auto-DD 30 May.',
+};
+
+const APPNAV = () => `
+  <aside class="appnav">
+    <div class="appnav__brand">
+      <span class="appnav__mark"><img src="../assets/gc-mark-mono-light.svg" alt=""></span>
+      <span class="appnav__name">GaimControl</span>
+    </div>
+    <div class="appnav__user">
+      <span class="appnav__avatar">S</span>
+      <div><div class="appnav__user-name">Sam Kennedy</div><div class="appnav__user-sub">Habitual · Day 30 unlock</div></div>
+    </div>
+    <nav class="appnav__list">
+      <a class="appnav__item is-disabled"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>Home</a>
+      <a class="appnav__item is-on" style="cursor:pointer" onclick="go(0)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Banking</a>
+      <div class="appnav__subnav">
+        <a class="appnav__subitem is-disabled" title="§06 Banking — open the banking prototype">Overview</a>
+        <a class="appnav__subitem is-on" style="cursor:pointer" onclick="go(0)">Loan</a>
+        <a class="appnav__subitem is-disabled" title="§07 Cards — open the cards prototype">Cards &amp; controls</a>
+        <a class="appnav__subitem is-disabled">Accounts</a>
+        <a class="appnav__subitem is-disabled">Spending</a>
+        <a class="appnav__subitem is-disabled">Sponsor</a>
+      </div>
+      <a class="appnav__item is-disabled"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg>Anna</a>
+      <a class="appnav__item is-disabled"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m7 14 4-4 4 4 5-5"/></svg>Activity</a>
+      <a class="appnav__item is-disabled"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>Profile</a>
+    </nav>
+    <div class="appnav__help">
+      <div style="font-size:12px;font-weight:700;margin-bottom:3px">Need help?</div>
+      <div style="font-size:11px;color:var(--text-secondary);line-height:1.4">Anna's always there. Crisis line is one tap away.</div>
+      <button class="gc-crisis-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7-4.5-9-9.5C2 7 5 4 8 4c1.7 0 3.2.8 4 2 .8-1.2 2.3-2 4-2 3 0 6 3 5 7.5C19 16.5 12 21 12 21z"/></svg>Get help now</button>
+    </div>
+  </aside>`;
+
+const ANNA = (text) => `
+  <div class="gc-card gc-card--anna">
+    <span class="anna-av"><img src="../assets/gc-mark-mono-light.svg" alt=""></span>
+    <div><div class="anna-name">Anna</div><p>${text}</p></div>
+  </div>`;
+
+const PAGE = (title, sub, content) => `
+  <div class="screen" style="display:contents">
+    ${APPNAV()}
+    <div class="main">
+      <div class="main__head"><div><h1 class="main__title">${title}</h1>${sub ? `<p class="main__sub">${sub}</p>` : ''}</div></div>
+      ${content}
+    </div>
+  </div>`;
+
+const builders = {
+  lo1: () => PAGE('Loan offer', 'Day 30 unlock · consolidation review · offer holds for 7 days', `
+    <div class="row-2">
+      <div class="stack">
+        <div class="gc-card gc-card--milestone">
+          <span class="lo-pill">Eligibility · live · Day 30</span>
+          <h2 style="font-size:30px;font-weight:800;letter-spacing:-0.02em;line-height:1.1;margin:8px 0 0">Your loan is ready to review.</h2>
+          <div class="lo-amt-row">
+            <div><div class="lo-amt-l">Principal</div><div class="lo-amt-n"><span>£</span>8,400</div></div>
+            <div><div class="lo-amt-l">Monthly</div><div class="lo-amt-n" style="font-size:32px">£311<span class="lo-amt-suf">/mo · 36mo</span></div></div>
+          </div>
+        </div>
+        <div class="gc-card">
+          <h3 style="font-size:15px;font-weight:700;margin:0">Pays off</h3>
+          <div class="lo-cred"><div class="lo-cred__logo" style="background:#0019A8;color:white">B</div><div><div class="lo-cred__name">Barclaycard</div><div class="lo-cred__sub">23.9% APR · ~£198/mo · paid in full</div></div><div class="lo-cred__amt">£4,820</div></div>
+          <div class="lo-cred"><div class="lo-cred__logo" style="background:#FFC72C;color:#1a1a1a">C</div><div><div class="lo-cred__name">Capital One</div><div class="lo-cred__sub">28.9% APR · ~£124/mo · paid in full</div></div><div class="lo-cred__amt">£3,580</div></div>
+          <div style="display:flex;justify-content:space-between;padding-top:14px;border-top:1px solid var(--border);font-size:14px"><span style="color:var(--text-secondary)">Settled by Experian ReFi · single batch</span><span style="font-family:'JetBrains Mono',monospace;font-weight:700;font-size:16px">£8,400</span></div>
+        </div>
+      </div>
+      <div class="stack">
+        <div class="gc-card">
+          <h3 style="font-size:15px;font-weight:700;margin:0">The numbers</h3>
+          <div class="lo-fig"><span class="lo-fig-l">APR · rep</span><span class="lo-fig-v">19.9% fixed</span></div>
+          <div class="lo-fig"><span class="lo-fig-l">Term</span><span class="lo-fig-v">36 months</span></div>
+          <div class="lo-fig"><span class="lo-fig-l">Total interest</span><span class="lo-fig-v">£2,803.20</span></div>
+          <div class="lo-fig"><span class="lo-fig-l">Total repayable</span><span class="lo-fig-v">£11,203.20</span></div>
+          <div class="lo-fig"><span class="lo-fig-l">Affordability</span><span class="lo-fig-v" style="color:var(--t-50)">14.5% · comfortable</span></div>
+        </div>
+        ${ANNA("This is the moment. You don't have to take the offer today — pause for 7 days if you want.")}
+        <button class="gc-btn gc-btn--primary gc-btn--lg gc-btn--full" onclick="next()">Continue · review SECCI →</button>
+        <button class="gc-btn gc-btn--ghost gc-btn--full">Pause · keep offer 7 days</button>
+        <div class="lo-decision">decision <a href="../41-decisions-log.html">GEN-01</a> · 30-day clean window (A/B vs 15)</div>
+      </div>
+    </div>`),
+
+  lo2: () => PAGE('SECCI', 'Standard European Consumer Credit Information · CONC 4.2 mandated', `
+    <div class="row-2">
+      <div class="stack">
+        <div class="gc-card">
+          <div style="display:flex;align-items:flex-start;gap:14px">
+            <span style="width:48px;height:48px;border-radius:12px;background:var(--p-40);color:var(--p-95);display:inline-flex;align-items:center;justify-content:center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></span>
+            <div>
+              <span style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-muted)">SECCI · pre-contract</span>
+              <h2 style="font-size:22px;font-weight:800;letter-spacing:-0.02em;margin:4px 0 0">Standard European Consumer Credit Information</h2>
+            </div>
+          </div>
+          <p style="font-size:13.5px;color:var(--text-secondary);line-height:1.6;margin:0;padding-top:12px;border-top:1px solid var(--border)">FCA-mandated per CONC 4.2. Same form every UK lender must give you. We render in the regulator's order so you can compare like-for-like.</p>
+          <div style="display:flex;gap:10px">
+            <button class="gc-btn gc-btn--ghost">Download PDF</button>
+            <button class="gc-btn gc-btn--ghost">~6 min read</button>
+          </div>
+        </div>
+        <div class="gc-card">
+          <div class="lo-secci"><h4>1 · Lender</h4><p>GaimControl Limited (FCA Sandbox Cohort 9). Algbra (FCA #952360) issues the card; not party to this loan.</p></div>
+          <div class="lo-secci"><h4>3 · Total credit</h4><p class="mono">£8,400.00</p></div>
+          <div class="lo-secci"><h4>5 · APR</h4><p class="mono">19.9% fixed · representative · no risk-based adjustment after offer.</p></div>
+          <div class="lo-secci"><h4>7 · Right of withdrawal</h4><p>14 days from sign-day to withdraw without reason (Consumer Credit Act 1974 §66A). Per <a href="../41-decisions-log.html">LO-06</a>, if creditors are already paid an internal cool-off mechanism handles unwind — no statutory 30-day repayment surprise.</p></div>
+          <div class="lo-secci"><h4>9 · Missed payments</h4><p>Reported to Experian / Equifax / TransUnion. <strong>No default fees</strong> per <a href="../41-decisions-log.html">RP-07</a>.</p></div>
+          <div class="lo-secci"><h4>11 · Relapse Hold</h4><p><strong>Unique to GaimControl.</strong> Refused MCC 7995 auto-pauses repayment 7 days, no interest accrues, sponsor notified. Contractual feature, not discretionary.</p></div>
+          <a href="#" style="font-size:13px;color:var(--accent);text-decoration:none;font-weight:600;text-align:center;padding:10px 0;border-top:1px solid var(--border);margin-top:8px;display:block">Read all 12 items in the PDF →</a>
+        </div>
+      </div>
+      <div class="stack">
+        <div class="gc-card" style="background:rgba(133,118,194,0.06);border-color:rgba(133,118,194,0.25)">
+          <span class="lo-sponsor-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 4.5 6v6c0 5 3.5 9 7.5 10 4-1 7.5-5 7.5-10V6Z"/></svg> Sent to sponsor</span>
+          <div style="font-size:13.5px;color:var(--text-secondary);margin-top:6px">Joanna received the same SECCI · 21:02 today.</div>
+          <div style="font-size:12px;color:var(--text-muted);margin-top:4px">Per <a href="../41-decisions-log.html" style="color:var(--accent);text-decoration:none">LO-07</a> sponsor sees SECCI by default · 48h review window before settlement runs.</div>
+        </div>
+        ${ANNA("Read it. Take the 7-day pause if you want to sit with it. Numbers don't change.")}
+        <button class="gc-btn gc-btn--primary gc-btn--lg gc-btn--full" onclick="next()">Continue · affordability →</button>
+        <button class="gc-btn gc-btn--ghost gc-btn--full" onclick="prev()">← Back to offer</button>
+      </div>
+    </div>`),
+
+  lo3: () => PAGE('Affordability', 'Final CONC 5.2A.4 fresh check · ~3 min · pre-filled from linked accounts', `
+    <div class="row-2">
+      <div class="stack">
+        <div class="gc-card">
+          <div class="lo-budg-head"><h3>Income</h3><span class="lo-budg-head__n">£2,140<span>/mo</span></span></div>
+          <div class="lo-budg">
+            <div><div class="lo-budg__t">PayBay payroll · monthly</div><div class="lo-budg__s">Barclays ****8810 · 6/6 mo verified</div></div>
+            <div class="lo-budg__a">£2,140</div>
+            <div class="gc-toggle is-on" onclick="toggleClass(this)"></div>
+          </div>
+        </div>
+        <div class="gc-card">
+          <div class="lo-budg-head"><h3>Essentials</h3><span class="lo-budg-head__n">£1,184<span>/mo</span></span></div>
+          <div class="lo-budg"><div><div class="lo-budg__t">Rent · 1-bed</div><div class="lo-budg__s">Standing order · 28th of month</div></div><div class="lo-budg__a">£950</div><div class="gc-toggle is-on" onclick="toggleClass(this)"></div></div>
+          <div class="lo-budg"><div><div class="lo-budg__t">Council tax</div><div class="lo-budg__s">Direct debit · 1st</div></div><div class="lo-budg__a">£124</div><div class="gc-toggle is-on" onclick="toggleClass(this)"></div></div>
+          <div class="lo-budg"><div><div class="lo-budg__t">Utilities</div><div class="lo-budg__s">3 direct debits</div></div><div class="lo-budg__a">£110</div><div class="gc-toggle is-on" onclick="toggleClass(this)"></div></div>
+        </div>
+        <div class="gc-card" style="opacity:0.85">
+          <div class="lo-budg-head"><h3>Debts · settled by ReFi</h3><span class="lo-budg-head__n" style="text-decoration:line-through;color:var(--text-muted)">£322</span></div>
+          <div class="lo-budg lo-budg--strike"><div><div class="lo-budg__t">Barclaycard min payment</div><div class="lo-budg__s">Closes paid-in-full</div></div><div class="lo-budg__a">£198</div><div class="gc-toggle is-on"></div></div>
+          <div class="lo-budg lo-budg--strike"><div><div class="lo-budg__t">Capital One min payment</div><div class="lo-budg__s">Closes paid-in-full</div></div><div class="lo-budg__a">£124</div><div class="gc-toggle is-on"></div></div>
+        </div>
+      </div>
+      <div class="stack">
+        <div class="gc-card" style="background:var(--bg-surface-2)">
+          <h3 style="font-size:16px;font-weight:700;margin:0">After settlement</h3>
+          <div class="lo-sum-grid">
+            <div class="lo-sum-card"><div class="lo-sum-card__l">Income</div><div class="lo-sum-card__n" style="color:var(--t-50)">+£2,140</div></div>
+            <div class="lo-sum-card"><div class="lo-sum-card__l">Essentials</div><div class="lo-sum-card__n">−£1,184</div></div>
+            <div class="lo-sum-card"><div class="lo-sum-card__l">GC loan</div><div class="lo-sum-card__n">−£311</div></div>
+            <div class="lo-sum-card lo-sum-card--total"><div class="lo-sum-card__l">Disposable</div><div class="lo-sum-card__n">£645</div></div>
+          </div>
+          <p style="font-size:12.5px;color:var(--text-secondary);line-height:1.55;margin:0">£645 disposable · well above the FCA "sustainable" 5% threshold (£107).</p>
+        </div>
+        <button class="gc-btn gc-btn--primary gc-btn--lg gc-btn--full" onclick="next()">Continue · sign →</button>
+        <button class="gc-btn gc-btn--ghost gc-btn--full" onclick="prev()">← Back to SECCI</button>
+      </div>
+    </div>`),
+
+  lo4: () => PAGE('Sign &amp; accept', 'Last gate · 14-day RTW + 24h pre-settlement cool-off', `
+    <div class="row-2">
+      <div class="stack">
+        <div class="gc-card gc-card--alert">
+          <div style="display:flex;align-items:center;gap:10px;color:var(--text-primary)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg><strong style="font-size:14.5px">14-day right-to-withdraw starts on sign.</strong></div>
+          <p style="font-size:13px;color:var(--text-secondary);line-height:1.55;margin:0">24h cool-off before settlement runs · cancel without consequence. Per <a href="../41-decisions-log.html" style="color:var(--accent);text-decoration:none">LO-06</a>, post-settlement withdrawals go through internal cool-off — no statutory 30-day repayment surprise.</p>
+        </div>
+        <div class="gc-card">
+          <h3 style="font-size:15px;font-weight:700;margin:0">Agreement summary</h3>
+          <div class="lo-sign-row"><span class="lo-sign-row__l">Lender</span><span class="lo-sign-row__v">GaimControl Ltd · FCA Sandbox</span></div>
+          <div class="lo-sign-row"><span class="lo-sign-row__l">Borrower</span><span class="lo-sign-row__v">Sam Kennedy · 12 Jul 1987</span></div>
+          <div class="lo-sign-row"><span class="lo-sign-row__l">Principal</span><span class="lo-sign-row__v">£8,400.00</span></div>
+          <div class="lo-sign-row"><span class="lo-sign-row__l">APR · term</span><span class="lo-sign-row__v">19.9% · 36mo · £311.20/mo</span></div>
+          <div class="lo-sign-row"><span class="lo-sign-row__l">First payment</span><span class="lo-sign-row__v">30 May 2026</span></div>
+          <div class="lo-sign-row"><span class="lo-sign-row__l">Settlement runs</span><span class="lo-sign-row__v">1 May 09:00 (24h cool-off)</span></div>
+        </div>
+        <div class="gc-card">
+          <h3 style="font-size:15px;font-weight:700;margin:0">Confirm · all required</h3>
+          <label class="lo-attest" onclick="toggleCheck(this)"><span class="gc-checkbox gc-checkbox--on"></span><span>I have read the SECCI and credit agreement.</span></label>
+          <label class="lo-attest" onclick="toggleCheck(this)"><span class="gc-checkbox gc-checkbox--on"></span><span>The figures reflect my current finances.</span></label>
+          <label class="lo-attest" onclick="toggleCheck(this)"><span class="gc-checkbox gc-checkbox--on"></span><span>I understand <strong>Relapse Hold (clause 11)</strong> auto-pauses repayment 7d on a refused MCC 7995 tx and notifies my sponsor.</span></label>
+          <label class="lo-attest" onclick="toggleCheck(this)"><span class="gc-checkbox"></span><span>I authorise GaimControl to instruct <strong>Experian ReFi</strong> to pay £8,400 directly to creditors.</span></label>
+        </div>
+      </div>
+      <div class="stack">
+        <div class="gc-card" style="background:var(--bg-surface-2);padding:24px">
+          <h3 style="font-size:15px;font-weight:700;margin:0">Sign here</h3>
+          <p style="font-size:13px;color:var(--text-secondary);line-height:1.55;margin:0">Type your full legal name · counts as wet signature.</p>
+          <input type="text" class="lo-sign-input" value="Sam Anthony Kennedy">
+          <div style="display:flex;gap:18px;flex-wrap:wrap;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-muted);padding-top:6px">
+            <span><strong style="color:var(--text-secondary)">Signed</strong> 30 Apr 11:42</span>
+            <span><strong style="color:var(--text-secondary)">Device</strong> macOS · Safari</span>
+            <span><strong style="color:var(--text-secondary)">IP</strong> 86.12.···.···</span>
+          </div>
+        </div>
+        ${ANNA("Last gate. After this, cool-off opens and we don't need to talk until Friday morning unless you want to.")}
+        <button class="gc-btn gc-btn--primary gc-btn--lg gc-btn--full" onclick="next()">Confirm &amp; sign · open cool-off →</button>
+      </div>
+    </div>`),
+
+  lo5: () => PAGE('Settled', '£8,400 paid · 2 creditors closed in 13 minutes', `
+    <div class="row-2">
+      <div class="stack">
+        <div class="gc-card gc-card--complete">
+          <span class="lo-pill" style="background:rgba(0,0,0,0.22);color:white">
+            <span style="display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:white;color:var(--t-30)"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+            Settled · 1 May 09:14
+          </span>
+          <h2 style="font-size:36px;font-weight:800;letter-spacing:-0.025em;line-height:1.05;margin:8px 0 0">£8,400 paid · 2 closed.</h2>
+          <p style="font-size:15px;line-height:1.55;margin:0">Experian ReFi ran the batch this morning. Both creditors marked paid-in-full · accounts close in ~5 working days.</p>
+        </div>
+        ${ANNA("That's the moment that doesn't come round again. Two creditors closed in 13 minutes. Take a breath.")}
+        <button class="gc-btn gc-btn--primary gc-btn--lg gc-btn--full">Open repayment dashboard →</button>
+        <div class="lo-decision">decisions · <a href="../41-decisions-log.html">LO-05</a> Experian ReFi only · <a href="../41-decisions-log.html">LO-06</a> internal cool-off</div>
+      </div>
+      <div class="stack">
+        <div class="gc-card">
+          <h3 style="font-size:15px;font-weight:700;margin:0">Timeline</h3>
+          <div class="lo-tl lo-tl--done"><span class="lo-tl__d"></span><div><div class="lo-tl__t">Sign &amp; accept</div><div class="lo-tl__s">30 Apr · 11:42</div></div><span class="lo-tl__time">11:42</span></div>
+          <div class="lo-tl lo-tl--done"><span class="lo-tl__d"></span><div><div class="lo-tl__t">24h cool-off</div><div class="lo-tl__s">No action needed</div></div><span class="lo-tl__time">until 1 May</span></div>
+          <div class="lo-tl lo-tl--done"><span class="lo-tl__d"></span><div><div class="lo-tl__t">Funds → Experian ReFi escrow</div><div class="lo-tl__s">£8,400 · single batch</div></div><span class="lo-tl__time">09:00</span></div>
+          <div class="lo-tl lo-tl--done"><span class="lo-tl__d"></span><div><div class="lo-tl__t">Barclaycard paid · £4,820</div><div class="lo-tl__s">FP · ref BC-22-SAM-K-CLOSE</div></div><span class="lo-tl__time">09:11</span></div>
+          <div class="lo-tl lo-tl--done"><span class="lo-tl__d"></span><div><div class="lo-tl__t">Capital One paid · £3,580</div><div class="lo-tl__s">FP · ref C1-22-SAM-K-CLOSE</div></div><span class="lo-tl__time">09:13</span></div>
+          <div class="lo-tl lo-tl--current"><span class="lo-tl__d"></span><div><div class="lo-tl__t">Receipts emailed</div><div class="lo-tl__s">To you + sponsor</div></div><span class="lo-tl__time">09:14</span></div>
+          <div class="lo-tl"><span class="lo-tl__d"></span><div><div class="lo-tl__t">Account closures · ~5d</div><div class="lo-tl__s">Creditor → credit-file update</div></div><span class="lo-tl__time">~6 May</span></div>
+          <div class="lo-tl"><span class="lo-tl__d"></span><div><div class="lo-tl__t">First payment · 30 May</div><div class="lo-tl__s">£311.20 auto-DD</div></div><span class="lo-tl__time">30 May</span></div>
+        </div>
+      </div>
+    </div>`),
+};
+
+let idx = 0;
+
+function toggleClass(el) { el.classList.toggle('is-on'); }
+function toggleCheck(el) {
+  const box = el.querySelector('.gc-checkbox');
+  if (box) box.classList.toggle('gc-checkbox--on');
+}
+
+function render() {
+  const screen = SCREENS[idx];
+  document.getElementById('viewport').innerHTML = builders[screen.kind]();
+  document.getElementById('browserUrl').textContent = 'app.gaimcontrol.com' + screen.url;
+  document.getElementById('screenId').textContent = screen.id;
+  document.getElementById('screenName').textContent = screen.name;
+  document.getElementById('progressFill').style.width = ((idx + 1) / SCREENS.length * 100) + '%';
+  document.getElementById('navPrev').disabled = idx === 0;
+  document.getElementById('navNext').disabled = idx === SCREENS.length - 1;
+  document.querySelectorAll('.proto-scrubber__item').forEach((el, i) => {
+    el.classList.toggle('is-active', i === idx);
+    if (i === idx) el.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  });
+  document.getElementById('contextBody').innerHTML = CTX[screen.kind] || screen.name;
+}
+
+function next() { if (idx < SCREENS.length - 1) { idx++; render(); } }
+function prev() { if (idx > 0) { idx--; render(); } }
+function go(i) { idx = i; render(); }
+
+function buildScrubber() {
+  const nav = document.getElementById('scrubber');
+  SCREENS.forEach((s, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'proto-scrubber__item';
+    btn.innerHTML = `<span class="proto-scrubber__id">${s.id}</span><span class="proto-scrubber__name">${s.name}</span>`;
+    btn.addEventListener('click', () => go(i));
+    nav.appendChild(btn);
+  });
+}
+
+function initTheme() {
+  const root = document.documentElement;
+  const stored = localStorage.getItem('gc-proto-theme');
+  const initial = stored || 'dark';
+  root.setAttribute('data-theme', initial);
+  document.querySelector('.theme-label').textContent = initial === 'dark' ? 'Dark' : 'Light';
+  document.querySelector('.proto-theme-toggle').addEventListener('click', () => {
+    const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    document.querySelector('.theme-label').textContent = next === 'dark' ? 'Dark' : 'Light';
+    try { localStorage.setItem('gc-proto-theme', next); } catch(e) {}
+  });
+}
+
+document.getElementById('navPrev').addEventListener('click', prev);
+document.getElementById('navNext').addEventListener('click', next);
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowRight') next();
+  if (e.key === 'ArrowLeft') prev();
+});
+
+buildScrubber();
+initTheme();
+render();
+</script>
+
+</body>
+</html>

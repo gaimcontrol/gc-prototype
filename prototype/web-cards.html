@@ -1,0 +1,702 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GaimControl · Web · §07 Card &amp; controls</title>
+<link rel="icon" href="../assets/gc-favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --p-10:#0B0F1C;--p-20:#161B2D;--p-30:#20273C;--p-40:#354872;--p-50:#4D608C;--p-60:#6B7DA6;--p-90:#DCE2F0;--p-95:#ECF0F9;--p-99:#FAFBFE;--p-100:#FFF;
+  --s-10:#28215A;--s-20:#3E3478;--s-30:#534792;--s-40:#6B5DAC;--s-50:#8576C2;--s-70:#B5ACDF;--s-80:#CFC8EA;--s-90:#E8E4F4;
+  --t-20:#1A6047;--t-30:#1F7058;--t-50:#399971;--t-60:#5BB088;--t-80:#ADDCC2;--t-90:#D5EDDF;
+  --w-30:#6B4500;--w-60:#C28200;--w-80:#FAB44A;--w-90:#FFDFA8;
+  --e-30:#7A1F1F;--e-50:#C73838;--e-90:#FBD9D9;
+  --n-50:#76798A;--n-80:#C5C8D2;--n-95:#F1F2F5;--nv-80:#C5C9DD;
+}
+[data-theme="dark"] { --bg-base: var(--p-30); --bg-surface: var(--p-20); --bg-surface-2: var(--p-10); --border: rgba(255,255,255,0.08); --text-primary: var(--n-95); --text-secondary: var(--nv-80); --text-muted: rgba(255,255,255,0.4); --accent: var(--s-70); --accent-strong: var(--s-50); --on-accent: #fff; --page-bg: #0a0e1a; --page-fg: var(--n-95); --page-fg-muted: var(--nv-80); --page-card-bg: var(--p-20); --page-divider: rgba(255,255,255,0.06); }
+[data-theme="light"] { --bg-base: var(--p-99); --bg-surface: #fff; --bg-surface-2: var(--p-95); --border: rgba(22,27,45,0.08); --text-primary: var(--p-20); --text-secondary: var(--n-50); --text-muted: var(--n-50); --accent: var(--p-40); --accent-strong: var(--s-40); --on-accent: #fff; --page-bg: var(--p-95); --page-fg: var(--p-20); --page-fg-muted: var(--n-50); --page-card-bg: #fff; --page-divider: rgba(22,27,45,0.08); }
+* { box-sizing: border-box; }
+html, body { background: var(--page-bg); color: var(--page-fg); margin: 0; transition: background-color 220ms ease, color 220ms ease; }
+body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif; font-size: 14px; line-height: 1.5; -webkit-font-smoothing: antialiased; min-height: 100vh; }
+
+/* SHELL */
+.proto-shell { display: grid; grid-template-columns: 280px 1fr; gap: 0; min-height: 100vh; }
+@media (max-width: 1100px) { .proto-shell { grid-template-columns: 1fr; } }
+.proto-sidebar { background: var(--page-card-bg); border-right: 1px solid var(--page-divider); padding: 28px 22px; position: sticky; top: 0; height: 100vh; overflow-y: auto; display: flex; flex-direction: column; gap: 16px; }
+@media (max-width: 1100px) { .proto-sidebar { position: static; height: auto; max-height: 50vh; border-right: none; border-bottom: 1px solid var(--page-divider); } }
+.proto-sidebar__brand { display: flex; align-items: center; gap: 10px; }
+.proto-sidebar__mark { width: 36px; height: 36px; border-radius: 10px; background: var(--p-30); display: inline-flex; align-items: center; justify-content: center; }
+.proto-sidebar__mark img { width: 70%; height: 70%; }
+.proto-sidebar__name { font-weight: 700; font-size: 17px; letter-spacing: -0.01em; }
+.proto-sidebar__pill { display: inline-flex; padding: 3px 9px; border-radius: 999px; background: linear-gradient(120deg, var(--s-50), var(--p-50), var(--t-50)); color: white; font-weight: 700; font-size: 9.5px; font-family: 'JetBrains Mono', monospace; letter-spacing: 0.06em; text-transform: uppercase; }
+.proto-sidebar__back { display: inline-flex; align-items: center; gap: 6px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--page-fg-muted); text-decoration: none; }
+.proto-sidebar__back:hover { color: var(--page-accent); }
+.proto-section-title { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--page-fg-muted); margin: 12px 0 6px; }
+.proto-scrubber { display: flex; flex-direction: column; gap: 2px; }
+.proto-scrubber__item { display: grid; grid-template-columns: 44px 1fr; gap: 8px; align-items: center; padding: 7px 10px; border-radius: 8px; cursor: pointer; border: none; background: transparent; color: inherit; font-family: inherit; text-align: left; }
+.proto-scrubber__item:hover { background: rgba(127,127,127,0.08); }
+.proto-scrubber__item.is-active { background: var(--accent-strong); color: var(--on-accent); }
+.proto-scrubber__item.is-active .proto-scrubber__id { color: rgba(255,255,255,0.85); }
+.proto-scrubber__id { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; color: var(--page-fg-muted); letter-spacing: 0.06em; }
+.proto-scrubber__name { font-size: 12.5px; font-weight: 500; }
+.proto-sidebar__footer { margin-top: auto; padding-top: 16px; border-top: 1px solid var(--page-divider); font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--page-fg-muted); }
+.proto-sidebar__footer a { color: var(--page-fg-muted); text-decoration: none; border-bottom: 1px dotted currentColor; }
+.proto-theme-toggle { display: inline-flex; align-items: center; gap: 8px; padding: 7px 12px; border-radius: 8px; background: var(--bg-surface-2); border: 1px solid var(--border); color: var(--page-fg-muted); cursor: pointer; font-family: 'JetBrains Mono', monospace; font-size: 11px; align-self: flex-start; }
+.proto-theme-toggle svg { width: 12px; height: 12px; }
+[data-theme="dark"] .proto-theme-toggle .icon-moon { display: none; }
+[data-theme="light"] .proto-theme-toggle .icon-sun { display: none; }
+
+/* STAGE */
+.proto-stage { display: flex; flex-direction: column; align-items: center; padding: 32px 24px 64px; gap: 18px; }
+.proto-modebar { display: flex; align-items: center; gap: 10px; padding: 10px 16px; background: var(--page-card-bg); border: 1px solid var(--page-divider); border-radius: 12px; font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: var(--page-fg-muted); flex-wrap: wrap; justify-content: center; }
+.proto-modebar__pill { display: inline-flex; padding: 3px 9px; border-radius: 999px; background: var(--bg-surface-2); }
+.proto-modebar__id { color: var(--page-fg); font-weight: 700; letter-spacing: 0.06em; }
+.proto-modebar__bar { width: 100px; height: 4px; border-radius: 4px; background: var(--bg-surface-2); position: relative; overflow: hidden; }
+.proto-modebar__bar__fill { position: absolute; left: 0; top: 0; bottom: 0; background: linear-gradient(90deg, var(--s-50), var(--t-50)); transition: width 240ms ease; }
+.proto-arrows { display: flex; align-items: center; gap: 8px; }
+.proto-arrow { width: 36px; height: 36px; border-radius: 10px; background: var(--page-card-bg); border: 1px solid var(--page-divider); color: var(--page-fg-muted); display: inline-flex; align-items: center; justify-content: center; cursor: pointer; }
+.proto-arrow:hover { background: var(--bg-surface-2); color: var(--page-fg); }
+.proto-arrow:disabled { opacity: 0.3; cursor: not-allowed; }
+.proto-arrow svg { width: 18px; height: 18px; }
+
+/* BROWSER */
+.browser { width: 100%; max-width: 1380px; background: var(--bg-base); border-radius: 18px; overflow: hidden; border: 1px solid var(--border); box-shadow: 0 24px 60px -20px rgba(0,0,0,0.45), 0 8px 24px -12px rgba(0,0,0,0.25); }
+[data-theme="light"] .browser { box-shadow: 0 24px 60px -20px rgba(22,27,45,0.18), 0 8px 24px -12px rgba(22,27,45,0.08); }
+.browser__chrome { display: flex; align-items: center; gap: 14px; padding: 12px 16px; background: var(--p-20); border-bottom: 1px solid var(--border); }
+[data-theme="light"] .browser__chrome { background: var(--n-95); }
+.browser__dots { display: inline-flex; gap: 7px; flex-shrink: 0; }
+.browser__dot { width: 11px; height: 11px; border-radius: 50%; }
+.browser__dot:nth-child(1) { background: #FF5F57; } .browser__dot:nth-child(2) { background: #FEBC2E; } .browser__dot:nth-child(3) { background: #28C840; }
+.browser__url { flex: 1; background: var(--bg-base); border: 1px solid var(--border); border-radius: 7px; padding: 6px 14px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--text-secondary); text-align: center; display: flex; align-items: center; justify-content: center; gap: 8px; }
+.browser__url svg { width: 12px; height: 12px; opacity: 0.7; flex-shrink: 0; }
+.browser__viewport { background: var(--bg-base); min-height: 800px; position: relative; color: var(--text-primary); display: grid; grid-template-columns: 240px 1fr; }
+
+/* App sidenav */
+.appnav { background: var(--bg-surface); border-right: 1px solid var(--border); padding: 20px 16px; display: flex; flex-direction: column; gap: 16px; }
+[data-theme="light"] .appnav { background: var(--bg-surface-2); border-right: 1px solid rgba(22,27,45,0.12); }
+[data-theme="light"] .appnav__item { color: var(--p-40); }
+[data-theme="light"] .appnav__item:hover { color: var(--p-20); }
+[data-theme="light"] .appnav__subitem { color: var(--p-50); }
+[data-theme="light"] .appnav__subitem:hover { color: var(--p-20); }
+[data-theme="light"] .appnav__user-sub { color: var(--p-50); }
+[data-theme="light"] .appnav .appnav__help div:nth-of-type(2) { color: var(--p-50); }
+.appnav__brand { display: flex; align-items: center; gap: 10px; padding: 4px 4px 12px; border-bottom: 1px solid var(--border); margin-bottom: 4px; }
+.appnav__mark { width: 32px; height: 32px; border-radius: 9px; background: var(--p-30); display: inline-flex; align-items: center; justify-content: center; }
+.appnav__mark img { width: 70%; height: 70%; }
+.appnav__name { font-weight: 700; font-size: 15px; letter-spacing: -0.01em; }
+.appnav__user { display: flex; align-items: center; gap: 10px; padding: 8px 8px; border-radius: 10px; background: var(--bg-base); }
+.appnav__avatar { width: 32px; height: 32px; border-radius: 50%; background: var(--accent-strong); color: white; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; font-size: 13px; }
+.appnav__user-name { font-size: 13px; font-weight: 600; }
+.appnav__user-sub { font-size: 11px; color: var(--text-secondary); }
+.appnav__list { display: flex; flex-direction: column; gap: 2px; }
+.appnav__item { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 10px; cursor: pointer; color: var(--text-secondary); text-decoration: none; font-size: 13.5px; font-weight: 500; }
+.appnav__item:hover { background: var(--bg-base); color: var(--text-primary); }
+.appnav__item.is-on { background: var(--accent-strong); color: var(--on-accent); font-weight: 600; }
+.appnav__item.is-disabled { opacity: 0.35; cursor: not-allowed; }
+.appnav__item.is-disabled:hover { background: transparent; color: var(--text-secondary); }
+.appnav__item svg { width: 18px; height: 18px; flex-shrink: 0; }
+.appnav__subnav { padding: 4px 0 4px 28px; display: flex; flex-direction: column; gap: 1px; border-left: 1px solid var(--border); margin: 2px 0 2px 22px; }
+.appnav__subitem { padding: 7px 12px; border-radius: 8px; font-size: 12.5px; font-weight: 500; color: var(--text-secondary); cursor: pointer; }
+.appnav__subitem:hover { background: var(--bg-base); color: var(--text-primary); }
+.appnav__subitem.is-on { background: var(--bg-base); color: var(--accent); font-weight: 600; }
+.appnav__subitem.is-disabled { opacity: 0.35; cursor: not-allowed; }
+.appnav__help { margin-top: auto; padding: 14px 14px; border-radius: 12px; background: var(--bg-base); border: 1px solid var(--border); }
+.gc-crisis-btn { width: 100%; padding: 9px 12px; border-radius: 10px; background: var(--e-50); color: white; border: none; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 6px; margin-top: 8px; }
+.gc-crisis-btn svg { width: 14px; height: 14px; }
+
+/* Main content */
+.main { padding: 32px 40px 56px; overflow-y: auto; max-height: 800px; }
+.main::-webkit-scrollbar { width: 6px; }
+.main::-webkit-scrollbar-thumb { background: rgba(127,127,127,0.2); border-radius: 6px; }
+.main__head { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 24px; }
+.main__title { font-size: 30px; font-weight: 800; letter-spacing: -0.02em; margin: 0; }
+.main__sub { font-size: 13.5px; color: var(--text-secondary); margin: 4px 0 0; }
+.main__head-actions { display: flex; gap: 10px; }
+
+/* Card */
+.gc-card { padding: 20px; background: var(--bg-surface); border: 1px solid var(--border); border-radius: 16px; display: flex; flex-direction: column; gap: 12px; }
+.gc-card--anna { background: linear-gradient(135deg, rgba(133,118,194,0.12), rgba(83,71,146,0.06)); border-color: rgba(133,118,194,0.25); flex-direction: row; align-items: center; gap: 14px; padding: 16px 20px; }
+.gc-card--anna .anna-av { width: 38px; height: 38px; border-radius: 50%; background: var(--p-30); display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.gc-card--anna .anna-av img { width: 60%; height: 60%; }
+.gc-card--anna .anna-name { font-size: 13px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 2px; }
+.gc-card--anna p { font-size: 14px; line-height: 1.5; margin: 0; }
+.gc-card--milestone { background: linear-gradient(135deg, var(--s-40), var(--p-40)); color: white; border-color: transparent; }
+.gc-card--milestone p { color: rgba(255,255,255,0.92); }
+.gc-card--alert { background: var(--bg-surface-2); border-left: 4px solid var(--w-60); border-radius: 6px 16px 16px 6px; padding: 14px 18px; gap: 4px; }
+
+.row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-items: start; }
+.row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+.stack { display: flex; flex-direction: column; gap: 16px; }
+@media (max-width: 900px) { .row-2 { grid-template-columns: 1fr; } .row-3 { grid-template-columns: 1fr; } }
+
+/* Card art (CC1) — bigger on web */
+.cc-card-art { width: 100%; max-width: 460px; aspect-ratio: 1.59; background: linear-gradient(135deg, var(--s-30) 0%, var(--p-20) 100%); border-radius: 20px; padding: 24px; position: relative; color: white; overflow: hidden; box-shadow: 0 24px 48px -20px rgba(0,0,0,0.4); }
+.cc-card-art__brand { width: 44px; height: 44px; opacity: 0.95; filter: brightness(1.2); }
+.cc-card-art__cn { position: absolute; top: 22px; right: 22px; width: 36px; height: 36px; color: rgba(255,255,255,0.6); }
+.cc-card-art__chip { position: absolute; top: 55%; left: 24px; width: 44px; height: 32px; border-radius: 6px; background: linear-gradient(135deg, #d4b56a, #8a6b30); }
+.cc-card-art__num { position: absolute; bottom: 56px; left: 24px; font-family: 'JetBrains Mono', monospace; font-size: 24px; font-weight: 700; letter-spacing: 0.12em; }
+.cc-card-art__name { position: absolute; bottom: 22px; left: 24px; font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.92; }
+.cc-card-art__exp { position: absolute; bottom: 22px; right: 24px; font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 600; opacity: 0.85; }
+
+/* Step list */
+.cc-step { display: grid; grid-template-columns: 36px 1fr; gap: 12px; align-items: flex-start; padding: 10px 0; }
+.cc-step__c { width: 36px; height: 36px; border-radius: 50%; background: var(--bg-surface-2); border: 1px solid var(--border); display: inline-flex; align-items: center; justify-content: center; color: var(--text-secondary); font-weight: 700; font-size: 14px; font-family: 'JetBrains Mono', monospace; flex-shrink: 0; }
+.cc-step.is-done .cc-step__c { background: var(--t-50); color: white; border-color: transparent; }
+.cc-step.is-done .cc-step__c svg { width: 18px; height: 18px; }
+.cc-step.is-active .cc-step__c { background: var(--accent-strong); color: white; border-color: transparent; }
+.cc-step__t { font-size: 14.5px; font-weight: 600; }
+.cc-step__s { font-size: 12.5px; color: var(--text-secondary); margin-top: 2px; }
+
+/* Pill */
+.cc-pill { display: inline-flex; align-items: center; gap: 7px; padding: 4px 13px 4px 5px; border-radius: 999px; font-size: 11px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; align-self: flex-start; }
+.cc-pill::before { content: ''; width: 10px; height: 10px; border-radius: 50%; }
+.cc-pill--ok { background: var(--t-20); color: var(--t-80); }
+.cc-pill--ok::before { background: var(--t-50); }
+[data-theme="light"] .cc-pill--ok { background: var(--t-90); color: var(--t-30); }
+.cc-pill--err { background: var(--e-30); color: var(--e-90); }
+.cc-pill--err::before { background: var(--e-50); }
+[data-theme="light"] .cc-pill--err { background: var(--e-90); color: var(--e-30); }
+.cc-pill--info { background: var(--p-40); color: var(--p-95); }
+.cc-pill--info::before { background: var(--p-90); }
+[data-theme="light"] .cc-pill--info { background: var(--p-90); color: var(--p-30); }
+.cc-pill--sponsor { background: var(--s-20); color: var(--s-80); }
+.cc-pill--sponsor::before { background: var(--s-50); }
+[data-theme="light"] .cc-pill--sponsor { background: var(--s-90); color: var(--s-20); }
+
+/* MCC + chan + perm rows */
+.cc-mcc, .cc-chan, .cc-perm { display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: center; padding: 14px 0; border-top: 1px solid var(--border); }
+.cc-mcc:first-child, .cc-chan:first-child, .cc-perm:first-child { border-top: none; padding-top: 0; }
+.cc-mcc__head { display: flex; align-items: center; gap: 10px; }
+.cc-mcc__code { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; padding: 3px 9px; border-radius: 6px; background: var(--bg-surface-2); color: var(--text-secondary); }
+.cc-mcc__name, .cc-chan__t, .cc-perm__t { font-size: 14.5px; font-weight: 600; }
+.cc-mcc__sub, .cc-chan__s, .cc-perm__s { font-size: 12.5px; color: var(--text-secondary); margin-top: 3px; line-height: 1.45; }
+.cc-mcc__locked { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-family: 'JetBrains Mono', monospace; color: var(--text-muted); margin-top: 4px; letter-spacing: 0.04em; }
+.cc-mcc__locked svg { width: 11px; height: 11px; }
+
+.cc-chan { display: grid; grid-template-columns: 44px 1fr auto; gap: 14px; }
+.cc-chan__ic { width: 44px; height: 44px; border-radius: 12px; display: inline-flex; align-items: center; justify-content: center; }
+.cc-chan__note { grid-column: 2 / -1; font-size: 12px; color: var(--text-secondary); padding-top: 4px; line-height: 1.45; }
+.cc-chan__note strong { color: var(--text-primary); }
+
+/* Toggle */
+.gc-toggle { width: 48px; height: 28px; background: var(--bg-surface-2); border: 1px solid var(--border); border-radius: 999px; position: relative; flex-shrink: 0; cursor: pointer; transition: background 160ms ease; }
+.gc-toggle::after { content: ''; position: absolute; top: 2px; left: 2px; width: 22px; height: 22px; background: var(--text-muted); border-radius: 50%; transition: transform 160ms ease, background 160ms ease; }
+.gc-toggle.is-on { background: var(--accent); border-color: transparent; }
+.gc-toggle.is-on::after { transform: translateX(20px); background: white; }
+.gc-toggle.is-locked { opacity: 0.6; cursor: not-allowed; }
+.gc-toggle--ok { background: var(--t-50); border-color: transparent; }
+.gc-toggle--ok::after { transform: translateX(20px); background: white; }
+
+/* Stat row */
+.cc-stat-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; padding-top: 12px; border-top: 1px solid var(--border); margin-top: 8px; }
+.cc-stat-row__n { font-size: 24px; font-weight: 800; letter-spacing: -0.015em; }
+.cc-stat-row__l { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 3px; }
+
+/* Trust row */
+.cc-trust { display: grid; grid-template-columns: 36px 1fr; gap: 12px; align-items: center; padding: 12px 0; border-top: 1px solid var(--border); }
+.cc-trust:first-child { border-top: none; padding-top: 0; }
+.cc-trust__ic { width: 36px; height: 36px; border-radius: 10px; background: var(--bg-surface-2); display: inline-flex; align-items: center; justify-content: center; color: var(--text-primary); }
+.cc-trust__ic svg { width: 18px; height: 18px; }
+.cc-trust__t { font-size: 14px; font-weight: 600; }
+.cc-trust__s { font-size: 12px; color: var(--text-secondary); }
+
+/* Field */
+.cc-field { display: flex; flex-direction: column; gap: 6px; }
+.cc-field__label { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); }
+.cc-field__input { background: var(--bg-base); border: 1px solid var(--border); border-radius: 11px; padding: 13px 16px; font-size: 15px; color: var(--text-primary); }
+.cc-chips { display: flex; gap: 7px; flex-wrap: wrap; }
+.cc-chip { padding: 8px 14px; border-radius: 999px; font-size: 13px; font-family: inherit; font-weight: 500; background: var(--bg-base); border: 1px solid var(--border); color: var(--text-primary); cursor: pointer; }
+.cc-chip.is-on { background: var(--accent-strong); color: var(--on-accent); border-color: transparent; font-weight: 600; }
+
+/* Avatar */
+.cc-avatar { width: 64px; height: 64px; border-radius: 50%; background: linear-gradient(135deg, var(--s-50), var(--p-40)); color: white; display: inline-flex; align-items: center; justify-content: center; font-size: 22px; font-weight: 700; flex-shrink: 0; }
+
+/* CTA */
+.gc-btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 12px 20px; border-radius: 12px; font-family: inherit; font-size: 14px; font-weight: 600; cursor: pointer; border: 1px solid transparent; }
+.gc-btn--primary { background: var(--accent-strong); color: var(--on-accent); }
+.gc-btn--primary:hover { background: var(--s-40); }
+.gc-btn--ghost { background: transparent; color: var(--text-primary); border-color: var(--border); }
+.gc-btn--ghost:hover { background: rgba(127,127,127,0.06); }
+.gc-btn--lg { padding: 14px 26px; font-size: 15px; border-radius: 14px; }
+.gc-btn--full { width: 100%; }
+
+/* Decision note */
+.cc-decision { font-size: 12px; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; padding: 12px 16px; background: var(--bg-surface-2); border-radius: 10px; line-height: 1.5; }
+.cc-decision a { color: var(--accent); text-decoration: none; }
+
+/* Context */
+.proto-context { width: 100%; max-width: 1380px; padding: 16px 20px; background: var(--page-card-bg); border: 1px solid var(--page-divider); border-radius: 12px; font-size: 13px; color: var(--page-fg-muted); line-height: 1.55; }
+.proto-context strong { color: var(--page-fg); }
+.proto-context a { color: var(--page-accent, var(--s-70)); text-decoration: none; border-bottom: 1px dotted currentColor; }
+.proto-context__head { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; color: var(--page-fg); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px; }
+
+.screen { animation: fade-in 220ms ease; }
+@keyframes fade-in { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+</style>
+<script src="flow-chain.js" defer></script>
+</head>
+<body>
+
+<div class="proto-shell">
+
+  <aside class="proto-sidebar">
+    <div class="proto-sidebar__brand">
+      <span class="proto-sidebar__mark"><img src="../assets/gc-mark-mono-light.svg" alt=""></span>
+      <span>
+        <div class="proto-sidebar__name">GaimControl</div>
+        <span class="proto-sidebar__pill">web</span>
+      </span>
+    </div>
+    <a class="proto-sidebar__back" href="index.html">← prototype index</a>
+    <button class="proto-theme-toggle" type="button" aria-label="Toggle theme">
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+      <span class="theme-label">Dark</span>
+    </button>
+    <div class="proto-section-title">§07 · CC1 – CC7</div>
+    <nav class="proto-scrubber" id="scrubber"></nav>
+    <div class="proto-sidebar__footer">Source: <a href="../web-ui/07-card-controls.html">web-ui/07</a></div>
+  </aside>
+
+  <main class="proto-stage">
+
+    <div class="proto-modebar">
+      <span>Screen <span class="proto-modebar__id" id="screenId">CC1</span></span>
+      <span class="proto-modebar__pill" id="screenName">Card setup</span>
+      <div class="proto-modebar__bar"><div class="proto-modebar__bar__fill" id="progressFill" style="width:14%"></div></div>
+      <div class="proto-arrows">
+        <button class="proto-arrow" id="navPrev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+        <button class="proto-arrow" id="navNext"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
+      </div>
+    </div>
+
+    <div class="browser">
+      <div class="browser__chrome">
+        <span class="browser__dots"><span class="browser__dot"></span><span class="browser__dot"></span><span class="browser__dot"></span></span>
+        <span class="browser__url">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          <span id="browserUrl">app.gaimcontrol.com/banking/cards</span>
+        </span>
+      </div>
+      <div class="browser__viewport" id="viewport"></div>
+    </div>
+
+    <div class="proto-context" id="contextPanel">
+      <div class="proto-context__head">Screen context</div>
+      <div id="contextBody"></div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+const SCREENS = [
+  { id: 'CC1', name: 'Card setup', kind: 'cc1', url: '/banking/cards', sub: 'card' },
+  { id: 'CC2', name: 'MCC blocks', kind: 'cc2', url: '/banking/cards/blocks', sub: 'blocks' },
+  { id: 'CC3', name: 'Channels', kind: 'cc3', url: '/banking/cards/channels', sub: 'channels' },
+  { id: 'CC4', name: 'Gamban', kind: 'cc4', url: '/banking/cards/gamban', sub: 'gamban' },
+  { id: 'CC5', name: 'Gamstop', kind: 'cc5', url: '/banking/cards/gamstop', sub: 'gamstop' },
+  { id: 'CC6', name: 'Sponsor', kind: 'cc6', url: '/banking/sponsor', sub: 'sponsor' },
+  { id: 'CC7', name: 'Invite sponsor', kind: 'cc7', url: '/banking/sponsor/invite', sub: 'sponsor' },
+];
+
+const CTX = {
+  cc1: '<strong>CC1 Card setup.</strong> Algbra-issued Visa debit (FCA #952360). Virtual card live instantly, physical ships in ~2 days. Web layout puts the card art prominently as a hero.',
+  cc2: '<strong>CC2 MCC blocks.</strong> Gambling MCCs (7995, 7800, 7801) are <strong>immutable</strong> mid-streak — locked at the Visa-auth layer. Edits queue until next 30-day reset per <a href="../41-decisions-log.html">GEN-01</a>. Per <a href="../41-decisions-log.html">CC-07</a>, profile-conditional MCCs are <strong>hidden from the user</strong>.',
+  cc3: '<strong>CC3 Channels.</strong> Per <a href="../41-decisions-log.html">CC-02</a>, all controls off by default with uniform cool-off. Per <a href="../41-decisions-log.html">CC-05</a>, magstripe is permanently off (toggle removed). Loosening any control requires sponsor co-sign.',
+  cc4: '<strong>CC4 Gamban.</strong> Device-level DNS + app block. GC pays the sub. Three-layer defence: Card block (MCC) + Gamban (device) + Gamstop (UK register).',
+  cc5: '<strong>CC5 Gamstop.</strong> UK national self-exclusion register, mandatory for UKGC-licensed operators. Doesn\'t cover physical bookies (→ BetFilter, <a href="../41-decisions-log.html">CC-01</a> TBD).',
+  cc6: '<strong>CC6 Sponsor.</strong> Permission matrix per sponsor. Per <a href="../41-decisions-log.html">BK-01</a>, sponsor receives all alerts by default. Anna chat content is locked off — therapy is privileged. Per <a href="../41-decisions-log.html">GEN-07</a>, up to 3 sponsors.',
+  cc7: '<strong>CC7 Invite sponsor.</strong> Two-sided invite. Per <a href="../41-decisions-log.html">CC-03</a> sponsor goes through light KYC + open banking (full flow in <a href="../15-sponsor-onboarding.html">§15</a>). Per <a href="../41-decisions-log.html">ON-04</a> invite timing is A/B (ON6 vs ON21).',
+};
+
+function toggleClass(el) {
+  if (el.classList.contains('is-locked')) return;
+  el.classList.toggle('is-on');
+}
+
+const ANNA = (text) => `
+  <div class="gc-card gc-card--anna">
+    <span class="anna-av"><img src="../assets/gc-mark-mono-light.svg" alt=""></span>
+    <div><div class="anna-name">Anna</div><p>${text}</p></div>
+  </div>`;
+
+const APPNAV = (activeSub) => `
+  <aside class="appnav">
+    <div class="appnav__brand">
+      <span class="appnav__mark"><img src="../assets/gc-mark-mono-light.svg" alt=""></span>
+      <span class="appnav__name">GaimControl</span>
+    </div>
+    <div class="appnav__user">
+      <span class="appnav__avatar">S</span>
+      <div><div class="appnav__user-name">Sam Kennedy</div><div class="appnav__user-sub">Habitual · Day 12</div></div>
+    </div>
+    <nav class="appnav__list">
+      <a class="appnav__item is-disabled"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>Home</a>
+      <a class="appnav__item is-on" style="cursor:pointer" onclick="go(0)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Banking</a>
+      <div class="appnav__subnav">
+        <a class="appnav__subitem is-disabled" title="§06 Banking · open the banking prototype to see this">Overview</a>
+        <a class="appnav__subitem ${['card','blocks','channels','gamban','gamstop'].includes(activeSub) ? 'is-on' : ''}" style="cursor:pointer" onclick="go(0)">Cards &amp; controls</a>
+        <a class="appnav__subitem is-disabled" title="§06 Banking · open the banking prototype to see this">Accounts</a>
+        <a class="appnav__subitem is-disabled" title="§06 Banking · open the banking prototype to see this">Spending</a>
+        <a class="appnav__subitem ${activeSub === 'sponsor' ? 'is-on' : ''}" style="cursor:pointer" onclick="go(5)">Sponsor</a>
+      </div>
+      <a class="appnav__item is-disabled"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg>Anna</a>
+      <a class="appnav__item is-disabled"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m7 14 4-4 4 4 5-5"/></svg>Activity</a>
+      <a class="appnav__item is-disabled"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>Profile</a>
+    </nav>
+    <div class="appnav__help">
+      <div style="font-size:12px;font-weight:700;margin-bottom:3px">Need help?</div>
+      <div style="font-size:11px;color:var(--text-secondary);line-height:1.4">Anna's always there. Crisis line is one tap away.</div>
+      <button class="gc-crisis-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7-4.5-9-9.5C2 7 5 4 8 4c1.7 0 3.2.8 4 2 .8-1.2 2.3-2 4-2 3 0 6 3 5 7.5C19 16.5 12 21 12 21z"/></svg>Get help now</button>
+    </div>
+  </aside>`;
+
+const PAGE = (sub, title, sublabel, content) => `
+  <div class="screen" style="display:contents">
+    ${APPNAV(sub)}
+    <div class="main">
+      <div class="main__head">
+        <div>
+          <h1 class="main__title">${title}</h1>
+          ${sublabel ? `<p class="main__sub">${sublabel}</p>` : ''}
+        </div>
+      </div>
+      ${content}
+    </div>
+  </div>`;
+
+const builders = {
+  cc1: () => PAGE('card', 'Card &amp; controls', 'Algbra-issued Visa debit · MCC, channel, network blocks layered on top', `
+    <div class="row-2">
+      <div class="stack">
+        <div class="gc-card gc-card--milestone">
+          <span class="cc-pill" style="background:rgba(255,255,255,0.18);color:white">Sponsor sees this</span>
+          <div class="cc-card-art" style="margin:8px auto">
+            <img class="cc-card-art__brand" src="../assets/gc-mark-mono-light.svg" alt="">
+            <svg class="cc-card-art__cn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5a5 5 0 0 0 0-5"/><path d="M11.5 17.5a9 9 0 0 0 0-11"/><path d="M14.5 20.5a13 13 0 0 0 0-17"/></svg>
+            <span class="cc-card-art__chip"></span>
+            <span class="cc-card-art__num">•••• 4291</span>
+            <span class="cc-card-art__name">SAM KENNEDY</span>
+            <span class="cc-card-art__exp">04/30</span>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;font-size:13px;padding-top:8px">
+            <div><span style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;opacity:0.7">Issuer</span><div style="font-weight:700;margin-top:3px">Algbra · FCA #952360</div></div>
+            <div><span style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;opacity:0.7">Status</span><div style="font-weight:700;margin-top:3px">Active · ships 2 May</div></div>
+          </div>
+        </div>
+        <div style="display:flex;gap:10px">
+          <button class="gc-btn gc-btn--primary gc-btn--lg" style="flex:1" onclick="next()">Add to Apple Pay</button>
+          <button class="gc-btn gc-btn--ghost gc-btn--lg">Show CVV</button>
+        </div>
+      </div>
+      <div class="stack">
+        <div class="gc-card">
+          <h3 style="font-size:16px;font-weight:700;margin:0">Setup</h3>
+          <div class="cc-step is-done"><span class="cc-step__c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="cc-step__t">Virtual card live</div><div class="cc-step__s">Apple/Google Pay ready</div></div></div>
+          <div class="cc-step is-done"><span class="cc-step__c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="cc-step__t">Physical shipped</div><div class="cc-step__s">via allpay · arrives 2 May</div></div></div>
+          <div class="cc-step is-active"><span class="cc-step__c">3</span><div><div class="cc-step__t">Set PIN + biometrics</div><div class="cc-step__s">On arrival</div></div></div>
+        </div>
+        <div class="gc-card">
+          <h3 style="font-size:16px;font-weight:700;margin:0">Controls active</h3>
+          <div class="cc-trust"><span class="cc-trust__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4.5 6v6c0 5 3.5 9 7.5 10 4-1 7.5-5 7.5-10V6Z"/></svg></span><div><div class="cc-trust__t">MCC blocks · 3 categories</div><div class="cc-trust__s">Gambling, lotteries, online wagering</div></div></div>
+          <div class="cc-trust"><span class="cc-trust__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 2"/></svg></span><div><div class="cc-trust__t">Channels · 2 of 6 enabled</div><div class="cc-trust__s">Online + Contactless on; ATM, Intl, P2P, Magstripe off</div></div></div>
+          <div class="cc-trust"><span class="cc-trust__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m7 14 4-4 4 4 5-5"/></svg></span><div><div class="cc-trust__t">Gamban + Gamstop</div><div class="cc-trust__s">3-layer defence active</div></div></div>
+        </div>
+      </div>
+    </div>`),
+
+  cc2: () => PAGE('blocks', 'MCC blocks', 'Visa merchant categories refused at the auth layer · £0 ever leaves you', `
+    <div class="row-2">
+      <div class="stack">
+        <div class="gc-card">
+          <span class="cc-pill cc-pill--err">MCC 7995 blocked</span>
+          <h2 style="font-size:32px;font-weight:800;letter-spacing:-0.02em;line-height:1.1;margin:4px 0 0">11 attempts refused.</h2>
+          <p style="font-size:14px;color:var(--text-secondary);line-height:1.55;margin:0;max-width:50ch">Hard NO at Visa auth. Merchant sees a refused card. £0 leaves you, ever. The card refuses before the bank account is ever asked.</p>
+          <div class="cc-stat-row">
+            <div><div class="cc-stat-row__n" style="color:var(--t-50)">£0</div><div class="cc-stat-row__l">Spent</div></div>
+            <div><div class="cc-stat-row__n">£89</div><div class="cc-stat-row__l">7d saved</div></div>
+            <div><div class="cc-stat-row__n">£2,840</div><div class="cc-stat-row__l">6mo saved</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="stack">
+        <div class="gc-card">
+          <h3 style="font-size:16px;font-weight:700;margin:0">What's blocked</h3>
+          <div class="cc-mcc">
+            <div><div class="cc-mcc__head"><span class="cc-mcc__code">7995</span><span class="cc-mcc__name">Betting · casino · lottery</span></div><div class="cc-mcc__sub">Sky Bet, Bet365, online casinos</div><div class="cc-mcc__locked"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect width="14" height="10" x="5" y="11" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Locked · profile default</div></div>
+            <div class="gc-toggle gc-toggle--ok is-locked"></div>
+          </div>
+          <div class="cc-mcc">
+            <div><div class="cc-mcc__head"><span class="cc-mcc__code">7800</span><span class="cc-mcc__name">Government lotteries</span></div><div class="cc-mcc__sub">National Lottery, Premium Bonds</div><div class="cc-mcc__locked"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect width="14" height="10" x="5" y="11" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Locked · profile default</div></div>
+            <div class="gc-toggle gc-toggle--ok is-locked"></div>
+          </div>
+          <div class="cc-mcc">
+            <div><div class="cc-mcc__head"><span class="cc-mcc__code">7801</span><span class="cc-mcc__name">Online wagering</span></div><div class="cc-mcc__sub">Visa-coded gambling</div><div class="cc-mcc__locked"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect width="14" height="10" x="5" y="11" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Locked · profile default</div></div>
+            <div class="gc-toggle gc-toggle--ok is-locked"></div>
+          </div>
+          <div class="cc-mcc">
+            <div><div class="cc-mcc__head"><span class="cc-mcc__code">5921</span><span class="cc-mcc__name">Liquor stores</span></div><div class="cc-mcc__sub">Optional add-on</div></div>
+            <div class="gc-toggle" onclick="toggleClass(this)"></div>
+          </div>
+        </div>
+        <div class="gc-card gc-card--alert">
+          <strong style="font-size:13.5px;color:var(--text-primary)">Edits go through cool-off</strong>
+          <p style="font-size:12.5px;color:var(--text-secondary);line-height:1.5;margin:0">Block-list changes queue until your next 30-day reset.</p>
+        </div>
+        <div class="cc-decision">decisions · <a href="../41-decisions-log.html">CC-07</a> profile-conditional MCCs hidden · <a href="../41-decisions-log.html">GEN-01</a> 30-day cool-off (A/B vs 15)</div>
+      </div>
+    </div>`),
+
+  cc3: () => PAGE('channels', 'Channels', 'Where the card is allowed to work · all off by default per CC-02', `
+    <div class="gc-card" style="max-width:760px">
+      <h3 style="font-size:16px;font-weight:700;margin:0">Channel controls</h3>
+      <div class="cc-chan">
+        <span class="cc-chan__ic" style="background:var(--p-40);color:var(--p-95)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 4 10 15 15 0 0 1-4 10 15 15 0 0 1-4-10 15 15 0 0 1 4-10z"/></svg></span>
+        <div><div class="cc-chan__t">Online (e-com)</div><div class="cc-chan__s">CNP via Stripe / Adyen</div></div>
+        <div class="gc-toggle is-on" onclick="toggleClass(this)"></div>
+        <div class="cc-chan__note">On — needed for groceries, transit, subs.</div>
+      </div>
+      <div class="cc-chan">
+        <span class="cc-chan__ic" style="background:var(--t-20);color:var(--t-80)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5a5 5 0 0 0 0-5"/><path d="M11.5 17.5a9 9 0 0 0 0-11"/><path d="M14.5 20.5a13 13 0 0 0 0-17"/></svg></span>
+        <div><div class="cc-chan__t">Contactless &amp; mobile</div><div class="cc-chan__s">Apple/Google Pay · chip&amp;pin</div></div>
+        <div class="gc-toggle is-on" onclick="toggleClass(this)"></div>
+        <div class="cc-chan__note">£100 cap per UK Visa rules.</div>
+      </div>
+      <div class="cc-chan">
+        <span class="cc-chan__ic" style="background:var(--w-30);color:var(--w-80)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg></span>
+        <div><div class="cc-chan__t">ATM</div><div class="cc-chan__s">Cash machines · UK + abroad</div></div>
+        <div class="gc-toggle" onclick="toggleClass(this)"></div>
+        <div class="cc-chan__note"><strong>Off by default.</strong> Cash is the most untraceable on-ramp. Sponsor co-sign required to enable.</div>
+      </div>
+      <div class="cc-chan">
+        <span class="cc-chan__ic" style="background:var(--w-30);color:var(--w-80)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/></svg></span>
+        <div><div class="cc-chan__t">International</div><div class="cc-chan__s">Non-GBP merchants</div></div>
+        <div class="gc-toggle" onclick="toggleClass(this)"></div>
+        <div class="cc-chan__note"><strong>Off.</strong> Holiday-enable for specific date ranges.</div>
+      </div>
+      <div class="cc-chan">
+        <span class="cc-chan__ic" style="background:var(--s-20);color:var(--s-80)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 5h18l-2 14H5z"/></svg></span>
+        <div><div class="cc-chan__t">P2P sends</div><div class="cc-chan__s">Faster Payments to people</div></div>
+        <div class="gc-toggle is-on" onclick="toggleClass(this)"></div>
+        <div class="cc-chan__note">New beneficiary delayed 2h. Sponsor sees over £100.</div>
+      </div>
+    </div>
+    <div class="cc-decision" style="margin-top:16px;max-width:760px">decision <a href="../41-decisions-log.html">CC-05</a> · magstripe toggle removed entirely (permanent off, no user-facing override)</div>`),
+
+  cc4: () => PAGE('gamban', 'Gamban', 'Device-level gambling-site block · GC pays the sub', `
+    <div class="row-2">
+      <div class="stack">
+        <div class="gc-card gc-card--milestone">
+          <span class="cc-pill" style="background:rgba(0,0,0,0.22);color:white">Linked · active</span>
+          <h2 style="font-size:30px;font-weight:800;letter-spacing:-0.02em;line-height:1.1;margin:4px 0 0">Device-blocker live · 2 devices.</h2>
+          <p style="font-size:14px;line-height:1.55;margin:0;max-width:50ch">60,000+ gambling sites and apps refuse to open at the device level. Tamper-resistant — uninstall triggers Anna + sponsor alert.</p>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.18);margin-top:8px;font-size:13px">
+            <div><span style="font-family:'JetBrains Mono',monospace;font-size:10.5px;text-transform:uppercase;letter-spacing:0.1em;opacity:0.7">Last sync</span><div style="font-weight:700;margin-top:3px">2 min ago</div></div>
+            <div><span style="font-family:'JetBrains Mono',monospace;font-size:10.5px;text-transform:uppercase;letter-spacing:0.1em;opacity:0.7">Subscription</span><div style="font-weight:700;margin-top:3px">GC pays · £35/yr</div></div>
+          </div>
+        </div>
+        <button class="gc-btn gc-btn--primary gc-btn--lg gc-btn--full">Add another device</button>
+      </div>
+      <div class="stack">
+        <div class="gc-card">
+          <h3 style="font-size:16px;font-weight:700;margin:0">What it does</h3>
+          <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:9px;font-size:13.5px;line-height:1.55;color:var(--text-secondary)">
+            <li><strong style="color:var(--text-primary)">Device-level DNS + app block</strong> — sites and apps fail to load</li>
+            <li><strong style="color:var(--text-primary)">Tamper-resistant</strong> — uninstall triggers sponsor + Anna alert</li>
+            <li><strong style="color:var(--text-primary)">API-verified daily</strong> — loan-affordability signal</li>
+            <li><strong style="color:var(--text-primary)">Cross-platform</strong> — iOS, Android, macOS, Windows</li>
+          </ul>
+        </div>
+        <div class="gc-card">
+          <h3 style="font-size:16px;font-weight:700;margin:0">Three-layer defence</h3>
+          <div class="cc-trust">
+            <span class="cc-trust__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4.5 6v6c0 5 3.5 9 7.5 10 4-1 7.5-5 7.5-10V6Z"/></svg></span>
+            <div><div class="cc-trust__t">Card block</div><div class="cc-trust__s">MCC 7995 · 100% refused</div></div>
+          </div>
+          <div class="cc-trust">
+            <span class="cc-trust__ic" style="background:var(--t-20);color:var(--t-80)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 2"/></svg></span>
+            <div><div class="cc-trust__t">Gamban (this screen)</div><div class="cc-trust__s">2 devices active</div></div>
+          </div>
+          <div class="cc-trust">
+            <span class="cc-trust__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/></svg></span>
+            <div><div class="cc-trust__t">Gamstop (CC5)</div><div class="cc-trust__s">UK register · 5-year exclusion</div></div>
+          </div>
+        </div>
+      </div>
+    </div>`),
+
+  cc5: () => PAGE('gamstop', 'Gamstop', 'UK national self-exclusion register · mandatory enforcement', `
+    <div class="row-2">
+      <div class="stack">
+        <div class="gc-card">
+          <span class="cc-pill cc-pill--info">Enrolled</span>
+          <h2 style="font-size:28px;font-weight:800;letter-spacing:-0.02em;line-height:1.15;margin:4px 0 0">Self-excluded · UK gambling · 5 yrs.</h2>
+          <p style="font-size:13.5px;color:var(--text-secondary);line-height:1.55;margin:0;max-width:50ch">UK national register · all UKGC-licensed operators must refuse. Licence at risk if breached.</p>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;padding-top:14px;border-top:1px solid var(--border);margin-top:8px">
+            <div><span style="font-family:'JetBrains Mono',monospace;font-size:10.5px;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-muted)">Term</span><div style="font-size:14.5px;font-weight:700;margin-top:3px">5 years (max)</div></div>
+            <div><span style="font-family:'JetBrains Mono',monospace;font-size:10.5px;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-muted)">Expires</span><div style="font-size:14.5px;font-weight:700;margin-top:3px">21 Apr 2031</div></div>
+          </div>
+        </div>
+        <button class="gc-btn gc-btn--ghost gc-btn--lg gc-btn--full">View Gamstop receipt</button>
+      </div>
+      <div class="stack">
+        <div class="gc-card">
+          <h3 style="font-size:16px;font-weight:700;margin:0">What it covers</h3>
+          <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:9px;font-size:13.5px;line-height:1.55;color:var(--text-secondary)">
+            <li><strong style="color:var(--text-primary)">All UKGC-licensed</strong> · online sites + apps</li>
+            <li><strong style="color:var(--text-primary)">Mandatory enforcement</strong> · operators must refuse</li>
+            <li><strong style="color:var(--text-primary)">Cannot be lifted early</strong> · 24h cool-off after expiry</li>
+          </ul>
+        </div>
+        <div class="gc-card">
+          <h3 style="font-size:16px;font-weight:700;margin:0">Doesn't cover</h3>
+          <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:9px;font-size:13px;line-height:1.55;color:var(--text-secondary)">
+            <li>Physical bookies → <a href="../41-decisions-log.html" style="color:var(--accent);text-decoration:none">BetFilter</a> (TBD per CC-01)</li>
+            <li>Offshore unlicensed → Gamban (CC4)</li>
+            <li>National Lottery → separate self-exclusion</li>
+          </ul>
+        </div>
+      </div>
+    </div>`),
+
+  cc6: () => PAGE('sponsor', 'Sponsor', 'Joanna Mitchell · sister · accepted 22 Apr · 1 of 3 max', `
+    <div class="row-2">
+      <div class="stack">
+        <div class="gc-card" style="padding:24px">
+          <div style="display:flex;align-items:center;gap:18px">
+            <span class="cc-avatar">JM</span>
+            <div style="flex:1;min-width:0">
+              <span class="cc-pill cc-pill--sponsor" style="margin-bottom:6px">Sponsor</span>
+              <h2 style="font-size:24px;font-weight:800;letter-spacing:-0.01em;margin:4px 0 0">Joanna Mitchell</h2>
+              <div style="font-size:13px;color:var(--text-secondary);margin-top:3px">Sister · accepted 22 Apr · 1 of 3 max</div>
+            </div>
+          </div>
+        </div>
+        ${ANNA("Sponsor trust grows in small choices. Joanna doesn't need to see everything to be useful.")}
+        <button class="gc-btn gc-btn--primary gc-btn--lg gc-btn--full" onclick="next()">Invite another sponsor</button>
+      </div>
+      <div class="stack">
+        <div class="gc-card">
+          <h3 style="font-size:16px;font-weight:700;margin:0">What Joanna sees</h3>
+          <div class="cc-perm">
+            <div><div class="cc-perm__t">Account balances</div><div class="cc-perm__s">Marked Sponsor in BK2 — GC card + Barclays + Barclaycard</div></div>
+            <div class="gc-toggle is-on" onclick="toggleClass(this)"></div>
+          </div>
+          <div class="cc-perm">
+            <div><div class="cc-perm__t">Transaction stream</div><div class="cc-perm__s">Same accounts · excludes individually-hidden tx</div></div>
+            <div class="gc-toggle is-on" onclick="toggleClass(this)"></div>
+          </div>
+          <div class="cc-perm">
+            <div><div class="cc-perm__t">Blocked-MCC alerts</div><div class="cc-perm__s">All by default per <a href="../41-decisions-log.html" style="color:var(--accent)">BK-01</a> · flat 3-in-7 threshold</div></div>
+            <div class="gc-toggle is-on" onclick="toggleClass(this)"></div>
+          </div>
+          <div class="cc-perm">
+            <div><div class="cc-perm__t">Channel changes</div><div class="cc-perm__s">ATM / Intl loosening requires Joanna's cosign</div></div>
+            <div class="gc-toggle is-on" onclick="toggleClass(this)"></div>
+          </div>
+          <div class="cc-perm">
+            <div><div class="cc-perm__t">Anna chat content</div><div class="cc-perm__s">Off · therapy is privileged · cannot be enabled</div></div>
+            <div class="gc-toggle is-locked" onclick="toggleClass(this)"></div>
+          </div>
+        </div>
+      </div>
+    </div>`),
+
+  cc7: () => PAGE('sponsor', 'Invite a sponsor', 'Two-sided · they accept and verify before seeing anything', `
+    <div style="max-width:560px">
+      <div class="gc-card" style="padding:28px">
+        <div class="cc-field">
+          <span class="cc-field__label">Their name</span>
+          <div class="cc-field__input">Joanna Mitchell</div>
+        </div>
+        <div class="cc-field" style="margin-top:14px">
+          <span class="cc-field__label">Email</span>
+          <div class="cc-field__input">joanna@example.com</div>
+        </div>
+        <div class="cc-field" style="margin-top:14px">
+          <span class="cc-field__label">Relationship</span>
+          <div class="cc-chips">
+            <button class="cc-chip is-on">Sister</button>
+            <button class="cc-chip">Partner</button>
+            <button class="cc-chip">Parent</button>
+            <button class="cc-chip">Friend</button>
+            <button class="cc-chip">Other</button>
+          </div>
+        </div>
+      </div>
+      <div class="gc-card gc-card--alert" style="margin-top:16px">
+        <strong style="font-size:13.5px;color:var(--text-primary)">Joanna gets a digest, not a stream</strong>
+        <p style="font-size:13px;color:var(--text-secondary);line-height:1.5;margin:0">Weekly summary by default. She never sees Anna chat content — therapy is privileged. She'll go through light KYC + open banking to verify her identity per <a href="../41-decisions-log.html" style="color:var(--accent)">CC-03</a>.</p>
+      </div>
+      <div style="margin-top:16px">${ANNA("Pick someone who already knows the shape of your situation. Surprise sponsorship rarely sticks.")}</div>
+      <button class="gc-btn gc-btn--primary gc-btn--lg gc-btn--full" style="margin-top:16px" onclick="go(5)">Send invite</button>
+      <div class="cc-decision" style="margin-top:16px">decisions · <a href="../41-decisions-log.html">CC-03</a> light KYC + open banking · <a href="../41-decisions-log.html">GEN-07</a> up to 3 sponsors · <a href="../41-decisions-log.html">ON-04</a> A/B invite timing (ON6 vs ON21)</div>
+    </div>`),
+};
+
+let idx = 0;
+
+function render() {
+  const screen = SCREENS[idx];
+  document.getElementById('viewport').innerHTML = builders[screen.kind]();
+  document.getElementById('browserUrl').textContent = 'app.gaimcontrol.com' + screen.url;
+  document.getElementById('screenId').textContent = screen.id;
+  document.getElementById('screenName').textContent = screen.name;
+  document.getElementById('progressFill').style.width = ((idx + 1) / SCREENS.length * 100) + '%';
+  document.getElementById('navPrev').disabled = idx === 0;
+  document.getElementById('navNext').disabled = idx === SCREENS.length - 1;
+  document.querySelectorAll('.proto-scrubber__item').forEach((el, i) => {
+    el.classList.toggle('is-active', i === idx);
+    if (i === idx) el.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  });
+  document.getElementById('contextBody').innerHTML = CTX[screen.kind] || screen.name;
+}
+
+function next() { if (idx < SCREENS.length - 1) { idx++; render(); } }
+function prev() { if (idx > 0) { idx--; render(); } }
+function go(i) { idx = i; render(); }
+
+function buildScrubber() {
+  const nav = document.getElementById('scrubber');
+  SCREENS.forEach((s, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'proto-scrubber__item';
+    btn.innerHTML = `<span class="proto-scrubber__id">${s.id}</span><span class="proto-scrubber__name">${s.name}</span>`;
+    btn.addEventListener('click', () => go(i));
+    nav.appendChild(btn);
+  });
+}
+
+function initTheme() {
+  const root = document.documentElement;
+  const stored = localStorage.getItem('gc-proto-theme');
+  const initial = stored || 'dark';
+  root.setAttribute('data-theme', initial);
+  document.querySelector('.theme-label').textContent = initial === 'dark' ? 'Dark' : 'Light';
+  document.querySelector('.proto-theme-toggle').addEventListener('click', () => {
+    const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    document.querySelector('.theme-label').textContent = next === 'dark' ? 'Dark' : 'Light';
+    try { localStorage.setItem('gc-proto-theme', next); } catch(e) {}
+  });
+}
+
+document.getElementById('navPrev').addEventListener('click', prev);
+document.getElementById('navNext').addEventListener('click', next);
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowRight') next();
+  if (e.key === 'ArrowLeft') prev();
+});
+
+buildScrubber();
+initTheme();
+render();
+</script>
+
+</body>
+</html>

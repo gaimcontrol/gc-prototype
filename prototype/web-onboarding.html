@@ -1,0 +1,1030 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GaimControl · Web · §05 Onboarding</title>
+<link rel="icon" href="../assets/gc-favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --p-10:#0B0F1C;--p-20:#161B2D;--p-30:#20273C;--p-40:#354872;--p-50:#4D608C;--p-60:#6B7DA6;--p-70:#8E9DC0;--p-80:#B5BFD9;--p-90:#DCE2F0;--p-95:#ECF0F9;--p-99:#FAFBFE;--p-100:#FFF;
+  --s-10:#28215A;--s-20:#3E3478;--s-30:#534792;--s-40:#6B5DAC;--s-50:#8576C2;--s-60:#9D90D2;--s-70:#B5ACDF;--s-80:#CFC8EA;--s-90:#E8E4F4;
+  --t-10:#0E4A35;--t-20:#1A6047;--t-30:#1F7058;--t-40:#2A8060;--t-50:#399971;--t-60:#5BB088;--t-70:#82C7A4;--t-80:#ADDCC2;--t-90:#D5EDDF;
+  --w-30:#6B4500;--w-40:#8C5A00;--w-50:#A36A00;--w-60:#C28200;--w-70:#E09900;--w-80:#FAB44A;--w-90:#FFDFA8;
+  --e-30:#7A1F1F;--e-50:#C73838;--e-90:#FBD9D9;
+  --n-50:#76798A;--n-60:#9094A3;--n-95:#F1F2F5;--nv-80:#C5C9DD;
+}
+[data-theme="dark"] {
+  --bg-base: var(--p-30); --bg-surface: var(--p-20); --bg-surface-2: var(--p-10);
+  --border: rgba(255,255,255,0.08);
+  --text-primary: var(--n-95); --text-secondary: var(--nv-80); --text-muted: rgba(255,255,255,0.4);
+  --accent: var(--s-70); --accent-strong: var(--s-50); --on-accent: #fff;
+  --page-bg: #0a0e1a; --page-fg: var(--n-95); --page-fg-muted: var(--nv-80);
+  --page-card-bg: var(--p-20); --page-divider: rgba(255,255,255,0.06);
+}
+[data-theme="light"] {
+  --bg-base: var(--p-99); --bg-surface: #fff; --bg-surface-2: var(--p-95);
+  --border: rgba(22,27,45,0.08);
+  --text-primary: var(--p-20); --text-secondary: var(--n-50); --text-muted: var(--n-50);
+  --accent: var(--p-40); --accent-strong: var(--s-40); --on-accent: #fff;
+  --page-bg: var(--p-95); --page-fg: var(--p-20); --page-fg-muted: var(--n-50);
+  --page-card-bg: #fff; --page-divider: rgba(22,27,45,0.08);
+}
+
+* { box-sizing: border-box; }
+html, body { background: var(--page-bg); color: var(--page-fg); margin: 0; transition: background-color 220ms ease, color 220ms ease; }
+body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif; font-size: 14px; line-height: 1.5; -webkit-font-smoothing: antialiased; min-height: 100vh; }
+
+/* ============= PROTOTYPE CHROME ============= */
+.proto-shell { display: grid; grid-template-columns: 280px 1fr; gap: 0; min-height: 100vh; }
+@media (max-width: 1100px) { .proto-shell { grid-template-columns: 1fr; } }
+
+.proto-sidebar { background: var(--page-card-bg); border-right: 1px solid var(--page-divider); padding: 28px 22px; position: sticky; top: 0; height: 100vh; overflow-y: auto; display: flex; flex-direction: column; gap: 16px; }
+@media (max-width: 1100px) { .proto-sidebar { position: static; height: auto; max-height: 50vh; border-right: none; border-bottom: 1px solid var(--page-divider); } }
+.proto-sidebar__brand { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
+.proto-sidebar__mark { width: 36px; height: 36px; border-radius: 10px; background: var(--p-30); display: inline-flex; align-items: center; justify-content: center; }
+.proto-sidebar__mark img { width: 70%; height: 70%; }
+.proto-sidebar__name { font-weight: 700; font-size: 17px; letter-spacing: -0.01em; }
+.proto-sidebar__pill { display: inline-flex; padding: 3px 9px; border-radius: 999px; background: linear-gradient(120deg, var(--s-50), var(--p-50), var(--t-50)); color: white; font-weight: 700; font-size: 9.5px; font-family: 'JetBrains Mono', monospace; letter-spacing: 0.06em; text-transform: uppercase; }
+.proto-sidebar__back { display: inline-flex; align-items: center; gap: 6px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--page-fg-muted); text-decoration: none; margin-bottom: 4px; }
+.proto-sidebar__back:hover { color: var(--page-accent, var(--s-70)); }
+
+.proto-section-title { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--page-fg-muted); margin: 12px 0 6px; }
+
+.proto-scrubber { display: flex; flex-direction: column; gap: 2px; }
+.proto-scrubber__item { display: grid; grid-template-columns: 44px 1fr; gap: 8px; align-items: center; padding: 7px 10px; border-radius: 8px; cursor: pointer; transition: background 140ms ease; border: none; background: transparent; color: inherit; font-family: inherit; text-align: left; }
+.proto-scrubber__item:hover { background: rgba(127,127,127,0.08); }
+.proto-scrubber__item.is-active { background: var(--accent-strong); color: var(--on-accent); }
+.proto-scrubber__item.is-active .proto-scrubber__id { color: rgba(255,255,255,0.85); }
+.proto-scrubber__id { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; color: var(--page-fg-muted); letter-spacing: 0.06em; }
+.proto-scrubber__name { font-size: 12.5px; font-weight: 500; }
+
+.proto-sidebar__footer { margin-top: auto; padding-top: 16px; border-top: 1px solid var(--page-divider); font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--page-fg-muted); }
+.proto-sidebar__footer a { color: var(--page-fg-muted); text-decoration: none; border-bottom: 1px dotted currentColor; }
+.proto-sidebar__footer a:hover { color: var(--page-accent, var(--s-70)); }
+
+.proto-theme-toggle { display: inline-flex; align-items: center; gap: 8px; padding: 7px 12px; border-radius: 8px; background: var(--bg-surface-2); border: 1px solid var(--border); color: var(--page-fg-muted); cursor: pointer; font-family: 'JetBrains Mono', monospace; font-size: 11px; align-self: flex-start; }
+.proto-theme-toggle svg { width: 12px; height: 12px; }
+[data-theme="dark"] .proto-theme-toggle .icon-moon { display: none; }
+[data-theme="light"] .proto-theme-toggle .icon-sun { display: none; }
+
+/* ============= STAGE ============= */
+.proto-stage { display: flex; flex-direction: column; align-items: center; padding: 32px 24px 64px; gap: 18px; }
+
+.proto-modebar { display: flex; align-items: center; gap: 10px; padding: 10px 16px; background: var(--page-card-bg); border: 1px solid var(--page-divider); border-radius: 12px; font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: var(--page-fg-muted); flex-wrap: wrap; justify-content: center; }
+.proto-modebar__pill { display: inline-flex; padding: 3px 9px; border-radius: 999px; background: var(--bg-surface-2); color: var(--page-fg-muted); }
+.proto-modebar__id { color: var(--page-fg); font-weight: 700; letter-spacing: 0.06em; }
+.proto-modebar__bar { width: 100px; height: 4px; border-radius: 4px; background: var(--bg-surface-2); position: relative; overflow: hidden; }
+.proto-modebar__bar__fill { position: absolute; left: 0; top: 0; bottom: 0; background: linear-gradient(90deg, var(--s-50), var(--t-50)); transition: width 240ms ease; }
+.proto-arrows { display: flex; align-items: center; gap: 8px; }
+.proto-arrow { width: 36px; height: 36px; border-radius: 10px; background: var(--page-card-bg); border: 1px solid var(--page-divider); color: var(--page-fg-muted); display: inline-flex; align-items: center; justify-content: center; cursor: pointer; }
+.proto-arrow:hover { background: var(--bg-surface-2); color: var(--page-fg); }
+.proto-arrow:disabled { opacity: 0.3; cursor: not-allowed; }
+.proto-arrow svg { width: 18px; height: 18px; }
+
+/* ============= BROWSER FRAME ============= */
+.browser {
+  width: 100%; max-width: 1280px;
+  background: var(--bg-base);
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  box-shadow: 0 24px 60px -20px rgba(0,0,0,0.45), 0 8px 24px -12px rgba(0,0,0,0.25);
+}
+[data-theme="light"] .browser { box-shadow: 0 24px 60px -20px rgba(22,27,45,0.18), 0 8px 24px -12px rgba(22,27,45,0.08); }
+
+.browser__chrome {
+  display: flex; align-items: center; gap: 14px;
+  padding: 12px 16px;
+  background: var(--p-20);
+  border-bottom: 1px solid var(--border);
+}
+[data-theme="light"] .browser__chrome { background: var(--n-95); }
+.browser__dots { display: inline-flex; gap: 7px; flex-shrink: 0; }
+.browser__dot { width: 11px; height: 11px; border-radius: 50%; }
+.browser__dot:nth-child(1) { background: #FF5F57; } .browser__dot:nth-child(2) { background: #FEBC2E; } .browser__dot:nth-child(3) { background: #28C840; }
+.browser__url {
+  flex: 1; background: var(--bg-base); border: 1px solid var(--border); border-radius: 7px;
+  padding: 6px 14px; font-family: 'JetBrains Mono', monospace; font-size: 12px;
+  color: var(--text-secondary); text-align: center;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+.browser__url svg { width: 12px; height: 12px; opacity: 0.7; flex-shrink: 0; }
+
+.browser__viewport {
+  background: var(--bg-base); min-height: 760px; position: relative; color: var(--text-primary);
+}
+
+/* ============= ONBOARDING-STAGE (inner page chrome) ============= */
+.ob-stage {
+  display: flex; flex-direction: column; min-height: 760px;
+}
+.ob-stage__nav {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20px 40px; border-bottom: 1px solid var(--border);
+}
+.ob-stage__brand { display: inline-flex; align-items: center; gap: 10px; font-weight: 700; font-size: 15px; letter-spacing: -0.01em; color: var(--text-primary); }
+.ob-stage__brand img { width: 22px; height: 22px; }
+[data-theme="light"] .ob-stage__brand img { filter: invert(1) brightness(0.3); }
+.ob-stage__nav-right { display: flex; align-items: center; gap: 14px; }
+.ob-stage__progress-tag {
+  padding: 6px 12px; border-radius: 999px;
+  background: var(--bg-surface); border: 1px solid var(--border);
+  font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-secondary);
+  letter-spacing: 0.04em;
+}
+.gc-crisis-pill {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 8px 14px; border-radius: 999px;
+  background: var(--e-50); color: white;
+  border: none; font-family: inherit; font-size: 12.5px; font-weight: 600; cursor: pointer;
+}
+.gc-crisis-pill svg { width: 13px; height: 13px; flex-shrink: 0; }
+
+.ob-stage__body {
+  flex: 1; padding: 48px 40px;
+  display: flex; flex-direction: column; align-items: center;
+  gap: 28px;
+}
+
+/* ============= ON1 WELCOME (2-col split) ============= */
+.welcome-split {
+  display: grid; grid-template-columns: 1fr 1.3fr; gap: 56px;
+  max-width: 1040px; width: 100%; align-items: center;
+}
+.welcome-anna { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 14px; }
+.welcome-anna-stage {
+  position: relative; width: 280px; height: 280px;
+  display: flex; align-items: center; justify-content: center;
+}
+.welcome-anna-orb {
+  position: absolute; border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, var(--s-50), transparent 70%);
+  opacity: 0.18; animation: orb-drift 8s ease-in-out infinite;
+}
+.welcome-anna-orb--1 { width: 220px; height: 220px; top: 10px; left: 10px; }
+.welcome-anna-orb--2 { width: 180px; height: 180px; top: 50px; right: 0; animation-delay: -2s; background: radial-gradient(circle at 30% 30%, var(--t-50), transparent 70%); }
+.welcome-anna-orb--3 { width: 150px; height: 150px; bottom: 20px; left: 30px; animation-delay: -4s; background: radial-gradient(circle at 30% 30%, var(--p-50), transparent 70%); }
+@keyframes orb-drift { 0%,100% { transform: translate(0,0); } 50% { transform: translate(10px, -10px); } }
+.welcome-anna-avatar {
+  position: relative;
+  width: 128px; height: 128px;
+  border-radius: 36px;
+  background: linear-gradient(135deg, var(--s-30), var(--p-20));
+  display: inline-flex; align-items: center; justify-content: center;
+  z-index: 2;
+}
+.welcome-anna-avatar img { width: 56%; height: 56%; }
+.welcome-anna-avatar__pulse { position: absolute; inset: -10px; border-radius: 44px; border: 2px solid var(--s-50); opacity: 0.5; animation: ob-pulse 2.6s ease-in-out infinite; }
+.welcome-anna-avatar__pulse--2 { animation-delay: -1.3s; opacity: 0.3; inset: -20px; border-radius: 52px; }
+@keyframes ob-pulse { 0%,100% { transform: scale(1); opacity: 0.5; } 50% { transform: scale(1.06); opacity: 0.15; } }
+.welcome-anna-chip {
+  position: absolute; padding: 5px 12px; border-radius: 999px;
+  background: var(--bg-surface); border: 1px solid var(--border); color: var(--text-primary);
+  font-size: 12px; font-weight: 500; box-shadow: 0 6px 16px -8px rgba(0,0,0,0.3);
+  animation: chip-bob 4s ease-in-out infinite; z-index: 3;
+}
+.welcome-anna-chip--1 { top: 30px; right: -10px; animation-delay: 0s; }
+.welcome-anna-chip--2 { bottom: 70px; left: -20px; animation-delay: -1.5s; }
+.welcome-anna-chip--3 { bottom: 30px; right: 10px; animation-delay: -3s; font-family: 'JetBrains Mono', monospace; }
+@keyframes chip-bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+.welcome-anna-name { font-weight: 700; font-size: 16px; }
+.welcome-anna-sub { font-size: 12.5px; color: var(--text-secondary); }
+
+.welcome-form { display: flex; flex-direction: column; gap: 16px; }
+.welcome-heading { font-size: 32px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.15; margin: 4px 0 0; }
+.welcome-sub { font-size: 14px; color: var(--text-secondary); margin: 0; }
+.welcome-list { list-style: none; padding: 0; margin: 4px 0; display: flex; flex-direction: column; gap: 8px; }
+.welcome-list li { display: grid; grid-template-columns: 32px 1fr; gap: 14px; align-items: center; padding: 12px 16px; background: var(--bg-surface); border: 1px solid var(--border); border-radius: 12px; }
+.welcome-list__num { width: 32px; height: 32px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 13px; background: var(--accent-strong); color: var(--on-accent); }
+.welcome-list__title { font-weight: 600; font-size: 14.5px; color: var(--text-primary); }
+.welcome-list__desc { font-size: 12.5px; color: var(--text-secondary); margin-top: 1px; }
+
+/* ============= QUIZ PROGRESS STRIP ============= */
+.quiz-progress {
+  display: flex; align-items: center; gap: 6px;
+  padding: 0; margin: 0 auto; max-width: 720px;
+}
+.quiz-progress__step {
+  flex: 1; display: inline-flex; align-items: center; gap: 8px;
+  padding: 9px 14px; border-radius: 10px;
+  background: var(--bg-surface); border: 1px solid var(--border);
+  font-size: 12px; font-weight: 500; color: var(--text-secondary);
+  white-space: nowrap;
+}
+.quiz-progress__step.is-done { background: var(--t-20); border-color: transparent; color: var(--t-80); }
+[data-theme="light"] .quiz-progress__step.is-done { background: var(--t-90); color: var(--t-30); }
+.quiz-progress__step.is-current { background: var(--accent-strong); border-color: transparent; color: var(--on-accent); font-weight: 600; }
+.quiz-progress__num { width: 22px; height: 22px; border-radius: 50%; background: rgba(0,0,0,0.18); display: inline-flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; flex-shrink: 0; }
+.quiz-progress__step.is-current .quiz-progress__num { background: rgba(255,255,255,0.22); color: white; }
+.quiz-progress__step.is-done .quiz-progress__num { background: rgba(57,153,113,0.25); color: var(--t-50); }
+
+/* ============= QUIZ Q CARD ============= */
+.quiz-stage {
+  display: flex; flex-direction: column; gap: 18px;
+  max-width: 720px; width: 100%; margin: 0 auto;
+}
+.gc-card { padding: 18px 20px; background: var(--bg-surface); border: 1px solid var(--border); border-radius: 14px; display: flex; gap: 12px; }
+.gc-card--anna { background: linear-gradient(135deg, rgba(133,118,194,0.12), rgba(83,71,146,0.06)); border-color: rgba(133,118,194,0.25); flex-direction: row; align-items: flex-start; }
+.gc-card--anna .gc-avatar--anna { width: 36px; height: 36px; border-radius: 50%; background: var(--p-30); display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.gc-card--anna .gc-avatar--anna img { width: 60%; height: 60%; }
+.gc-card--anna .anna-name { font-weight: 700; font-size: 14px; letter-spacing: -0.01em; margin-bottom: 2px; }
+.gc-card--anna p { font-size: 14px; line-height: 1.55; margin: 0; color: var(--text-primary); }
+
+.quiz-question { background: var(--bg-surface); border: 1px solid var(--border); border-radius: 14px; padding: 24px; display: flex; flex-direction: column; gap: 16px; }
+.quiz-question__num { font-family: 'JetBrains Mono', monospace; font-size: 11.5px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); }
+.quiz-question__title { font-size: 22px; font-weight: 700; line-height: 1.3; letter-spacing: -0.015em; margin: 0; color: var(--text-primary); }
+
+.quiz-scale { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.quiz-scale__opt { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; padding: 16px 12px; background: var(--bg-base); border: 1px solid var(--border); border-radius: 12px; cursor: pointer; font-family: inherit; color: var(--text-primary); transition: all 140ms ease; }
+.quiz-scale__opt:hover { border-color: var(--accent); background: rgba(127,127,127,0.04); }
+.quiz-scale__opt.is-on { background: var(--accent-strong); color: var(--on-accent); border-color: var(--accent-strong); }
+.quiz-scale__num { font-family: 'JetBrains Mono', monospace; font-size: 20px; font-weight: 700; }
+.quiz-scale__label { font-size: 12px; font-weight: 500; text-align: center; }
+
+.quiz-choices { display: flex; flex-direction: column; gap: 8px; }
+.quiz-choice { padding: 14px 18px; background: var(--bg-base); border: 1px solid var(--border); border-radius: 12px; font-family: inherit; font-size: 15px; font-weight: 500; color: var(--text-primary); text-align: left; cursor: pointer; transition: background 140ms ease; }
+.quiz-choice:hover { background: rgba(127,127,127,0.04); border-color: var(--accent); }
+.quiz-choice.is-on { background: var(--accent-strong); color: var(--on-accent); border-color: var(--accent-strong); font-weight: 600; }
+
+.quiz-checks { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+@media (max-width: 800px) { .quiz-checks { grid-template-columns: 1fr; } }
+.quiz-check { display: flex; align-items: center; gap: 11px; padding: 12px 16px; background: var(--bg-base); border: 1px solid var(--border); border-radius: 12px; font-size: 14px; color: var(--text-primary); cursor: pointer; transition: background 140ms ease; }
+.quiz-check:hover { background: rgba(127,127,127,0.04); border-color: var(--accent); }
+.quiz-check.is-on { background: var(--accent-strong); color: var(--on-accent); border-color: var(--accent-strong); }
+.gc-checkbox { width: 18px; height: 18px; border-radius: 5px; border: 1.5px solid currentColor; flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center; }
+.quiz-check.is-on .gc-checkbox { background: white; border-color: white; color: var(--accent-strong); }
+.quiz-check.is-on .gc-checkbox::after { content: '✓'; font-size: 12px; font-weight: 700; }
+
+.quiz-text { display: flex; flex-direction: column; gap: 6px; }
+.quiz-text input { padding: 14px 16px; background: var(--bg-base); border: 1px solid var(--border); border-radius: 12px; font-family: inherit; font-size: 16px; color: var(--text-primary); }
+.quiz-text input:focus { outline: none; border-color: var(--accent-strong); }
+.quiz-text .hint { font-size: 12.5px; color: var(--text-secondary); }
+
+.quiz-actions { display: flex; gap: 10px; align-items: center; justify-content: flex-end; padding-top: 8px; }
+
+/* ============= BUTTONS ============= */
+.gc-btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 12px 22px; border-radius: 12px; font-family: inherit; font-size: 14px; font-weight: 600; cursor: pointer; border: 1px solid transparent; transition: transform 120ms ease, background-color 160ms ease, border-color 160ms ease; }
+.gc-btn:active { transform: scale(0.98); }
+.gc-btn--primary { background: var(--accent-strong); color: var(--on-accent); }
+.gc-btn--primary:hover { background: var(--s-40); }
+[data-theme="light"] .gc-btn--primary:hover { background: var(--s-30); }
+.gc-btn--ghost { background: transparent; color: var(--text-primary); border-color: var(--border); }
+.gc-btn--ghost:hover { background: rgba(127,127,127,0.06); border-color: rgba(127,127,127,0.18); }
+.gc-btn--ghost:disabled { opacity: 0.35; cursor: not-allowed; }
+.gc-btn--lg { padding: 14px 28px; font-size: 15px; border-radius: 14px; }
+.gc-btn--full { width: 100%; }
+
+/* ============= PROFILE HERO (ON7) ============= */
+.profile-hero { background: linear-gradient(135deg, var(--s-40), var(--p-50)); color: white; padding: 32px 36px; border-radius: 18px; display: flex; flex-direction: column; gap: 8px; position: relative; overflow: hidden; max-width: 720px; margin: 0 auto; width: 100%; }
+.profile-hero__kicker { font-family: 'JetBrains Mono', monospace; font-size: 11.5px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.85; }
+.profile-hero__name { font-size: 44px; font-weight: 800; letter-spacing: -0.025em; margin: 0; line-height: 1; }
+.profile-hero__sub { font-size: 15px; line-height: 1.55; margin: 4px 0 0; opacity: 0.92; }
+.profile-hero__chips { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+.profile-hero__chip { background: rgba(0,0,0,0.22); padding: 5px 13px; border-radius: 999px; font-size: 12px; font-weight: 600; }
+
+.result-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 720px; margin: 0 auto; width: 100%; }
+@media (max-width: 800px) { .result-grid { grid-template-columns: 1fr; } }
+.result-item { padding: 16px 18px; background: var(--bg-surface); border: 1px solid var(--border); border-radius: 12px; display: flex; flex-direction: column; gap: 6px; }
+.result-item__icon { width: 32px; height: 32px; border-radius: 9px; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; }
+.result-item__icon--ok { background: var(--t-20); color: var(--t-80); }
+[data-theme="light"] .result-item__icon--ok { background: var(--t-90); color: var(--t-30); }
+.result-item__icon--warn { background: var(--w-30); color: var(--w-80); }
+[data-theme="light"] .result-item__icon--warn { background: var(--w-90); color: var(--w-30); }
+.result-item__t { font-weight: 600; font-size: 14px; color: var(--text-primary); }
+.result-item__s { font-size: 12.5px; color: var(--text-secondary); margin-top: 2px; }
+
+/* ============= KYC ============= */
+.kyc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; max-width: 880px; margin: 0 auto; width: 100%; align-items: start; }
+@media (max-width: 800px) { .kyc-grid { grid-template-columns: 1fr; } }
+.kyc-form { display: flex; flex-direction: column; gap: 14px; }
+.kyc-field { display: flex; flex-direction: column; gap: 6px; }
+.kyc-field label { font-size: 12.5px; font-weight: 600; color: var(--text-secondary); letter-spacing: 0.02em; }
+.kyc-field input { padding: 12px 14px; background: var(--bg-base); border: 1px solid var(--border); border-radius: 11px; font-family: inherit; font-size: 14.5px; color: var(--text-primary); }
+.vendor-badge { display: inline-flex; align-items: center; gap: 7px; font-size: 12px; color: var(--text-secondary); padding: 8px 12px; background: var(--bg-base); border-radius: 8px; border: 1px solid var(--border); align-self: flex-start; }
+.vendor-badge svg { width: 13px; height: 13px; flex-shrink: 0; }
+
+.kyc-camera-stage {
+  background: var(--bg-surface-2); border-radius: 18px; padding: 32px;
+  display: flex; flex-direction: column; align-items: center; gap: 18px;
+  max-width: 520px; margin: 0 auto; width: 100%;
+}
+.kyc-camera-frame {
+  width: 100%; aspect-ratio: 1.55; border: 3px dashed var(--t-60); border-radius: 16px;
+  background: linear-gradient(135deg, #1a3052, #0e1f3a);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
+  color: rgba(255,255,255,0.92);
+}
+.kyc-camera-caption { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text-secondary); }
+.kyc-camera-caption::before { content: ''; width: 8px; height: 8px; border-radius: 50%; background: var(--t-50); }
+
+.kyc-liveness-stage { display: flex; flex-direction: column; align-items: center; gap: 22px; max-width: 520px; margin: 0 auto; width: 100%; }
+.kyc-oval { width: 220px; height: 280px; border-radius: 50%/55%; border: 4px solid var(--s-50); background: linear-gradient(135deg, var(--p-20), var(--s-20)); display: flex; align-items: center; justify-content: center; position: relative; }
+.kyc-oval__face { position: relative; width: 80%; height: 80%; }
+.kyc-oval__eye { position: absolute; top: 35%; width: 10px; height: 10px; border-radius: 50%; background: white; }
+.kyc-oval__mouth { position: absolute; top: 60%; left: 50%; transform: translateX(-50%); width: 30%; height: 7px; border-radius: 0 0 16px 16px; background: rgba(255,255,255,0.6); }
+.kyc-liveness-steps { display: flex; gap: 8px; }
+.kyc-liveness-step { padding: 8px 14px; border-radius: 999px; font-size: 12.5px; font-family: 'JetBrains Mono', monospace; color: var(--text-secondary); background: var(--bg-surface); border: 1px solid var(--border); }
+.kyc-liveness-step.is-done { background: var(--t-20); color: var(--t-80); border-color: transparent; }
+.kyc-liveness-step.is-current { background: var(--accent-strong); color: var(--on-accent); border-color: transparent; }
+
+/* ============= BANK ============= */
+.bank-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; max-width: 920px; margin: 0 auto; width: 100%; align-items: start; }
+@media (max-width: 800px) { .bank-grid { grid-template-columns: 1fr; } }
+.bank-explain-list { display: flex; flex-direction: column; gap: 10px; }
+.bank-explain { display: grid; grid-template-columns: 44px 1fr; gap: 14px; align-items: center; padding: 14px 16px; background: var(--bg-surface); border: 1px solid var(--border); border-radius: 12px; }
+.bank-explain__icon { width: 44px; height: 44px; border-radius: 12px; display: inline-flex; align-items: center; justify-content: center; }
+.bank-explain__icon--t { background: var(--t-20); color: var(--t-80); }
+.bank-explain__icon--p { background: var(--p-40); color: var(--p-95); }
+.bank-explain__icon--s { background: var(--s-20); color: var(--s-80); }
+[data-theme="light"] .bank-explain__icon--t { background: var(--t-90); color: var(--t-30); }
+[data-theme="light"] .bank-explain__icon--p { background: var(--p-90); color: var(--p-30); }
+[data-theme="light"] .bank-explain__icon--s { background: var(--s-90); color: var(--s-10); }
+.bank-explain__t { font-weight: 600; font-size: 14.5px; color: var(--text-primary); }
+.bank-explain__s { font-size: 12.5px; color: var(--text-secondary); margin-top: 1px; }
+
+.bank-list { display: flex; flex-direction: column; gap: 8px; }
+.bank-row { display: flex; align-items: center; gap: 14px; padding: 13px 18px; background: var(--bg-base); border: 1px solid var(--border); border-radius: 12px; cursor: pointer; transition: background 140ms ease; color: var(--text-primary); font-family: inherit; text-align: left; width: 100%; }
+.bank-row:hover { background: rgba(127,127,127,0.04); border-color: var(--accent); }
+.bank-row.is-on { background: var(--accent-strong); color: var(--on-accent); border-color: var(--accent-strong); }
+.bank-row__logo { width: 36px; height: 36px; border-radius: 9px; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0; font-size: 14px; }
+.bank-row__name { font-weight: 600; font-size: 15px; color: inherit; }
+
+.connecting-stage {
+  display: flex; flex-direction: column; align-items: center; gap: 18px;
+  padding: 40px 24px; max-width: 520px; margin: 0 auto; width: 100%;
+  border-radius: 18px; cursor: pointer; transition: transform 160ms ease, border-color 160ms ease;
+  background: var(--bg-surface); border: 1px solid var(--border);
+}
+.connecting-stage:hover { border-color: var(--accent); }
+.connecting-logo-wrap { position: relative; width: 96px; height: 96px; display: inline-flex; align-items: center; justify-content: center; }
+.connecting-logo-pulse { position: absolute; inset: 0; border-radius: 28px; border: 2.5px solid #005EB8; opacity: 0.4; animation: ob-pulse 2.4s ease-in-out infinite; }
+.connecting-logo { width: 80px; height: 80px; border-radius: 22px; background: linear-gradient(135deg,#005EB8,#003D75); display: inline-flex; align-items: center; justify-content: center; color: white; font-size: 32px; font-weight: 800; }
+.connecting-progress { display: flex; flex-direction: column; gap: 7px; width: 100%; max-width: 320px; }
+.connecting-step { padding: 11px 16px; border-radius: 12px; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--text-secondary); background: var(--bg-base); border: 1px solid var(--border); }
+.connecting-step.is-done { background: var(--t-20); color: var(--t-80); border-color: transparent; }
+.connecting-step.is-current { background: var(--accent-strong); color: var(--on-accent); border-color: transparent; }
+.connecting-hint { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--accent); letter-spacing: 0.08em; text-transform: uppercase; }
+
+.bank-summary { background: var(--bg-surface); border: 1px solid var(--border); border-radius: 16px; padding: 22px 24px; display: flex; flex-direction: column; gap: 14px; max-width: 720px; margin: 0 auto; width: 100%; }
+.bank-summary__head { display: flex; align-items: center; justify-content: space-between; }
+.bank-summary__head__name { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 16px; }
+.bank-summary__head__name span { width: 28px; height: 28px; border-radius: 7px; background: #005EB8; color: white; display: inline-flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; }
+.bank-summary__head__meta { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--text-secondary); }
+.bank-summary__stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+@media (max-width: 800px) { .bank-summary__stats { grid-template-columns: repeat(2, 1fr); } }
+.bank-summary__stat { padding: 14px 16px; background: var(--bg-base); border: 1px solid var(--border); border-radius: 12px; }
+.bank-summary__stat-n { font-size: 22px; font-weight: 800; letter-spacing: -0.015em; }
+.bank-summary__stat-l { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
+
+/* ============= SUITABILITY (ON16) ============= */
+.suit-status { display: inline-flex; align-items: center; gap: 8px; padding: 6px 16px 6px 8px; border-radius: 999px; font-size: 12px; font-weight: 700; }
+.suit-status::before { content: ''; width: 10px; height: 10px; border-radius: 50%; background: currentColor; opacity: 0.8; }
+.suit-status--ok { background: var(--t-20); color: var(--t-80); }
+.suit-status--ok::before { background: var(--t-50); opacity: 1; }
+[data-theme="light"] .suit-status--ok { background: var(--t-90); color: var(--t-30); }
+
+/* ============= DECISION CALLOUT ============= */
+.decision-callout { padding: 14px 18px; background: rgba(133,118,194,0.10); border: 1px solid rgba(133,118,194,0.28); border-radius: 12px; font-size: 13px; color: var(--text-secondary); line-height: 1.55; max-width: 720px; margin: 0 auto; width: 100%; }
+.decision-callout strong { color: var(--accent); }
+
+/* ============= SPONSOR ============= */
+.sponsor-form { display: flex; flex-direction: column; gap: 14px; padding: 24px; background: var(--bg-surface); border: 1px solid var(--border); border-radius: 14px; max-width: 520px; margin: 0 auto; width: 100%; }
+
+/* ============= CONTEXT PANEL ============= */
+.proto-context { width: 100%; max-width: 1280px; padding: 16px 20px; background: var(--page-card-bg); border: 1px solid var(--page-divider); border-radius: 12px; font-size: 13px; color: var(--page-fg-muted); line-height: 1.55; }
+.proto-context strong { color: var(--page-fg); }
+.proto-context a { color: var(--page-accent, var(--s-70)); text-decoration: none; border-bottom: 1px dotted currentColor; }
+.proto-context__head { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; color: var(--page-fg); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px; }
+
+.screen { animation: fade-in 220ms ease; }
+@keyframes fade-in { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+</style>
+<script src="flow-chain.js" defer></script>
+</head>
+<body>
+
+<div class="proto-shell">
+
+  <aside class="proto-sidebar">
+    <div class="proto-sidebar__brand">
+      <span class="proto-sidebar__mark"><img src="../assets/gc-mark-mono-light.svg" alt=""></span>
+      <span>
+        <div class="proto-sidebar__name">GaimControl</div>
+        <span class="proto-sidebar__pill">web</span>
+      </span>
+    </div>
+    <a class="proto-sidebar__back" href="index.html">← prototype index</a>
+
+    <button class="proto-theme-toggle" type="button" aria-label="Toggle theme">
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+      <span class="theme-label">Dark</span>
+    </button>
+
+    <div class="proto-section-title">§05 · ON1 – ON16</div>
+    <nav class="proto-scrubber" id="scrubber"></nav>
+
+    <div class="proto-sidebar__footer">
+      Source spec: <a href="../web-ui/05-onboarding-quiz.html">web-ui/05</a><br>
+      Decisions: <a href="../41-decisions-log.html">41 log</a>
+    </div>
+  </aside>
+
+  <main class="proto-stage">
+
+    <div class="proto-modebar">
+      <span>Screen <span class="proto-modebar__id" id="screenId">ON1</span></span>
+      <span class="proto-modebar__pill" id="screenName">Welcome</span>
+      <div class="proto-modebar__bar"><div class="proto-modebar__bar__fill" id="progressFill" style="width:3%"></div></div>
+      <div class="proto-arrows">
+        <button class="proto-arrow" id="navPrev" aria-label="Previous"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+        <button class="proto-arrow" id="navNext" aria-label="Next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
+      </div>
+    </div>
+
+    <div class="browser">
+      <div class="browser__chrome">
+        <span class="browser__dots"><span class="browser__dot"></span><span class="browser__dot"></span><span class="browser__dot"></span></span>
+        <span class="browser__url">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          <span id="browserUrl">app.gaimcontrol.com/onboarding/welcome</span>
+        </span>
+      </div>
+      <div class="browser__viewport" id="viewport"></div>
+    </div>
+
+    <div class="proto-context" id="contextPanel">
+      <div class="proto-context__head">Screen context</div>
+      <div id="contextBody">Loading…</div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+/* ====================================================================
+   QUIZ DATA — same content as mobile, web layout differs
+   ==================================================================== */
+const QUIZ = [
+  { section: 1, sectionName: 'Demographics', title: 'Demographics', url: '/quiz/demographics', anna: "Hello, traveller. I'm here to help you navigate this journey. My name is Anna. What's yours?", q: 1, of: 5, qText: "What's your name?", kind: 'text', placeholder: 'First name', value: 'Sam', hint: "I'll use this to make conversations feel like, well, conversations." },
+  { section: 1, sectionName: 'Demographics', title: 'Demographics', url: '/quiz/demographics', anna: "Nice to meet you, Sam. Now a few simple ones — they help me get the picture.", q: 2, of: 5, qText: 'Nice to meet you, Sam. How old are you?', kind: 'choice', options: ['18 – 24', '25 – 34', '35 – 44', '45 – 54', '55 – 64', '65 +', 'Prefer not to answer'], on: 1 },
+  { section: 1, sectionName: 'Demographics', title: 'Demographics', url: '/quiz/demographics', anna: "No wrong answer here.", q: 3, of: 5, qText: 'How do you see yourself in terms of gender?', kind: 'choice', options: ['Guy', 'Gal', 'Non-binary', 'Something else', 'Prefer not to answer'], on: 0 },
+  { section: 1, sectionName: 'Demographics', title: 'Demographics', url: '/quiz/demographics', anna: "Helps me understand your situation a bit.", q: 4, of: 5, qText: "What's your work vibe?", kind: 'choice', options: ['Working for someone else', 'Running my own show', 'Between jobs', 'Hitting the books', 'Enjoying retirement', 'Other / Prefer not'], on: 0 },
+  { section: 1, sectionName: 'Demographics', title: 'Demographics', url: '/quiz/demographics', anna: "Last one in this section. Round numbers are fine.", q: 5, of: 5, qText: 'Yearly income range?', kind: 'choice', options: ['Less than £20k', '£20k – £39k', '£39k – £59k', 'Over £60k', 'Prefer not to answer'], on: 1, nextLabel: 'Next section →' },
+  { section: 2, sectionName: 'Severity', title: 'PGSI severity', url: '/quiz/severity', anna: "Nine PGSI questions — the standard NHS measure. Be honest with yourself.", q: 1, of: 9, qText: 'Have you ever felt that you might have a problem with gambling?', kind: 'scale', options: ['No, not me!', 'Sometimes I do', 'Often on my mind', 'Yes, always'], on: 1 },
+  { section: 2, sectionName: 'Severity', title: 'PGSI severity', url: '/quiz/severity', anna: "No judgement, this is just data.", q: 2, of: 9, qText: 'Have people told you that you had a gambling problem?', kind: 'scale', options: ['Not that I recall', 'Some people sometimes', 'Yes, most of the time', 'They always tell me'], on: 0 },
+  { section: 2, sectionName: 'Severity', title: 'PGSI severity', url: '/quiz/severity', anna: "Guilt is information, not a verdict.", q: 3, of: 9, qText: 'Have you ever felt guilty about gambling?', kind: 'scale', options: ['Nope, never', 'Sometimes guilt', 'Often guilty', 'Always guilty'], on: 2 },
+  { section: 2, sectionName: 'Severity', title: 'PGSI severity', url: '/quiz/severity', anna: "The mind and the wallet are connected — checking both.", q: 4, of: 9, qText: 'Health problems like stress or anxiety because of gambling?', kind: 'scale', options: ['No, healthy', 'Sometimes', 'Often', 'Yes, every time'], on: 1 },
+  { section: 2, sectionName: 'Severity', title: 'PGSI severity', url: '/quiz/severity', anna: "Be straight with yourself, even on the awkward ones.", q: 5, of: 9, qText: 'In 12 months, did you bet more than you could afford to lose?', kind: 'scale', options: ['Never', 'Sometimes', 'Most of the time', 'Always'], on: 1 },
+  { section: 2, sectionName: 'Severity', title: 'PGSI severity', url: '/quiz/severity', anna: "Chasing is the most common pattern — knowing helps.", q: 6, of: 9, qText: 'Did you come back another day to win back losses?', kind: 'scale', options: ['No, never', 'Sometimes', 'Most of the time', "It's my routine"], on: 2 },
+  { section: 2, sectionName: 'Severity', title: 'PGSI severity', url: '/quiz/severity', anna: "Sensitive question. There are no wrong answers here.", q: 7, of: 9, qText: 'Have you borrowed money or sold things to bet?', kind: 'scale', options: ['No, never', 'A few times', 'Most of the time', 'Always'], on: 0 },
+  { section: 2, sectionName: 'Severity', title: 'PGSI severity', url: '/quiz/severity', anna: "We can build a path even if it's been tight.", q: 8, of: 9, qText: 'Has gambling put your finances in a tight spot?', kind: 'scale', options: ['No, never', 'Some struggles', 'Most of the time', 'Yes, regularly'], on: 2 },
+  { section: 2, sectionName: 'Severity', title: 'PGSI severity', url: '/quiz/severity', anna: "Last PGSI one. We'll have your score in a moment.", q: 9, of: 9, qText: 'Did you need to bet more to feel the same excitement?', kind: 'scale', options: ['No', 'On occasion', 'Most of the time', 'Always'], on: 1, nextLabel: 'Next section →' },
+  { section: 3, sectionName: 'Situation', title: 'Situation & debt', url: '/quiz/situation', anna: "Just to understand the landscape — debt isn't shameful, it's information.", q: 1, of: 4, qText: 'Current debt situation?', kind: 'choice', options: ['None', 'Minor', 'Significant', 'Overwhelming', 'I have no idea', 'Prefer not to say'], on: 2 },
+  { section: 3, sectionName: 'Situation', title: 'Situation & debt', url: '/quiz/situation', anna: "However you handle it now is fine — we'll work from there.", q: 2, of: 4, qText: 'Approach to handling debts?', kind: 'choice', options: ['Detailed planning', 'Pay whatever I can', 'Ignore as long as possible', 'Seek help from family', 'Other', 'Prefer not to say'], on: 1 },
+  { section: 3, sectionName: 'Situation', title: 'Situation & debt', url: '/quiz/situation', anna: "Co-occurring stuff matters — it changes what works.", q: 3, of: 4, qText: 'Anything else affecting your gambling?', kind: 'choice', options: ['Diagnosed', 'Suspected, not diagnosed', 'None', 'Prefer not to answer'], on: 1 },
+  { section: 3, sectionName: 'Situation', title: 'Situation & debt', url: '/quiz/situation', anna: "Pattern questions next.", q: 4, of: 4, qText: 'Family history of gambling issues?', kind: 'choice', options: ['Yes', 'No', 'Not sure', 'Prefer not to answer'], on: 2, nextLabel: 'Next section →' },
+  { section: 4, sectionName: 'Patterns', title: 'Patterns', url: '/quiz/patterns', anna: "The shape of how, when, and why — builds your profile.", q: 1, of: 6, qText: 'What type of gambling do you go for?', kind: 'choice', options: ['Sports betting', 'Casino games', 'Slot machines', 'Stock / crypto trading', 'Other'], on: 0 },
+  { section: 4, sectionName: 'Patterns', title: 'Patterns', url: '/quiz/patterns', anna: "Pick all that apply.", q: 2, of: 6, qText: 'Where do you see ads about gambling?', kind: 'checks', options: ['Outdoor ads', 'TV ads', 'Internet ads', 'Phone ads', 'Social media', 'Streamers', 'Other'], on: [3, 4] },
+  { section: 4, sectionName: 'Patterns', title: 'Patterns', url: '/quiz/patterns', anna: "Channel matters — the friction differs.", q: 3, of: 6, qText: 'How do you usually gamble?', kind: 'choice', options: ['Online from computer', 'Online from phone', 'Physical locations', 'Other'], on: 1 },
+  { section: 4, sectionName: 'Patterns', title: 'Patterns', url: '/quiz/patterns', anna: "Reason informs which tools help.", q: 4, of: 6, qText: 'Main reason for gambling?', kind: 'choice', options: ['Excitement / thrill', 'Win money', 'Recover losses', 'Escape stress', 'Social activity', 'Boredom', 'Other'], on: 0 },
+  { section: 4, sectionName: 'Patterns', title: 'Patterns', url: '/quiz/patterns', anna: "Time of day matters more than people think.", q: 5, of: 6, qText: 'When do you typically gamble?', kind: 'choice', options: ['Morning', 'Day', 'Evening', 'Night', "Doesn't matter"], on: 2 },
+  { section: 4, sectionName: 'Patterns', title: 'Patterns', url: '/quiz/patterns', anna: "Last pattern question.", q: 6, of: 6, qText: 'What about days?', kind: 'choice', options: ['Workdays', 'Weekends', 'Paydays', "Doesn't matter"], on: 2, nextLabel: 'Next section →' },
+  { section: 5, sectionName: 'Help', title: 'Help-seeking', url: '/quiz/help-seeking', anna: "Anything you've tried — we'll build on what's already working.", q: 1, of: 3, qText: 'Where have you tried support?', kind: 'checks', options: ["I didn't try", 'Private therapy', 'Public therapy (NHS)', 'GamCare / charities', 'GA', 'Apps', 'Friends / Family', 'Online community', 'Self-exclusion'], on: [3, 8] },
+  { section: 5, sectionName: 'Help', title: 'Help-seeking', url: '/quiz/help-seeking', anna: "Honesty here helps — it shapes the cadence.", q: 2, of: 3, qText: 'How did that work for you?', kind: 'choice', options: ['Yes, for a while', "No, didn't work", "No, wasn't for me", 'Other'], on: 0 },
+  { section: 5, sectionName: 'Help', title: 'Help-seeking', url: '/quiz/help-seeking', anna: "Last question. After this — your pattern.", q: 3, of: 3, qText: "If it didn't suit you, why?", kind: 'checks', options: ["Didn't suit my needs", "Didn't relate to people", 'Too expensive', 'Overwhelming', 'Not enough time', 'Schedule fit', 'Other'], on: [4], nextLabel: 'See profile →' }
+];
+
+const SCREENS = [
+  { id: 'ON1', name: 'Welcome', url: '/onboarding/welcome', kind: 'on1', step: 1 },
+  ...QUIZ.map((q, i) => ({ id: `ON${1 + q.section}.${q.q}`, name: `${q.sectionName} · Q${q.q}/${q.of}`, url: 'app.gaimcontrol.com' + q.url, kind: 'quiz', data: q, step: 1 + q.section, idx: i })),
+  { id: 'ON6+', name: 'Sponsor invite · A/B', url: '/quiz/sponsor', kind: 'sponsor', step: 7 },
+  { id: 'ON7', name: 'Profile · Habitual', url: '/quiz/profile', kind: 'on7', step: 7 },
+  { id: 'ON8', name: 'KYC · Start', url: '/kyc/start', kind: 'on8', step: 8 },
+  { id: 'ON9', name: 'KYC · Document', url: '/kyc/document', kind: 'on9', step: 9 },
+  { id: 'ON10', name: 'KYC · Liveness', url: '/kyc/liveness', kind: 'on10', step: 10 },
+  { id: 'ON11', name: 'KYC · Verified', url: '/kyc/verified', kind: 'on11', step: 11 },
+  { id: 'ON12', name: 'Banking · Connect', url: '/banking/connect', kind: 'on12', step: 12 },
+  { id: 'ON13', name: 'Banking · Select', url: '/banking/select', kind: 'on13', step: 13 },
+  { id: 'ON14', name: 'Banking · Connecting', url: '/banking/connecting', kind: 'on14', step: 14 },
+  { id: 'ON15', name: 'Banking · Connected', url: '/banking/connected', kind: 'on15', step: 15 },
+  { id: 'ON16', name: 'Suitability · Service ON', url: '/onboarding/decision', kind: 'on16', step: 16 },
+];
+
+const CTX = {
+  on1: '<strong>ON1 Welcome.</strong> Two-column split. Anna orb left as a presence; entry CTA right with 5-section preview. Crisis pill persistent top-right of every onboarding screen. Source: web-ui/05 §02.',
+  sponsor: '<strong>Sponsor invite — A/B placement.</strong> Per decision <a href="../41-decisions-log.html">ON-04</a>, the invite ships at ON6 (variant A) and at ON21 / Controls (variant B). Users are randomised. Both variants go through the same SP1–SP7 flow in <a href="../15-sponsor-onboarding.html">§15</a>.',
+  on7: '<strong>ON7 Profile result.</strong> Demo shows the Habitual profile (PGSI 14). Per <a href="../41-decisions-log.html">GEN-01</a>, the clean window is <strong>30 days</strong> (A/B vs 15) — Habitual cohort sees the 30-day callout.',
+  on8: '<strong>ON8 KYC start.</strong> Two-column: form left, vendor badge right. Algbra runs document capture + liveness + PEP/sanctions. GC never sees raw IDs. Per <a href="../41-decisions-log.html">ON-01</a>, allpay can swap in — UX identical.',
+  on12: '<strong>ON12 Banking intro.</strong> TrueLayer primary, Yapily backup. Per <a href="../41-decisions-log.html">GEN-06</a>, Experian pre-check is A/B at this step — pre-check all accounts (variant A) vs only first account then continue (variant B).',
+  on13: '<strong>ON13 Bank select.</strong> Per <a href="../41-decisions-log.html">ON-07</a>, joint-account self-attest checkbox shipped here. Cross-checked against bureau; pass = clear, fail = ops review.',
+  on16: '<strong>ON16 Suitability.</strong> Soft credit (Experian) + PGSI + profile + 90-day OB + vulnerability flags. Demo shows Service ON outcome. Per <a href="../41-decisions-log.html">ON-06</a>, 100% income coverage from linked accounts is required for streak + loan eligibility.',
+};
+
+/* ----- ANNA BUBBLE ----- */
+const ANNA = (text) => `
+  <div class="gc-card gc-card--anna">
+    <div class="gc-avatar gc-avatar--anna"><img src="../assets/gc-mark-mono-light.svg" alt=""></div>
+    <div>
+      <div class="anna-name">Anna</div>
+      <p>${text}</p>
+    </div>
+  </div>`;
+
+/* ----- PROGRESS STRIP (5 sections) ----- */
+const PROGRESS_STRIP = (currentSection, done = []) => {
+  const names = ['Demographics', 'Severity', 'Situation', 'Patterns', 'Help'];
+  let html = '<div class="quiz-progress">';
+  for (let i = 1; i <= 5; i++) {
+    let cls = '';
+    if (done.includes(i)) cls = ' is-done';
+    else if (i === currentSection) cls = ' is-current';
+    html += `<span class="quiz-progress__step${cls}"><span class="quiz-progress__num">${done.includes(i) ? '✓' : i}</span><span>${names[i-1]}</span></span>`;
+  }
+  html += '</div>';
+  return html;
+};
+
+/* ===== SCREEN BUILDERS ===== */
+
+function shellNav(step) {
+  return `
+    <div class="ob-stage__nav">
+      <span class="ob-stage__brand"><img src="../assets/gc-mark-mono-light.svg" alt=""> GaimControl</span>
+      <div class="ob-stage__nav-right">
+        <span class="ob-stage__progress-tag">Step ${step} of 16 · ~10 min</span>
+        <button class="gc-crisis-pill" type="button" aria-label="Help">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7-4.5-9-9.5C2 7 5 4 8 4c1.7 0 3.2.8 4 2 .8-1.2 2.3-2 4-2 3 0 6 3 5 7.5C19 16.5 12 21 12 21z"/></svg>
+          Help
+        </button>
+      </div>
+    </div>`;
+}
+
+function buildON1(step) {
+  return `
+    ${shellNav(step)}
+    <div class="ob-stage__body">
+      <div class="welcome-split">
+        <div class="welcome-anna">
+          <div class="welcome-anna-stage" aria-hidden="true">
+            <span class="welcome-anna-orb welcome-anna-orb--1"></span>
+            <span class="welcome-anna-orb welcome-anna-orb--2"></span>
+            <span class="welcome-anna-orb welcome-anna-orb--3"></span>
+            <div class="welcome-anna-avatar">
+              <span class="welcome-anna-avatar__pulse"></span>
+              <span class="welcome-anna-avatar__pulse welcome-anna-avatar__pulse--2"></span>
+              <img src="../assets/gc-mark-mono-light.svg" alt="">
+            </div>
+            <span class="welcome-anna-chip welcome-anna-chip--1">"hey Sam"</span>
+            <span class="welcome-anna-chip welcome-anna-chip--2">"no judgement"</span>
+            <span class="welcome-anna-chip welcome-anna-chip--3">~10 min</span>
+          </div>
+          <div class="welcome-anna-name">Anna · your coach</div>
+          <div class="welcome-anna-sub">CBT-trained AI · here for the next 10 minutes</div>
+        </div>
+        <div class="welcome-form">
+          <div class="gc-card gc-card--anna" style="flex-direction:column;align-items:flex-start;gap:8px">
+            <div class="anna-name">Anna</div>
+            <p>Hey — I'm Anna. Before we open your account, I want to understand how gambling sits in your life right now. Five short sections, no right answers, no judgement. Everything you tell me is private and stays inside GaimControl.</p>
+          </div>
+          <h3 class="welcome-heading">Let's get to know you.</h3>
+          <p class="welcome-sub">Five sections · ~10 minutes · You can pause and pick up where you left off.</p>
+          <ul class="welcome-list">
+            <li><span class="welcome-list__num">1</span><div><div class="welcome-list__title">A bit about you</div><div class="welcome-list__desc">Age, postcode, work — the basics.</div></div></li>
+            <li><span class="welcome-list__num">2</span><div><div class="welcome-list__title">How gambling shows up</div><div class="welcome-list__desc">PGSI — 9 standard questions on severity.</div></div></li>
+            <li><span class="welcome-list__num">3</span><div><div class="welcome-list__title">Money &amp; obligations</div><div class="welcome-list__desc">Income, debts, who depends on you.</div></div></li>
+            <li><span class="welcome-list__num">4</span><div><div class="welcome-list__title">Patterns</div><div class="welcome-list__desc">When, where, how — to find your profile.</div></div></li>
+            <li><span class="welcome-list__num">5</span><div><div class="welcome-list__title">What you've tried</div><div class="welcome-list__desc">Past help-seeking, what worked, what didn't.</div></div></li>
+          </ul>
+          <button class="gc-btn gc-btn--primary gc-btn--lg gc-btn--full" onclick="next()">Start with Anna →</button>
+          <p style="font-size:12px;color:var(--text-muted);margin:0;text-align:center">By continuing you agree to our <a href="#" style="color:var(--text-secondary)">Privacy Notice</a>. We never sell or share your responses.</p>
+        </div>
+      </div>
+    </div>`;
+}
+
+function buildQuiz(q, step) {
+  const done = [];
+  for (let i = 1; i < q.section; i++) done.push(i);
+  const progress = PROGRESS_STRIP(q.section, done);
+
+  let answer = '';
+  if (q.kind === 'text') {
+    answer = `<div class="quiz-text"><input type="text" placeholder="${q.placeholder || ''}" value="${q.value || ''}"><span class="hint">${q.hint || ''}</span></div>`;
+  } else if (q.kind === 'choice') {
+    answer = '<div class="quiz-choices">';
+    q.options.forEach((opt, i) => {
+      answer += `<button class="quiz-choice${i === q.on ? ' is-on' : ''}" onclick="pickOne(this)">${opt}</button>`;
+    });
+    answer += '</div>';
+  } else if (q.kind === 'scale') {
+    answer = '<div class="quiz-scale">';
+    q.options.forEach((opt, i) => {
+      answer += `<button class="quiz-scale__opt${i === q.on ? ' is-on' : ''}" onclick="pickOne(this)"><span class="quiz-scale__num">${i}</span><span class="quiz-scale__label">${opt}</span></button>`;
+    });
+    answer += '</div>';
+  } else if (q.kind === 'checks') {
+    answer = '<div class="quiz-checks">';
+    q.options.forEach((opt, i) => {
+      const on = (Array.isArray(q.on) && q.on.includes(i)) ? ' is-on' : '';
+      answer += `<label class="quiz-check${on}" onclick="toggleCheck(this)"><span class="gc-checkbox"></span>${opt}</label>`;
+    });
+    answer += '</div>';
+  }
+
+  return `
+    ${shellNav(step)}
+    <div class="ob-stage__body">
+      ${progress}
+      <div class="quiz-stage">
+        ${ANNA(q.anna)}
+        <div class="quiz-question">
+          <div>
+            <span class="quiz-question__num">Question ${q.q} of ${q.of}</span>
+            <h4 class="quiz-question__title" style="margin-top:6px">${q.qText}</h4>
+          </div>
+          ${answer}
+          <div class="quiz-actions">
+            <button class="gc-btn gc-btn--ghost" onclick="prev()">← Back</button>
+            <button class="gc-btn gc-btn--primary" onclick="next()">${q.nextLabel || 'Next →'}</button>
+          </div>
+        </div>
+      </div>
+    </div>`;
+}
+
+function buildSponsor(step) {
+  return `
+    ${shellNav(step)}
+    <div class="ob-stage__body">
+      <div class="quiz-stage">
+        ${ANNA("A sponsor is a trusted person — partner, clinician, family member — who can see safety events and authorise certain actions. Optional, but it makes everything stronger.")}
+        <div class="decision-callout">
+          <strong>A/B test:</strong> half of users see this at onboarding (here, variant A). Half see it post-onboarding from Controls / §07 (variant B).
+        </div>
+        <div class="sponsor-form">
+          <div class="kyc-field"><label>Sponsor's name</label><input type="text" value="Alex Kennedy"></div>
+          <div class="kyc-field"><label>Relationship</label><input type="text" value="Partner"></div>
+          <div class="kyc-field"><label>Sponsor's email</label><input type="email" value="alex@example.com"></div>
+          <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:6px">
+            <button class="gc-btn gc-btn--ghost" onclick="next()">Skip for now</button>
+            <button class="gc-btn gc-btn--primary" onclick="next()">Send invite →</button>
+          </div>
+        </div>
+      </div>
+    </div>`;
+}
+
+function buildON7(step) {
+  return `
+    ${shellNav(step)}
+    <div class="ob-stage__body">
+      <div class="quiz-stage" style="max-width:800px">
+        ${ANNA("Pattern fits habitual — frequent, mostly online, chasing losses comes up. Starting point.")}
+        <div class="profile-hero">
+          <span class="profile-hero__kicker">Your pattern</span>
+          <h3 class="profile-hero__name">Habitual</h3>
+          <p class="profile-hero__sub">Default merchant blocks ON. 30-day clean window before loan path unlocks.</p>
+          <div class="profile-hero__chips">
+            <span class="profile-hero__chip">PGSI 14</span>
+            <span class="profile-hero__chip">Eligible</span>
+          </div>
+        </div>
+        <div class="decision-callout">
+          <strong>Decisions log GEN-01:</strong> 30-day clean window is variant A (this user). Variant B (15 days) is in flight as an A/B test.
+        </div>
+        <div class="result-grid">
+          <div class="result-item"><span class="result-item__icon result-item__icon--ok">✓</span><div class="result-item__t">Card blocks ON</div><div class="result-item__s">Gambling MCC refused at terminal</div></div>
+          <div class="result-item"><span class="result-item__icon result-item__icon--ok">✓</span><div class="result-item__t">30-day clean window</div><div class="result-item__s">Unlocks loan + settlement path</div></div>
+          <div class="result-item"><span class="result-item__icon result-item__icon--ok">✓</span><div class="result-item__t">2× per week Anna</div><div class="result-item__s">CBT-based sessions, ~15 min</div></div>
+        </div>
+        <div style="display:flex;justify-content:center;margin-top:8px">
+          <button class="gc-btn gc-btn--primary gc-btn--lg" onclick="next()">Continue → ID check</button>
+        </div>
+      </div>
+    </div>`;
+}
+
+function buildON8(step) {
+  return `
+    ${shellNav(step)}
+    <div class="ob-stage__body">
+      <div style="max-width:880px;width:100%;display:flex;flex-direction:column;gap:24px">
+        ${ANNA("Algbra needs to confirm who you are — FCA + AML rules. Three quick steps.")}
+        <div class="kyc-grid">
+          <div class="kyc-form">
+            <h3 style="font-size:22px;font-weight:700;margin:0;letter-spacing:-0.015em">Confirm details</h3>
+            <div class="kyc-field"><label>Full legal name</label><input type="text" value="Sam Kennedy"></div>
+            <div class="kyc-field"><label>Date of birth</label><input type="text" value="14 / 03 / 1994"></div>
+            <div class="kyc-field"><label>Home address</label><input type="text" value="42 Finsbury Park Rd, N4 2JX"></div>
+            <span class="vendor-badge">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              Algbra · FCA #952360
+            </span>
+            <button class="gc-btn gc-btn--primary gc-btn--lg" style="align-self:flex-start" onclick="next()">Start ID check →</button>
+          </div>
+          <div style="background:var(--bg-surface);border:1px solid var(--border);border-radius:14px;padding:20px;display:flex;flex-direction:column;gap:14px">
+            <h4 style="margin:0;font-size:15px;font-weight:700">What happens next</h4>
+            <div class="bank-explain"><span class="bank-explain__icon bank-explain__icon--t"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="m9 12 2 2 4-4"/></svg></span><div><div class="bank-explain__t">1 · Capture document</div><div class="bank-explain__s">Passport or driving licence</div></div></div>
+            <div class="bank-explain"><span class="bank-explain__icon bank-explain__icon--p"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21v-2a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v2"/></svg></span><div><div class="bank-explain__t">2 · Liveness selfie</div><div class="bank-explain__s">Turn slightly, blink — ~5 seconds</div></div></div>
+            <div class="bank-explain"><span class="bank-explain__icon bank-explain__icon--s"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg></span><div><div class="bank-explain__t">3 · PEP / sanctions check</div><div class="bank-explain__s">Standard AML screening</div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>`;
+}
+
+function buildON9(step) {
+  return `
+    ${shellNav(step)}
+    <div class="ob-stage__body">
+      <div style="max-width:720px;width:100%;display:flex;flex-direction:column;gap:18px">
+        ${ANNA("Hold your passport flat. Frame turns green when good.")}
+        <div class="kyc-camera-stage">
+          <div class="kyc-camera-frame">
+            <span style="font-size:11px;letter-spacing:0.12em;opacity:0.7;font-family:'JetBrains Mono',monospace">PASSPORT · UK</span>
+            <span style="font-size:18px;font-weight:700;color:white;letter-spacing:0.06em">SAM KENNEDY</span>
+          </div>
+          <div class="kyc-camera-caption">Corners detected · hold steady</div>
+          <button class="gc-btn gc-btn--primary gc-btn--lg" onclick="next()">Capture →</button>
+        </div>
+      </div>
+    </div>`;
+}
+
+function buildON10(step) {
+  return `
+    ${shellNav(step)}
+    <div class="ob-stage__body">
+      <div style="max-width:720px;width:100%;display:flex;flex-direction:column;gap:18px">
+        ${ANNA("Look ahead, then turn slightly. About 5 seconds.")}
+        <div class="kyc-liveness-stage">
+          <div class="kyc-oval">
+            <div class="kyc-oval__face">
+              <span class="kyc-oval__eye" style="left:30%"></span>
+              <span class="kyc-oval__eye" style="right:30%"></span>
+              <span class="kyc-oval__mouth"></span>
+            </div>
+          </div>
+          <div class="kyc-liveness-steps">
+            <div class="kyc-liveness-step is-done">✓ Look ahead</div>
+            <div class="kyc-liveness-step is-current">2 · Slowly turn right</div>
+            <div class="kyc-liveness-step">3 · Blink</div>
+          </div>
+          <button class="gc-btn gc-btn--primary gc-btn--lg" onclick="next()">Continue</button>
+        </div>
+      </div>
+    </div>`;
+}
+
+function buildON11(step) {
+  return `
+    ${shellNav(step)}
+    <div class="ob-stage__body">
+      <div style="max-width:720px;width:100%;display:flex;flex-direction:column;gap:18px">
+        ${ANNA("Algbra confirmed your identity. Account-opening unlocked.")}
+        <div class="profile-hero" style="background:linear-gradient(135deg, var(--t-30), var(--t-50))">
+          <span class="suit-status suit-status--ok" style="background:rgba(0,0,0,0.22);color:white;align-self:flex-start">Verified</span>
+          <h3 class="profile-hero__name" style="font-size:36px">You're verified.</h3>
+          <p class="profile-hero__sub">Identity matched. No PEP / sanctions. Account opening authorised.</p>
+        </div>
+        <div class="result-grid">
+          <div class="result-item"><span class="result-item__icon result-item__icon--ok">✓</span><div class="result-item__t">Document verified</div><div class="result-item__s">UK Passport</div></div>
+          <div class="result-item"><span class="result-item__icon result-item__icon--ok">✓</span><div class="result-item__t">Liveness 99.7%</div><div class="result-item__s">Anti-spoof pass</div></div>
+          <div class="result-item"><span class="result-item__icon result-item__icon--ok">✓</span><div class="result-item__t">Address · Royal Mail PAF</div><div class="result-item__s">Confirmed</div></div>
+        </div>
+        <div style="display:flex;justify-content:center;margin-top:8px">
+          <button class="gc-btn gc-btn--primary gc-btn--lg" onclick="next()">Connect your bank →</button>
+        </div>
+      </div>
+    </div>`;
+}
+
+function buildON12(step) {
+  return `
+    ${shellNav(step)}
+    <div class="ob-stage__body">
+      <div style="max-width:920px;width:100%;display:flex;flex-direction:column;gap:24px">
+        ${ANNA("Read-only, 90 days. We see patterns; we never move your money.")}
+        <div class="bank-grid">
+          <div style="display:flex;flex-direction:column;gap:14px">
+            <h3 style="font-size:22px;font-weight:700;margin:0;letter-spacing:-0.015em">Why we ask</h3>
+            <div class="bank-explain-list">
+              <div class="bank-explain"><span class="bank-explain__icon bank-explain__icon--t"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span><div><div class="bank-explain__t">Read-only</div><div class="bank-explain__s">FCA-regulated open banking</div></div></div>
+              <div class="bank-explain"><span class="bank-explain__icon bank-explain__icon--p"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></span><div><div class="bank-explain__t">90 days</div><div class="bank-explain__s">Auto-refresh weekly</div></div></div>
+              <div class="bank-explain"><span class="bank-explain__icon bank-explain__icon--s"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/></svg></span><div><div class="bank-explain__t">Revoke any time</div><div class="bank-explain__s">Profile → Settings</div></div></div>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:14px">
+            <div class="decision-callout">
+              <strong>Decisions log GEN-06:</strong> Experian pre-check A/B. Variant A (this user): every linked account pre-checked at link time. Variant B: first-account-only, batched later.
+            </div>
+            <button class="gc-btn gc-btn--primary gc-btn--lg gc-btn--full" onclick="next()">Connect your bank →</button>
+            <span class="vendor-badge" style="align-self:center"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>TrueLayer · FCA-AISP</span>
+          </div>
+        </div>
+      </div>
+    </div>`;
+}
+
+function buildON13(step) {
+  return `
+    ${shellNav(step)}
+    <div class="ob-stage__body">
+      <div style="max-width:720px;width:100%;display:flex;flex-direction:column;gap:18px">
+        ${ANNA("Pick where most of your money lives.")}
+        <div class="gc-card" style="flex-direction:column;gap:14px;padding:24px">
+          <div class="kyc-field"><label>Search banks</label><input type="text" value="Barc"></div>
+          <div class="bank-list">
+            <button class="bank-row is-on" onclick="pickBank(this, 'Barclays')"><span class="bank-row__logo" style="background:#005EB8;color:white">B</span><span class="bank-row__name">Barclays</span></button>
+            <button class="bank-row" onclick="pickBank(this, 'Barclaycard')"><span class="bank-row__logo" style="background:#0099CC;color:white">B</span><span class="bank-row__name">Barclaycard</span></button>
+            <button class="bank-row" onclick="pickBank(this, 'Barclays Wealth')"><span class="bank-row__logo" style="background:#FF3B30;color:white">B</span><span class="bank-row__name">Barclays Wealth</span></button>
+          </div>
+          <label class="quiz-check" onclick="toggleCheck(this)" style="margin-top:4px">
+            <span class="gc-checkbox"></span>
+            <span style="font-size:14px;line-height:1.45">This is a <strong>joint account</strong> &mdash; verify against the named co-holder</span>
+          </label>
+          <span class="vendor-badge" style="align-self:flex-start"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>TrueLayer · FCA-AISP</span>
+        </div>
+        <div class="decision-callout">
+          <strong>Decisions log ON-07:</strong> Joint-account self-attest checkbox ships here. Cross-checked against bureau record; pass = clear, fail = ops review.
+        </div>
+        <div style="display:flex;justify-content:flex-end">
+          <button class="gc-btn gc-btn--primary gc-btn--lg" id="connectCta" onclick="next()">Connect Barclays →</button>
+        </div>
+      </div>
+    </div>`;
+}
+
+function buildON14(step) {
+  return `
+    ${shellNav(step)}
+    <div class="ob-stage__body">
+      <div style="max-width:720px;width:100%;display:flex;flex-direction:column;gap:18px">
+        <div class="connecting-stage" onclick="next()" role="button" tabindex="0">
+          <div class="connecting-logo-wrap">
+            <span class="connecting-logo-pulse"></span>
+            <div class="connecting-logo">B</div>
+          </div>
+          <h3 style="font-size:22px;font-weight:800;margin:0;letter-spacing:-0.02em">Opening Barclays securely…</h3>
+          <p style="font-size:13.5px;color:var(--text-secondary);max-width:380px;text-align:center;margin:0;line-height:1.55">You'll land in your Barclays portal for a moment. Approve, then come back.</p>
+          <div class="connecting-progress">
+            <div class="connecting-step is-done">✓ Authorising</div>
+            <div class="connecting-step is-current">→ Opening Barclays</div>
+            <div class="connecting-step">Pulling 90 days</div>
+            <div class="connecting-step">Categorising</div>
+          </div>
+          <span class="connecting-hint">click to continue (sim)</span>
+        </div>
+        <div style="display:flex;justify-content:center">
+          <button class="gc-btn gc-btn--ghost" onclick="prev()">Cancel</button>
+        </div>
+      </div>
+    </div>`;
+}
+
+function buildON15(step) {
+  return `
+    ${shellNav(step)}
+    <div class="ob-stage__body">
+      <div style="max-width:720px;width:100%;display:flex;flex-direction:column;gap:18px">
+        ${ANNA("Got it. 90 days of read-only history. Here's the picture.")}
+        <div class="bank-summary">
+          <div class="bank-summary__head">
+            <span class="bank-summary__head__name"><span>B</span>Barclays · ****4291</span>
+            <span class="bank-summary__head__meta">412 transactions</span>
+          </div>
+          <div class="bank-summary__stats">
+            <div class="bank-summary__stat"><div class="bank-summary__stat-n">£8,420</div><div class="bank-summary__stat-l">Gambling spend</div></div>
+            <div class="bank-summary__stat"><div class="bank-summary__stat-n">7</div><div class="bank-summary__stat-l">Merchants</div></div>
+            <div class="bank-summary__stat"><div class="bank-summary__stat-n">£2,140</div><div class="bank-summary__stat-l">Avg income</div></div>
+            <div class="bank-summary__stat"><div class="bank-summary__stat-n">£640</div><div class="bank-summary__stat-l">Debt service</div></div>
+          </div>
+        </div>
+        <div style="display:flex;justify-content:center;margin-top:4px">
+          <button class="gc-btn gc-btn--primary gc-btn--lg" onclick="next()">Continue → suitability</button>
+        </div>
+      </div>
+    </div>`;
+}
+
+function buildON16(step) {
+  return `
+    ${shellNav(step)}
+    <div class="ob-stage__body">
+      <div style="max-width:800px;width:100%;display:flex;flex-direction:column;gap:18px">
+        ${ANNA("Soft credit + 90-day spending look — we're good to set up your account.")}
+        <div style="display:flex;flex-direction:column;align-items:flex-start;gap:8px">
+          <span class="suit-status suit-status--ok">Service eligible</span>
+          <h2 style="font-size:48px;font-weight:800;letter-spacing:-0.025em;line-height:1;margin:4px 0 0">You're in.</h2>
+          <p style="font-size:15px;color:var(--text-secondary);margin:0;line-height:1.55">All GC features turn on. Card, monitoring, Anna's first session.</p>
+        </div>
+        <div class="result-grid" style="grid-template-columns:repeat(2,1fr);max-width:800px">
+          <div class="result-item"><span class="result-item__icon result-item__icon--ok">✓</span><div class="result-item__t">PGSI 14 · service-eligible</div><div class="result-item__s">Habitual · blocks default-ON</div></div>
+          <div class="result-item"><span class="result-item__icon result-item__icon--ok">✓</span><div class="result-item__t">ID verified · Algbra</div><div class="result-item__s">No PEP / sanctions</div></div>
+          <div class="result-item"><span class="result-item__icon result-item__icon--ok">✓</span><div class="result-item__t">Credit · Experian soft-pull</div><div class="result-item__s">No CCJs · 1 active loan</div></div>
+          <div class="result-item"><span class="result-item__icon result-item__icon--warn">!</span><div class="result-item__t">Vulnerability flag</div><div class="result-item__s">Daily Anna for 30 days</div></div>
+        </div>
+        <div style="display:flex;justify-content:center;margin-top:8px">
+          <button class="gc-btn gc-btn--primary gc-btn--lg" onclick="restart()">Open my account →</button>
+        </div>
+      </div>
+    </div>`;
+}
+
+const builders = { on1: buildON1, sponsor: buildSponsor, on7: buildON7, on8: buildON8, on9: buildON9, on10: buildON10, on11: buildON11, on12: buildON12, on13: buildON13, on14: buildON14, on15: buildON15, on16: buildON16 };
+
+/* ----- STATE + NAV ----- */
+let idx = 0;
+
+function render() {
+  const screen = SCREENS[idx];
+  let html;
+  if (screen.kind === 'quiz') html = buildQuiz(screen.data, screen.step);
+  else html = builders[screen.kind](screen.step);
+
+  document.getElementById('viewport').innerHTML = `<div class="ob-stage screen">${html}</div>`;
+  document.getElementById('browserUrl').textContent = 'app.gaimcontrol.com' + (screen.url || (screen.kind === 'quiz' ? screen.data.url : '/onboarding/welcome'));
+  document.getElementById('screenId').textContent = screen.id;
+  document.getElementById('screenName').textContent = screen.name;
+  document.getElementById('progressFill').style.width = ((idx + 1) / SCREENS.length * 100) + '%';
+  document.getElementById('navPrev').disabled = idx === 0;
+  document.getElementById('navNext').disabled = idx === SCREENS.length - 1;
+
+  document.querySelectorAll('.proto-scrubber__item').forEach((el, i) => {
+    el.classList.toggle('is-active', i === idx);
+    if (i === idx) el.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  });
+
+  const k = screen.kind === 'quiz' ? null : screen.kind;
+  let ctxHtml;
+  if (k && CTX[k]) ctxHtml = CTX[k];
+  else if (k === 'on9' || k === 'on10' || k === 'on11') ctxHtml = CTX.on8;
+  else if (k === 'on14' || k === 'on15') ctxHtml = '<strong>Bank link · TrueLayer.</strong> Read-only consent, 90-day window, auto-refresh weekly. Yapily is the backup AISP if TrueLayer fails.';
+  else ctxHtml = `<strong>${screen.name}</strong> — one question per screen, 4-col PGSI scale on desktop, Back / Next at bottom. All content pulled verbatim from web-ui/05.`;
+  document.getElementById('contextBody').innerHTML = ctxHtml;
+}
+
+function next() { if (idx < SCREENS.length - 1) { idx++; render(); } }
+function prev() { if (idx > 0) { idx--; render(); } }
+function go(i) { idx = i; render(); }
+function restart() { idx = 0; render(); }
+
+function pickOne(el) {
+  const parent = el.parentElement;
+  parent.querySelectorAll('.is-on').forEach(s => s.classList.remove('is-on'));
+  el.classList.add('is-on');
+}
+function toggleCheck(el) {
+  el.classList.toggle('is-on');
+}
+function pickBank(el, name) {
+  pickOne(el);
+  const cta = document.getElementById('connectCta');
+  if (cta) cta.textContent = `Connect ${name} →`;
+}
+
+function buildScrubber() {
+  const nav = document.getElementById('scrubber');
+  SCREENS.forEach((s, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'proto-scrubber__item';
+    btn.innerHTML = `<span class="proto-scrubber__id">${s.id}</span><span class="proto-scrubber__name">${s.name}</span>`;
+    btn.addEventListener('click', () => go(i));
+    nav.appendChild(btn);
+  });
+}
+
+function initTheme() {
+  const root = document.documentElement;
+  const stored = localStorage.getItem('gc-proto-theme');
+  const initial = stored || 'dark';
+  root.setAttribute('data-theme', initial);
+  document.querySelector('.theme-label').textContent = initial === 'dark' ? 'Dark' : 'Light';
+  document.querySelector('.proto-theme-toggle').addEventListener('click', () => {
+    const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    document.querySelector('.theme-label').textContent = next === 'dark' ? 'Dark' : 'Light';
+    try { localStorage.setItem('gc-proto-theme', next); } catch(e) {}
+  });
+}
+
+document.getElementById('navPrev').addEventListener('click', prev);
+document.getElementById('navNext').addEventListener('click', next);
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowRight') next();
+  if (e.key === 'ArrowLeft') prev();
+});
+
+buildScrubber();
+initTheme();
+render();
+</script>
+
+</body>
+</html>

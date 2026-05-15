@@ -1,0 +1,829 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GaimControl · Web · §13 Admin console</title>
+<link rel="icon" href="../assets/gc-favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --p-10:#0B0F1C;--p-20:#161B2D;--p-30:#20273C;--p-40:#354872;--p-50:#4D608C;--p-60:#6B7DA6;--p-90:#DCE2F0;--p-95:#ECF0F9;--p-99:#FAFBFE;--p-100:#FFF;
+  --s-10:#28215A;--s-20:#3E3478;--s-30:#534792;--s-40:#6B5DAC;--s-50:#8576C2;--s-70:#B5ACDF;--s-80:#CFC8EA;--s-90:#E8E4F4;
+  --t-20:#1A6047;--t-30:#1F7058;--t-50:#399971;--t-60:#5BB088;--t-80:#ADDCC2;--t-90:#D5EDDF;
+  --w-30:#6B4500;--w-60:#C28200;--w-80:#FAB44A;--w-90:#FFDFA8;
+  --e-30:#7A1F1F;--e-50:#C73838;--e-80:#F4A4A4;--e-90:#FBD9D9;
+  --n-50:#76798A;--n-80:#C5C8D2;--n-95:#F1F2F5;--nv-80:#C5C9DD;
+}
+[data-theme="dark"] { --bg-base: var(--p-30); --bg-surface: var(--p-20); --bg-surface-2: var(--p-10); --border: rgba(255,255,255,0.08); --border-strong: rgba(255,255,255,0.14); --text-primary: var(--n-95); --text-secondary: var(--nv-80); --text-muted: rgba(255,255,255,0.4); --accent: var(--s-70); --accent-strong: var(--s-50); --on-accent: #fff; --page-bg: #0a0e1a; --page-fg: var(--n-95); --page-fg-muted: var(--nv-80); --page-card-bg: var(--p-20); --page-divider: rgba(255,255,255,0.06); }
+[data-theme="light"] { --bg-base: var(--p-99); --bg-surface: #fff; --bg-surface-2: var(--p-95); --border: rgba(22,27,45,0.08); --border-strong: rgba(22,27,45,0.16); --text-primary: var(--p-20); --text-secondary: var(--n-50); --text-muted: var(--n-50); --accent: var(--p-40); --accent-strong: var(--s-40); --on-accent: #fff; --page-bg: var(--p-95); --page-fg: var(--p-20); --page-fg-muted: var(--n-50); --page-card-bg: #fff; --page-divider: rgba(22,27,45,0.08); }
+* { box-sizing: border-box; }
+html, body { background: var(--page-bg); color: var(--page-fg); margin: 0; transition: background-color 220ms ease, color 220ms ease; }
+body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif; font-size: 14px; line-height: 1.5; -webkit-font-smoothing: antialiased; min-height: 100vh; }
+
+.proto-shell { display: grid; grid-template-columns: 280px 1fr; gap: 0; min-height: 100vh; }
+@media (max-width: 1100px) { .proto-shell { grid-template-columns: 1fr; } }
+.proto-sidebar { background: var(--page-card-bg); border-right: 1px solid var(--page-divider); padding: 28px 22px; position: sticky; top: 0; height: 100vh; overflow-y: auto; display: flex; flex-direction: column; gap: 16px; }
+@media (max-width: 1100px) { .proto-sidebar { position: static; height: auto; max-height: 50vh; border-right: none; border-bottom: 1px solid var(--page-divider); } }
+.proto-sidebar__brand { display: flex; align-items: center; gap: 10px; }
+.proto-sidebar__mark { width: 36px; height: 36px; border-radius: 10px; background: var(--p-30); display: inline-flex; align-items: center; justify-content: center; }
+.proto-sidebar__mark img { width: 70%; height: 70%; }
+.proto-sidebar__name { font-weight: 700; font-size: 17px; letter-spacing: -0.01em; }
+.proto-sidebar__pill { display: inline-flex; padding: 3px 9px; border-radius: 999px; background: linear-gradient(120deg, var(--s-50), var(--p-50), var(--t-50)); color: white; font-weight: 700; font-size: 9.5px; font-family: 'JetBrains Mono', monospace; letter-spacing: 0.06em; text-transform: uppercase; }
+.proto-sidebar__back { display: inline-flex; align-items: center; gap: 6px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--page-fg-muted); text-decoration: none; }
+.proto-section-title { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--page-fg-muted); margin: 12px 0 6px; }
+.proto-scrubber { display: flex; flex-direction: column; gap: 2px; }
+.proto-scrubber__item { display: grid; grid-template-columns: 44px 1fr; gap: 8px; align-items: center; padding: 7px 10px; border-radius: 8px; cursor: pointer; border: none; background: transparent; color: inherit; font-family: inherit; text-align: left; }
+.proto-scrubber__item:hover { background: rgba(127,127,127,0.08); }
+.proto-scrubber__item.is-active { background: var(--accent-strong); color: var(--on-accent); }
+.proto-scrubber__item.is-active .proto-scrubber__id { color: rgba(255,255,255,0.85); }
+.proto-scrubber__id { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; color: var(--page-fg-muted); letter-spacing: 0.06em; }
+.proto-scrubber__name { font-size: 12.5px; font-weight: 500; }
+.proto-sidebar__footer { margin-top: auto; padding-top: 16px; border-top: 1px solid var(--page-divider); font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--page-fg-muted); }
+.proto-sidebar__footer a { color: var(--page-fg-muted); text-decoration: none; border-bottom: 1px dotted currentColor; }
+.proto-theme-toggle { display: inline-flex; align-items: center; gap: 8px; padding: 7px 12px; border-radius: 8px; background: var(--bg-surface-2); border: 1px solid var(--border); color: var(--page-fg-muted); cursor: pointer; font-family: 'JetBrains Mono', monospace; font-size: 11px; align-self: flex-start; }
+.proto-theme-toggle svg { width: 12px; height: 12px; }
+[data-theme="dark"] .proto-theme-toggle .icon-moon { display: none; }
+[data-theme="light"] .proto-theme-toggle .icon-sun { display: none; }
+
+.proto-stage { display: flex; flex-direction: column; align-items: center; padding: 32px 24px 64px; gap: 18px; }
+.proto-modebar { display: flex; align-items: center; gap: 10px; padding: 10px 16px; background: var(--page-card-bg); border: 1px solid var(--page-divider); border-radius: 12px; font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: var(--page-fg-muted); flex-wrap: wrap; justify-content: center; }
+.proto-modebar__pill { display: inline-flex; padding: 3px 9px; border-radius: 999px; background: var(--bg-surface-2); }
+.proto-modebar__id { color: var(--page-fg); font-weight: 700; letter-spacing: 0.06em; }
+.proto-modebar__bar { width: 100px; height: 4px; border-radius: 4px; background: var(--bg-surface-2); position: relative; overflow: hidden; }
+.proto-modebar__bar__fill { position: absolute; left: 0; top: 0; bottom: 0; background: linear-gradient(90deg, var(--s-50), var(--t-50)); transition: width 240ms ease; }
+.proto-arrows { display: flex; align-items: center; gap: 8px; }
+.proto-arrow { width: 36px; height: 36px; border-radius: 10px; background: var(--page-card-bg); border: 1px solid var(--page-divider); color: var(--page-fg-muted); display: inline-flex; align-items: center; justify-content: center; cursor: pointer; }
+.proto-arrow:hover { background: var(--bg-surface-2); color: var(--page-fg); }
+.proto-arrow:disabled { opacity: 0.3; cursor: not-allowed; }
+.proto-arrow svg { width: 18px; height: 18px; }
+
+/* Admin browser frame */
+.browser { width: 100%; max-width: 1380px; background: var(--bg-base); border-radius: 18px; overflow: hidden; border: 1px solid var(--border); box-shadow: 0 24px 60px -20px rgba(0,0,0,0.45), 0 8px 24px -12px rgba(0,0,0,0.25); }
+[data-theme="light"] .browser { box-shadow: 0 24px 60px -20px rgba(22,27,45,0.18), 0 8px 24px -12px rgba(22,27,45,0.08); }
+.browser__chrome { display: flex; align-items: center; gap: 14px; padding: 12px 16px; background: var(--p-20); border-bottom: 1px solid var(--border); }
+[data-theme="light"] .browser__chrome { background: var(--n-95); }
+.browser__dots { display: inline-flex; gap: 7px; flex-shrink: 0; }
+.browser__dot { width: 11px; height: 11px; border-radius: 50%; }
+.browser__dot:nth-child(1) { background: #FF5F57; } .browser__dot:nth-child(2) { background: #FEBC2E; } .browser__dot:nth-child(3) { background: #28C840; }
+.browser__url { flex: 1; background: var(--bg-base); border: 1px solid var(--border); border-radius: 7px; padding: 6px 14px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--w-80); text-align: center; display: flex; align-items: center; justify-content: center; gap: 8px; }
+.browser__url svg { width: 12px; height: 12px; opacity: 0.7; flex-shrink: 0; }
+.browser__viewport { background: var(--bg-base); min-height: 820px; max-height: 820px; position: relative; color: var(--text-primary); display: grid; grid-template-columns: 240px 1fr; }
+
+/* Admin sidebar / nav */
+.ad-nav { background: var(--bg-surface); border-right: 1px solid var(--border); padding: 16px 12px; display: flex; flex-direction: column; gap: 8px; }
+[data-theme="light"] .ad-nav { background: var(--bg-surface-2); border-right: 1px solid rgba(22,27,45,0.12); }
+.ad-nav__brand { display: flex; align-items: center; gap: 10px; padding: 4px 8px 14px; border-bottom: 1px solid var(--border); margin-bottom: 4px; }
+.ad-nav__mark { width: 30px; height: 30px; border-radius: 7px; background: var(--w-60); display: inline-flex; align-items: center; justify-content: center; color: white; font-family: 'JetBrains Mono', monospace; font-weight: 800; font-size: 14px; }
+.ad-nav__name { font-weight: 700; font-size: 14px; letter-spacing: -0.01em; line-height: 1.1; }
+.ad-nav__sub { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; color: var(--text-muted); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 2px; display: block; }
+.ad-nav__user { display: flex; align-items: center; gap: 9px; padding: 8px 10px; border-radius: 8px; background: var(--bg-base); }
+.ad-nav__avatar { width: 28px; height: 28px; border-radius: 50%; background: var(--p-40); color: white; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; font-size: 11px; }
+.ad-nav__user-name { font-size: 12px; font-weight: 600; }
+.ad-nav__user-role { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; color: var(--w-80); padding: 1px 6px; border-radius: 4px; background: var(--w-30); display: inline-block; margin-top: 2px; letter-spacing: 0.05em; font-weight: 700; }
+[data-theme="light"] .ad-nav__user-role { background: var(--w-90); color: var(--w-30); }
+.ad-nav__section { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); padding: 8px 10px 4px; }
+.ad-nav__item { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 7px; cursor: pointer; color: var(--text-secondary); text-decoration: none; font-size: 13px; font-weight: 500; }
+.ad-nav__item:hover { background: var(--bg-base); color: var(--text-primary); }
+.ad-nav__item.is-on { background: var(--w-30); color: var(--w-80); font-weight: 600; }
+[data-theme="light"] .ad-nav__item.is-on { background: var(--w-90); color: var(--w-30); }
+.ad-nav__item svg { width: 15px; height: 15px; flex-shrink: 0; }
+.ad-nav__item__count { margin-left: auto; font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; padding: 1px 6px; border-radius: 999px; background: var(--bg-surface-2); }
+.ad-nav__item.is-on .ad-nav__item__count { background: rgba(255,255,255,0.18); color: white; }
+.ad-nav__item__count--danger { background: var(--e-50); color: white; }
+.ad-nav__cmd-k { margin-top: auto; padding: 8px 10px; background: var(--bg-base); border: 1px solid var(--border); border-radius: 7px; display: flex; align-items: center; gap: 8px; cursor: pointer; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-muted); }
+.ad-nav__cmd-k svg { width: 12px; height: 12px; }
+.ad-nav__cmd-k kbd { margin-left: auto; padding: 1px 6px; border-radius: 4px; background: var(--bg-surface-2); font-family: inherit; font-size: 10px; }
+
+/* Main content */
+.ad-main { padding: 0; overflow-y: auto; max-height: 820px; display: flex; flex-direction: column; }
+.ad-main::-webkit-scrollbar { width: 6px; }
+.ad-main::-webkit-scrollbar-thumb { background: rgba(127,127,127,0.2); border-radius: 6px; }
+.ad-topbar { display: flex; align-items: center; gap: 14px; padding: 12px 22px; border-bottom: 1px solid var(--border); background: var(--bg-base); position: sticky; top: 0; z-index: 10; }
+.ad-topbar__path { font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: var(--text-muted); letter-spacing: 0.04em; }
+.ad-topbar__path b { color: var(--text-primary); font-weight: 700; }
+.ad-topbar__actions { margin-left: auto; display: flex; gap: 6px; }
+.ad-topbar__btn { padding: 6px 12px; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; border: 1px solid var(--border); background: var(--bg-base); color: var(--text-secondary); border-radius: 5px; cursor: pointer; letter-spacing: 0.04em; text-transform: uppercase; display: inline-flex; align-items: center; gap: 5px; }
+.ad-topbar__btn:hover { border-color: var(--accent); color: var(--text-primary); }
+.ad-topbar__btn--primary { background: var(--w-60); color: white; border-color: transparent; }
+.ad-topbar__btn--danger { background: var(--e-50); color: white; border-color: transparent; }
+
+.ad-body { padding: 22px; display: flex; flex-direction: column; gap: 18px; }
+.ad-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 14px; padding-bottom: 12px; border-bottom: 1px solid var(--border); flex-wrap: wrap; }
+.ad-head h2 { font-size: 22px; font-weight: 800; letter-spacing: -0.02em; margin: 0; }
+.ad-head__sub { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-muted); margin-top: 4px; }
+
+/* Dense table */
+.ad-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.ad-table thead { background: var(--bg-surface-2); }
+.ad-table th { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-muted); text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--border); }
+.ad-table td { padding: 11px 12px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+.ad-table tr:hover td { background: var(--bg-surface); cursor: pointer; }
+.ad-table__cust { font-weight: 600; }
+.ad-table__id { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-muted); margin-top: 1px; }
+.ad-table__time { font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: var(--text-secondary); }
+
+/* Pills */
+.ad-pill { display: inline-flex; align-items: center; gap: 5px; padding: 3px 9px; border-radius: 4px; font-family: 'JetBrains Mono', monospace; font-size: 10.5px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; }
+.ad-pill--ok { background: var(--t-20); color: var(--t-80); }
+[data-theme="light"] .ad-pill--ok { background: var(--t-90); color: var(--t-30); }
+.ad-pill--warn { background: var(--w-30); color: var(--w-80); }
+[data-theme="light"] .ad-pill--warn { background: var(--w-90); color: var(--w-30); }
+.ad-pill--danger { background: var(--e-30); color: var(--e-90); }
+[data-theme="light"] .ad-pill--danger { background: var(--e-90); color: var(--e-30); }
+.ad-pill--info { background: var(--p-40); color: var(--p-95); }
+[data-theme="light"] .ad-pill--info { background: var(--p-90); color: var(--p-30); }
+.ad-pill--purple { background: var(--s-20); color: var(--s-80); }
+[data-theme="light"] .ad-pill--purple { background: var(--s-90); color: var(--s-20); }
+
+.ad-card { padding: 18px 20px; background: var(--bg-surface); border: 1px solid var(--border); border-radius: 10px; display: flex; flex-direction: column; gap: 10px; }
+.ad-card__h { display: flex; align-items: center; gap: 10px; padding-bottom: 8px; border-bottom: 1px solid var(--border); margin-bottom: 2px; }
+.ad-card__t { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-secondary); }
+
+/* Stat tiles */
+.ad-stat-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
+@media (max-width: 1100px) { .ad-stat-grid { grid-template-columns: repeat(3, 1fr); } }
+.ad-stat { padding: 14px 16px; background: var(--bg-surface); border: 1px solid var(--border); border-radius: 8px; }
+.ad-stat__l { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-muted); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 5px; }
+.ad-stat__n { font-family: 'JetBrains Mono', monospace; font-size: 26px; font-weight: 700; letter-spacing: -0.01em; line-height: 1; }
+.ad-stat__d { font-size: 11px; color: var(--text-secondary); margin-top: 3px; }
+.ad-stat__d--ok { color: var(--t-60); }
+.ad-stat__d--warn { color: var(--w-80); }
+.ad-stat__d--danger { color: var(--e-50); }
+[data-theme="light"] .ad-stat__d--ok { color: var(--t-30); }
+[data-theme="light"] .ad-stat__d--warn { color: var(--w-30); }
+
+/* Definition list */
+.ad-defs { display: grid; grid-template-columns: 130px 1fr; gap: 6px 14px; font-size: 12.5px; }
+.ad-defs dt { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--text-muted); padding-top: 2px; }
+.ad-defs dd { margin: 0; }
+
+/* Tabs */
+.ad-tabs { display: flex; gap: 2px; border-bottom: 1px solid var(--border); margin-bottom: 14px; flex-wrap: wrap; }
+.ad-tab { padding: 9px 14px; font-family: inherit; font-size: 13px; font-weight: 500; background: transparent; border: none; color: var(--text-secondary); cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px; }
+.ad-tab:hover { color: var(--text-primary); }
+.ad-tab.is-on { color: var(--w-80); border-bottom-color: var(--w-60); font-weight: 700; }
+[data-theme="light"] .ad-tab.is-on { color: var(--w-30); }
+
+/* Customer header */
+.ad-cust-head { display: grid; grid-template-columns: 56px 1fr auto; gap: 16px; align-items: center; padding: 16px 20px; background: var(--bg-surface); border: 1px solid var(--border); border-radius: 10px; }
+.ad-cust-head__av { width: 56px; height: 56px; border-radius: 50%; background: linear-gradient(135deg,var(--s-50),var(--p-40)); color: white; display: inline-flex; align-items: center; justify-content: center; font-weight: 800; font-size: 22px; }
+.ad-cust-head__name { font-size: 19px; font-weight: 800; letter-spacing: -0.01em; }
+.ad-cust-head__sub { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-muted); margin-top: 2px; letter-spacing: 0.04em; }
+.ad-cust-head__pills { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 6px; }
+.ad-cust-head__actions { display: flex; flex-direction: column; gap: 6px; }
+
+/* Override form */
+.ad-form-row { display: grid; grid-template-columns: 200px 1fr; gap: 14px; align-items: flex-start; padding: 14px 0; border-top: 1px solid var(--border); }
+.ad-form-row:first-of-type { border-top: none; padding-top: 0; }
+.ad-form-row__label { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--text-secondary); padding-top: 6px; }
+.ad-form-row__hint { font-size: 11.5px; color: var(--text-muted); margin-top: 4px; line-height: 1.45; }
+.ad-input, .ad-select { padding: 9px 12px; font-family: inherit; font-size: 13px; background: var(--bg-base); border: 1px solid var(--border); border-radius: 6px; color: var(--text-primary); width: 100%; outline: none; }
+.ad-input:focus, .ad-select:focus { border-color: var(--accent); }
+.ad-textarea { padding: 10px 12px; font-family: inherit; font-size: 13px; background: var(--bg-base); border: 1px solid var(--border); border-radius: 6px; color: var(--text-primary); width: 100%; outline: none; resize: vertical; min-height: 70px; line-height: 1.55; }
+
+/* Approve four-eyes checklist */
+.ad-check { display: grid; grid-template-columns: 22px 1fr; gap: 10px; align-items: flex-start; padding: 9px 0; border-top: 1px solid var(--border); }
+.ad-check:first-of-type { border-top: none; padding-top: 0; }
+.ad-check__icon { width: 20px; height: 20px; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+.ad-check__icon svg { width: 11px; height: 11px; }
+.ad-check--ok .ad-check__icon { background: var(--t-50); color: white; }
+.ad-check--warn .ad-check__icon { background: var(--w-60); color: white; }
+.ad-check--info .ad-check__icon { background: var(--p-40); color: white; font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 11px; }
+.ad-check__t { font-size: 12.5px; font-weight: 600; }
+.ad-check__s { font-size: 11.5px; color: var(--text-secondary); margin-top: 1px; line-height: 1.45; }
+
+/* Audit log */
+.ad-audit-row { display: grid; grid-template-columns: 110px 100px 1fr 120px; gap: 12px; align-items: center; padding: 9px 12px; border-bottom: 1px solid var(--border); font-size: 12px; }
+.ad-audit-row:hover { background: var(--bg-surface); }
+.ad-audit-row__when { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-muted); }
+.ad-audit-row__actor { font-family: 'JetBrains Mono', monospace; font-size: 11px; }
+.ad-audit-row__what { font-size: 12.5px; }
+.ad-audit-row__what code { font-family: 'JetBrains Mono', monospace; font-size: 11px; padding: 1px 6px; background: var(--bg-surface-2); border-radius: 4px; color: var(--text-secondary); }
+.ad-audit-row__cust { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-secondary); }
+
+/* Report card */
+.ad-report-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 1000px) { .ad-report-grid { grid-template-columns: 1fr; } }
+.ad-report { padding: 16px 18px; background: var(--bg-surface); border: 1px solid var(--border); border-radius: 8px; display: flex; flex-direction: column; gap: 6px; }
+.ad-report__h { display: flex; align-items: center; gap: 8px; padding-bottom: 8px; border-bottom: 1px solid var(--border); margin-bottom: 4px; }
+.ad-report__t { font-size: 14px; font-weight: 700; }
+.ad-report__code { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; padding: 2px 7px; border-radius: 4px; background: var(--bg-surface-2); color: var(--text-muted); margin-left: auto; }
+.ad-report__d { font-size: 12px; color: var(--text-secondary); line-height: 1.5; }
+.ad-report__when { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-muted); padding-top: 6px; border-top: 1px solid var(--border); margin-top: 4px; display: flex; justify-content: space-between; }
+
+/* Row-2 split */
+.row-2 { display: grid; grid-template-columns: 2fr 1fr; gap: 16px; align-items: start; }
+.row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; align-items: stretch; }
+@media (max-width: 1000px) { .row-2 { grid-template-columns: 1fr; } .row-3 { grid-template-columns: 1fr; } }
+
+.proto-context { width: 100%; max-width: 1380px; padding: 16px 20px; background: var(--page-card-bg); border: 1px solid var(--page-divider); border-radius: 12px; font-size: 13px; color: var(--page-fg-muted); line-height: 1.55; }
+.proto-context strong { color: var(--page-fg); }
+.proto-context a { color: var(--page-accent, var(--s-70)); text-decoration: none; border-bottom: 1px dotted currentColor; }
+.proto-context__head { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; color: var(--page-fg); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px; }
+
+.screen { animation: fade-in 220ms ease; }
+@keyframes fade-in { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+</style>
+<script src="flow-chain.js" defer></script>
+</head>
+<body>
+
+<div class="proto-shell">
+
+  <aside class="proto-sidebar">
+    <div class="proto-sidebar__brand">
+      <span class="proto-sidebar__mark"><img src="../assets/gc-mark-mono-light.svg" alt=""></span>
+      <span>
+        <div class="proto-sidebar__name">GaimControl</div>
+        <span class="proto-sidebar__pill">web · admin</span>
+      </span>
+    </div>
+    <a class="proto-sidebar__back" href="index.html">← prototype index</a>
+    <button class="proto-theme-toggle" type="button" aria-label="Toggle theme">
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+      <span class="theme-label">Dark</span>
+    </button>
+    <div class="proto-section-title">§13 · AD1 – AD7</div>
+    <nav class="proto-scrubber" id="scrubber"></nav>
+    <div class="proto-sidebar__footer">Source: <a href="../web-ui/13-admin.html">web-ui/13</a><br>Ops-only · web at <code>admin.gaimcontrol.com</code><br>Roles: L1 reviewer · L2 senior · L3 compliance · Treasury</div>
+  </aside>
+
+  <main class="proto-stage">
+
+    <div class="proto-modebar">
+      <span>Screen <span class="proto-modebar__id" id="screenId">AD1</span></span>
+      <span class="proto-modebar__pill" id="screenName">Queues · daily worksurface</span>
+      <span class="proto-modebar__pill" style="background:var(--w-30);color:var(--w-80)">Web-only · ops</span>
+      <div class="proto-modebar__bar"><div class="proto-modebar__bar__fill" id="progressFill" style="width:14%"></div></div>
+      <div class="proto-arrows">
+        <button class="proto-arrow" id="navPrev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+        <button class="proto-arrow" id="navNext"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
+      </div>
+    </div>
+
+    <div class="browser">
+      <div class="browser__chrome">
+        <span class="browser__dots"><span class="browser__dot"></span><span class="browser__dot"></span><span class="browser__dot"></span></span>
+        <span class="browser__url">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          <span id="browserUrl">admin.gaimcontrol.com</span>
+        </span>
+      </div>
+      <div class="browser__viewport" id="viewport"></div>
+    </div>
+
+    <div class="proto-context" id="contextPanel">
+      <div class="proto-context__head">Screen context</div>
+      <div id="contextBody"></div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+const SCREENS = [
+  { id: 'AD1', name: 'Queues · daily worksurface', kind: 'ad1', url: '/admin' },
+  { id: 'AD2', name: 'Customer detail · tabbed', kind: 'ad2', url: '/admin/c/CU-289-A1F4' },
+  { id: 'AD3', name: 'Override · request (4-eyes)', kind: 'ad3', url: '/admin/o/new' },
+  { id: 'AD4', name: 'Override · approve (2nd reviewer)', kind: 'ad4', url: '/admin/o/OV-2026-0142' },
+  { id: 'AD5', name: 'Vulnerability register', kind: 'ad5', url: '/admin/vuln' },
+  { id: 'AD6', name: 'FCA reports · weekly SFTP', kind: 'ad6', url: '/admin/reports' },
+  { id: 'AD7', name: 'Audit log · every state change', kind: 'ad7', url: '/admin/audit' },
+];
+
+const CTX = {
+  ad1: '<strong>AD1 Queues.</strong> Five priority queues stacked in the left rail — KYC review · Sanctions hits · Vulnerability triage · Hold review · Override approvals. L1 reviewer default view. Cmd+K opens global search.',
+  ad2: '<strong>AD2 Customer detail.</strong> Tabbed record (Overview · KYC · Banking · Loan · Anna · Vulnerability · Audit · Comms). Vuln-flagged customers carry the shield pill at the top, always — Consumer Duty needs it visible without a click. Overview is the dense one-screen brief.',
+  ad3: '<strong>AD3 Override · request.</strong> Four-eyes flow for irreversible actions (close, force-Hold, write-off, KYC override). Requester picks action + customer + reason. Approver matrix shown — some actions need 2 approvers from different teams.',
+  ad4: '<strong>AD4 Override · approve.</strong> Second reviewer sees: original request, requester ID, machine-derived checks, audit trail. Approve / reject is one click; both options write to audit immediately. Some actions need a third approver (e.g. Treasury + Compliance for write-offs).',
+  ad5: '<strong>AD5 Vulnerability register.</strong> FCA Consumer Duty + CONC App 1.4 register of all flagged customers. Driver category · next review date · who flagged · whether self-reported or detected. 3-month re-review cadence per <a href="../41-decisions-log.html">SF-04</a>.',
+  ad6: '<strong>AD6 FCA reports.</strong> Weekly SFTP feeds: persistent-debt cases (CONC 6.7.27), vulnerability stats, complaints, lending decisions. Generated Friday 06:00 · SFTP\'d Friday 09:00. Re-runnable on demand with audit trail.',
+  ad7: '<strong>AD7 Audit log.</strong> Read-only log of every state change with actor + timestamp. 7-year retention per FCA. Filterable by customer · actor · action · time. Cannot be edited or deleted by any role.',
+};
+
+const NAV = (active) => `
+  <aside class="ad-nav">
+    <div class="ad-nav__brand">
+      <span class="ad-nav__mark">GC</span>
+      <span><span class="ad-nav__name">GaimControl</span><span class="ad-nav__sub">Admin · v0.4.7</span></span>
+    </div>
+    <div class="ad-nav__user">
+      <span class="ad-nav__avatar">JF</span>
+      <div><div class="ad-nav__user-name">J. Foster</div><div class="ad-nav__user-role">L1 · Reviewer</div></div>
+    </div>
+    <div class="ad-nav__section">Worksurface</div>
+    <a class="ad-nav__item ${active==='ad1'?'is-on':''}" onclick="go(0)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>Queues<span class="ad-nav__item__count ad-nav__item__count--danger">47</span></a>
+    <a class="ad-nav__item ${active==='ad2'?'is-on':''}" onclick="go(1)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="7" r="4"/><path d="M5 21a7 7 0 0 1 14 0"/></svg>Customers</a>
+    <div class="ad-nav__section">Compliance</div>
+    <a class="ad-nav__item ${active==='ad3'||active==='ad4'?'is-on':''}" onclick="go(2)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 11h-6"/><path d="M19 8v6"/></svg>Overrides<span class="ad-nav__item__count">8</span></a>
+    <a class="ad-nav__item ${active==='ad5'?'is-on':''}" onclick="go(4)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Vulnerability<span class="ad-nav__item__count">214</span></a>
+    <a class="ad-nav__item ${active==='ad6'?'is-on':''}" onclick="go(5)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>FCA reports</a>
+    <a class="ad-nav__item ${active==='ad7'?'is-on':''}" onclick="go(6)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 3v18h18"/><path d="M9 9h6M9 13h6M9 17h3"/></svg>Audit log</a>
+    <button class="ad-nav__cmd-k"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>Search · <kbd>⌘K</kbd></button>
+  </aside>`;
+
+const TOPBAR = (path, actions) => `
+  <div class="ad-topbar">
+    <span class="ad-topbar__path">${path}</span>
+    <div class="ad-topbar__actions">${actions || ''}</div>
+  </div>`;
+
+const builders = {
+  ad1: () => `
+    <div class="screen" style="display:contents">
+      ${NAV('ad1')}
+      <div class="ad-main">
+        ${TOPBAR('admin / <b>queues</b>', '<button class="ad-topbar__btn">Filters</button><button class="ad-topbar__btn">Bulk assign</button><button class="ad-topbar__btn ad-topbar__btn--primary">My queue</button>')}
+        <div class="ad-body">
+          <div class="ad-head"><div><h2>Queues</h2><div class="ad-head__sub">5 priority queues · 47 items · refreshed 09:41:17</div></div></div>
+          <div class="ad-stat-grid">
+            <div class="ad-stat"><div class="ad-stat__l">KYC review</div><div class="ad-stat__n">14</div><div class="ad-stat__d ad-stat__d--warn">3 over 24h · escalate</div></div>
+            <div class="ad-stat"><div class="ad-stat__l">Sanctions</div><div class="ad-stat__n">2</div><div class="ad-stat__d ad-stat__d--danger">Action within 4h · FCA</div></div>
+            <div class="ad-stat"><div class="ad-stat__l">Vulnerability</div><div class="ad-stat__n">23</div><div class="ad-stat__d ad-stat__d--ok">All under 48h SLA</div></div>
+            <div class="ad-stat"><div class="ad-stat__l">Hold review</div><div class="ad-stat__n">6</div><div class="ad-stat__d">Per RP-03 / RP-04</div></div>
+            <div class="ad-stat"><div class="ad-stat__l">Overrides</div><div class="ad-stat__n">2</div><div class="ad-stat__d">Both waiting on 2nd approver</div></div>
+          </div>
+          <div class="ad-card" style="padding:0;gap:0">
+            <div style="padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px">
+              <span class="ad-pill ad-pill--danger">KYC review · 14 items</span>
+              <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-muted);margin-left:auto">SLA · 24h · 3 breached</span>
+            </div>
+            <table class="ad-table">
+              <thead><tr><th style="width:42px"></th><th>Customer</th><th>Submitted</th><th>Algbra signal</th><th>Risk</th><th>Status</th></tr></thead>
+              <tbody>
+                <tr><td><input type="checkbox"></td><td><div class="ad-table__cust">Margaret Patel</div><div class="ad-table__id">CU-291-B3D8 · joined 13 May</div></td><td class="ad-table__time">14 May · 09:14</td><td><span class="ad-pill ad-pill--danger">Sanctions hit · review</span></td><td><span class="ad-pill ad-pill--danger">High</span></td><td><span class="ad-pill ad-pill--warn">2h 27m</span></td></tr>
+                <tr><td><input type="checkbox"></td><td><div class="ad-table__cust">Daniel Okafor</div><div class="ad-table__id">CU-291-C0A1 · joined 13 May</div></td><td class="ad-table__time">14 May · 06:02</td><td><span class="ad-pill ad-pill--warn">Address mismatch · proof needed</span></td><td><span class="ad-pill ad-pill--warn">Medium</span></td><td><span class="ad-pill ad-pill--ok">5h 39m</span></td></tr>
+                <tr><td><input type="checkbox"></td><td><div class="ad-table__cust">Aisha Williams</div><div class="ad-table__id">CU-291-D9F2 · joined 13 May</div></td><td class="ad-table__time">13 May · 22:48</td><td><span class="ad-pill ad-pill--warn">Selfie liveness · retry</span></td><td><span class="ad-pill">Low</span></td><td><span class="ad-pill ad-pill--ok">10h 53m</span></td></tr>
+                <tr><td><input type="checkbox"></td><td><div class="ad-table__cust">Tom Bridges</div><div class="ad-table__id">CU-290-E7B5 · joined 12 May</div></td><td class="ad-table__time">12 May · 19:32</td><td><span class="ad-pill ad-pill--danger">PEP match · L2 required</span></td><td><span class="ad-pill ad-pill--danger">High</span></td><td><span class="ad-pill ad-pill--danger">38h · breach</span></td></tr>
+                <tr><td><input type="checkbox"></td><td><div class="ad-table__cust">Priya Sharma</div><div class="ad-table__id">CU-290-F1C2 · joined 12 May</div></td><td class="ad-table__time">12 May · 14:21</td><td><span class="ad-pill ad-pill--warn">Document quality · re-upload</span></td><td><span class="ad-pill">Low</span></td><td><span class="ad-pill ad-pill--ok">19h 20m</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="ad-card" style="padding:0;gap:0">
+            <div style="padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px">
+              <span class="ad-pill ad-pill--warn">Vulnerability triage · 23 items</span>
+              <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-muted);margin-left:auto">SLA · 48h · 0 breached</span>
+            </div>
+            <table class="ad-table">
+              <thead><tr><th style="width:42px"></th><th>Customer</th><th>Driver</th><th>Source</th><th>Flagged</th><th>Status</th></tr></thead>
+              <tbody>
+                <tr onclick="go(1)"><td><input type="checkbox"></td><td><div class="ad-table__cust">Sam Kennedy</div><div class="ad-table__id">CU-289-A1F4 · Habitual</div></td><td><span class="ad-pill ad-pill--purple">Coercion · SF-05</span></td><td><span class="ad-pill ad-pill--info">Self-report</span></td><td class="ad-table__time">14 May · 08:33</td><td><span class="ad-pill ad-pill--ok">1h 8m</span></td></tr>
+                <tr><td><input type="checkbox"></td><td><div class="ad-table__cust">Ryan Holmes</div><div class="ad-table__id">CU-289-B2E1 · Compulsive</div></td><td><span class="ad-pill ad-pill--purple">Health</span></td><td><span class="ad-pill ad-pill--info">Self-report</span></td><td class="ad-table__time">14 May · 07:14</td><td><span class="ad-pill ad-pill--ok">2h 27m</span></td></tr>
+                <tr><td><input type="checkbox"></td><td><div class="ad-table__cust">Linda Coleman</div><div class="ad-table__id">CU-288-D9F3 · Mood-influenced</div></td><td><span class="ad-pill ad-pill--purple">Life event</span></td><td><span class="ad-pill ad-pill--warn">Anna detected</span></td><td class="ad-table__time">13 May · 21:02</td><td><span class="ad-pill ad-pill--ok">12h 39m</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>`,
+
+  ad2: () => `
+    <div class="screen" style="display:contents">
+      ${NAV('ad2')}
+      <div class="ad-main">
+        ${TOPBAR('admin / queues / <b>customer · CU-289-A1F4</b>', '<button class="ad-topbar__btn">← Back to queue</button><button class="ad-topbar__btn">Open Anna log</button><button class="ad-topbar__btn ad-topbar__btn--primary" onclick="go(2)">Request override</button>')}
+        <div class="ad-body">
+          <div class="ad-cust-head">
+            <span class="ad-cust-head__av">SK</span>
+            <div>
+              <div class="ad-cust-head__name">Sam Kennedy</div>
+              <div class="ad-cust-head__sub">CU-289-A1F4 · joined 27 Mar 2026 · sam.k@hotmail.co.uk · Sheffield S2 4LP</div>
+              <div class="ad-cust-head__pills">
+                <span class="ad-pill ad-pill--purple"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Vulnerable · coercion · self-report</span>
+                <span class="ad-pill ad-pill--info">Habitual · PGSI 14</span>
+                <span class="ad-pill ad-pill--ok">Day 58 clean</span>
+                <span class="ad-pill ad-pill--warn">Active loan · £8,089</span>
+              </div>
+            </div>
+            <div class="ad-cust-head__actions">
+              <button class="ad-topbar__btn">Note</button>
+              <button class="ad-topbar__btn">Email</button>
+            </div>
+          </div>
+          <div class="ad-tabs">
+            <button class="ad-tab is-on">Overview</button>
+            <button class="ad-tab">KYC</button>
+            <button class="ad-tab">Banking</button>
+            <button class="ad-tab">Loan</button>
+            <button class="ad-tab">Anna</button>
+            <button class="ad-tab">Vulnerability</button>
+            <button class="ad-tab">Audit</button>
+            <button class="ad-tab">Communications</button>
+          </div>
+          <div class="row-2">
+            <div style="display:flex;flex-direction:column;gap:14px">
+              <div class="ad-card">
+                <div class="ad-card__h"><span class="ad-card__t">Identity · KYC</span><span class="ad-pill ad-pill--ok" style="margin-left:auto">Verified</span></div>
+                <dl class="ad-defs">
+                  <dt>Full name</dt><dd>Samantha Jane Kennedy</dd>
+                  <dt>DOB</dt><dd>12 Mar 1991 · age 35</dd>
+                  <dt>NI number</dt><dd>QQ•••••B</dd>
+                  <dt>KYC vendor</dt><dd>Vouchsafe · v4 · ID + selfie + address</dd>
+                  <dt>Sanctions</dt><dd><span class="ad-pill ad-pill--ok">Clean · last screen 30 Apr 06:00</span></dd>
+                  <dt>PEP</dt><dd><span class="ad-pill ad-pill--ok">No match</span></dd>
+                </dl>
+              </div>
+              <div class="ad-card">
+                <div class="ad-card__h"><span class="ad-card__t">Loan · LO-289-A1F4</span><span class="ad-pill ad-pill--warn" style="margin-left:auto">Repaying · 1/36</span></div>
+                <dl class="ad-defs">
+                  <dt>Principal</dt><dd>£8,400 (Experian ReFi settlement)</dd>
+                  <dt>APR</dt><dd>19.9% · term 36 mo</dd>
+                  <dt>Monthly</dt><dd>£311.20 · DD Barclays ****8810</dd>
+                  <dt>Balance</dt><dd>£8,089.00</dd>
+                  <dt>Hold count</dt><dd>1 auto · 0 manual this year</dd>
+                  <dt>CONC 6.7.27</dt><dd>Not triggered · interest 12% &lt; principal</dd>
+                </dl>
+              </div>
+              <div class="ad-card">
+                <div class="ad-card__h"><span class="ad-card__t">Recent audit · last 10</span></div>
+                <div class="ad-audit-row"><span class="ad-audit-row__when">14 May 08:33</span><span class="ad-audit-row__actor">customer</span><span class="ad-audit-row__what">Vulnerability self-report · <code>coercion</code></span><span class="ad-audit-row__cust">→ SF-05 queue</span></div>
+                <div class="ad-audit-row"><span class="ad-audit-row__when">14 May 06:00</span><span class="ad-audit-row__actor">system</span><span class="ad-audit-row__what">Sanctions screen run · <code>clean</code></span><span class="ad-audit-row__cust">—</span></div>
+                <div class="ad-audit-row"><span class="ad-audit-row__when">12 May 21:30</span><span class="ad-audit-row__actor">customer</span><span class="ad-audit-row__what">Sponsor message · template "struggling tonight"</span><span class="ad-audit-row__cust">→ Joanna Murray</span></div>
+                <div class="ad-audit-row"><span class="ad-audit-row__when">06 May 22:15</span><span class="ad-audit-row__actor">system</span><span class="ad-audit-row__what">Relapse Hold opened · clause 11 auto</span><span class="ad-audit-row__cust">MCC 7995 refused</span></div>
+                <div class="ad-audit-row"><span class="ad-audit-row__when">06 May 22:14</span><span class="ad-audit-row__actor">card-network</span><span class="ad-audit-row__what">Transaction refused · <code>£42 · MCC 7995</code></span><span class="ad-audit-row__cust">Sky Bet</span></div>
+              </div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:14px">
+              <div class="ad-card">
+                <div class="ad-card__h"><span class="ad-card__t">Vulnerability · current</span></div>
+                <dl class="ad-defs">
+                  <dt>Driver</dt><dd>Coercion · SF-05</dd>
+                  <dt>Source</dt><dd>Self-report · 14 May 08:33</dd>
+                  <dt>Free text</dt><dd style="font-style:italic;color:var(--text-secondary)">"Partner sometimes asks for the card · uncomfortable."</dd>
+                  <dt>Next review</dt><dd>14 Aug 2026 · 3-month cadence per SF-04</dd>
+                  <dt>Routed to</dt><dd>Safeguarding ops (manual queue)</dd>
+                </dl>
+              </div>
+              <div class="ad-card">
+                <div class="ad-card__h"><span class="ad-card__t">Sponsors · 2 active</span></div>
+                <dl class="ad-defs">
+                  <dt>Joanna Murray</dt><dd>Sister · since 18 Apr · 7/7 digests</dd>
+                  <dt>Dr Williams</dt><dd>Clinician · invited 10 May · SP4 pending</dd>
+                </dl>
+              </div>
+              <div class="ad-card">
+                <div class="ad-card__h"><span class="ad-card__t">FCA flags</span></div>
+                <dl class="ad-defs">
+                  <dt>Consumer Duty</dt><dd><span class="ad-pill ad-pill--ok">Compliant</span></dd>
+                  <dt>CONC 5.2A.4</dt><dd>Affordability re-tested 27 Apr · pass</dd>
+                  <dt>CONC App 1.4</dt><dd>Coercion flag · safeguarding queue</dd>
+                </dl>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>`,
+
+  ad3: () => `
+    <div class="screen" style="display:contents">
+      ${NAV('ad3')}
+      <div class="ad-main">
+        ${TOPBAR('admin / customers / CU-289-A1F4 / <b>override · request</b>', '<button class="ad-topbar__btn">Cancel</button><button class="ad-topbar__btn ad-topbar__btn--primary">Submit for approval</button>')}
+        <div class="ad-body">
+          <div class="ad-head"><div><h2>Override · request</h2><div class="ad-head__sub">Four-eyes for irreversible actions · L1 cannot approve own request</div></div></div>
+          <div class="row-2">
+            <div class="ad-card">
+              <div class="ad-form-row">
+                <span class="ad-form-row__label">Customer</span>
+                <div>
+                  <div style="display:flex;align-items:center;gap:10px;padding:9px 12px;background:var(--bg-base);border:1px solid var(--border);border-radius:6px">
+                    <span class="ad-cust-head__av" style="width:32px;height:32px;font-size:13px">SK</span>
+                    <div><div style="font-size:13px;font-weight:600">Sam Kennedy</div><div style="font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--text-muted)">CU-289-A1F4</div></div>
+                  </div>
+                </div>
+              </div>
+              <div class="ad-form-row">
+                <span class="ad-form-row__label">Action</span>
+                <div>
+                  <select class="ad-select">
+                    <option>Extend payment holiday allowance (RP-02 override)</option>
+                    <option>Force-close customer account</option>
+                    <option>Manual KYC verification override</option>
+                    <option>Loan write-off / partial settlement</option>
+                    <option>Wind-down account · skip cool-off</option>
+                  </select>
+                  <div class="ad-form-row__hint">Per <a href="../41-decisions-log.html" style="color:var(--accent)">RP-02</a> default is 1/yr. Extension is irreversible — requires L2 + Compliance approval.</div>
+                </div>
+              </div>
+              <div class="ad-form-row">
+                <span class="ad-form-row__label">Reason</span>
+                <div>
+                  <select class="ad-select">
+                    <option>Vulnerability accommodation · health driver</option>
+                    <option>Vulnerability accommodation · life event</option>
+                    <option>Vulnerability accommodation · resilience</option>
+                    <option>Manual ops decision · coercion flag</option>
+                    <option>Tech failure · system-driven harm</option>
+                    <option>Other (free text required)</option>
+                  </select>
+                </div>
+              </div>
+              <div class="ad-form-row">
+                <span class="ad-form-row__label">Vulnerability driver</span>
+                <div>
+                  <select class="ad-select"><option>Coercion · SF-05 (current flag)</option><option>Health</option><option>Life event</option><option>Resilience</option><option>Capability</option></select>
+                  <div class="ad-form-row__hint">Auto-populated from customer's current vulnerability flag · editable. Must match action reason.</div>
+                </div>
+              </div>
+              <div class="ad-form-row">
+                <span class="ad-form-row__label">Detail</span>
+                <div>
+                  <textarea class="ad-textarea" placeholder="Free-text justification · ~3 sentences · captured in audit log permanently">Customer self-reported coercion driver this morning. Granting an extra 2-month payment holiday to bridge their move to a safer housing situation. Discussed with safeguarding ops (G. Hassan) at 09:12.</textarea>
+                </div>
+              </div>
+              <div class="ad-form-row">
+                <span class="ad-form-row__label">Sponsor visible?</span>
+                <div>
+                  <label style="display:flex;align-items:center;gap:8px;font-size:13px"><input type="radio" name="sv" checked> No · default (vulnerability is between us and customer)</label>
+                  <label style="display:flex;align-items:center;gap:8px;font-size:13px;margin-top:6px"><input type="radio" name="sv"> Yes · customer has explicitly consented</label>
+                </div>
+              </div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:14px">
+              <div class="ad-card">
+                <div class="ad-card__h"><span class="ad-card__t">Approver matrix · this action</span></div>
+                <div class="ad-check ad-check--ok"><span class="ad-check__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="ad-check__t">Requester · L1+</div><div class="ad-check__s">J. Foster (you)</div></div></div>
+                <div class="ad-check ad-check--info"><span class="ad-check__icon">1</span><div><div class="ad-check__t">Approver A · L2+</div><div class="ad-check__s">Any L2 reviewer or above · different person from requester</div></div></div>
+                <div class="ad-check ad-check--info"><span class="ad-check__icon">2</span><div><div class="ad-check__t">Approver B · Compliance</div><div class="ad-check__s">Compliance team member · required for vulnerability-tagged overrides</div></div></div>
+                <div class="ad-check ad-check--warn"><span class="ad-check__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 9v4M12 17h.01"/><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z"/></svg></span><div><div class="ad-check__t">Audit-log entry</div><div class="ad-check__s">All four (you · A · B · system) sign · 7-year retention</div></div></div>
+              </div>
+              <div class="ad-card">
+                <div class="ad-card__h"><span class="ad-card__t">SLA</span></div>
+                <dl class="ad-defs">
+                  <dt>Target</dt><dd>4 working hours</dd>
+                  <dt>Escalation</dt><dd>Auto-page L3 if no approver picks up in 2h</dd>
+                  <dt>Customer-visible</dt><dd>No · only after both approvals</dd>
+                </dl>
+              </div>
+              <div class="ad-card" style="background:var(--w-30);border-color:transparent;color:white">
+                <div class="ad-card__h" style="border-bottom-color:rgba(255,255,255,0.15)"><span class="ad-card__t" style="color:rgba(255,255,255,0.85)">Important</span></div>
+                <p style="font-size:12.5px;line-height:1.55;margin:0;color:rgba(255,255,255,0.92)">Once submitted, this request is visible to all approvers and the audit log. <strong>Cannot be withdrawn</strong> · only rejected by an approver.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>`,
+
+  ad4: () => `
+    <div class="screen" style="display:contents">
+      ${NAV('ad4')}
+      <div class="ad-main">
+        ${TOPBAR('admin / overrides / <b>OV-2026-0142</b>', '<button class="ad-topbar__btn">Audit trail</button><button class="ad-topbar__btn ad-topbar__btn--danger">Reject</button><button class="ad-topbar__btn ad-topbar__btn--primary">Approve · sign as Approver A</button>')}
+        <div class="ad-body">
+          <div class="ad-head"><div><h2>Override · approve</h2><div class="ad-head__sub">OV-2026-0142 · requested 14 May 09:18 · awaiting Approver A (you · M. Wong, L2)</div></div></div>
+          <div class="row-2">
+            <div style="display:flex;flex-direction:column;gap:14px">
+              <div class="ad-card">
+                <div class="ad-card__h"><span class="ad-card__t">Request summary</span><span class="ad-pill ad-pill--warn" style="margin-left:auto">Awaiting A + B</span></div>
+                <dl class="ad-defs">
+                  <dt>Customer</dt><dd>Sam Kennedy · CU-289-A1F4 · Habitual</dd>
+                  <dt>Action</dt><dd>Extend payment holiday allowance (RP-02 override)</dd>
+                  <dt>Reason</dt><dd>Vulnerability accommodation · coercion driver</dd>
+                  <dt>Detail</dt><dd style="font-style:italic">"Customer self-reported coercion driver this morning. Granting an extra 2-month payment holiday to bridge their move to a safer housing situation. Discussed with safeguarding ops (G. Hassan) at 09:12."</dd>
+                  <dt>Requester</dt><dd>J. Foster · L1 Reviewer · session VFS-31 from 192.0.2.91 (Sheffield office)</dd>
+                  <dt>Sponsor visible</dt><dd>No</dd>
+                </dl>
+              </div>
+              <div class="ad-card">
+                <div class="ad-card__h"><span class="ad-card__t">Machine-derived checks</span></div>
+                <div class="ad-check ad-check--ok"><span class="ad-check__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="ad-check__t">Vulnerability driver matches reason · coercion</div><div class="ad-check__s">Driver flagged 14 May 08:33 · matches stated reason</div></div></div>
+                <div class="ad-check ad-check--ok"><span class="ad-check__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="ad-check__t">Customer not at affordability risk</div><div class="ad-check__s">CONC 5.2A.4 re-test passed 27 Apr · DTI 31%</div></div></div>
+                <div class="ad-check ad-check--ok"><span class="ad-check__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="ad-check__t">Requester does not have conflict of interest</div><div class="ad-check__s">Not customer's sponsor · not assigned safeguarding worker</div></div></div>
+                <div class="ad-check ad-check--ok"><span class="ad-check__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="ad-check__t">Discussed with safeguarding ops</div><div class="ad-check__s">G. Hassan responded "approve" on Slack at 09:12 · linked in audit</div></div></div>
+                <div class="ad-check ad-check--warn"><span class="ad-check__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 9v4M12 17h.01"/><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z"/></svg></span><div><div class="ad-check__t">First override for this customer in 12 months</div><div class="ad-check__s">Not a pattern · still flag if requests cluster</div></div></div>
+              </div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:14px">
+              <div class="ad-card">
+                <div class="ad-card__h"><span class="ad-card__t">Approver chain</span></div>
+                <div class="ad-check ad-check--ok"><span class="ad-check__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="ad-check__t">Requester · J. Foster · L1</div><div class="ad-check__s">Signed 14 May 09:18</div></div></div>
+                <div class="ad-check ad-check--info"><span class="ad-check__icon">A</span><div><div class="ad-check__t">Approver A · you · M. Wong · L2</div><div class="ad-check__s">Waiting · session active</div></div></div>
+                <div class="ad-check ad-check--info"><span class="ad-check__icon">B</span><div><div class="ad-check__t">Approver B · Compliance</div><div class="ad-check__s">Will be paged after your sign · routed to D. Marshall</div></div></div>
+              </div>
+              <div class="ad-card">
+                <div class="ad-card__h"><span class="ad-card__t">If approved</span></div>
+                <ul style="margin:0;padding:0 0 0 16px;font-size:12px;color:var(--text-secondary);line-height:1.6">
+                  <li>Customer's allowance for 2026 becomes 3 holidays</li>
+                  <li>Audit log entry created with all 3 actors</li>
+                  <li>Customer notified via in-app + email (Anna messaging)</li>
+                  <li>Re-review prompt fires in 90 days</li>
+                </ul>
+              </div>
+              <div class="ad-card">
+                <div class="ad-card__h"><span class="ad-card__t">If rejected</span></div>
+                <ul style="margin:0;padding:0 0 0 16px;font-size:12px;color:var(--text-secondary);line-height:1.6">
+                  <li>Customer not notified — request never existed from their POV</li>
+                  <li>Requester gets feedback channel · can re-submit with edits</li>
+                  <li>Audit entry retained (rejected outcome)</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>`,
+
+  ad5: () => `
+    <div class="screen" style="display:contents">
+      ${NAV('ad5')}
+      <div class="ad-main">
+        ${TOPBAR('admin / <b>vulnerability register</b>', '<button class="ad-topbar__btn">Filters</button><button class="ad-topbar__btn">Export CSV (FCA)</button>')}
+        <div class="ad-body">
+          <div class="ad-head"><div><h2>Vulnerability register · FCA Consumer Duty</h2><div class="ad-head__sub">214 active flags · 3-month re-review cadence per <a href="../41-decisions-log.html" style="color:var(--accent)">SF-04</a> · CONC App 1.4 drivers</div></div></div>
+          <div class="ad-stat-grid">
+            <div class="ad-stat"><div class="ad-stat__l">Health</div><div class="ad-stat__n">68</div><div class="ad-stat__d">32% of register</div></div>
+            <div class="ad-stat"><div class="ad-stat__l">Life event</div><div class="ad-stat__n">52</div><div class="ad-stat__d">24% of register</div></div>
+            <div class="ad-stat"><div class="ad-stat__l">Resilience</div><div class="ad-stat__n">71</div><div class="ad-stat__d">33% of register</div></div>
+            <div class="ad-stat"><div class="ad-stat__l">Capability</div><div class="ad-stat__n">14</div><div class="ad-stat__d">7%</div></div>
+            <div class="ad-stat"><div class="ad-stat__l">Coercion (SF-05)</div><div class="ad-stat__n">9</div><div class="ad-stat__d ad-stat__d--warn">Manual queue · 4%</div></div>
+          </div>
+          <div class="ad-card" style="padding:0;gap:0">
+            <div style="padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px">
+              <span class="ad-pill ad-pill--purple">Due for re-review · 30 days</span>
+              <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-muted);margin-left:auto">23 customers · 3-month cadence (SF-04)</span>
+            </div>
+            <table class="ad-table">
+              <thead><tr><th>Customer</th><th>Driver</th><th>Flagged</th><th>Next review</th><th>Source</th><th>Last contact</th></tr></thead>
+              <tbody>
+                <tr onclick="go(1)"><td><div class="ad-table__cust">Sam Kennedy</div><div class="ad-table__id">CU-289-A1F4</div></td><td><span class="ad-pill ad-pill--purple">Coercion · SF-05</span></td><td class="ad-table__time">14 May 2026</td><td class="ad-table__time">14 Aug 2026 · 3mo</td><td><span class="ad-pill ad-pill--info">Self-report</span></td><td class="ad-table__time">14 May</td></tr>
+                <tr><td><div class="ad-table__cust">Ryan Holmes</div><div class="ad-table__id">CU-289-B2E1</div></td><td><span class="ad-pill ad-pill--purple">Health</span></td><td class="ad-table__time">22 Feb 2026</td><td class="ad-table__time">22 May 2026</td><td><span class="ad-pill ad-pill--info">Self-report</span></td><td class="ad-table__time">12 May</td></tr>
+                <tr><td><div class="ad-table__cust">Linda Coleman</div><div class="ad-table__id">CU-288-D9F3</div></td><td><span class="ad-pill ad-pill--purple">Life event</span></td><td class="ad-table__time">18 Feb 2026</td><td class="ad-table__time">18 May 2026</td><td><span class="ad-pill ad-pill--warn">Anna detected</span></td><td class="ad-table__time">08 May</td></tr>
+                <tr><td><div class="ad-table__cust">Marcus Begg</div><div class="ad-table__id">CU-287-F1A2</div></td><td><span class="ad-pill ad-pill--purple">Resilience</span></td><td class="ad-table__time">04 Feb 2026</td><td class="ad-table__time">04 May 2026</td><td><span class="ad-pill ad-pill--info">Self-report</span></td><td class="ad-table__time">28 Apr</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="ad-card">
+            <div class="ad-card__h"><span class="ad-card__t">Recent re-reviews · last 7 days</span></div>
+            <div class="ad-audit-row"><span class="ad-audit-row__when">13 May 16:22</span><span class="ad-audit-row__actor">G. Hassan</span><span class="ad-audit-row__what">CU-286-A1E4 · re-reviewed · <code>maintain · life event</code></span><span class="ad-audit-row__cust">+90 days</span></div>
+            <div class="ad-audit-row"><span class="ad-audit-row__when">13 May 11:09</span><span class="ad-audit-row__actor">M. Wong</span><span class="ad-audit-row__what">CU-285-B3D8 · re-reviewed · <code>drop · resolved</code></span><span class="ad-audit-row__cust">closed</span></div>
+            <div class="ad-audit-row"><span class="ad-audit-row__when">12 May 14:48</span><span class="ad-audit-row__actor">customer</span><span class="ad-audit-row__what">CU-284-C9F2 · added · <code>capability · english 2L</code></span><span class="ad-audit-row__cust">new flag</span></div>
+            <div class="ad-audit-row"><span class="ad-audit-row__when">10 May 09:30</span><span class="ad-audit-row__actor">D. Marshall</span><span class="ad-audit-row__what">CU-283-D7B5 · re-reviewed · <code>escalate · coercion</code></span><span class="ad-audit-row__cust">→ safeguarding</span></div>
+          </div>
+        </div>
+      </div>
+    </div>`,
+
+  ad6: () => `
+    <div class="screen" style="display:contents">
+      ${NAV('ad6')}
+      <div class="ad-main">
+        ${TOPBAR('admin / <b>FCA reports</b>', '<button class="ad-topbar__btn">Re-run last batch</button><button class="ad-topbar__btn ad-topbar__btn--primary">Generate now</button>')}
+        <div class="ad-body">
+          <div class="ad-head"><div><h2>FCA reports · weekly SFTP feeds</h2><div class="ad-head__sub">Auto-generated Friday 06:00 · SFTP\'d Friday 09:00 to fca-data.org.uk · audit-trail signed</div></div></div>
+          <div class="ad-card">
+            <div class="ad-card__h"><span class="ad-card__t">Next run · this Friday 15 May</span><span class="ad-pill ad-pill--ok" style="margin-left:auto">Scheduled</span></div>
+            <dl class="ad-defs">
+              <dt>Generate at</dt><dd>15 May 2026 · 06:00 BST</dd>
+              <dt>SFTP at</dt><dd>15 May 2026 · 09:00 BST</dd>
+              <dt>Endpoint</dt><dd><code style="font-family:'JetBrains Mono',monospace;font-size:11px">sftp://fca-data.org.uk/gaimcontrol/inbound</code></dd>
+              <dt>Compression</dt><dd>GPG-encrypted (FCA pubkey) + tar.gz</dd>
+              <dt>Re-run window</dt><dd>Until Friday 23:00 · after that requires Compliance approval</dd>
+            </dl>
+          </div>
+          <div class="ad-report-grid">
+            <div class="ad-report">
+              <div class="ad-report__h"><span class="ad-report__t">Persistent debt cases</span><span class="ad-report__code">CONC-6727</span></div>
+              <p class="ad-report__d">All accounts where interest paid &gt; principal over rolling 18 months. Statutory under CONC 6.7.27 · per <a href="../41-decisions-log.html" style="color:var(--accent)">RP-05</a> re-review cadence is 3 months.</p>
+              <div class="ad-report__when"><span>Last run · 08 May 09:00</span><span class="ad-pill ad-pill--ok">14 customers · OK</span></div>
+            </div>
+            <div class="ad-report">
+              <div class="ad-report__h"><span class="ad-report__t">Vulnerability statistics</span><span class="ad-report__code">CONC-APP1</span></div>
+              <p class="ad-report__d">Anonymised counts per driver · per outcome · per source (self-report vs Anna-detected). Quarterly trend included. Required for Consumer Duty annual review.</p>
+              <div class="ad-report__when"><span>Last run · 08 May 09:00</span><span class="ad-pill ad-pill--ok">214 active · OK</span></div>
+            </div>
+            <div class="ad-report">
+              <div class="ad-report__h"><span class="ad-report__t">Complaints register</span><span class="ad-report__code">DISP-1</span></div>
+              <p class="ad-report__d">All complaints · resolution times · outcomes · uphold rate. Quarterly required under DISP. Includes redress paid.</p>
+              <div class="ad-report__when"><span>Last run · 08 May 09:00</span><span class="ad-pill ad-pill--warn">3 unresolved · explain</span></div>
+            </div>
+            <div class="ad-report">
+              <div class="ad-report__h"><span class="ad-report__t">Lending decisions</span><span class="ad-report__code">PSD-1</span></div>
+              <p class="ad-report__d">All loan applications · approved/declined · APR distribution · cohort default rates. Per FCA PSD reporting.</p>
+              <div class="ad-report__when"><span>Last run · 08 May 09:00</span><span class="ad-pill ad-pill--ok">847 apps · OK</span></div>
+            </div>
+            <div class="ad-report">
+              <div class="ad-report__h"><span class="ad-report__t">Open-banking renewals</span><span class="ad-report__code">PSD2-AISP</span></div>
+              <p class="ad-report__d">90-day re-consent compliance under PSD2. Failure rate · auto-renew success · TrueLayer outage windows.</p>
+              <div class="ad-report__when"><span>Last run · 08 May 09:00</span><span class="ad-pill ad-pill--ok">98.7% · OK</span></div>
+            </div>
+            <div class="ad-report">
+              <div class="ad-report__h"><span class="ad-report__t">Sanctions screening</span><span class="ad-report__code">JMLSG</span></div>
+              <p class="ad-report__d">Daily sanctions + PEP screens · matches · resolution time. Cross-checked against HM Treasury list.</p>
+              <div class="ad-report__when"><span>Last run · 08 May 09:00</span><span class="ad-pill ad-pill--ok">0 unresolved · OK</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>`,
+
+  ad7: () => `
+    <div class="screen" style="display:contents">
+      ${NAV('ad7')}
+      <div class="ad-main">
+        ${TOPBAR('admin / <b>audit log</b>', '<button class="ad-topbar__btn">Filters</button><button class="ad-topbar__btn">Export</button><span class="ad-topbar__btn" style="color:var(--w-80);border-color:var(--w-60);cursor:default">Read-only · 7-year retention</span>')}
+        <div class="ad-body">
+          <div class="ad-head"><div><h2>Audit log</h2><div class="ad-head__sub">Every state change · cannot be edited or deleted by any role · 7-year retention per FCA</div></div></div>
+          <div class="row-3">
+            <div class="ad-card">
+              <div class="ad-card__h"><span class="ad-card__t">Today</span></div>
+              <div style="font-size:24px;font-family:'JetBrains Mono',monospace;font-weight:700">1,442</div>
+              <div style="font-size:11.5px;color:var(--text-secondary)">events recorded · 14 May 2026</div>
+            </div>
+            <div class="ad-card">
+              <div class="ad-card__h"><span class="ad-card__t">This week</span></div>
+              <div style="font-size:24px;font-family:'JetBrains Mono',monospace;font-weight:700">9,103</div>
+              <div style="font-size:11.5px;color:var(--text-secondary)">events · 47 admin actions · 8,956 system</div>
+            </div>
+            <div class="ad-card">
+              <div class="ad-card__h"><span class="ad-card__t">Retention</span></div>
+              <div style="font-size:24px;font-family:'JetBrains Mono',monospace;font-weight:700">7y</div>
+              <div style="font-size:11.5px;color:var(--text-secondary)">FCA minimum · we keep forever (anonymised after deletion)</div>
+            </div>
+          </div>
+          <div class="ad-card" style="padding:0;gap:0">
+            <div style="padding:13px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px">
+              <input class="ad-input" placeholder="Filter · customer / actor / action / time range" style="max-width:380px">
+              <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-muted);margin-left:auto">Showing 25 of 1,442 today</span>
+            </div>
+            <div style="padding:0">
+              <div class="ad-audit-row" style="background:var(--bg-surface-2);font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-muted)"><span>Time</span><span>Actor</span><span>Event</span><span>Subject</span></div>
+              <div class="ad-audit-row"><span class="ad-audit-row__when">09:18:42</span><span class="ad-audit-row__actor">J. Foster (L1)</span><span class="ad-audit-row__what"><code>override.request</code> · OV-2026-0142 · extend payment holiday</span><span class="ad-audit-row__cust">CU-289-A1F4</span></div>
+              <div class="ad-audit-row"><span class="ad-audit-row__when">09:12:01</span><span class="ad-audit-row__actor">G. Hassan (Safeguard)</span><span class="ad-audit-row__what"><code>safeguarding.note.add</code> · coercion driver acknowledged</span><span class="ad-audit-row__cust">CU-289-A1F4</span></div>
+              <div class="ad-audit-row"><span class="ad-audit-row__when">08:33:12</span><span class="ad-audit-row__actor">customer (Sam K)</span><span class="ad-audit-row__what"><code>vulnerability.self_report</code> · driver=coercion · free text</span><span class="ad-audit-row__cust">CU-289-A1F4</span></div>
+              <div class="ad-audit-row"><span class="ad-audit-row__when">06:00:00</span><span class="ad-audit-row__actor">system</span><span class="ad-audit-row__what"><code>sanctions.screen.batch</code> · 12,847 customers · 0 hits</span><span class="ad-audit-row__cust">—</span></div>
+              <div class="ad-audit-row"><span class="ad-audit-row__when">04:14:55</span><span class="ad-audit-row__actor">system</span><span class="ad-audit-row__what"><code>truelayer.consent.renew</code> · auto-renew · 94 accounts</span><span class="ad-audit-row__cust">batch</span></div>
+              <div class="ad-audit-row"><span class="ad-audit-row__when">22:48:33 (prev)</span><span class="ad-audit-row__actor">customer (A. Williams)</span><span class="ad-audit-row__what"><code>kyc.selfie.retry</code> · liveness fail · retry 2 of 3</span><span class="ad-audit-row__cust">CU-291-D9F2</span></div>
+              <div class="ad-audit-row"><span class="ad-audit-row__when">22:14:08 (prev)</span><span class="ad-audit-row__actor">card-network</span><span class="ad-audit-row__what"><code>transaction.refused</code> · £42 · MCC 7995 (Sky Bet)</span><span class="ad-audit-row__cust">CU-289-A1F4</span></div>
+              <div class="ad-audit-row"><span class="ad-audit-row__when">22:15:11 (prev)</span><span class="ad-audit-row__actor">system</span><span class="ad-audit-row__what"><code>relapse_hold.open.auto</code> · clause 11 · 7-day pause</span><span class="ad-audit-row__cust">CU-289-A1F4</span></div>
+              <div class="ad-audit-row"><span class="ad-audit-row__when">22:15:14 (prev)</span><span class="ad-audit-row__actor">system</span><span class="ad-audit-row__what"><code>sponsor.notify.send</code> · digest event · push + email</span><span class="ad-audit-row__cust">→ Joanna Murray</span></div>
+              <div class="ad-audit-row"><span class="ad-audit-row__when">22:16:00 (prev)</span><span class="ad-audit-row__actor">system</span><span class="ad-audit-row__what"><code>direct_debit.reschedule</code> · 30 Jun → 07 Jul · no fee</span><span class="ad-audit-row__cust">LO-289-A1F4</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>`,
+};
+
+let idx = 0;
+
+function render() {
+  const screen = SCREENS[idx];
+  document.getElementById('viewport').innerHTML = builders[screen.kind]();
+  document.getElementById('browserUrl').textContent = 'admin.gaimcontrol.com' + screen.url;
+  document.getElementById('screenId').textContent = screen.id;
+  document.getElementById('screenName').textContent = screen.name;
+  document.getElementById('progressFill').style.width = ((idx + 1) / SCREENS.length * 100) + '%';
+  document.getElementById('navPrev').disabled = idx === 0;
+  document.getElementById('navNext').disabled = idx === SCREENS.length - 1;
+  document.querySelectorAll('.proto-scrubber__item').forEach((el, i) => {
+    el.classList.toggle('is-active', i === idx);
+    if (i === idx) el.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  });
+  document.getElementById('contextBody').innerHTML = CTX[screen.kind] || screen.name;
+}
+
+function next() { if (idx < SCREENS.length - 1) { idx++; render(); } }
+function prev() { if (idx > 0) { idx--; render(); } }
+function go(i) { idx = i; render(); }
+
+function buildScrubber() {
+  const nav = document.getElementById('scrubber');
+  SCREENS.forEach((s, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'proto-scrubber__item';
+    btn.innerHTML = `<span class="proto-scrubber__id">${s.id}</span><span class="proto-scrubber__name">${s.name}</span>`;
+    btn.addEventListener('click', () => go(i));
+    nav.appendChild(btn);
+  });
+}
+
+function initTheme() {
+  const root = document.documentElement;
+  const stored = localStorage.getItem('gc-proto-theme');
+  const initial = stored || 'dark';
+  root.setAttribute('data-theme', initial);
+  document.querySelector('.theme-label').textContent = initial === 'dark' ? 'Dark' : 'Light';
+  document.querySelector('.proto-theme-toggle').addEventListener('click', () => {
+    const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    document.querySelector('.theme-label').textContent = next === 'dark' ? 'Dark' : 'Light';
+    try { localStorage.setItem('gc-proto-theme', next); } catch(e) {}
+  });
+}
+
+document.getElementById('navPrev').addEventListener('click', prev);
+document.getElementById('navNext').addEventListener('click', next);
+document.addEventListener('keydown', (e) => { if (e.key === 'ArrowRight') next(); if (e.key === 'ArrowLeft') prev(); });
+buildScrubber();
+initTheme();
+render();
+</script>
+
+</body>
+</html>

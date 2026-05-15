@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GaimControl · clickable prototype</title>
+<link rel="icon" href="../assets/gc-favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --p-10:#0B0F1C;--p-20:#161B2D;--p-30:#20273C;--p-40:#354872;--p-50:#4D608C;--p-60:#6B7DA6;--p-99:#FAFBFE;--p-100:#FFF;
+  --s-20:#3E3478;--s-30:#534792;--s-50:#8576C2;--s-70:#B5ACDF;--s-80:#CFC8EA;
+  --t-20:#1A6047;--t-30:#1F7058;--t-50:#399971;--t-60:#5BB088;--t-80:#ADDCC2;--t-90:#D5EDDF;
+  --w-30:#6B4500;--w-60:#C28200;--w-80:#FAB44A;--w-90:#FFDFA8;
+  --n-50:#76798A;--n-95:#F1F2F5;--nv-80:#C5C9DD;
+}
+[data-theme="dark"] { --page-bg: #0a0e1a; --page-fg: var(--n-95); --page-fg-muted: var(--nv-80); --page-card-bg: var(--p-20); --page-card-bg-2: var(--p-10); --page-divider: rgba(255,255,255,0.06); --page-accent: var(--s-70); }
+[data-theme="light"] { --page-bg: var(--p-99); --page-fg: var(--p-20); --page-fg-muted: var(--n-50); --page-card-bg: var(--p-100); --page-card-bg-2: #f4f5f9; --page-divider: rgba(22,27,45,0.08); --page-accent: var(--p-40); }
+* { box-sizing: border-box; }
+html, body { background: var(--page-bg); color: var(--page-fg); margin: 0; transition: background-color 220ms ease, color 220ms ease; }
+body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif; font-size: 15px; line-height: 1.55; -webkit-font-smoothing: antialiased; padding: 64px 24px 96px; max-width: 1180px; margin: 0 auto; min-height: 100vh; }
+
+/* Header */
+.gc-header { display: flex; align-items: center; gap: 12px; padding: 4px 0 24px; border-bottom: 1px solid var(--page-divider); margin-bottom: 48px; }
+.gc-header__mark { width: 44px; height: 44px; border-radius: 12px; background: var(--p-30); display: inline-flex; align-items: center; justify-content: center; }
+.gc-header__mark img { width: 70%; height: 70%; }
+.gc-header__name { font-weight: 700; font-size: 22px; letter-spacing: -0.01em; }
+.gc-header__pill { display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px; border-radius: 999px; background: linear-gradient(120deg, var(--s-50), var(--p-50), var(--t-50)); color: white; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; font-size: 11.5px; font-family: 'JetBrains Mono', monospace; }
+.gc-header__theme { margin-left: auto; width: 36px; height: 36px; border-radius: 50%; background: transparent; border: 1px solid var(--page-divider); display: inline-flex; align-items: center; justify-content: center; color: var(--page-fg-muted); cursor: pointer; }
+.gc-header__theme svg { width: 16px; height: 16px; }
+[data-theme="dark"] .gc-header__theme .icon-moon { display: none; }
+[data-theme="light"] .gc-header__theme .icon-sun { display: none; }
+
+/* Title */
+.subhead { display: inline-flex; align-items: center; gap: 14px; font-family: 'JetBrains Mono', monospace; font-size: 11.5px; font-weight: 600; letter-spacing: 0.14em; color: var(--page-fg-muted); text-transform: uppercase; margin-bottom: 28px; }
+.subhead::before { content: ''; width: 24px; height: 3px; background: linear-gradient(90deg, var(--s-50), var(--p-50), var(--t-50)); border-radius: 2px; }
+h1 { font-family: 'Inter', sans-serif; font-size: 80px; font-weight: 800; line-height: 0.95; letter-spacing: -0.045em; margin: 0 0 28px; }
+@media (max-width: 720px) { h1 { font-size: 52px; } }
+.gradient { background: linear-gradient(120deg, var(--s-50) 0%, var(--p-60) 38%, var(--t-50) 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.lede { font-size: 17px; color: var(--page-fg-muted); max-width: 68ch; margin: 0 0 48px; }
+
+/* Section heads */
+.section-head { display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap; margin: 72px 0 8px; }
+.section-head__num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--page-fg-muted); letter-spacing: 0.12em; text-transform: uppercase; padding-top: 14px; }
+.section-head__title { font-size: 28px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.1; }
+.section-head__sub { color: var(--page-fg-muted); font-size: 14px; max-width: 68ch; flex-basis: 100%; margin-top: 4px; }
+
+/* Full-prototype tiles (large, hero) */
+.full-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 32px; }
+@media (max-width: 720px) { .full-grid { grid-template-columns: 1fr; } }
+.full {
+  padding: 28px; background: var(--page-card-bg); border: 1px solid var(--page-divider);
+  border-radius: 18px; text-decoration: none; color: inherit;
+  display: flex; flex-direction: column; gap: 14px;
+  transition: transform 200ms ease, border-color 200ms ease;
+  position: relative; overflow: hidden;
+}
+.full:hover { border-color: var(--page-accent); transform: translateY(-2px); }
+.full--wip::after { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(133,118,194,0.04), transparent 60%); pointer-events: none; }
+.full__icon { width: 56px; height: 56px; border-radius: 14px; background: var(--page-card-bg-2); display: inline-flex; align-items: center; justify-content: center; color: var(--page-accent); }
+.full__device { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--page-fg-muted); letter-spacing: 0.08em; text-transform: uppercase; }
+.full__name { font-size: 24px; font-weight: 700; letter-spacing: -0.02em; }
+.full__desc { font-size: 14px; color: var(--page-fg-muted); line-height: 1.55; }
+.full__progress { display: flex; align-items: center; gap: 10px; margin-top: 4px; }
+.full__progress-bar { flex: 1; height: 6px; background: var(--page-card-bg-2); border-radius: 6px; position: relative; overflow: hidden; }
+.full__progress-fill { position: absolute; left: 0; top: 0; bottom: 0; background: linear-gradient(90deg, var(--s-50), var(--t-50)); border-radius: 6px; }
+.full__progress-text { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--page-fg-muted); }
+.full__cta { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; font-weight: 600; color: var(--page-accent); font-family: 'JetBrains Mono', monospace; letter-spacing: 0.04em; text-transform: uppercase; margin-top: auto; }
+.full__pill { display: inline-flex; align-items: center; gap: 5px; padding: 3px 10px; border-radius: 999px; background: var(--w-30); color: var(--w-80); font-size: 10.5px; font-weight: 600; font-family: 'JetBrains Mono', monospace; align-self: flex-start; letter-spacing: 0.06em; text-transform: uppercase; }
+.full__pill::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+.full__pill--ready { background: var(--t-20); color: var(--t-80); }
+.full__pill--planned { background: rgba(127,127,127,0.10); color: var(--page-fg-muted); }
+
+/* Per-flow tiles (compact grid) */
+.flows { display: grid; grid-template-columns: 64px minmax(260px, 2fr) minmax(170px, 1fr) minmax(170px, 1fr); gap: 0; margin-top: 24px; background: var(--page-card-bg); border: 1px solid var(--page-divider); border-radius: 14px; overflow-x: auto; }
+.flows__head { padding: 14px 18px; background: var(--page-card-bg-2); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--page-fg-muted); letter-spacing: 0.08em; text-transform: uppercase; border-bottom: 1px solid var(--page-divider); }
+.flows__row-num { padding: 14px 12px 14px 18px; font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 600; color: var(--page-fg-muted); letter-spacing: 0.06em; border-top: 1px solid var(--page-divider); display: flex; align-items: center; }
+.flows__row-name { padding: 14px 18px 14px 0; border-top: 1px solid var(--page-divider); display: flex; flex-direction: column; gap: 2px; justify-content: center; }
+.flows__row-name strong { font-size: 14px; font-weight: 600; color: var(--page-fg); }
+.flows__row-name span { font-size: 12px; color: var(--page-fg-muted); }
+.flows__cell { padding: 12px 18px; border-top: 1px solid var(--page-divider); border-left: 1px solid var(--page-divider); display: flex; align-items: center; gap: 10px; min-height: 60px; }
+.flows__cell a { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: var(--page-accent); text-decoration: none; font-family: 'JetBrains Mono', monospace; }
+.flows__cell a:hover { text-decoration: underline; }
+.flows__cell.is-wip a, .flows__cell.is-planned a, .flows__cell.is-na a { color: var(--page-fg-muted); pointer-events: none; }
+.flows__cell-pill { display: inline-flex; align-items: center; gap: 5px; padding: 3px 9px; border-radius: 999px; background: rgba(127,127,127,0.10); font-size: 10px; font-weight: 600; color: var(--page-fg-muted); font-family: 'JetBrains Mono', monospace; letter-spacing: 0.04em; text-transform: uppercase; }
+.flows__cell-pill::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+.flows__cell-pill--ready { background: var(--t-20); color: var(--t-80); }
+.flows__cell-pill--wip { background: var(--w-30); color: var(--w-80); }
+.flows__cell-pill--na { background: rgba(127,127,127,0.06); color: var(--page-fg-muted); opacity: 0.7; }
+[data-theme="light"] .flows__cell-pill--ready { background: var(--t-90); color: var(--t-30); }
+[data-theme="light"] .flows__cell-pill--wip { background: var(--w-90); color: var(--w-30); }
+[data-theme="light"] .full__pill { background: var(--w-90); color: var(--w-30); }
+[data-theme="light"] .full__pill--ready { background: var(--t-90); color: var(--t-30); }
+
+hr { border: none; border-top: 1px solid var(--page-divider); margin: 64px 0 48px; }
+.note { padding: 14px 16px; background: var(--page-card-bg-2); border-left: 3px solid var(--s-50); border-radius: 4px; font-size: 13.5px; color: var(--page-fg-muted); line-height: 1.55; }
+.note strong { color: var(--page-fg); }
+.note a { color: var(--page-accent); text-decoration: none; border-bottom: 1px dotted currentColor; }
+footer { color: var(--page-fg-muted); font-size: 12px; font-family: 'JetBrains Mono', monospace; margin-top: 64px; }
+footer a { color: var(--page-accent); text-decoration: none; }
+</style>
+</head>
+<body>
+
+<header class="gc-header">
+  <span class="gc-header__mark"><img src="../assets/gc-mark-mono-light.svg" alt=""></span>
+  <span class="gc-header__name">GaimControl</span>
+  <span class="gc-header__pill">prototype</span>
+  <button class="gc-header__theme" type="button" aria-label="Toggle theme">
+    <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+    <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+  </button>
+</header>
+
+<div class="subhead">Clickable prototype · pixel-perfect to spec</div>
+<h1>Click <span class="gradient">through it</span>.</h1>
+<p class="lede">Two ways in. The <strong>full prototypes</strong> stitch every flow together with working cross-flow navigation — the artefact to walk clients through end-to-end. The <strong>per-flow demos</strong> below open one specific journey in isolation — better for screenshots, focused reviews, and shipping a piece before everything else is done. Both pull from the same hand-coded screens; nothing diverges.</p>
+
+<!-- ============================================================
+     FULL PROTOTYPES
+     ============================================================ -->
+<div class="section-head">
+  <span class="section-head__num">A</span>
+  <h2 class="section-head__title">Full prototypes</h2>
+  <span class="section-head__sub">End-to-end demos. Every flow wired together with cross-flow navigation (working bottom tabs on mobile, sidenav on web). Built last — they grow as each per-flow demo lands.</span>
+</div>
+
+<div class="full-grid">
+  <a class="full full--wip" href="mobile-prototype.html">
+    <span class="full__icon">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="6" y="2" width="12" height="20" rx="3"/>
+        <line x1="11" y1="18" x2="13" y2="18"/>
+      </svg>
+    </span>
+    <span class="full__device">Mobile · React Native target</span>
+    <span class="full__name">Full mobile prototype</span>
+    <span class="full__desc">iPhone 14 frame, 393 × 852. Every consumer flow end-to-end with working bottom-tab nav (Home / Banking / Anna / Activity / Profile per design-system §10). Stitches §04 → §16 once each per-flow demo is signed off below.</span>
+    <span class="full__progress">
+      <span class="full__progress-bar"><span class="full__progress-fill" style="width:100%"></span></span>
+      <span class="full__progress-text">11 / 11 flows</span>
+    </span>
+    <span class="full__pill">Ready</span>
+    <span class="full__cta">All mobile flows complete →</span>
+  </a>
+
+  <a class="full full--wip" href="web-prototype.html">
+    <span class="full__icon">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="4" width="20" height="14" rx="2"/>
+        <line x1="9" y1="22" x2="15" y2="22"/>
+        <line x1="12" y1="18" x2="12" y2="22"/>
+      </svg>
+    </span>
+    <span class="full__device">Web · Next.js target</span>
+    <span class="full__name">Full web prototype</span>
+    <span class="full__desc">Desktop frame, 1440 wide. Same flows as mobile but in the web-ui paradigm: left sidenav, Banking sub-nav (Overview / Cards / Accounts / Spending / Sponsor), larger Anna chat surface. Plus admin (§13) + sponsor dash (§15) + marketing (§14) — web-only surfaces.</span>
+    <span class="full__progress">
+      <span class="full__progress-bar"><span class="full__progress-fill" style="width:100%"></span></span>
+      <span class="full__progress-text">13 / 13 surfaces</span>
+    </span>
+    <span class="full__pill">Ready</span>
+    <span class="full__cta">All web surfaces complete →</span>
+  </a>
+</div>
+
+<!-- ============================================================
+     PER-FLOW DEMOS
+     ============================================================ -->
+<div class="section-head">
+  <span class="section-head__num">B</span>
+  <h2 class="section-head__title">Per-flow demos</h2>
+  <span class="section-head__sub">One flow, one device, one link. These are what you'll demo when you only need to show a specific journey or when a flow is shipping before the rest of the product. Each per-flow demo is hand-coded straight from the matching spec section file — no inference, no improvisation.</span>
+</div>
+
+<div class="flows">
+  <div class="flows__head">§</div>
+  <div class="flows__head">Flow</div>
+  <div class="flows__head" style="border-left:1px solid var(--page-divider)">Mobile</div>
+  <div class="flows__head" style="border-left:1px solid var(--page-divider)">Web</div>
+
+  <!-- 04 Auth -->
+  <div class="flows__row-num">04</div>
+  <div class="flows__row-name"><strong>Auth &amp; session</strong><span>AU1–7 · email/phone + OTP · biometrics · daily unlock</span></div>
+  <div class="flows__cell"><span class="flows__cell-pill flows__cell-pill--ready">Ready</span><a href="mobile-auth.html">open →</a></div>
+  <div class="flows__cell"><span class="flows__cell-pill flows__cell-pill--ready">Ready</span><a href="web-auth.html">open →</a></div>
+
+  <!-- 05 Onboarding -->
+  <div class="flows__row-num">05</div>
+  <div class="flows__row-name"><strong>Onboarding intake</strong><span>ON1–16 · Anna-led quiz · KYC · bank link</span></div>
+  <div class="flows__cell"><span class="flows__cell-pill flows__cell-pill--ready">Ready</span><a href="mobile-onboarding.html">open →</a></div>
+  <div class="flows__cell"><span class="flows__cell-pill flows__cell-pill--ready">Ready</span><a href="web-onboarding.html">open →</a></div>
+
+  <!-- 06 Banking -->
+  <div class="flows__row-num">06</div>
+  <div class="flows__row-name"><strong>Banking dashboard</strong><span>BK1–5 · 3 home states · transactions · sponsor view</span></div>
+  <div class="flows__cell"><span class="flows__cell-pill flows__cell-pill--ready">Ready</span><a href="mobile-banking.html">open →</a></div>
+  <div class="flows__cell"><span class="flows__cell-pill flows__cell-pill--ready">Ready</span><a href="web-banking.html">open →</a></div>
+
+  <!-- 07 Card controls -->
+  <div class="flows__row-num">07</div>
+  <div class="flows__row-name"><strong>Card controls + sponsor</strong><span>CC1–7 · MCC blocks · channels · Gamban + Gamstop · sponsor permissions</span></div>
+  <div class="flows__cell"><span class="flows__cell-pill flows__cell-pill--ready">Ready</span><a href="mobile-cards.html">open →</a></div>
+  <div class="flows__cell"><span class="flows__cell-pill flows__cell-pill--ready">Ready</span><a href="web-cards.html">open →</a></div>
+
+  <!-- 08 Anna -->
+  <div class="flows__row-num">08</div>
+  <div class="flows__row-name"><strong>Anna chat &amp; CBT</strong><span>AN1–8 · chat surface · 4 CBT sessions · daily check-ins · sponsor-blind</span></div>
+  <div class="flows__cell"><span class="flows__cell-pill flows__cell-pill--ready">Ready</span><a href="mobile-anna.html">open →</a></div>
+  <div class="flows__cell"><span class="flows__cell-pill flows__cell-pill--ready">Ready</span><a href="web-anna.html">open →</a></div>
+
+  <!-- 09 Loan offer -->
+  <div class="flows__row-num">09</div>
+  <div class="flows__row-name"><strong>Loan offer + SECCI</strong><span>LO1–5 · offer · SECCI · affordability · sign · settled · Experian ReFi</span></div>
+  <div class="flows__cell"><span class="flows__cell-pill flows__cell-pill--ready">Ready</span><a href="mobile-loan.html">open →</a></div>
+  <div class="flows__cell"><span class="flows__cell-pill flows__cell-pill--ready">Ready</span><a href="web-loan.html">open →</a></div>
+
+  <!-- 10 Repayment -->
+  <div class="flows__row-num">10</div>
+  <div class="flows__row-name"><strong>Repayment + Relapse Hold</strong><span>RP1–5 · dashboard · payment · auto + manual Hold · CONC 6.7.27</span></div>
+  <div class="flows__cell"><span class="flows__cell-pill flows__cell-pill--ready">Ready</span><a href="mobile-repayment.html">open →</a></div>
+  <div class="flows__cell"><span class="flows__cell-pill flows__cell-pill--ready">Ready</span><a href="web-repayment.html">open →</a></div>
+
+  <!-- 11 Safeguarding -->
+  <div class="flows__row-num">11</div>
+  <div class="flows__row-name"><strong>Safeguarding &amp; crisis</strong><span>SF1–4 · help home · crisis ladder · vulnerability · sponsor templates</span></div>
+  <div class="flows__cell"><span class="flows__cell-pill flows__cell-pill--ready">Ready</span><a href="mobile-safeguarding.html">open →</a></div>
+  <div class="flows__cell"><span class="flows__cell-pill flows__cell-pill--ready">Ready</span><a href="web-safeguarding.html">open →</a></div>
+
+  <!-- 12 Profile -->
+  <div class="flows__row-num">12</div>
+  <div class="flows__row-name"><strong>Profile &amp; settings</strong><span>PR1–6 · settings home · personal · 5-section notif · sponsor · GDPR · close</span></div>
+  <div class="flows__cell"><span class="flows__cell-pill flows__cell-pill--ready">Ready</span><a href="mobile-profile.html">open →</a></div>
+  <div class="flows__cell"><span class="flows__cell-pill flows__cell-pill--ready">Ready</span><a href="web-profile.html">open →</a></div>
+
+  <!-- 13 Admin -->
+  <div class="flows__row-num">13</div>
+  <div class="flows__row-name"><strong>Admin console</strong><span>AD1–7 · queues · four-eyes overrides · vulnerability register · FCA SFTP feeds · audit log</span></div>
+  <div class="flows__cell is-na"><span class="flows__cell-pill flows__cell-pill--na">Web only</span></div>
+  <div class="flows__cell"><span class="flows__cell-pill flows__cell-pill--ready">Ready</span><a href="web-admin.html">open →</a></div>
+
+  <!-- 14 Marketing -->
+  <div class="flows__row-num">14</div>
+  <div class="flows__row-name"><strong>Marketing site</strong><span>MK1–8 · public pages · 6 profile UTM landers · sponsor + lender explainer · custom illustrations</span></div>
+  <div class="flows__cell is-na"><span class="flows__cell-pill flows__cell-pill--na">Web only</span></div>
+  <div class="flows__cell"><span class="flows__cell-pill flows__cell-pill--ready">Ready</span><a href="web-marketing.html">open →</a></div>
+
+  <!-- 15 Sponsor onboarding -->
+  <div class="flows__row-num">15</div>
+  <div class="flows__row-name"><strong>Sponsor onboarding</strong><span>SP1 + SP7 user side · SP3–SP6 sponsor side (web-only at MVP)</span></div>
+  <div class="flows__cell"><span class="flows__cell-pill flows__cell-pill--ready">Ready</span><a href="mobile-sponsor-onboarding.html">open →</a></div>
+  <div class="flows__cell"><span class="flows__cell-pill flows__cell-pill--ready">Ready</span><a href="web-sponsor-onboarding.html">open →</a></div>
+
+  <!-- 16 Off-boarding -->
+  <div class="flows__row-num">16</div>
+  <div class="flows__row-name"><strong>Off-boarding flows</strong><span>OB1–5 · existing-loan Path A · profile-based Path B · Article 17 up front</span></div>
+  <div class="flows__cell"><span class="flows__cell-pill flows__cell-pill--ready">Ready</span><a href="mobile-offboarding.html">open →</a></div>
+  <div class="flows__cell"><span class="flows__cell-pill flows__cell-pill--ready">Ready</span><a href="web-offboarding.html">open →</a></div>
+</div>
+
+<hr>
+
+<div class="note">
+  <strong>How this works.</strong> Each per-flow demo is hand-coded HTML/CSS, no React, no build step. Every screen is wired straight to the matching screen ID in the spec (ON1, BK1, CC1, etc.) so engineers and reviewers can compare side-by-side. Decisions from the <a href="../41-decisions-log.html">log</a> are applied inline. When all flows for a device are signed off, the corresponding <strong>full prototype</strong> at the top of this page stitches them together with cross-flow navigation — bottom tabs on mobile (Home / Banking / Anna / Activity / Profile), sidenav on web. The full prototype is the artefact you walk clients through; the per-flow demos are the units you build and review.
+</div>
+
+<footer>
+  prototype / index · v1.0 · 2026-05-15 · all 13 web surfaces ready · all 11 mobile flows ready · per-flow + full structure ·
+  back to <a href="../00-index.html">spec index</a>
+</footer>
+
+<script>
+(function(){
+  var root = document.documentElement;
+  var KEY = 'gc-theme';
+  var stored;
+  try { stored = localStorage.getItem(KEY); } catch(e){}
+  var initial = stored || 'dark';
+  function apply(t){ root.setAttribute('data-theme', t); try { localStorage.setItem(KEY, t); } catch(e){} }
+  apply(initial);
+  document.querySelector('.gc-header__theme').addEventListener('click', function(){
+    apply(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+  });
+})();
+</script>
+
+</body>
+</html>
