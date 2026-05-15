@@ -10,28 +10,28 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --p-10:#0B0F1C;--p-20:#161B2D;--p-30:#20273C;--p-40:#354872;--p-50:#4D608C;--p-60:#6B7DA6;--p-70:#8E9DC0;--p-80:#B5BFD9;--p-90:#DCE2F0;--p-95:#ECF0F9;--p-99:#FAFBFE;--p-100:#FFF;
-  --s-10:#28215A;--s-20:#3E3478;--s-30:#534792;--s-40:#6B5DAC;--s-50:#8576C2;--s-60:#9D90D2;--s-70:#B5ACDF;--s-80:#CFC8EA;--s-90:#E8E4F4;
-  --t-10:#0E4A35;--t-20:#1A6047;--t-30:#1F7058;--t-40:#2A8060;--t-50:#399971;--t-60:#5BB088;--t-70:#82C7A4;--t-80:#ADDCC2;--t-90:#D5EDDF;
-  --w-30:#6B4500;--w-40:#8C5A00;--w-50:#A36A00;--w-60:#C28200;--w-70:#E09900;--w-80:#FAB44A;--w-90:#FFDFA8;
-  --e-30:#7A1F1F;--e-50:#C73838;--e-90:#FBD9D9;
-  --n-50:#76798A;--n-60:#9094A3;--n-95:#F1F2F5;--nv-80:#C5C9DD;
+ --p-10:#0B0F1C;--p-20:#161B2D;--p-30:#20273C;--p-40:#354872;--p-50:#4D608C;--p-60:#6B7DA6;--p-70:#8E9DC0;--p-80:#B5BFD9;--p-90:#DCE2F0;--p-95:#ECF0F9;--p-99:#FAFBFE;--p-100:#FFF;
+ --s-10:#28215A;--s-20:#3E3478;--s-30:#534792;--s-40:#6B5DAC;--s-50:#8576C2;--s-60:#9D90D2;--s-70:#B5ACDF;--s-80:#CFC8EA;--s-90:#E8E4F4;
+ --t-10:#0E4A35;--t-20:#1A6047;--t-30:#1F7058;--t-40:#2A8060;--t-50:#399971;--t-60:#5BB088;--t-70:#82C7A4;--t-80:#ADDCC2;--t-90:#D5EDDF;
+ --w-30:#6B4500;--w-40:#8C5A00;--w-50:#A36A00;--w-60:#C28200;--w-70:#E09900;--w-80:#FAB44A;--w-90:#FFDFA8;
+ --e-30:#7A1F1F;--e-50:#C73838;--e-90:#FBD9D9;
+ --n-50:#76798A;--n-60:#9094A3;--n-95:#F1F2F5;--nv-80:#C5C9DD;
 }
 [data-theme="dark"] {
-  --bg-base: var(--p-30); --bg-surface: var(--p-20); --bg-surface-2: var(--p-10);
-  --border: rgba(255,255,255,0.08);
-  --text-primary: var(--n-95); --text-secondary: var(--nv-80); --text-muted: rgba(255,255,255,0.4);
-  --accent: var(--s-70); --accent-strong: var(--s-50); --on-accent: #fff;
-  --page-bg: #0a0e1a; --page-fg: var(--n-95); --page-fg-muted: var(--nv-80);
-  --page-card-bg: var(--p-20); --page-divider: rgba(255,255,255,0.06);
+ --bg-base: var(--p-30); --bg-surface: var(--p-20); --bg-surface-2: var(--p-10);
+ --border: rgba(255,255,255,0.08);
+ --text-primary: var(--n-95); --text-secondary: var(--nv-80); --text-muted: rgba(255,255,255,0.4);
+ --accent: var(--s-70); --accent-strong: var(--s-50); --on-accent: #fff;
+ --page-bg: #0a0e1a; --page-fg: var(--n-95); --page-fg-muted: var(--nv-80);
+ --page-card-bg: var(--p-20); --page-divider: rgba(255,255,255,0.06);
 }
 [data-theme="light"] {
-  --bg-base: var(--p-99); --bg-surface: #fff; --bg-surface-2: var(--p-95);
-  --border: rgba(22,27,45,0.08);
-  --text-primary: var(--p-20); --text-secondary: var(--n-50); --text-muted: var(--n-50);
-  --accent: var(--p-40); --accent-strong: var(--s-40); --on-accent: #fff;
-  --page-bg: var(--p-95); --page-fg: var(--p-20); --page-fg-muted: var(--n-50);
-  --page-card-bg: #fff; --page-divider: rgba(22,27,45,0.08);
+ --bg-base: var(--p-99); --bg-surface: #fff; --bg-surface-2: var(--p-95);
+ --border: rgba(22,27,45,0.08);
+ --text-primary: var(--p-20); --text-secondary: var(--n-50); --text-muted: var(--n-50);
+ --accent: var(--p-40); --accent-strong: var(--s-40); --on-accent: #fff;
+ --page-bg: var(--p-95); --page-fg: var(--p-20); --page-fg-muted: var(--n-50);
+ --page-card-bg: #fff; --page-divider: rgba(22,27,45,0.08);
 }
 * { box-sizing: border-box; }
 html, body { background: var(--page-bg); color: var(--page-fg); margin: 0; transition: background-color 220ms ease, color 220ms ease; }
@@ -39,9 +39,9 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-
 
 /* SHELL */
 .proto-shell { display: grid; grid-template-columns: 280px 1fr; gap: 0; min-height: 100vh; }
-@media (max-width: 960px) { .proto-shell { grid-template-columns: 1fr; } }
+@media (max-width: 960px) {.proto-shell { grid-template-columns: 1fr; } }
 .proto-sidebar { background: var(--page-card-bg); border-right: 1px solid var(--page-divider); padding: 28px 22px; position: sticky; top: 0; height: 100vh; overflow-y: auto; display: flex; flex-direction: column; gap: 16px; }
-@media (max-width: 960px) { .proto-sidebar { position: static; height: auto; max-height: 50vh; border-right: none; border-bottom: 1px solid var(--page-divider); } }
+@media (max-width: 960px) {.proto-sidebar { position: static; height: auto; max-height: 50vh; border-right: none; border-bottom: 1px solid var(--page-divider); } }
 .proto-sidebar__brand { display: flex; align-items: center; gap: 10px; }
 .proto-sidebar__mark { width: 36px; height: 36px; border-radius: 10px; background: var(--p-30); display: inline-flex; align-items: center; justify-content: center; }
 .proto-sidebar__mark img { width: 70%; height: 70%; }
@@ -54,15 +54,15 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-
 .proto-scrubber__item { display: grid; grid-template-columns: 44px 1fr; gap: 8px; align-items: center; padding: 7px 10px; border-radius: 8px; cursor: pointer; border: none; background: transparent; color: inherit; font-family: inherit; text-align: left; }
 .proto-scrubber__item:hover { background: rgba(127,127,127,0.08); }
 .proto-scrubber__item.is-active { background: var(--accent-strong); color: var(--on-accent); }
-.proto-scrubber__item.is-active .proto-scrubber__id { color: rgba(255,255,255,0.85); }
+.proto-scrubber__item.is-active.proto-scrubber__id { color: rgba(255,255,255,0.85); }
 .proto-scrubber__id { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; color: var(--page-fg-muted); letter-spacing: 0.06em; }
 .proto-scrubber__name { font-size: 12.5px; font-weight: 500; }
 .proto-sidebar__footer { margin-top: auto; padding-top: 16px; border-top: 1px solid var(--page-divider); font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--page-fg-muted); }
 .proto-sidebar__footer a { color: var(--page-fg-muted); text-decoration: none; border-bottom: 1px dotted currentColor; }
 .proto-theme-toggle { display: inline-flex; align-items: center; gap: 8px; padding: 7px 12px; border-radius: 8px; background: var(--bg-surface-2); border: 1px solid var(--border); color: var(--page-fg-muted); cursor: pointer; font-family: 'JetBrains Mono', monospace; font-size: 11px; align-self: flex-start; }
 .proto-theme-toggle svg { width: 12px; height: 12px; }
-[data-theme="dark"] .proto-theme-toggle .icon-moon { display: none; }
-[data-theme="light"] .proto-theme-toggle .icon-sun { display: none; }
+[data-theme="dark"].proto-theme-toggle.icon-moon { display: none; }
+[data-theme="light"].proto-theme-toggle.icon-sun { display: none; }
 
 /* STAGE */
 .proto-stage { display: flex; flex-direction: column; align-items: center; padding: 48px 24px 64px; gap: 24px; }
@@ -79,11 +79,11 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-
 
 /* PHONE */
 .phone {
-  width: 393px; height: 852px; flex-shrink: 0;
-  border-radius: 56px; background: #000; padding: 13px; position: relative;
-  box-shadow: 0 0 0 1.5px #2a2e3a, 0 30px 60px -20px rgba(0,0,0,0.7), 0 16px 32px -16px rgba(0,0,0,0.4);
+ width: 393px; height: 852px; flex-shrink: 0;
+ border-radius: 56px; background: #000; padding: 13px; position: relative;
+ box-shadow: 0 0 0 1.5px #2a2e3a, 0 30px 60px -20px rgba(0,0,0,0.7), 0 16px 32px -16px rgba(0,0,0,0.4);
 }
-.phone::before, .phone::after { content: ''; position: absolute; background: #2a2e3a; }
+.phone::before,.phone::after { content: ''; position: absolute; background: #2a2e3a; }
 .phone::before { left: -3px; top: 110px; width: 3px; height: 30px; border-radius: 3px 0 0 3px; }
 .phone::after { left: -3px; top: 160px; width: 3px; height: 60px; border-radius: 3px 0 0 3px; }
 .phone__inner { width: 100%; height: 100%; background: var(--bg-base); color: var(--text-primary); border-radius: 44px; overflow: hidden; position: relative; display: flex; flex-direction: column; }
@@ -137,7 +137,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-
 /* CTA */
 .phone__cta { display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 15px 18px; border-radius: 14px; background: var(--accent-strong); color: var(--on-accent); border: none; font-family: inherit; font-size: 15px; font-weight: 600; cursor: pointer; transition: transform 120ms ease, background-color 160ms ease; width: 100%; }
 .phone__cta:hover { background: var(--s-40); }
-[data-theme="light"] .phone__cta:hover { background: var(--s-30); }
+[data-theme="light"].phone__cta:hover { background: var(--s-30); }
 .phone__cta:active { transform: scale(0.98); }
 .phone__cta:disabled { background: rgba(127,127,127,0.18); color: var(--text-muted); cursor: not-allowed; }
 
@@ -165,7 +165,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-
 
 /* Samaritans card */
 .crisis-card { padding: 14px 16px; border-radius: 12px; background: var(--e-30); color: var(--e-90); font-size: 12.5px; line-height: 1.5; }
-[data-theme="light"] .crisis-card { background: var(--e-90); color: var(--e-30); }
+[data-theme="light"].crisis-card { background: var(--e-90); color: var(--e-30); }
 .crisis-card strong { display: block; margin-bottom: 2px; font-size: 13.5px; }
 
 /* AU6 / AU7 progress bar */
@@ -189,12 +189,12 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-
 
 .screen { animation: fade-in 220ms ease; }
 @keyframes fade-in { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
-@media (max-width: 720px) { .phone { transform: scale(0.92); transform-origin: top center; } }
-@media (max-width: 480px) { .phone { transform: scale(0.78); } }
+@media (max-width: 720px) {.phone { transform: scale(0.92); transform-origin: top center; } }
+@media (max-width: 480px) {.phone { transform: scale(0.78); } }
 
 /* ============= SPLASH (LA1) ============= */
 .la-stage { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 32px 28px; gap: 22px; cursor: pointer; background: linear-gradient(160deg, var(--p-30) 0%, var(--p-10) 100%); position: relative; overflow: hidden; color: white; }
-[data-theme="light"] .la-stage { background: linear-gradient(160deg, var(--p-40) 0%, var(--p-20) 100%); }
+[data-theme="light"].la-stage { background: linear-gradient(160deg, var(--p-40) 0%, var(--p-20) 100%); }
 .la-mark { width: 110px; height: 110px; border-radius: 28px; background: linear-gradient(135deg, var(--s-30), var(--p-20)); display: inline-flex; align-items: center; justify-content: center; position: relative; box-shadow: 0 24px 60px -10px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.08); animation: la-mark-rise 1s cubic-bezier(0.2,0.8,0.2,1) backwards; z-index: 3; }
 .la-mark img { width: 56%; height: 56%; }
 @keyframes la-mark-rise { from { transform: scale(0.6); opacity: 0; } to { transform: scale(1); opacity: 1; } }
@@ -239,9 +239,9 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-
 .we-body { font-size: 14.5px; line-height: 1.55; color: rgba(255,255,255,0.88); margin: 0; }
 .we-cta { padding: 16px 24px 28px; }
 .we-cta button { width: 100%; background: white; color: var(--p-20); border: none; padding: 16px 18px; border-radius: 14px; font-family: inherit; font-size: 15px; font-weight: 700; cursor: pointer; }
-.we-stage--control .we-cta button { color: var(--w-30); }
-.we-stage--anna .we-cta button { color: var(--s-20); }
-.we-stage--repair .we-cta button { color: var(--t-20); }
+.we-stage--control.we-cta button { color: var(--w-30); }
+.we-stage--anna.we-cta button { color: var(--s-20); }
+.we-stage--repair.we-cta button { color: var(--t-20); }
 .we-cta button:active { transform: scale(0.98); }
 
 /* WE1 brand visual */
@@ -261,7 +261,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-
 .we-diag__alert-t { font-size: 10.5px; font-weight: 700; color: white; }
 .we-diag__alert-s { font-size: 9.5px; color: rgba(244,164,164,0.95); }
 
-/* WE3 control visual — card with blocked badge */
+/* WE3 control visual. Card with blocked badge */
 .we-ctrl { position: relative; width: 200px; }
 .we-ctrl__card { width: 100%; aspect-ratio: 1.59; background: linear-gradient(135deg, #161B2D, #20273C); border-radius: 14px; padding: 14px; color: white; box-shadow: 0 24px 48px rgba(0,0,0,0.45); transform: rotate(-6deg); position: relative; }
 .we-ctrl__card img { width: 22px; height: 22px; opacity: 0.95; }
@@ -305,447 +305,447 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-
 
 <div class="proto-shell">
 
-  <aside class="proto-sidebar">
-    <div class="proto-sidebar__brand">
-      <span class="proto-sidebar__mark"><img src="../assets/gc-mark-mono-light.svg" alt=""></span>
-      <span>
-        <div class="proto-sidebar__name">GaimControl</div>
-        <span class="proto-sidebar__pill">mobile</span>
-      </span>
-    </div>
-    <a class="proto-sidebar__back" href="index.html">← prototype index</a>
+ <aside class="proto-sidebar">
+ <div class="proto-sidebar__brand">
+ <span class="proto-sidebar__mark"><img src="../assets/gc-mark-mono-light.svg" alt=""></span>
+ <span>
+ <div class="proto-sidebar__name">GaimControl</div>
+ <span class="proto-sidebar__pill">mobile</span>
+ </span>
+ </div>
+ <a class="proto-sidebar__back" href="index.html">← prototype index</a>
 
-    <button class="proto-theme-toggle" type="button" aria-label="Toggle theme">
-      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
-      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
-      <span class="theme-label">Dark</span>
-    </button>
+ <button class="proto-theme-toggle" type="button" aria-label="Toggle theme">
+ <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+ <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+ <span class="theme-label">Dark</span>
+ </button>
 
-    <div class="proto-section-title">§04 · AU1 – AU7 + RU1/RU2</div>
-    <nav class="proto-scrubber" id="scrubber"></nav>
+ <div class="proto-section-title">§04 · AU1 – AU7 + RU1/RU2</div>
+ <nav class="proto-scrubber" id="scrubber"></nav>
 
-    <div class="proto-sidebar__footer">
-      Source: <a href="../app-ui/04-auth.html">app-ui/04</a>
-    </div>
-  </aside>
+ <div class="proto-sidebar__footer">
+ Source: <a href="../app-ui/04-auth.html">app-ui/04</a>
+ </div>
+ </aside>
 
-  <main class="proto-stage">
+ <main class="proto-stage">
 
-    <div class="proto-modebar">
-      <span>Screen <span class="proto-modebar__id" id="screenId">AU1</span></span>
-      <span class="proto-modebar__pill" id="screenName">Sign in</span>
-      <div class="proto-modebar__bar"><div class="proto-modebar__bar__fill" id="progressFill" style="width:11%"></div></div>
-      <div class="proto-arrows">
-        <button class="proto-arrow" id="navPrev" aria-label="Previous"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
-        <button class="proto-arrow" id="navNext" aria-label="Next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
-      </div>
-    </div>
+ <div class="proto-modebar">
+ <span>Screen <span class="proto-modebar__id" id="screenId">AU1</span></span>
+ <span class="proto-modebar__pill" id="screenName">Sign in</span>
+ <div class="proto-modebar__bar"><div class="proto-modebar__bar__fill" id="progressFill" style="width:11%"></div></div>
+ <div class="proto-arrows">
+ <button class="proto-arrow" id="navPrev" aria-label="Previous"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+ <button class="proto-arrow" id="navNext" aria-label="Next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
+ </div>
+ </div>
 
-    <div class="phone">
-      <div class="phone__notch"></div>
-      <div class="phone__inner">
-        <div class="phone__statusbar">
-          <span>9:41</span>
-          <span class="phone__statusbar__right">
-            <span style="display:inline-flex;gap:3px"><span style="width:4px;height:4px;border-radius:50%;background:currentColor"></span><span style="width:4px;height:5px;border-radius:1px;background:currentColor"></span><span style="width:4px;height:6px;border-radius:1px;background:currentColor"></span><span style="width:4px;height:7px;border-radius:1px;background:currentColor"></span></span>
-            <span>100%</span>
-          </span>
-        </div>
-        <div id="stage" style="flex:1;display:flex;flex-direction:column;min-height:0"></div>
-      </div>
-    </div>
+ <div class="phone">
+ <div class="phone__notch"></div>
+ <div class="phone__inner">
+ <div class="phone__statusbar">
+ <span>9:41</span>
+ <span class="phone__statusbar__right">
+ <span style="display:inline-flex;gap:3px"><span style="width:4px;height:4px;border-radius:50%;background:currentColor"></span><span style="width:4px;height:5px;border-radius:1px;background:currentColor"></span><span style="width:4px;height:6px;border-radius:1px;background:currentColor"></span><span style="width:4px;height:7px;border-radius:1px;background:currentColor"></span></span>
+ <span>100%</span>
+ </span>
+ </div>
+ <div id="stage" style="flex:1;display:flex;flex-direction:column;min-height:0"></div>
+ </div>
+ </div>
 
-    <div class="proto-context" id="contextPanel">
-      <div class="proto-context__head">Screen context</div>
-      <div id="contextBody"></div>
-    </div>
+ <div class="proto-context" id="contextPanel">
+ <div class="proto-context__head">Screen context</div>
+ <div id="contextBody"></div>
+ </div>
 
-  </main>
+ </main>
 </div>
 
 <script>
 const SCREENS = [
-  { id: 'LA1', name: 'Launch splash', kind: 'la1' },
-  { id: 'WE1', name: 'Welcome · brand', kind: 'we1' },
-  { id: 'WE2', name: 'Welcome · diagnose', kind: 'we2' },
-  { id: 'WE3', name: 'Welcome · control', kind: 'we3' },
-  { id: 'WE4', name: 'Welcome · Anna', kind: 'we4' },
-  { id: 'WE5', name: 'Welcome · repair', kind: 'we5' },
-  { id: 'AU1', name: 'Sign in', kind: 'au1' },
-  { id: 'AU2', name: 'Sign up', kind: 'au2' },
-  { id: 'AU3', name: 'Verify code', kind: 'au3' },
-  { id: 'AU4', name: 'Magic link sent', kind: 'au4' },
-  { id: 'AU5', name: 'Recovery', kind: 'au5' },
-  { id: 'AU6', name: 'Set passcode', kind: 'au6' },
-  { id: 'AU7', name: 'Enable Face ID', kind: 'au7' },
-  { id: 'RU1', name: 'Daily unlock · Face ID', kind: 'ru1' },
-  { id: 'RU2', name: 'Daily unlock · passcode', kind: 'ru2' },
+ { id: 'LA1', name: 'Launch splash', kind: 'la1' },
+ { id: 'WE1', name: 'Welcome · brand', kind: 'we1' },
+ { id: 'WE2', name: 'Welcome · diagnose', kind: 'we2' },
+ { id: 'WE3', name: 'Welcome · control', kind: 'we3' },
+ { id: 'WE4', name: 'Welcome · Anna', kind: 'we4' },
+ { id: 'WE5', name: 'Welcome · repair', kind: 'we5' },
+ { id: 'AU1', name: 'Sign in', kind: 'au1' },
+ { id: 'AU2', name: 'Sign up', kind: 'au2' },
+ { id: 'AU3', name: 'Verify code', kind: 'au3' },
+ { id: 'AU4', name: 'Magic link sent', kind: 'au4' },
+ { id: 'AU5', name: 'Recovery', kind: 'au5' },
+ { id: 'AU6', name: 'Set passcode', kind: 'au6' },
+ { id: 'AU7', name: 'Enable Face ID', kind: 'au7' },
+ { id: 'RU1', name: 'Daily unlock · Face ID', kind: 'ru1' },
+ { id: 'RU2', name: 'Daily unlock · passcode', kind: 'ru2' },
 ];
 
 const CTX = {
-  la1: '<strong>LA1 Launch splash.</strong> Every app open shows this for ~1.2–1.5s. GC mark pulses with orbiting particles; brand wordmark + tagline rise in. Then routes to <strong>WE1 carousel</strong> on first install (server flag), or to <strong>RU1 / RU2 unlock</strong> for returning users with a valid session, or to <strong>AU1 sign in</strong> if no session. Tap or wait to advance.',
-  we1: '<strong>WE1 Welcome · Brand.</strong> Bold solid gradient, Monzo/Revolut energy. First slide of the 5-slide welcome carousel — shown <strong>first install only</strong> (server flag travels with the account; never shown again on this user even on a fresh device). Skip routes to AU2 sign-up.',
-  we2: '<strong>WE2 Welcome · Diagnose.</strong> "We notice the patterns." Connect-your-bank thesis. Spend chart with a flagged pattern alert.',
-  we3: '<strong>WE3 Welcome · Control.</strong> "We block where it goes wrong." Card art with a Sky Bet · Blocked badge — illustrates MCC 7995 refusal at the auth layer.',
-  we4: '<strong>WE4 Welcome · Anna.</strong> "Anna\'s there when it\'s hard." CBT-based AI coach. Sample chat bubbles showing in/out + typing indicator.',
-  we5: '<strong>WE5 Welcome · Repair.</strong> "When you\'re ready, we help with the debt." Loan-offer card showing eligibility. Per <a href="../41-decisions-log.html">GEN-01</a>, this slide now says <strong>30 clean days</strong> unlocks consolidation (A/B vs 15). Final CTA is "Get started" → routes to AU2.',
-  au1: '<strong>AU1 Sign in.</strong> Returning user. Email or phone toggle, 6-digit OTP sent. No password — passwordless auth across the product. <a href="../app-ui/04-auth.html">app-ui/04</a>.',
-  au2: '<strong>AU2 Sign up.</strong> New user. Adds invite-code field during Sandbox Phase 1 (capped at 10 users/month). T&amp;C + Privacy Policy checkbox required.',
-  au3: '<strong>AU3 Verify code.</strong> 6-digit OTP, expires in 10 min. Auto-submits when last box fills. Alternate paths: magic link (→ AU4), recovery (→ AU5).',
-  au4: '<strong>AU4 Magic link sent.</strong> Email link opens the app via Universal Link and resumes the flow at AU6. Waiting state with pulse indicator.',
-  au5: '<strong>AU5 Recovery.</strong> The "can\'t access this" off-ramp. Only screen in the auth flow with the Crisis pill visible (Samaritans card surfaces emotional-distress entry points).',
-  au6: '<strong>AU6 Set passcode.</strong> 4-digit passcode for quick re-entry. We still ask for an OTP every 30 days, or on a new device.',
-  au7: '<strong>AU7 Enable Face ID.</strong> Mobile only. Face data never leaves the device (Apple Secure Enclave / Android Keystore). Optional — passcode is the fallback.',
-  ru1: '<strong>RU1 Daily unlock · Face ID.</strong> The day-2 surface. Same route (/auth/unlock) as RU2; renders Face ID if AU7 was enabled and biometric is available.',
-  ru2: '<strong>RU2 Daily unlock · passcode.</strong> Passcode fallback when biometric unavailable / failed 3×. After 5 wrong passcodes, fresh OTP required (back to AU3).',
+ la1: '<strong>LA1 Launch splash.</strong> Every app open shows this for ~1.2–1.5s. GC mark pulses with orbiting particles; brand wordmark + tagline rise in. Then routes to <strong>WE1 carousel</strong> on first install (server flag), or to <strong>RU1 / RU2 unlock</strong> for returning users with a valid session, or to <strong>AU1 sign in</strong> if no session. Tap or wait to advance.',
+ we1: '<strong>WE1 Welcome · Brand.</strong> Bold solid gradient, Monzo/Revolut energy. First slide of the 5-slide welcome carousel. Shown <strong>first install only</strong> (server flag travels with the account; never shown again on this user even on a fresh device). Skip routes to AU2 sign-up.',
+ we2: '<strong>WE2 Welcome · Diagnose.</strong> "We notice the patterns." Connect-your-bank thesis. Spend chart with a flagged pattern alert.',
+ we3: '<strong>WE3 Welcome · Control.</strong> "We block where it goes wrong." Card art with a Sky Bet · Blocked badge. Illustrates MCC 7995 refusal at the auth layer.',
+ we4: '<strong>WE4 Welcome · Anna.</strong> "Anna\'s there when it\'s hard." CBT-based AI coach. Sample chat bubbles showing in/out + typing indicator.',
+ we5: '<strong>WE5 Welcome · Repair.</strong> "When you\'re ready, we help with the debt." Loan-offer card showing eligibility. Per <a href="../41-decisions-log.html">GEN-01</a>, this slide now says <strong>30 clean days</strong> unlocks consolidation (A/B vs 15). Final CTA is "Get started" → routes to AU2.',
+ au1: '<strong>AU1 Sign in.</strong> Returning user. Email or phone toggle, 6-digit OTP sent. No password. Passwordless auth across the product. <a href="../app-ui/04-auth.html">app-ui/04</a>.',
+ au2: '<strong>AU2 Sign up.</strong> New user. Adds invite-code field during Sandbox Phase 1 (capped at 10 users/month). T&amp;C + Privacy Policy checkbox required.',
+ au3: '<strong>AU3 Verify code.</strong> 6-digit OTP, expires in 10 min. Auto-submits when last box fills. Alternate paths: magic link (→ AU4), recovery (→ AU5).',
+ au4: '<strong>AU4 Magic link sent.</strong> Email link opens the app via Universal Link and resumes the flow at AU6. Waiting state with pulse indicator.',
+ au5: '<strong>AU5 Recovery.</strong> The "can\'t access this" off-ramp. Only screen in the auth flow with the Crisis pill visible (Samaritans card surfaces emotional-distress entry points).',
+ au6: '<strong>AU6 Set passcode.</strong> 4-digit passcode for quick re-entry. We still ask for an OTP every 30 days, or on a new device.',
+ au7: '<strong>AU7 Enable Face ID.</strong> Mobile only. Face data never leaves the device (Apple Secure Enclave / Android Keystore). Optional. Passcode is the fallback.',
+ ru1: '<strong>RU1 Daily unlock · Face ID.</strong> The day-2 surface. Same route (/auth/unlock) as RU2; renders Face ID if AU7 was enabled and biometric is available.',
+ ru2: '<strong>RU2 Daily unlock · passcode.</strong> Passcode fallback when biometric unavailable / failed 3×. After 5 wrong passcodes, fresh OTP required (back to AU3).',
 };
 
 function topbarPlain() {
-  return `<div class="phone__topbar"><span class="phone__topbar__spacer"></span></div>`;
+ return `<div class="phone__topbar"><span class="phone__topbar__spacer"></span></div>`;
 }
 function topbarBack() {
-  return `<div class="phone__topbar">
-    <button class="phone__back" onclick="prev()" aria-label="Back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
-    <span class="phone__topbar__spacer"></span>
-  </div>`;
+ return `<div class="phone__topbar">
+ <button class="phone__back" onclick="prev()" aria-label="Back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
+ <span class="phone__topbar__spacer"></span>
+ </div>`;
 }
 function topbarBackCrisis() {
-  return `<div class="phone__topbar">
-    <button class="phone__back" onclick="prev()" aria-label="Back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
-    <span class="phone__topbar__spacer"></span>
-    <button class="gc-crisis-pill" type="button"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7-4.5-9-9.5C2 7 5 4 8 4c1.7 0 3.2.8 4 2 .8-1.2 2.3-2 4-2 3 0 6 3 5 7.5C19 16.5 12 21 12 21z"/></svg> Help</button>
-  </div>`;
+ return `<div class="phone__topbar">
+ <button class="phone__back" onclick="prev()" aria-label="Back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
+ <span class="phone__topbar__spacer"></span>
+ <button class="gc-crisis-pill" type="button"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7-4.5-9-9.5C2 7 5 4 8 4c1.7 0 3.2.8 4 2.8-1.2 2.3-2 4-2 3 0 6 3 5 7.5C19 16.5 12 21 12 21z"/></svg> Help</button>
+ </div>`;
 }
 function topbarSkip(label) {
-  return `<div class="phone__topbar"><span class="phone__topbar__spacer"></span><a class="phone__topbar__skip" onclick="next()">${label}</a></div>`;
+ return `<div class="phone__topbar"><span class="phone__topbar__spacer"></span><a class="phone__topbar__skip" onclick="next()">${label}</a></div>`;
 }
 
 function weTop(activeIdx) {
-  let dots = '';
-  for (let i = 0; i < 5; i++) dots += `<span class="we-dot ${i === activeIdx ? 'is-on' : ''}"></span>`;
-  return `<div class="we-top"><div class="we-dots">${dots}</div><a class="we-skip" onclick="go(7)">Skip</a></div>`;
+ let dots = '';
+ for (let i = 0; i < 5; i++) dots += `<span class="we-dot ${i === activeIdx ? 'is-on' : ''}"></span>`;
+ return `<div class="we-top"><div class="we-dots">${dots}</div><a class="we-skip" onclick="go(7)">Skip</a></div>`;
 }
 const STAR_SVG = `<svg viewBox="0 0 24 24"><path d="M12 2 14 8.5 20 8 15 13 17 20 12 16 7 20 9 13 4 8 10 8.5z"/></svg>`;
 
 const builders = {
-  la1: () => `
-    <div class="la-stage" onclick="next()" role="button">
-      <div class="la-particles">
-        <span class="la-particle"></span>
-        <span class="la-particle"></span>
-        <span class="la-particle"></span>
-        <span class="la-particle"></span>
-        <span class="la-particle"></span>
-        <span class="la-particle"></span>
-      </div>
-      <div class="la-mark">
-        <span class="la-pulse"></span>
-        <span class="la-pulse la-pulse--2"></span>
-        <img src="../assets/gc-mark-mono-light.svg" alt="">
-      </div>
-      <h1 class="la-wordmark">GaimControl</h1>
-      <div class="la-tag">Recovery banking</div>
-      <div class="la-tap-hint">tap to continue (sim)</div>
-    </div>`,
+ la1: () => `
+ <div class="la-stage" onclick="next()" role="button">
+ <div class="la-particles">
+ <span class="la-particle"></span>
+ <span class="la-particle"></span>
+ <span class="la-particle"></span>
+ <span class="la-particle"></span>
+ <span class="la-particle"></span>
+ <span class="la-particle"></span>
+ </div>
+ <div class="la-mark">
+ <span class="la-pulse"></span>
+ <span class="la-pulse la-pulse--2"></span>
+ <img src="../assets/gc-mark-mono-light.svg" alt="">
+ </div>
+ <h1 class="la-wordmark">GaimControl</h1>
+ <div class="la-tag">Recovery banking</div>
+ <div class="la-tap-hint">tap to continue (sim)</div>
+ </div>`,
 
-  we1: () => `
-    <div class="we-stage we-stage--brand">
-      ${weTop(0)}
-      <div class="we-visual">
-        <span class="we-deco we-deco-star we-deco--tl">${STAR_SVG}</span>
-        <span class="we-deco we-deco-ring we-deco--br" style="border-color:rgba(255,255,255,0.18)"></span>
-        <span class="we-deco we-deco-circle we-deco--tr"></span>
-        <div class="we-brand-bob">
-          <div class="we-brand-mark"><img src="../assets/gc-mark-mono-light.svg" alt=""></div>
-          <span class="we-brand-pill">GaimControl · FCA Sandbox</span>
-        </div>
-      </div>
-      <div class="we-content">
-        <h2 class="we-heading">Banking, but for staying clean</h2>
-        <p class="we-body">A bank account for people in recovery from gambling. Stop. Stay clean. Pay it down.</p>
-      </div>
-      <div class="we-cta"><button onclick="next()">Next</button></div>
-    </div>`,
+ we1: () => `
+ <div class="we-stage we-stage--brand">
+ ${weTop(0)}
+ <div class="we-visual">
+ <span class="we-deco we-deco-star we-deco--tl">${STAR_SVG}</span>
+ <span class="we-deco we-deco-ring we-deco--br" style="border-color:rgba(255,255,255,0.18)"></span>
+ <span class="we-deco we-deco-circle we-deco--tr"></span>
+ <div class="we-brand-bob">
+ <div class="we-brand-mark"><img src="../assets/gc-mark-mono-light.svg" alt=""></div>
+ <span class="we-brand-pill">GaimControl · FCA Sandbox</span>
+ </div>
+ </div>
+ <div class="we-content">
+ <h2 class="we-heading">Banking, but for staying clean</h2>
+ <p class="we-body">A bank account for people in recovery from gambling. Stop. Stay clean. Pay it down.</p>
+ </div>
+ <div class="we-cta"><button onclick="next()">Next</button></div>
+ </div>`,
 
-  we2: () => `
-    <div class="we-stage we-stage--diagnose">
-      ${weTop(1)}
-      <div class="we-visual">
-        <span class="we-deco we-deco-star we-deco--tr">${STAR_SVG}</span>
-        <span class="we-deco we-deco-ring we-deco--bl"></span>
-        <div class="we-diag">
-          <div class="we-diag__chart">
-            <span class="we-diag__chart-l">Spend · last 30d</span>
-            <svg width="100%" height="42" viewBox="0 0 180 42" preserveAspectRatio="none" style="margin-top:6px">
-              <path d="M0 32 Q 20 36 40 28 T 90 14 T 130 6 T 180 10" fill="none" stroke="var(--p-40)" stroke-width="2"/>
-              <circle cx="130" cy="6" r="5" fill="var(--e-50)"/>
-              <circle cx="90" cy="14" r="3" fill="var(--w-80)"/>
-            </svg>
-          </div>
-          <div class="we-diag__alert">
-            <span class="we-diag__alert-ic"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/></svg></span>
-            <div><div class="we-diag__alert-t">Sky Bet · 22:14</div><div class="we-diag__alert-s">Pattern flagged</div></div>
-          </div>
-        </div>
-      </div>
-      <div class="we-content">
-        <h2 class="we-heading">We notice the patterns</h2>
-        <p class="we-body">Connect your bank and we'll spot the slips before they become spirals.</p>
-      </div>
-      <div class="we-cta"><button onclick="next()">Next</button></div>
-    </div>`,
+ we2: () => `
+ <div class="we-stage we-stage--diagnose">
+ ${weTop(1)}
+ <div class="we-visual">
+ <span class="we-deco we-deco-star we-deco--tr">${STAR_SVG}</span>
+ <span class="we-deco we-deco-ring we-deco--bl"></span>
+ <div class="we-diag">
+ <div class="we-diag__chart">
+ <span class="we-diag__chart-l">Spend · last 30d</span>
+ <svg width="100%" height="42" viewBox="0 0 180 42" preserveAspectRatio="none" style="margin-top:6px">
+ <path d="M0 32 Q 20 36 40 28 T 90 14 T 130 6 T 180 10" fill="none" stroke="var(--p-40)" stroke-width="2"/>
+ <circle cx="130" cy="6" r="5" fill="var(--e-50)"/>
+ <circle cx="90" cy="14" r="3" fill="var(--w-80)"/>
+ </svg>
+ </div>
+ <div class="we-diag__alert">
+ <span class="we-diag__alert-ic"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/></svg></span>
+ <div><div class="we-diag__alert-t">Sky Bet · 22:14</div><div class="we-diag__alert-s">Pattern flagged</div></div>
+ </div>
+ </div>
+ </div>
+ <div class="we-content">
+ <h2 class="we-heading">We notice the patterns</h2>
+ <p class="we-body">Connect your bank and we'll spot the slips before they become spirals.</p>
+ </div>
+ <div class="we-cta"><button onclick="next()">Next</button></div>
+ </div>`,
 
-  we3: () => `
-    <div class="we-stage we-stage--control">
-      ${weTop(2)}
-      <div class="we-visual">
-        <span class="we-deco we-deco-star we-deco--tl">${STAR_SVG}</span>
-        <span class="we-deco we-deco-circle we-deco--br" style="background:rgba(255,255,255,0.25)"></span>
-        <div class="we-ctrl">
-          <div class="we-ctrl__card">
-            <img src="../assets/gc-mark-mono-light.svg" alt="">
-            <div class="we-ctrl__card-num">•••• 4291</div>
-            <div class="we-ctrl__card-meta"><span>05/29</span><span>SAM K</span></div>
-            <span class="we-ctrl__lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="10" x="5" y="11" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span>
-          </div>
-          <span class="we-ctrl__badge">Sky Bet · Blocked</span>
-        </div>
-      </div>
-      <div class="we-content">
-        <h2 class="we-heading">We block where it goes wrong</h2>
-        <p class="we-body">Your card refuses gambling sites at the merchant-code level. £0 ever leaves you.</p>
-      </div>
-      <div class="we-cta"><button onclick="next()">Next</button></div>
-    </div>`,
+ we3: () => `
+ <div class="we-stage we-stage--control">
+ ${weTop(2)}
+ <div class="we-visual">
+ <span class="we-deco we-deco-star we-deco--tl">${STAR_SVG}</span>
+ <span class="we-deco we-deco-circle we-deco--br" style="background:rgba(255,255,255,0.25)"></span>
+ <div class="we-ctrl">
+ <div class="we-ctrl__card">
+ <img src="../assets/gc-mark-mono-light.svg" alt="">
+ <div class="we-ctrl__card-num">•••• 4291</div>
+ <div class="we-ctrl__card-meta"><span>05/29</span><span>SAM K</span></div>
+ <span class="we-ctrl__lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="10" x="5" y="11" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span>
+ </div>
+ <span class="we-ctrl__badge">Sky Bet · Blocked</span>
+ </div>
+ </div>
+ <div class="we-content">
+ <h2 class="we-heading">We block where it goes wrong</h2>
+ <p class="we-body">Your card refuses gambling sites at the merchant-code level. £0 ever leaves you.</p>
+ </div>
+ <div class="we-cta"><button onclick="next()">Next</button></div>
+ </div>`,
 
-  we4: () => `
-    <div class="we-stage we-stage--anna">
-      ${weTop(3)}
-      <div class="we-visual">
-        <span class="we-deco we-deco-circle we-deco--tl"></span>
-        <span class="we-deco we-deco-star we-deco--br">${STAR_SVG}</span>
-        <div class="we-chat">
-          <div class="we-chat__in">Hey, today's session is on goals. Slow with me?</div>
-          <div class="we-chat__out">ok</div>
-          <div class="we-chat__typing"><span></span><span></span><span></span></div>
-        </div>
-      </div>
-      <div class="we-content">
-        <h2 class="we-heading">Anna's there when it's hard</h2>
-        <p class="we-body">CBT-based AI coach. Open chat at 11pm before payday — that's what she's for.</p>
-      </div>
-      <div class="we-cta"><button onclick="next()">Next</button></div>
-    </div>`,
+ we4: () => `
+ <div class="we-stage we-stage--anna">
+ ${weTop(3)}
+ <div class="we-visual">
+ <span class="we-deco we-deco-circle we-deco--tl"></span>
+ <span class="we-deco we-deco-star we-deco--br">${STAR_SVG}</span>
+ <div class="we-chat">
+ <div class="we-chat__in">Hey, today's session is on goals. Slow with me?</div>
+ <div class="we-chat__out">ok</div>
+ <div class="we-chat__typing"><span></span><span></span><span></span></div>
+ </div>
+ </div>
+ <div class="we-content">
+ <h2 class="we-heading">Anna's there when it's hard</h2>
+ <p class="we-body">CBT-based AI coach. Open chat at 11pm before payday. That's what she's for.</p>
+ </div>
+ <div class="we-cta"><button onclick="next()">Next</button></div>
+ </div>`,
 
-  we5: () => `
-    <div class="we-stage we-stage--repair">
-      ${weTop(4)}
-      <div class="we-visual">
-        <span class="we-deco we-deco-star we-deco--tr">${STAR_SVG}</span>
-        <span class="we-deco we-deco-ring we-deco--bl"></span>
-        <div class="we-rep">
-          <span class="we-rep__kicker">Loan offer</span>
-          <div class="we-rep__amt"><span class="we-rep__amt-pre">£</span>12,450</div>
-          <div class="we-rep__term">36 months · paid direct</div>
-          <div class="we-rep__bar"><div></div></div>
-          <span class="we-rep__pill">Eligible</span>
-        </div>
-      </div>
-      <div class="we-content">
-        <h2 class="we-heading">When you're ready, we help with the debt</h2>
-        <p class="we-body">30 clean days unlocks consolidation. Relapse Hold pauses interest if you slip.</p>
-      </div>
-      <div class="we-cta"><button onclick="go(7)">Get started</button></div>
-    </div>`,
+ we5: () => `
+ <div class="we-stage we-stage--repair">
+ ${weTop(4)}
+ <div class="we-visual">
+ <span class="we-deco we-deco-star we-deco--tr">${STAR_SVG}</span>
+ <span class="we-deco we-deco-ring we-deco--bl"></span>
+ <div class="we-rep">
+ <span class="we-rep__kicker">Loan offer</span>
+ <div class="we-rep__amt"><span class="we-rep__amt-pre">£</span>12,450</div>
+ <div class="we-rep__term">36 months · paid direct</div>
+ <div class="we-rep__bar"><div></div></div>
+ <span class="we-rep__pill">Eligible</span>
+ </div>
+ </div>
+ <div class="we-content">
+ <h2 class="we-heading">When you're ready, we help with the debt</h2>
+ <p class="we-body">30 clean days unlocks consolidation. Relapse Hold pauses interest if you slip.</p>
+ </div>
+ <div class="we-cta"><button onclick="go(7)">Get started</button></div>
+ </div>`,
 
-  au1: () => `
-    ${topbarPlain()}
-    <div class="phone__content">
-      <span class="phone__brand"><img src="../assets/gc-mark-mono-light.svg" alt=""></span>
-      <h3 class="phone__heading phone__heading--center">Welcome back</h3>
-      <p class="phone__sub phone__sub--center">Sign in with email or phone. We'll send a 6-digit code.</p>
-      <div class="gc-segmented" style="align-self:center"><button class="is-on">Email</button><button>Phone</button></div>
-      <div class="phone__field">
-        <span class="phone__label">Email</span>
-        <input class="phone__input" type="email" value="sam@example.com">
-      </div>
-      <button class="phone__cta" onclick="next()">Continue</button>
-      <p class="phone__alt">Don't have an account? <a onclick="go(1)">Sign up</a></p>
-    </div>`,
+ au1: () => `
+ ${topbarPlain()}
+ <div class="phone__content">
+ <span class="phone__brand"><img src="../assets/gc-mark-mono-light.svg" alt=""></span>
+ <h3 class="phone__heading phone__heading--center">Welcome back</h3>
+ <p class="phone__sub phone__sub--center">Sign in with email or phone. We'll send a 6-digit code.</p>
+ <div class="gc-segmented" style="align-self:center"><button class="is-on">Email</button><button>Phone</button></div>
+ <div class="phone__field">
+ <span class="phone__label">Email</span>
+ <input class="phone__input" type="email" value="sam@example.com">
+ </div>
+ <button class="phone__cta" onclick="next()">Continue</button>
+ <p class="phone__alt">Don't have an account? <a onclick="go(1)">Sign up</a></p>
+ </div>`,
 
-  au2: () => `
-    ${topbarPlain()}
-    <div class="phone__content">
-      <span class="phone__brand"><img src="../assets/gc-mark-mono-light.svg" alt=""></span>
-      <h3 class="phone__heading phone__heading--center">Let's begin</h3>
-      <p class="phone__sub phone__sub--center">During the FCA Sandbox you'll need an invite code from us.</p>
-      <div class="gc-segmented" style="align-self:center"><button class="is-on">Email</button><button>Phone</button></div>
-      <div class="phone__field">
-        <span class="phone__label">Email</span>
-        <input class="phone__input" type="email" placeholder="you@example.com">
-      </div>
-      <div class="phone__field">
-        <span class="phone__label">Invite code</span>
-        <input class="phone__input" type="text" placeholder="GAIMCONTROL-xxxx" style="font-family:'JetBrains Mono',monospace">
-      </div>
-      <label class="phone__check">
-        <span class="gc-checkbox gc-checkbox--on"></span>
-        <span>I agree to <a href="#">Terms</a>, <a href="#">Privacy</a>, and to GC reading my banking transactions.</span>
-      </label>
-      <button class="phone__cta" onclick="go(2)">Continue</button>
-    </div>`,
+ au2: () => `
+ ${topbarPlain()}
+ <div class="phone__content">
+ <span class="phone__brand"><img src="../assets/gc-mark-mono-light.svg" alt=""></span>
+ <h3 class="phone__heading phone__heading--center">Let's begin</h3>
+ <p class="phone__sub phone__sub--center">During the FCA Sandbox you'll need an invite code from us.</p>
+ <div class="gc-segmented" style="align-self:center"><button class="is-on">Email</button><button>Phone</button></div>
+ <div class="phone__field">
+ <span class="phone__label">Email</span>
+ <input class="phone__input" type="email" placeholder="you@example.com">
+ </div>
+ <div class="phone__field">
+ <span class="phone__label">Invite code</span>
+ <input class="phone__input" type="text" placeholder="GAIMCONTROL-xxxx" style="font-family:'JetBrains Mono',monospace">
+ </div>
+ <label class="phone__check">
+ <span class="gc-checkbox gc-checkbox--on"></span>
+ <span>I agree to <a href="#">Terms</a>, <a href="#">Privacy</a>, and to GC reading my banking transactions.</span>
+ </label>
+ <button class="phone__cta" onclick="go(2)">Continue</button>
+ </div>`,
 
-  au3: () => `
-    ${topbarBack()}
-    <div class="phone__content">
-      <h3 class="phone__heading">Check your email</h3>
-      <p class="phone__sub">Enter the 6-digit code sent to <strong style="color:var(--text-primary)">sam@example.com</strong>. Expires in 10 min.</p>
-      <div class="phone__field">
-        <span class="phone__label">Code</span>
-        <div class="phone__otp">
-          <input maxlength="1" value="4"><input maxlength="1" value="2"><input maxlength="1" value="9"><input maxlength="1"><input maxlength="1"><input maxlength="1">
-        </div>
-        <span class="phone__hint">Auto-submits when you fill the last box.</span>
-      </div>
-      <button class="phone__cta" onclick="go(5)" style="margin-top:8px">Verify code</button>
-      <div class="phone__bottom-links">
-        <a onclick="go(3)">Send a magic link instead</a>
-        <a class="dim">Resend code in 24s</a>
-        <a class="sec" onclick="go(4)">I can't access this email</a>
-      </div>
-    </div>`,
+ au3: () => `
+ ${topbarBack()}
+ <div class="phone__content">
+ <h3 class="phone__heading">Check your email</h3>
+ <p class="phone__sub">Enter the 6-digit code sent to <strong style="color:var(--text-primary)">sam@example.com</strong>. Expires in 10 min.</p>
+ <div class="phone__field">
+ <span class="phone__label">Code</span>
+ <div class="phone__otp">
+ <input maxlength="1" value="4"><input maxlength="1" value="2"><input maxlength="1" value="9"><input maxlength="1"><input maxlength="1"><input maxlength="1">
+ </div>
+ <span class="phone__hint">Auto-submits when you fill the last box.</span>
+ </div>
+ <button class="phone__cta" onclick="go(5)" style="margin-top:8px">Verify code</button>
+ <div class="phone__bottom-links">
+ <a onclick="go(3)">Send a magic link instead</a>
+ <a class="dim">Resend code in 24s</a>
+ <a class="sec" onclick="go(4)">I can't access this email</a>
+ </div>
+ </div>`,
 
-  au4: () => `
-    ${topbarBack()}
-    <div class="phone__content" style="text-align:center;align-items:center">
-      <div class="phone__icon-circle">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-      </div>
-      <h3 class="phone__heading phone__heading--center">Check your email</h3>
-      <p class="phone__sub phone__sub--center">We sent a sign-in link to <strong style="color:var(--text-primary)">sam@example.com</strong>. Tap it on this phone — we'll bring you back here.</p>
-      <div style="display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--text-secondary)">
-        <span class="phone__pulse-dot"></span>
-        Waiting for you to click…
-      </div>
-      <button class="phone__cta" onclick="go(5)" style="margin-top:14px">Simulate link tap (sim)</button>
-      <div class="phone__bottom-links">
-        <a onclick="go(2)">Send a code instead</a>
-        <a class="dim">Resend link</a>
-      </div>
-    </div>`,
+ au4: () => `
+ ${topbarBack()}
+ <div class="phone__content" style="text-align:center;align-items:center">
+ <div class="phone__icon-circle">
+ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+ </div>
+ <h3 class="phone__heading phone__heading--center">Check your email</h3>
+ <p class="phone__sub phone__sub--center">We sent a sign-in link to <strong style="color:var(--text-primary)">sam@example.com</strong>. Tap it on this phone. We'll bring you back here.</p>
+ <div style="display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--text-secondary)">
+ <span class="phone__pulse-dot"></span>
+ Waiting for you to click…
+ </div>
+ <button class="phone__cta" onclick="go(5)" style="margin-top:14px">Simulate link tap (sim)</button>
+ <div class="phone__bottom-links">
+ <a onclick="go(2)">Send a code instead</a>
+ <a class="dim">Resend link</a>
+ </div>
+ </div>`,
 
-  au5: () => `
-    ${topbarBackCrisis()}
-    <div class="phone__content">
-      <h3 class="phone__heading">Can't get in?</h3>
-      <p class="phone__sub">No problem. Pick one — we'll get you back in.</p>
-      <button class="recover-option" onclick="go(2)">
-        <strong>Try my phone instead</strong>
-        <span>SMS to ····· 1234</span>
-      </button>
-      <button class="recover-option">
-        <strong>Contact our team</strong>
-        <span>Reply within 1 working day</span>
-      </button>
-      <div class="crisis-card">
-        <strong>Need to talk to someone now?</strong>
-        Samaritans free on <strong>116 123</strong>, 24/7.
-      </div>
-    </div>`,
+ au5: () => `
+ ${topbarBackCrisis()}
+ <div class="phone__content">
+ <h3 class="phone__heading">Can't get in?</h3>
+ <p class="phone__sub">No problem. Pick one. We'll get you back in.</p>
+ <button class="recover-option" onclick="go(2)">
+ <strong>Try my phone instead</strong>
+ <span>SMS to ····· 1234</span>
+ </button>
+ <button class="recover-option">
+ <strong>Contact our team</strong>
+ <span>Reply within 1 working day</span>
+ </button>
+ <div class="crisis-card">
+ <strong>Need to talk to someone now?</strong>
+ Samaritans free on <strong>116 123</strong>, 24/7.
+ </div>
+ </div>`,
 
-  au6: () => `
-    ${topbarSkip('Skip')}
-    <div class="phone__content">
-      <div class="phone__progress"><div style="width:50%"></div></div>
-      <h3 class="phone__heading">Create a passcode</h3>
-      <p class="phone__sub">Quick re-entry next time you open GaimControl. We'll still ask for an OTP every 30 days, or on a new device.</p>
-      <div class="phone__field" style="margin-top:8px">
-        <span class="phone__label" style="text-align:center">4-digit passcode</span>
-        <div class="phone__passcode">
-          <input maxlength="1" type="password" inputmode="numeric" value="•" class="is-filled">
-          <input maxlength="1" type="password" inputmode="numeric" value="•" class="is-filled">
-          <input maxlength="1" type="password" inputmode="numeric">
-          <input maxlength="1" type="password" inputmode="numeric">
-        </div>
-        <span class="phone__hint" style="text-align:center">Avoid 1234 or your year of birth.</span>
-      </div>
-      <button class="phone__cta" style="margin-top:auto" onclick="next()">Continue</button>
-    </div>`,
+ au6: () => `
+ ${topbarSkip('Skip')}
+ <div class="phone__content">
+ <div class="phone__progress"><div style="width:50%"></div></div>
+ <h3 class="phone__heading">Create a passcode</h3>
+ <p class="phone__sub">Quick re-entry next time you open GaimControl. We'll still ask for an OTP every 30 days, or on a new device.</p>
+ <div class="phone__field" style="margin-top:8px">
+ <span class="phone__label" style="text-align:center">4-digit passcode</span>
+ <div class="phone__passcode">
+ <input maxlength="1" type="password" inputmode="numeric" value="•" class="is-filled">
+ <input maxlength="1" type="password" inputmode="numeric" value="•" class="is-filled">
+ <input maxlength="1" type="password" inputmode="numeric">
+ <input maxlength="1" type="password" inputmode="numeric">
+ </div>
+ <span class="phone__hint" style="text-align:center">Avoid 1234 or your year of birth.</span>
+ </div>
+ <button class="phone__cta" style="margin-top:auto" onclick="next()">Continue</button>
+ </div>`,
 
-  au7: () => `
-    ${topbarSkip('Not now')}
-    <div class="phone__content">
-      <div class="phone__progress"><div style="width:80%"></div></div>
-      <h3 class="phone__heading">Use Face ID?</h3>
-      <p class="phone__sub">Instead of typing your passcode every time, you can unlock GaimControl with Face ID. Your face data never leaves your phone.</p>
-      <span class="biometric-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M9 4H5a2 2 0 0 0-2 2v4"/><path d="M19 4h-4"/><path d="M19 4a2 2 0 0 1 2 2v4"/><path d="M3 14v4a2 2 0 0 0 2 2h4"/><path d="M21 14v4a2 2 0 0 1-2 2h-4"/>
-          <path d="M9 9v1"/><path d="M15 9v1"/><path d="M10 15s.5 1.5 2 1.5 2-1.5 2-1.5"/>
-        </svg>
-      </span>
-      <div style="font-size:11.5px;color:var(--text-muted);text-align:center;line-height:1.45">Your passcode stays as backup. You can change either in Profile → Security.</div>
-      <button class="phone__cta" style="margin-top:auto" onclick="next()">Enable Face ID</button>
-      <p class="phone__alt">Maybe later · <a onclick="next()">Use passcode only</a></p>
-    </div>`,
+ au7: () => `
+ ${topbarSkip('Not now')}
+ <div class="phone__content">
+ <div class="phone__progress"><div style="width:80%"></div></div>
+ <h3 class="phone__heading">Use Face ID?</h3>
+ <p class="phone__sub">Instead of typing your passcode every time, you can unlock GaimControl with Face ID. Your face data never leaves your phone.</p>
+ <span class="biometric-icon">
+ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+ <path d="M9 4H5a2 2 0 0 0-2 2v4"/><path d="M19 4h-4"/><path d="M19 4a2 2 0 0 1 2 2v4"/><path d="M3 14v4a2 2 0 0 0 2 2h4"/><path d="M21 14v4a2 2 0 0 1-2 2h-4"/>
+ <path d="M9 9v1"/><path d="M15 9v1"/><path d="M10 15s.5 1.5 2 1.5 2-1.5 2-1.5"/>
+ </svg>
+ </span>
+ <div style="font-size:11.5px;color:var(--text-muted);text-align:center;line-height:1.45">Your passcode stays as backup. You can change either in Profile → Security.</div>
+ <button class="phone__cta" style="margin-top:auto" onclick="next()">Enable Face ID</button>
+ <p class="phone__alt">Maybe later · <a onclick="next()">Use passcode only</a></p>
+ </div>`,
 
-  ru1: () => `
-    ${topbarPlain()}
-    <div class="phone__content" style="text-align:center;align-items:center">
-      <span class="phone__brand"><img src="../assets/gc-mark-mono-light.svg" alt=""></span>
-      <h3 class="phone__heading phone__heading--center">Welcome back, Sam</h3>
-      <span class="biometric-icon" style="margin:24px auto;cursor:pointer" onclick="next()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M9 4H5a2 2 0 0 0-2 2v4"/><path d="M19 4h-4"/><path d="M19 4a2 2 0 0 1 2 2v4"/><path d="M3 14v4a2 2 0 0 0 2 2h4"/><path d="M21 14v4a2 2 0 0 1-2 2h-4"/>
-          <path d="M9 9v1"/><path d="M15 9v1"/><path d="M10 15s.5 1.5 2 1.5 2-1.5 2-1.5"/>
-        </svg>
-      </span>
-      <span style="font-size:12.5px;color:var(--text-secondary)">Look at your phone… (tap to sim)</span>
-      <div class="phone__bottom-links">
-        <a onclick="next()">Use passcode instead</a>
-        <a class="dim" onclick="go(0)">Sign in as someone else</a>
-      </div>
-    </div>`,
+ ru1: () => `
+ ${topbarPlain()}
+ <div class="phone__content" style="text-align:center;align-items:center">
+ <span class="phone__brand"><img src="../assets/gc-mark-mono-light.svg" alt=""></span>
+ <h3 class="phone__heading phone__heading--center">Welcome back, Sam</h3>
+ <span class="biometric-icon" style="margin:24px auto;cursor:pointer" onclick="next()">
+ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+ <path d="M9 4H5a2 2 0 0 0-2 2v4"/><path d="M19 4h-4"/><path d="M19 4a2 2 0 0 1 2 2v4"/><path d="M3 14v4a2 2 0 0 0 2 2h4"/><path d="M21 14v4a2 2 0 0 1-2 2h-4"/>
+ <path d="M9 9v1"/><path d="M15 9v1"/><path d="M10 15s.5 1.5 2 1.5 2-1.5 2-1.5"/>
+ </svg>
+ </span>
+ <span style="font-size:12.5px;color:var(--text-secondary)">Look at your phone… (tap to sim)</span>
+ <div class="phone__bottom-links">
+ <a onclick="next()">Use passcode instead</a>
+ <a class="dim" onclick="go(0)">Sign in as someone else</a>
+ </div>
+ </div>`,
 
-  ru2: () => `
-    ${topbarBack()}
-    <div class="phone__content" style="text-align:center;align-items:center">
-      <span class="phone__brand"><img src="../assets/gc-mark-mono-light.svg" alt=""></span>
-      <h3 class="phone__heading phone__heading--center">Enter your passcode</h3>
-      <p class="phone__sub phone__sub--center">Welcome back, Sam.</p>
-      <div class="phone__passcode" style="margin-top:16px">
-        <input maxlength="1" type="password" inputmode="numeric" value="•" class="is-filled">
-        <input maxlength="1" type="password" inputmode="numeric" value="•" class="is-filled">
-        <input maxlength="1" type="password" inputmode="numeric" value="•" class="is-filled">
-        <input maxlength="1" type="password" inputmode="numeric">
-      </div>
-      <span style="font-size:11.5px;color:var(--text-muted);margin-top:10px">3 of 5 attempts used. After 5 you'll need a fresh code.</span>
-      <button class="phone__cta" style="margin-top:auto" onclick="restart()">Unlock</button>
-      <div class="phone__bottom-links" style="margin-top:0;padding-top:0">
-        <a onclick="go(7)">Use Face ID</a>
-        <a class="sec" onclick="go(5)">I forgot my passcode</a>
-      </div>
-    </div>`,
+ ru2: () => `
+ ${topbarBack()}
+ <div class="phone__content" style="text-align:center;align-items:center">
+ <span class="phone__brand"><img src="../assets/gc-mark-mono-light.svg" alt=""></span>
+ <h3 class="phone__heading phone__heading--center">Enter your passcode</h3>
+ <p class="phone__sub phone__sub--center">Welcome back, Sam.</p>
+ <div class="phone__passcode" style="margin-top:16px">
+ <input maxlength="1" type="password" inputmode="numeric" value="•" class="is-filled">
+ <input maxlength="1" type="password" inputmode="numeric" value="•" class="is-filled">
+ <input maxlength="1" type="password" inputmode="numeric" value="•" class="is-filled">
+ <input maxlength="1" type="password" inputmode="numeric">
+ </div>
+ <span style="font-size:11.5px;color:var(--text-muted);margin-top:10px">3 of 5 attempts used. After 5 you'll need a fresh code.</span>
+ <button class="phone__cta" style="margin-top:auto" onclick="restart()">Unlock</button>
+ <div class="phone__bottom-links" style="margin-top:0;padding-top:0">
+ <a onclick="go(7)">Use Face ID</a>
+ <a class="sec" onclick="go(5)">I forgot my passcode</a>
+ </div>
+ </div>`,
 };
 
 let idx = 0;
 
 function render() {
-  const screen = SCREENS[idx];
-  document.getElementById('stage').innerHTML = `<div class="screen" style="display:flex;flex-direction:column;flex:1;min-height:0">${builders[screen.kind]()}</div>`;
+ const screen = SCREENS[idx];
+ document.getElementById('stage').innerHTML = `<div class="screen" style="display:flex;flex-direction:column;flex:1;min-height:0">${builders[screen.kind]()}</div>`;
 
-  document.getElementById('screenId').textContent = screen.id;
-  document.getElementById('screenName').textContent = screen.name;
-  document.getElementById('progressFill').style.width = ((idx + 1) / SCREENS.length * 100) + '%';
-  document.getElementById('navPrev').disabled = idx === 0;
-  document.getElementById('navNext').disabled = idx === SCREENS.length - 1;
+ document.getElementById('screenId').textContent = screen.id;
+ document.getElementById('screenName').textContent = screen.name;
+ document.getElementById('progressFill').style.width = ((idx + 1) / SCREENS.length * 100) + '%';
+ document.getElementById('navPrev').disabled = idx === 0;
+ document.getElementById('navNext').disabled = idx === SCREENS.length - 1;
 
-  document.querySelectorAll('.proto-scrubber__item').forEach((el, i) => {
-    el.classList.toggle('is-active', i === idx);
-    if (i === idx) el.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
-  });
+ document.querySelectorAll('.proto-scrubber__item').forEach((el, i) => {
+ el.classList.toggle('is-active', i === idx);
+ if (i === idx) el.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+ });
 
-  document.getElementById('contextBody').innerHTML = CTX[screen.kind] || `<strong>${screen.id}</strong> ${screen.name}`;
+ document.getElementById('contextBody').innerHTML = CTX[screen.kind] || `<strong>${screen.id}</strong> ${screen.name}`;
 }
 
 function next() { if (idx < SCREENS.length - 1) { idx++; render(); } }
@@ -754,35 +754,35 @@ function go(i) { idx = i; render(); }
 function restart() { idx = 7; render(); /* loop back to daily unlock for demo cycle */ }
 
 function buildScrubber() {
-  const nav = document.getElementById('scrubber');
-  SCREENS.forEach((s, i) => {
-    const btn = document.createElement('button');
-    btn.className = 'proto-scrubber__item';
-    btn.innerHTML = `<span class="proto-scrubber__id">${s.id}</span><span class="proto-scrubber__name">${s.name}</span>`;
-    btn.addEventListener('click', () => go(i));
-    nav.appendChild(btn);
-  });
+ const nav = document.getElementById('scrubber');
+ SCREENS.forEach((s, i) => {
+ const btn = document.createElement('button');
+ btn.className = 'proto-scrubber__item';
+ btn.innerHTML = `<span class="proto-scrubber__id">${s.id}</span><span class="proto-scrubber__name">${s.name}</span>`;
+ btn.addEventListener('click', () => go(i));
+ nav.appendChild(btn);
+ });
 }
 
 function initTheme() {
-  const root = document.documentElement;
-  const stored = localStorage.getItem('gc-proto-theme');
-  const initial = stored || 'dark';
-  root.setAttribute('data-theme', initial);
-  document.querySelector('.theme-label').textContent = initial === 'dark' ? 'Dark' : 'Light';
-  document.querySelector('.proto-theme-toggle').addEventListener('click', () => {
-    const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-    root.setAttribute('data-theme', next);
-    document.querySelector('.theme-label').textContent = next === 'dark' ? 'Dark' : 'Light';
-    try { localStorage.setItem('gc-proto-theme', next); } catch(e) {}
-  });
+ const root = document.documentElement;
+ const stored = localStorage.getItem('gc-proto-theme');
+ const initial = stored || 'dark';
+ root.setAttribute('data-theme', initial);
+ document.querySelector('.theme-label').textContent = initial === 'dark' ? 'Dark' : 'Light';
+ document.querySelector('.proto-theme-toggle').addEventListener('click', () => {
+ const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+ root.setAttribute('data-theme', next);
+ document.querySelector('.theme-label').textContent = next === 'dark' ? 'Dark' : 'Light';
+ try { localStorage.setItem('gc-proto-theme', next); } catch(e) {}
+ });
 }
 
 document.getElementById('navPrev').addEventListener('click', prev);
 document.getElementById('navNext').addEventListener('click', next);
 document.addEventListener('keydown', (e) => {
-  if (e.key === 'ArrowRight') next();
-  if (e.key === 'ArrowLeft') prev();
+ if (e.key === 'ArrowRight') next();
+ if (e.key === 'ArrowLeft') prev();
 });
 
 buildScrubber();

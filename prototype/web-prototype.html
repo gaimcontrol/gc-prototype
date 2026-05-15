@@ -10,11 +10,11 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --p-10:#0B0F1C;--p-20:#161B2D;--p-30:#20273C;--p-40:#354872;--p-50:#4D608C;--p-60:#6B7DA6;--p-99:#FAFBFE;--p-100:#FFF;
-  --s-50:#8576C2;--s-70:#B5ACDF;
-  --t-20:#1A6047;--t-50:#399971;--t-80:#ADDCC2;--t-90:#D5EDDF;--t-30:#1F7058;
-  --w-30:#6B4500;--w-80:#FAB44A;--w-90:#FFDFA8;--w-60:#C28200;
-  --n-50:#76798A;--n-95:#F1F2F5;--nv-80:#C5C9DD;
+ --p-10:#0B0F1C;--p-20:#161B2D;--p-30:#20273C;--p-40:#354872;--p-50:#4D608C;--p-60:#6B7DA6;--p-99:#FAFBFE;--p-100:#FFF;
+ --s-50:#8576C2;--s-70:#B5ACDF;
+ --t-20:#1A6047;--t-50:#399971;--t-80:#ADDCC2;--t-90:#D5EDDF;--t-30:#1F7058;
+ --w-30:#6B4500;--w-80:#FAB44A;--w-90:#FFDFA8;--w-60:#C28200;
+ --n-50:#76798A;--n-95:#F1F2F5;--nv-80:#C5C9DD;
 }
 [data-theme="dark"] { --page-bg: #0a0e1a; --page-fg: var(--n-95); --page-fg-muted: var(--nv-80); --page-card-bg: var(--p-20); --page-card-bg-2: var(--p-10); --page-divider: rgba(255,255,255,0.06); --page-accent: var(--s-70); }
 [data-theme="light"] { --page-bg: var(--p-99); --page-fg: var(--p-20); --page-fg-muted: var(--n-50); --page-card-bg: var(--p-100); --page-card-bg-2: #f4f5f9; --page-divider: rgba(22,27,45,0.08); --page-accent: var(--p-40); }
@@ -37,11 +37,11 @@ h1 { font-family: 'Inter', sans-serif; font-size: 64px; font-weight: 800; line-h
 .status-card { padding: 24px; background: var(--page-card-bg); border: 1px solid var(--page-divider); border-radius: 14px; margin: 32px 0; }
 .status-card__head { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
 .status-card__icon { width: 40px; height: 40px; border-radius: 11px; background: var(--w-30); color: var(--w-80); display: inline-flex; align-items: center; justify-content: center; }
-[data-theme="light"] .status-card__icon { background: var(--w-90); color: var(--w-30); }
+[data-theme="light"].status-card__icon { background: var(--w-90); color: var(--w-30); }
 .status-card__title { font-size: 17px; font-weight: 700; }
 .status-card__sub { font-size: 13.5px; color: var(--page-fg-muted); line-height: 1.55; max-width: 64ch; }
 .progress-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 18px; }
-@media (max-width: 720px) { .progress-row { grid-template-columns: 1fr; } }
+@media (max-width: 720px) {.progress-row { grid-template-columns: 1fr; } }
 .progress-stat { padding: 14px 16px; background: var(--page-card-bg-2); border-radius: 11px; }
 .progress-stat__n { font-size: 24px; font-weight: 800; letter-spacing: -0.02em; }
 .progress-stat__l { font-size: 11.5px; color: var(--page-fg-muted); margin-top: 2px; font-family: 'JetBrains Mono', monospace; letter-spacing: 0.04em; text-transform: uppercase; }
@@ -61,41 +61,41 @@ footer a { color: var(--page-accent); text-decoration: none; }
 <body>
 
 <header class="gc-header">
-  <span class="gc-header__mark"><img src="../assets/gc-mark-mono-light.svg" alt=""></span>
-  <span class="gc-header__name">GaimControl</span>
-  <span class="gc-header__pill">web · full</span>
+ <span class="gc-header__mark"><img src="../assets/gc-mark-mono-light.svg" alt=""></span>
+ <span class="gc-header__name">GaimControl</span>
+ <span class="gc-header__pill">web · full</span>
 </header>
 
 <a class="back" href="index.html">← prototype index</a>
 
 <div class="subhead">Web · full prototype</div>
 <h1>End-to-end <span class="gradient">web</span>.</h1>
-<p class="lede">Every flow in the web-ui paradigm: left sidenav with Banking expanding into Overview / Cards / Accounts / Spending / Sponsor sub-nav, larger Anna chat surface, plus the web-only surfaces — admin (§13), sponsor dash (§15), marketing site (§14). Builds after mobile sign-off so the two demos can be screenshotted side-by-side.</p>
+<p class="lede">Every flow in the web-ui paradigm: left sidenav with Banking expanding into Overview / Cards / Accounts / Spending / Sponsor sub-nav, larger Anna chat surface, plus the web-only surfaces. Admin (§13), sponsor dash (§15), marketing site (§14). Builds after mobile sign-off so the two demos can be screenshotted side-by-side.</p>
 
 <div class="status-card">
-  <div class="status-card__head">
-    <span class="status-card__icon">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-    </span>
-    <div>
-      <div class="status-card__title">All web surfaces ready</div>
-      <div class="status-card__sub">All 13 web surfaces ready: 11 consumer flows (§04 → §16) + §13 Admin console + §14 Marketing site with custom illustrations, 6 profile UTM landers, and the sponsor/lender explainer.</div>
-    </div>
-  </div>
-  <div class="progress-row">
-    <div class="progress-stat"><div class="progress-stat__n">13 / 13</div><div class="progress-stat__l">Web surfaces ready</div></div>
-    <div class="progress-stat"><div class="progress-stat__n">100%</div><div class="progress-stat__l">Coverage</div></div>
-  </div>
+ <div class="status-card__head">
+ <span class="status-card__icon">
+ <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+ </span>
+ <div>
+ <div class="status-card__title">All web surfaces ready</div>
+ <div class="status-card__sub">All 13 web surfaces ready: 11 consumer flows (§04 → §16) + §13 Admin console + §14 Marketing site with custom illustrations, 6 profile UTM landers, and the sponsor/lender explainer.</div>
+ </div>
+ </div>
+ <div class="progress-row">
+ <div class="progress-stat"><div class="progress-stat__n">13 / 13</div><div class="progress-stat__l">Web surfaces ready</div></div>
+ <div class="progress-stat"><div class="progress-stat__n">100%</div><div class="progress-stat__l">Coverage</div></div>
+ </div>
 </div>
 
 <!-- Tour CTA -->
 <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;padding:22px 24px;margin:24px 0 32px;background:linear-gradient(135deg,rgba(133,118,194,0.16),rgba(57,153,113,0.10));border:1px solid var(--page-divider);border-radius:16px">
-  <div style="flex:1;min-width:240px">
-    <div style="font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--page-fg-muted);margin-bottom:4px">Combined prototype · click-through tour</div>
-    <div style="font-size:17px;font-weight:700;letter-spacing:-0.01em">Start at §04 Auth · the sticky top bar moves you through all 13 web surfaces.</div>
-    <div style="font-size:12.5px;color:var(--page-fg-muted);margin-top:6px;line-height:1.55">Use the prev/next buttons at the very top, click any §xx pill to jump, or press <kbd style="font-family:'JetBrains Mono',monospace;font-size:10.5px;padding:1px 6px;border-radius:4px;background:var(--page-card-bg-2);border:1px solid var(--page-divider)">Shift</kbd> + <kbd style="font-family:'JetBrains Mono',monospace;font-size:10.5px;padding:1px 6px;border-radius:4px;background:var(--page-card-bg-2);border:1px solid var(--page-divider)">←</kbd>/<kbd style="font-family:'JetBrains Mono',monospace;font-size:10.5px;padding:1px 6px;border-radius:4px;background:var(--page-card-bg-2);border:1px solid var(--page-divider)">→</kbd> to step between flows.</div>
-  </div>
-  <a href="web-auth.html" style="display:inline-flex;align-items:center;gap:8px;padding:14px 24px;border-radius:13px;background:linear-gradient(120deg,var(--s-50),var(--p-50),var(--t-50));color:white;text-decoration:none;font-weight:700;font-size:15px;letter-spacing:-0.005em;box-shadow:0 10px 28px -10px rgba(133,118,194,0.55)">Start tour →</a>
+ <div style="flex:1;min-width:240px">
+ <div style="font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--page-fg-muted);margin-bottom:4px">Combined prototype · click-through tour</div>
+ <div style="font-size:17px;font-weight:700;letter-spacing:-0.01em">Start at §04 Auth · the sticky top bar moves you through all 13 web surfaces.</div>
+ <div style="font-size:12.5px;color:var(--page-fg-muted);margin-top:6px;line-height:1.55">Use the prev/next buttons at the very top, click any §xx pill to jump, or press <kbd style="font-family:'JetBrains Mono',monospace;font-size:10.5px;padding:1px 6px;border-radius:4px;background:var(--page-card-bg-2);border:1px solid var(--page-divider)">Shift</kbd> + <kbd style="font-family:'JetBrains Mono',monospace;font-size:10.5px;padding:1px 6px;border-radius:4px;background:var(--page-card-bg-2);border:1px solid var(--page-divider)">←</kbd>/<kbd style="font-family:'JetBrains Mono',monospace;font-size:10.5px;padding:1px 6px;border-radius:4px;background:var(--page-card-bg-2);border:1px solid var(--page-divider)">→</kbd> to step between flows.</div>
+ </div>
+ <a href="web-auth.html" style="display:inline-flex;align-items:center;gap:8px;padding:14px 24px;border-radius:13px;background:linear-gradient(120deg,var(--s-50),var(--p-50),var(--t-50));color:white;text-decoration:none;font-weight:700;font-size:15px;letter-spacing:-0.005em;box-shadow:0 10px 28px -10px rgba(133,118,194,0.55)">Start tour →</a>
 </div>
 
 <a class="flow-row" href="web-auth.html" style="border-color:var(--t-50);text-decoration:none;color:inherit"><span class="flow-row__num">§04</span><div><div class="flow-row__name">Auth &amp; session</div><div class="flow-row__sub">AU1–6 · 6 screens · email/phone + OTP, rotating product story, magic link, recovery, passcode</div></div><span class="flow-row__pill" style="background:var(--t-20);color:var(--t-80)">Ready · open →</span></a>
@@ -113,15 +113,15 @@ footer a { color: var(--page-accent); text-decoration: none; }
 <a class="flow-row" href="web-offboarding.html" style="border-color:var(--t-50);text-decoration:none;color:inherit"><span class="flow-row__num">§16</span><div><div class="flow-row__name">Off-boarding flows</div><div class="flow-row__sub">OB1–5 · 5 screens · reason + state check · Art. 17 consequences up front · loan path A (3 options) + profile path B (5-tier cool-off) · auto-deletion timeline</div></div><span class="flow-row__pill" style="background:var(--t-20);color:var(--t-80)">Ready · open →</span></a>
 
 <footer>
-  web-prototype · v1.0 · 2026-05-15 · all 13 web surfaces ready ·
-  back to <a href="index.html">index</a> · <a href="../00-index.html">spec</a>
+ web-prototype · v1.0 · 2026-05-15 · all 13 web surfaces ready ·
+ back to <a href="index.html">index</a> · <a href="../00-index.html">spec</a>
 </footer>
 
 <script>
 (function(){
-  var root = document.documentElement;
-  var stored; try { stored = localStorage.getItem('gc-theme'); } catch(e){}
-  root.setAttribute('data-theme', stored || 'dark');
+ var root = document.documentElement;
+ var stored; try { stored = localStorage.getItem('gc-theme'); } catch(e){}
+ root.setAttribute('data-theme', stored || 'dark');
 })();
 </script>
 

@@ -10,12 +10,12 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --p-10:#0B0F1C;--p-20:#161B2D;--p-30:#20273C;--p-40:#354872;--p-50:#4D608C;--p-60:#6B7DA6;--p-90:#DCE2F0;--p-95:#ECF0F9;--p-99:#FAFBFE;--p-100:#FFF;
-  --s-10:#28215A;--s-20:#3E3478;--s-30:#534792;--s-40:#6B5DAC;--s-50:#8576C2;--s-70:#B5ACDF;--s-80:#CFC8EA;--s-90:#E8E4F4;
-  --t-20:#1A6047;--t-30:#1F7058;--t-50:#399971;--t-60:#5BB088;--t-80:#ADDCC2;--t-90:#D5EDDF;
-  --w-30:#6B4500;--w-60:#C28200;--w-80:#FAB44A;--w-90:#FFDFA8;
-  --e-30:#7A1F1F;--e-50:#C73838;--e-80:#F4A4A4;--e-90:#FBD9D9;
-  --n-50:#76798A;--n-80:#C5C8D2;--n-95:#F1F2F5;--nv-80:#C5C9DD;
+ --p-10:#0B0F1C;--p-20:#161B2D;--p-30:#20273C;--p-40:#354872;--p-50:#4D608C;--p-60:#6B7DA6;--p-90:#DCE2F0;--p-95:#ECF0F9;--p-99:#FAFBFE;--p-100:#FFF;
+ --s-10:#28215A;--s-20:#3E3478;--s-30:#534792;--s-40:#6B5DAC;--s-50:#8576C2;--s-70:#B5ACDF;--s-80:#CFC8EA;--s-90:#E8E4F4;
+ --t-20:#1A6047;--t-30:#1F7058;--t-50:#399971;--t-60:#5BB088;--t-80:#ADDCC2;--t-90:#D5EDDF;
+ --w-30:#6B4500;--w-60:#C28200;--w-80:#FAB44A;--w-90:#FFDFA8;
+ --e-30:#7A1F1F;--e-50:#C73838;--e-80:#F4A4A4;--e-90:#FBD9D9;
+ --n-50:#76798A;--n-80:#C5C8D2;--n-95:#F1F2F5;--nv-80:#C5C9DD;
 }
 [data-theme="dark"] { --bg-base: var(--p-30); --bg-surface: var(--p-20); --bg-surface-2: var(--p-10); --border: rgba(255,255,255,0.08); --text-primary: var(--n-95); --text-secondary: var(--nv-80); --text-muted: rgba(255,255,255,0.4); --accent: var(--s-70); --accent-strong: var(--s-50); --on-accent: #fff; --page-bg: #0a0e1a; --page-fg: var(--n-95); --page-fg-muted: var(--nv-80); --page-card-bg: var(--p-20); --page-divider: rgba(255,255,255,0.06); }
 [data-theme="light"] { --bg-base: var(--p-99); --bg-surface: #fff; --bg-surface-2: var(--p-95); --border: rgba(22,27,45,0.08); --text-primary: var(--p-20); --text-secondary: var(--n-50); --text-muted: var(--n-50); --accent: var(--p-40); --accent-strong: var(--s-40); --on-accent: #fff; --page-bg: var(--p-95); --page-fg: var(--p-20); --page-fg-muted: var(--n-50); --page-card-bg: #fff; --page-divider: rgba(22,27,45,0.08); }
@@ -24,9 +24,9 @@ html, body { background: var(--page-bg); color: var(--page-fg); margin: 0; trans
 body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif; font-size: 14px; line-height: 1.5; -webkit-font-smoothing: antialiased; min-height: 100vh; }
 
 .proto-shell { display: grid; grid-template-columns: 280px 1fr; gap: 0; min-height: 100vh; }
-@media (max-width: 1100px) { .proto-shell { grid-template-columns: 1fr; } }
+@media (max-width: 1100px) {.proto-shell { grid-template-columns: 1fr; } }
 .proto-sidebar { background: var(--page-card-bg); border-right: 1px solid var(--page-divider); padding: 28px 22px; position: sticky; top: 0; height: 100vh; overflow-y: auto; display: flex; flex-direction: column; gap: 16px; }
-@media (max-width: 1100px) { .proto-sidebar { position: static; height: auto; max-height: 50vh; border-right: none; border-bottom: 1px solid var(--page-divider); } }
+@media (max-width: 1100px) {.proto-sidebar { position: static; height: auto; max-height: 50vh; border-right: none; border-bottom: 1px solid var(--page-divider); } }
 .proto-sidebar__brand { display: flex; align-items: center; gap: 10px; }
 .proto-sidebar__mark { width: 36px; height: 36px; border-radius: 10px; background: var(--p-30); display: inline-flex; align-items: center; justify-content: center; }
 .proto-sidebar__mark img { width: 70%; height: 70%; }
@@ -38,15 +38,15 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-
 .proto-scrubber__item { display: grid; grid-template-columns: 44px 1fr; gap: 8px; align-items: center; padding: 7px 10px; border-radius: 8px; cursor: pointer; border: none; background: transparent; color: inherit; font-family: inherit; text-align: left; }
 .proto-scrubber__item:hover { background: rgba(127,127,127,0.08); }
 .proto-scrubber__item.is-active { background: var(--accent-strong); color: var(--on-accent); }
-.proto-scrubber__item.is-active .proto-scrubber__id { color: rgba(255,255,255,0.85); }
+.proto-scrubber__item.is-active.proto-scrubber__id { color: rgba(255,255,255,0.85); }
 .proto-scrubber__id { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; color: var(--page-fg-muted); letter-spacing: 0.06em; }
 .proto-scrubber__name { font-size: 12.5px; font-weight: 500; }
 .proto-sidebar__footer { margin-top: auto; padding-top: 16px; border-top: 1px solid var(--page-divider); font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--page-fg-muted); }
 .proto-sidebar__footer a { color: var(--page-fg-muted); text-decoration: none; border-bottom: 1px dotted currentColor; }
 .proto-theme-toggle { display: inline-flex; align-items: center; gap: 8px; padding: 7px 12px; border-radius: 8px; background: var(--bg-surface-2); border: 1px solid var(--border); color: var(--page-fg-muted); cursor: pointer; font-family: 'JetBrains Mono', monospace; font-size: 11px; align-self: flex-start; }
 .proto-theme-toggle svg { width: 12px; height: 12px; }
-[data-theme="dark"] .proto-theme-toggle .icon-moon { display: none; }
-[data-theme="light"] .proto-theme-toggle .icon-sun { display: none; }
+[data-theme="dark"].proto-theme-toggle.icon-moon { display: none; }
+[data-theme="light"].proto-theme-toggle.icon-sun { display: none; }
 
 .proto-stage { display: flex; flex-direction: column; align-items: center; padding: 32px 24px 64px; gap: 18px; }
 .proto-modebar { display: flex; align-items: center; gap: 10px; padding: 10px 16px; background: var(--page-card-bg); border: 1px solid var(--page-divider); border-radius: 12px; font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: var(--page-fg-muted); flex-wrap: wrap; justify-content: center; }
@@ -62,26 +62,26 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-
 .proto-arrow svg { width: 18px; height: 18px; }
 
 .browser { width: 100%; max-width: 1380px; background: var(--bg-base); border-radius: 18px; overflow: hidden; border: 1px solid var(--border); box-shadow: 0 24px 60px -20px rgba(0,0,0,0.45), 0 8px 24px -12px rgba(0,0,0,0.25); }
-[data-theme="light"] .browser { box-shadow: 0 24px 60px -20px rgba(22,27,45,0.18), 0 8px 24px -12px rgba(22,27,45,0.08); }
+[data-theme="light"].browser { box-shadow: 0 24px 60px -20px rgba(22,27,45,0.18), 0 8px 24px -12px rgba(22,27,45,0.08); }
 .browser__chrome { display: flex; align-items: center; gap: 14px; padding: 12px 16px; background: var(--p-20); border-bottom: 1px solid var(--border); }
-[data-theme="light"] .browser__chrome { background: var(--n-95); }
+[data-theme="light"].browser__chrome { background: var(--n-95); }
 .browser__dots { display: inline-flex; gap: 7px; flex-shrink: 0; }
 .browser__dot { width: 11px; height: 11px; border-radius: 50%; }
-.browser__dot:nth-child(1) { background: #FF5F57; } .browser__dot:nth-child(2) { background: #FEBC2E; } .browser__dot:nth-child(3) { background: #28C840; }
+.browser__dot:nth-child(1) { background: #FF5F57; }.browser__dot:nth-child(2) { background: #FEBC2E; }.browser__dot:nth-child(3) { background: #28C840; }
 .browser__url { flex: 1; background: var(--bg-base); border: 1px solid var(--border); border-radius: 7px; padding: 6px 14px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--text-secondary); text-align: center; display: flex; align-items: center; justify-content: center; gap: 8px; }
 .browser__url svg { width: 12px; height: 12px; opacity: 0.7; flex-shrink: 0; }
 .browser__url__sponsor { color: var(--s-70); }
-[data-theme="light"] .browser__url__sponsor { color: var(--s-40); }
+[data-theme="light"].browser__url__sponsor { color: var(--s-40); }
 .browser__viewport { background: var(--bg-base); min-height: 820px; max-height: 820px; position: relative; color: var(--text-primary); }
 .browser__viewport--user-nav { display: grid; grid-template-columns: 240px 1fr; }
 .browser__viewport--sponsor { display: grid; grid-template-columns: 240px 1fr; }
 .browser__viewport--full { display: block; padding: 0; }
 
 .appnav { background: var(--bg-surface); border-right: 1px solid var(--border); padding: 20px 16px; display: flex; flex-direction: column; gap: 16px; }
-[data-theme="light"] .appnav { background: var(--bg-surface-2); border-right: 1px solid rgba(22,27,45,0.12); }
-[data-theme="light"] .appnav__item { color: var(--p-40); }
-[data-theme="light"] .appnav__subitem { color: var(--p-50); }
-[data-theme="light"] .appnav__user-sub { color: var(--p-50); }
+[data-theme="light"].appnav { background: var(--bg-surface-2); border-right: 1px solid rgba(22,27,45,0.12); }
+[data-theme="light"].appnav__item { color: var(--p-40); }
+[data-theme="light"].appnav__subitem { color: var(--p-50); }
+[data-theme="light"].appnav__user-sub { color: var(--p-50); }
 .appnav__brand { display: flex; align-items: center; gap: 10px; padding: 4px 4px 12px; border-bottom: 1px solid var(--border); margin-bottom: 4px; }
 .appnav__mark { width: 32px; height: 32px; border-radius: 9px; background: var(--p-30); display: inline-flex; align-items: center; justify-content: center; }
 .appnav__mark img { width: 70%; height: 70%; }
@@ -112,16 +112,16 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-
 
 .gc-card { padding: 20px; background: var(--bg-surface); border: 1px solid var(--border); border-radius: 16px; display: flex; flex-direction: column; gap: 12px; }
 .gc-card--anna { background: linear-gradient(135deg, rgba(133,118,194,0.12), rgba(83,71,146,0.06)); border-color: rgba(133,118,194,0.25); flex-direction: row; align-items: flex-start; gap: 14px; padding: 16px 20px; }
-.gc-card--anna .anna-av { width: 38px; height: 38px; border-radius: 50%; background: var(--p-30); display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
-.gc-card--anna .anna-av img { width: 60%; height: 60%; }
-.gc-card--anna .anna-name { font-size: 13px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 2px; }
+.gc-card--anna.anna-av { width: 38px; height: 38px; border-radius: 50%; background: var(--p-30); display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.gc-card--anna.anna-av img { width: 60%; height: 60%; }
+.gc-card--anna.anna-name { font-size: 13px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 2px; }
 .gc-card--anna p { font-size: 13.5px; line-height: 1.55; margin: 0; }
 .gc-card--info { background: var(--bg-surface-2); border-left: 4px solid var(--s-50); border-radius: 6px 16px 16px 6px; padding: 22px 24px; }
 
 .row-2 { display: grid; grid-template-columns: 2fr 1fr; gap: 16px; align-items: start; }
 .row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; align-items: stretch; }
 .stack { display: flex; flex-direction: column; gap: 16px; }
-@media (max-width: 1000px) { .row-2 { grid-template-columns: 1fr; } .row-3 { grid-template-columns: 1fr; } }
+@media (max-width: 1000px) {.row-2 { grid-template-columns: 1fr; }.row-3 { grid-template-columns: 1fr; } }
 
 /* Input + form */
 .sp-label { font-size: 11.5px; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 5px; display: block; }
@@ -148,9 +148,9 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-
 .sp-matrix__row:first-of-type { border-top: none; }
 .sp-matrix__ic { width: 24px; height: 24px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
 .sp-matrix__ic--y { background: var(--t-20); color: var(--t-80); }
-[data-theme="light"] .sp-matrix__ic--y { background: var(--t-90); color: var(--t-30); }
+[data-theme="light"].sp-matrix__ic--y { background: var(--t-90); color: var(--t-30); }
 .sp-matrix__ic--n { background: var(--e-30); color: var(--e-90); }
-[data-theme="light"] .sp-matrix__ic--n { background: var(--e-90); color: var(--e-30); }
+[data-theme="light"].sp-matrix__ic--n { background: var(--e-90); color: var(--e-30); }
 .sp-matrix__ic svg { width: 12px; height: 12px; }
 .sp-matrix__t { font-size: 14px; font-weight: 600; }
 .sp-matrix__s { font-size: 12.5px; color: var(--text-secondary); margin-top: 2px; line-height: 1.5; }
@@ -159,14 +159,14 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-
 .sp-kyc-step { display: grid; grid-template-columns: 44px 1fr auto; gap: 14px; align-items: center; padding: 14px 16px; background: var(--bg-surface); border: 1px solid var(--border); border-radius: 14px; }
 .sp-kyc-step--current { border-color: var(--accent-strong); box-shadow: 0 0 0 3px rgba(133,118,194,0.18); }
 .sp-kyc-step__n { width: 44px; height: 44px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 15px; background: var(--bg-surface-2); color: var(--text-secondary); }
-.sp-kyc-step--done .sp-kyc-step__n { background: var(--t-50); color: white; }
-.sp-kyc-step--current .sp-kyc-step__n { background: var(--accent-strong); color: white; }
+.sp-kyc-step--done.sp-kyc-step__n { background: var(--t-50); color: white; }
+.sp-kyc-step--current.sp-kyc-step__n { background: var(--accent-strong); color: white; }
 .sp-kyc-step__t { font-size: 14.5px; font-weight: 600; }
 .sp-kyc-step__s { font-size: 12.5px; color: var(--text-secondary); margin-top: 2px; }
 .sp-kyc-step__pill { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; font-weight: 700; letter-spacing: 0.05em; padding: 3px 9px; border-radius: 999px; background: var(--bg-surface-2); color: var(--text-muted); }
-.sp-kyc-step--current .sp-kyc-step__pill { background: var(--accent-strong); color: white; }
-.sp-kyc-step--done .sp-kyc-step__pill { background: var(--t-20); color: var(--t-80); }
-[data-theme="light"] .sp-kyc-step--done .sp-kyc-step__pill { background: var(--t-90); color: var(--t-30); }
+.sp-kyc-step--current.sp-kyc-step__pill { background: var(--accent-strong); color: white; }
+.sp-kyc-step--done.sp-kyc-step__pill { background: var(--t-20); color: var(--t-80); }
+[data-theme="light"].sp-kyc-step--done.sp-kyc-step__pill { background: var(--t-90); color: var(--t-30); }
 
 .sp-cam-frame { aspect-ratio: 4/3; background: var(--bg-base); border: 2px dashed var(--border); border-radius: 16px; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 8px; color: var(--text-muted); padding: 32px; }
 .sp-cam-frame__ic { width: 56px; height: 56px; border-radius: 50%; background: var(--bg-surface-2); display: inline-flex; align-items: center; justify-content: center; }
@@ -180,7 +180,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-
 .sp-bank:hover { border-color: var(--accent); }
 .sp-bank.is-on { border-color: var(--accent-strong); box-shadow: 0 0 0 3px rgba(133,118,194,0.18); }
 .sp-bank__logo { width: 36px; height: 36px; border-radius: 9px; display: inline-flex; align-items: center; justify-content: center; font-weight: 800; color: white; font-family: 'JetBrains Mono', monospace; font-size: 14px; letter-spacing: -0.01em; overflow: hidden; flex-shrink: 0; box-shadow: 0 0 0 1px rgba(255,255,255,0.06); }
-[data-theme="light"] .sp-bank__logo { box-shadow: 0 0 0 1px rgba(22,27,45,0.08); }
+[data-theme="light"].sp-bank__logo { box-shadow: 0 0 0 1px rgba(22,27,45,0.08); }
 .sp-bank__n { font-size: 12.5px; font-weight: 600; }
 
 /* SP6 sponsor dashboard */
@@ -189,7 +189,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-
 .sp-stat__n { font-size: 28px; font-weight: 800; letter-spacing: -0.02em; line-height: 1; }
 .sp-stat__d { font-size: 12px; color: var(--text-secondary); margin-top: 4px; }
 .sp-stat__d--ok { color: var(--t-60); }
-[data-theme="light"] .sp-stat__d--ok { color: var(--t-30); }
+[data-theme="light"].sp-stat__d--ok { color: var(--t-30); }
 
 .sp-tl { display: grid; grid-template-columns: 120px 1fr; gap: 14px; align-items: flex-start; padding: 13px 0; border-top: 1px solid var(--border); }
 .sp-tl:first-of-type { border-top: none; padding-top: 0; }
@@ -198,15 +198,15 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-
 .sp-tl__s { font-size: 12.5px; color: var(--text-secondary); margin-top: 2px; line-height: 1.45; }
 .sp-tl__pill { display: inline-flex; padding: 2px 9px; border-radius: 999px; font-size: 9.5px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; margin-right: 6px; font-family: 'JetBrains Mono', monospace; }
 .sp-tl__pill--milestone { background: var(--t-20); color: var(--t-80); }
-[data-theme="light"] .sp-tl__pill--milestone { background: var(--t-90); color: var(--t-30); }
+[data-theme="light"].sp-tl__pill--milestone { background: var(--t-90); color: var(--t-30); }
 .sp-tl__pill--hold { background: var(--w-30); color: var(--w-80); }
-[data-theme="light"] .sp-tl__pill--hold { background: var(--w-90); color: var(--w-30); }
+[data-theme="light"].sp-tl__pill--hold { background: var(--w-90); color: var(--w-30); }
 .sp-tl__pill--message { background: var(--s-20); color: var(--s-80); }
-[data-theme="light"] .sp-tl__pill--message { background: var(--s-90); color: var(--s-20); }
+[data-theme="light"].sp-tl__pill--message { background: var(--s-90); color: var(--s-20); }
 
 /* Sponsor sidebar */
 .appnav--sponsor { background: linear-gradient(180deg, rgba(83,71,146,0.05), transparent 40%), var(--bg-surface); }
-[data-theme="light"] .appnav--sponsor { background: linear-gradient(180deg, rgba(83,71,146,0.05), transparent 40%), var(--bg-surface-2); }
+[data-theme="light"].appnav--sponsor { background: linear-gradient(180deg, rgba(83,71,146,0.05), transparent 40%), var(--bg-surface-2); }
 
 .gc-btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 12px 20px; border-radius: 12px; font-family: inherit; font-size: 14px; font-weight: 600; cursor: pointer; border: 1px solid transparent; text-decoration: none; }
 .gc-btn--primary { background: var(--accent-strong); color: var(--on-accent); }
@@ -235,445 +235,445 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-
 
 <div class="proto-shell">
 
-  <aside class="proto-sidebar">
-    <div class="proto-sidebar__brand">
-      <span class="proto-sidebar__mark"><img src="../assets/gc-mark-mono-light.svg" alt=""></span>
-      <span>
-        <div class="proto-sidebar__name">GaimControl</div>
-        <span class="proto-sidebar__pill">web</span>
-      </span>
-    </div>
-    <a class="proto-sidebar__back" href="index.html">← prototype index</a>
-    <button class="proto-theme-toggle" type="button" aria-label="Toggle theme">
-      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
-      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
-      <span class="theme-label">Dark</span>
-    </button>
-    <div class="proto-section-title">§15 · SP1 + SP3–SP7</div>
-    <nav class="proto-scrubber" id="scrubber"></nav>
-    <div class="proto-sidebar__footer">
-      Source: <a href="../15-sponsor-onboarding.html">15-sponsor-onboarding</a><br>
-      Decisions: GEN-03 · GEN-07 · ON-04 · CC-03<br>
-      <em>SP1 + SP7 on user surface (app.gaimcontrol.com), SP3–SP6 on sponsor.gaimcontrol.com</em>
-    </div>
-  </aside>
+ <aside class="proto-sidebar">
+ <div class="proto-sidebar__brand">
+ <span class="proto-sidebar__mark"><img src="../assets/gc-mark-mono-light.svg" alt=""></span>
+ <span>
+ <div class="proto-sidebar__name">GaimControl</div>
+ <span class="proto-sidebar__pill">web</span>
+ </span>
+ </div>
+ <a class="proto-sidebar__back" href="index.html">← prototype index</a>
+ <button class="proto-theme-toggle" type="button" aria-label="Toggle theme">
+ <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+ <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+ <span class="theme-label">Dark</span>
+ </button>
+ <div class="proto-section-title">§15 · SP1 + SP3–SP7</div>
+ <nav class="proto-scrubber" id="scrubber"></nav>
+ <div class="proto-sidebar__footer">
+ Source: <a href="../15-sponsor-onboarding.html">15-sponsor-onboarding</a><br>
+ Decisions: GEN-03 · GEN-07 · ON-04 · CC-03<br>
+ <em>SP1 + SP7 on user surface (app.gaimcontrol.com), SP3–SP6 on sponsor.gaimcontrol.com</em>
+ </div>
+ </aside>
 
-  <main class="proto-stage">
+ <main class="proto-stage">
 
-    <div class="proto-modebar">
-      <span>Screen <span class="proto-modebar__id" id="screenId">SP1</span></span>
-      <span class="proto-modebar__pill" id="screenName">User invites a sponsor</span>
-      <span class="proto-modebar__pill" id="audiencePill" style="background:var(--bg-surface-2)">User-side</span>
-      <div class="proto-modebar__bar"><div class="proto-modebar__bar__fill" id="progressFill" style="width:17%"></div></div>
-      <div class="proto-arrows">
-        <button class="proto-arrow" id="navPrev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
-        <button class="proto-arrow" id="navNext"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
-      </div>
-    </div>
+ <div class="proto-modebar">
+ <span>Screen <span class="proto-modebar__id" id="screenId">SP1</span></span>
+ <span class="proto-modebar__pill" id="screenName">User invites a sponsor</span>
+ <span class="proto-modebar__pill" id="audiencePill" style="background:var(--bg-surface-2)">User-side</span>
+ <div class="proto-modebar__bar"><div class="proto-modebar__bar__fill" id="progressFill" style="width:17%"></div></div>
+ <div class="proto-arrows">
+ <button class="proto-arrow" id="navPrev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+ <button class="proto-arrow" id="navNext"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
+ </div>
+ </div>
 
-    <div class="browser">
-      <div class="browser__chrome">
-        <span class="browser__dots"><span class="browser__dot"></span><span class="browser__dot"></span><span class="browser__dot"></span></span>
-        <span class="browser__url">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-          <span id="browserUrl">app.gaimcontrol.com/profile/sponsor/invite</span>
-        </span>
-      </div>
-      <div class="browser__viewport" id="viewport"></div>
-    </div>
+ <div class="browser">
+ <div class="browser__chrome">
+ <span class="browser__dots"><span class="browser__dot"></span><span class="browser__dot"></span><span class="browser__dot"></span></span>
+ <span class="browser__url">
+ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+ <span id="browserUrl">app.gaimcontrol.com/profile/sponsor/invite</span>
+ </span>
+ </div>
+ <div class="browser__viewport" id="viewport"></div>
+ </div>
 
-    <div class="proto-context" id="contextPanel">
-      <div class="proto-context__head">Screen context</div>
-      <div id="contextBody"></div>
-    </div>
+ <div class="proto-context" id="contextPanel">
+ <div class="proto-context__head">Screen context</div>
+ <div id="contextBody"></div>
+ </div>
 
-  </main>
+ </main>
 </div>
 
 <script>
 const SCREENS = [
-  { id: 'SP1', name: 'User invites a sponsor', kind: 'sp1', url: '/profile/sponsor/invite', audience: 'user' },
-  { id: 'SP3', name: 'Sponsor · explainer landing', kind: 'sp3', url: '/welcome/sam-k', audience: 'sponsor' },
-  { id: 'SP4', name: 'Sponsor · light KYC (Vouchsafe)', kind: 'sp4', url: '/verify/id', audience: 'sponsor' },
-  { id: 'SP5', name: 'Sponsor · open banking (TrueLayer)', kind: 'sp5', url: '/verify/bank', audience: 'sponsor' },
-  { id: 'SP6', name: 'Sponsor · dashboard', kind: 'sp6', url: '/dashboard', audience: 'sponsor' },
-  { id: 'SP7', name: 'User · sponsor management', kind: 'sp7', url: '/profile/sponsor', audience: 'user' },
+ { id: 'SP1', name: 'User invites a sponsor', kind: 'sp1', url: '/profile/sponsor/invite', audience: 'user' },
+ { id: 'SP3', name: 'Sponsor · explainer landing', kind: 'sp3', url: '/welcome/sam-k', audience: 'sponsor' },
+ { id: 'SP4', name: 'Sponsor · light KYC (Vouchsafe)', kind: 'sp4', url: '/verify/id', audience: 'sponsor' },
+ { id: 'SP5', name: 'Sponsor · open banking (TrueLayer)', kind: 'sp5', url: '/verify/bank', audience: 'sponsor' },
+ { id: 'SP6', name: 'Sponsor · dashboard', kind: 'sp6', url: '/dashboard', audience: 'sponsor' },
+ { id: 'SP7', name: 'User · sponsor management', kind: 'sp7', url: '/profile/sponsor', audience: 'user' },
 ];
 
 const CTX = {
-  sp1: '<strong>SP1 User invites a sponsor.</strong> Web entry point — from §12 Profile, "Invite a sponsor" tile. Three required fields (sponsor name · relationship · email) + optional 280-char note. Per <a href="../41-decisions-log.html">ON-04</a> A/B, this same surface is reachable from ON6 (onboarding) and from §07 Controls after onboarding.',
-  sp3: '<strong>SP3 Sponsor · explainer landing.</strong> Joanna clicks the email link, lands on <code>sponsor.gaimcontrol.com</code>. Reuses §14 MK8 with first-name + relationship merged. CTA: "Sponsor Sam now". Secondary: expand the abilities matrix (what sponsors can / can\'t do). Decline path: polite ack + user notified.',
-  sp4: '<strong>SP4 Sponsor · light KYC.</strong> Vouchsafe-powered — same vendor as user KYC per <a href="../41-decisions-log.html">CC-03</a>. Lighter set: name + DOB + address + photo ID + selfie. No income or affordability check. Failed KYC routes to ops review.',
-  sp5: '<strong>SP5 Sponsor · open banking.</strong> Single account via TrueLayer. Liveness + AML cross-check only — we don\'t analyse Joanna\'s spending. The link reduces coercion risk by tying the sponsor to a real verified account in their own name (per <a href="../41-decisions-log.html">GEN-03</a>).',
-  sp6: '<strong>SP6 Sponsor · dashboard.</strong> Web-only at MVP — sponsors are infrequent visitors. Push + email on subscribed events. Cannot DM the user inside the app. Per <a href="../41-decisions-log.html">GEN-07</a> up to 3 sponsors per user; per SP6.A authorisations are any-of-N · per SP6.B notifications are broadcast-all.',
-  sp7: '<strong>SP7 User · sponsor management.</strong> Lives in §12 PR4. Suspend revokes immediately + retains in audit log; remove = full revocation + cascade. Up to 3 active sponsors.',
+ sp1: '<strong>SP1 User invites a sponsor.</strong> Web entry point. From §12 Profile, "Invite a sponsor" tile. Three required fields (sponsor name · relationship · email) + optional 280-char note. Per <a href="../41-decisions-log.html">ON-04</a> A/B, this same surface is reachable from ON6 (onboarding) and from §07 Controls after onboarding.',
+ sp3: '<strong>SP3 Sponsor · explainer landing.</strong> Joanna clicks the email link, lands on <code>sponsor.gaimcontrol.com</code>. Reuses §14 MK8 with first-name + relationship merged. CTA: "Sponsor Sam now". Secondary: expand the abilities matrix (what sponsors can / can\'t do). Decline path: polite ack + user notified.',
+ sp4: '<strong>SP4 Sponsor · light KYC.</strong> Vouchsafe-powered. Same vendor as user KYC per <a href="../41-decisions-log.html">CC-03</a>. Lighter set: name + DOB + address + photo ID + selfie. No income or affordability check. Failed KYC routes to ops review.',
+ sp5: '<strong>SP5 Sponsor · open banking.</strong> Single account via TrueLayer. Liveness + AML cross-check only. We don\'t analyse Joanna\'s spending. The link reduces coercion risk by tying the sponsor to a real verified account in their own name (per <a href="../41-decisions-log.html">GEN-03</a>).',
+ sp6: '<strong>SP6 Sponsor · dashboard.</strong> Web-only at MVP. Sponsors are infrequent visitors. Push + email on subscribed events. Cannot DM the user inside the app. Per <a href="../41-decisions-log.html">GEN-07</a> up to 3 sponsors per user; per SP6.A authorisations are any-of-N · per SP6.B notifications are broadcast-all.',
+ sp7: '<strong>SP7 User · sponsor management.</strong> Lives in §12 PR4. Suspend revokes immediately + retains in audit log; remove = full revocation + cascade. Up to 3 active sponsors.',
 };
 
 const USER_APPNAV = () => `
-  <aside class="appnav">
-    <div class="appnav__brand">
-      <span class="appnav__mark"><img src="../assets/gc-mark-mono-light.svg" alt=""></span>
-      <span class="appnav__name">GaimControl</span>
-    </div>
-    <div class="appnav__user">
-      <span class="appnav__avatar">S</span>
-      <div><div class="appnav__user-name">Sam Kennedy</div><div class="appnav__user-sub">Habitual · Day 58</div></div>
-    </div>
-    <nav class="appnav__list">
-      <a class="appnav__item is-disabled"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>Home</a>
-      <a class="appnav__item is-disabled"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Banking</a>
-      <a class="appnav__item is-disabled"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg>Anna</a>
-      <a class="appnav__item is-disabled"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m7 14 4-4 4 4 5-5"/></svg>Activity</a>
-      <a class="appnav__item is-on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>Profile</a>
-      <div class="appnav__subnav">
-        <a class="appnav__subitem">Settings home</a>
-        <a class="appnav__subitem">Personal info</a>
-        <a class="appnav__subitem">Notifications</a>
-        <a class="appnav__subitem is-on">Sponsor</a>
-        <a class="appnav__subitem">Download data</a>
-        <a class="appnav__subitem">Close account</a>
-      </div>
-    </nav>
-    <div class="appnav__help">
-      <div style="font-size:12px;font-weight:700;margin-bottom:3px">Need help?</div>
-      <div style="font-size:11px;color:var(--text-secondary);line-height:1.4">Anna's always there. Crisis line is one tap away.</div>
-    </div>
-  </aside>`;
+ <aside class="appnav">
+ <div class="appnav__brand">
+ <span class="appnav__mark"><img src="../assets/gc-mark-mono-light.svg" alt=""></span>
+ <span class="appnav__name">GaimControl</span>
+ </div>
+ <div class="appnav__user">
+ <span class="appnav__avatar">S</span>
+ <div><div class="appnav__user-name">Sam Kennedy</div><div class="appnav__user-sub">Habitual · Day 58</div></div>
+ </div>
+ <nav class="appnav__list">
+ <a class="appnav__item is-disabled"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>Home</a>
+ <a class="appnav__item is-disabled"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Banking</a>
+ <a class="appnav__item is-disabled"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg>Anna</a>
+ <a class="appnav__item is-disabled"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m7 14 4-4 4 4 5-5"/></svg>Activity</a>
+ <a class="appnav__item is-on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>Profile</a>
+ <div class="appnav__subnav">
+ <a class="appnav__subitem">Settings home</a>
+ <a class="appnav__subitem">Personal info</a>
+ <a class="appnav__subitem">Notifications</a>
+ <a class="appnav__subitem is-on">Sponsor</a>
+ <a class="appnav__subitem">Download data</a>
+ <a class="appnav__subitem">Close account</a>
+ </div>
+ </nav>
+ <div class="appnav__help">
+ <div style="font-size:12px;font-weight:700;margin-bottom:3px">Need help?</div>
+ <div style="font-size:11px;color:var(--text-secondary);line-height:1.4">Anna's always there. Crisis line is one tap away.</div>
+ </div>
+ </aside>`;
 
 const SPONSOR_APPNAV = () => `
-  <aside class="appnav appnav--sponsor">
-    <div class="appnav__brand">
-      <span class="appnav__mark" style="background:var(--s-40)"><img src="../assets/gc-mark-mono-light.svg" alt=""></span>
-      <span><span class="appnav__name">GaimControl</span><span class="appnav__name__sub">Sponsor</span></span>
-    </div>
-    <div class="appnav__user">
-      <span class="appnav__avatar" style="background:linear-gradient(135deg,var(--s-50),var(--p-40))">JM</span>
-      <div><div class="appnav__user-name">Joanna Murray</div><div class="appnav__user-sub">Sponsoring Sam</div></div>
-    </div>
-    <nav class="appnav__list">
-      <a class="appnav__item ${idx===4?'is-on':''}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>Dashboard</a>
-      <a class="appnav__item is-disabled"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 3v18h18"/><path d="m7 14 4-4 4 4 5-5"/></svg>Insights</a>
-      <a class="appnav__item is-disabled"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/></svg>Alerts</a>
-      <a class="appnav__item is-disabled"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="7" r="4"/><path d="M5 21a7 7 0 0 1 14 0"/></svg>Account</a>
-    </nav>
-    <div class="appnav__help" style="background:var(--s-20);border-color:transparent;color:white">
-      <div style="font-size:12px;font-weight:700;color:white">Sponsor handbook</div>
-      <div style="font-size:11px;color:rgba(255,255,255,0.78);line-height:1.4">What you can &amp; can't see, plus when to step in.</div>
-    </div>
-  </aside>`;
+ <aside class="appnav appnav--sponsor">
+ <div class="appnav__brand">
+ <span class="appnav__mark" style="background:var(--s-40)"><img src="../assets/gc-mark-mono-light.svg" alt=""></span>
+ <span><span class="appnav__name">GaimControl</span><span class="appnav__name__sub">Sponsor</span></span>
+ </div>
+ <div class="appnav__user">
+ <span class="appnav__avatar" style="background:linear-gradient(135deg,var(--s-50),var(--p-40))">JM</span>
+ <div><div class="appnav__user-name">Joanna Murray</div><div class="appnav__user-sub">Sponsoring Sam</div></div>
+ </div>
+ <nav class="appnav__list">
+ <a class="appnav__item ${idx===4?'is-on':''}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>Dashboard</a>
+ <a class="appnav__item is-disabled"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 3v18h18"/><path d="m7 14 4-4 4 4 5-5"/></svg>Insights</a>
+ <a class="appnav__item is-disabled"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/></svg>Alerts</a>
+ <a class="appnav__item is-disabled"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="7" r="4"/><path d="M5 21a7 7 0 0 1 14 0"/></svg>Account</a>
+ </nav>
+ <div class="appnav__help" style="background:var(--s-20);border-color:transparent;color:white">
+ <div style="font-size:12px;font-weight:700;color:white">Sponsor handbook</div>
+ <div style="font-size:11px;color:rgba(255,255,255,0.78);line-height:1.4">What you can &amp; can't see, plus when to step in.</div>
+ </div>
+ </aside>`;
 
 const PAGE = (audience, title, sub, content) => `
-  <div class="screen" style="display:contents">
-    ${audience === 'user' ? USER_APPNAV() : SPONSOR_APPNAV()}
-    <div class="main">
-      <div class="main__head"><div><h1 class="main__title">${title}</h1>${sub ? `<p class="main__sub">${sub}</p>` : ''}</div></div>
-      ${content}
-    </div>
-  </div>`;
+ <div class="screen" style="display:contents">
+ ${audience === 'user' ? USER_APPNAV() : SPONSOR_APPNAV()}
+ <div class="main">
+ <div class="main__head"><div><h1 class="main__title">${title}</h1>${sub ? `<p class="main__sub">${sub}</p>` : ''}</div></div>
+ ${content}
+ </div>
+ </div>`;
 
 const builders = {
-  sp1: () => PAGE('user', 'Invite a sponsor', 'Three required fields. Joanna will read what sponsorship means before she commits.', `
-    <div class="row-2">
-      <div class="stack">
-        <div class="gc-card">
-          <h3 style="font-size:16px;font-weight:700;margin:0">Sponsor details</h3>
-          <div><span class="sp-label">Their full name</span><input class="sp-input sp-input--filled" value="Joanna Murray"></div>
-          <div>
-            <span class="sp-label">Relationship</span>
-            <div class="sp-rel-grid">
-              <button class="sp-rel" onclick="pickRel(this)">Partner</button>
-              <button class="sp-rel" onclick="pickRel(this)">Parent</button>
-              <button class="sp-rel is-on" onclick="pickRel(this)">Sibling</button>
-              <button class="sp-rel" onclick="pickRel(this)">Clinician</button>
-              <button class="sp-rel" onclick="pickRel(this)">Friend</button>
-              <button class="sp-rel" onclick="pickRel(this)">Other</button>
-            </div>
-          </div>
-          <div><span class="sp-label">Their email</span><input class="sp-input sp-input--filled" type="email" value="joanna.m@hotmail.co.uk"></div>
-          <div>
-            <div class="sp-label-row"><span class="sp-label">A note (optional, 280 chars)</span><span class="sp-counter">87 / 280</span></div>
-            <textarea class="sp-textarea">Hey Jo — would you do this with me? I've explained it on the call. No pressure x</textarea>
-          </div>
-        </div>
-        <div class="gc-card gc-card--info">
-          <h3 style="font-size:14px;font-weight:700;margin:0">What Joanna will go through</h3>
-          <ol style="margin:0;padding:0 0 0 18px;font-size:13px;color:var(--text-secondary);line-height:1.7">
-            <li>Get this invite via email · with your note · ~30s</li>
-            <li>Open the explainer landing · sees abilities matrix · ~3 min</li>
-            <li>Light KYC via Vouchsafe · name, DOB, ID, selfie · ~3 min</li>
-            <li>Bank link via TrueLayer · liveness + AML · ~2 min</li>
-            <li>Land on sponsor dashboard · she's done</li>
-          </ol>
-          <p style="font-size:12px;color:var(--text-muted);margin:6px 0 0">Total active time: ~10 minutes. Same KYC vendor she might have used at her own bank.</p>
-        </div>
-      </div>
-      <div class="stack">
-        <div class="gc-card">
-          <h3 style="font-size:15px;font-weight:700;margin:0 0 4px">Two entry points · same flow</h3>
-          <p style="font-size:13px;color:var(--text-secondary);line-height:1.55;margin:0">Per <a href="../41-decisions-log.html" style="color:var(--accent)">ON-04</a> A/B — variant A invites during onboarding at ON6, variant B invites later from §07 Controls. Users randomised. Downstream identical.</p>
-          <span style="display:inline-flex;padding:5px 11px;border-radius:999px;background:var(--s-20);color:var(--s-80);font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:0.05em;font-weight:700;align-self:flex-start;margin-top:4px">You're in · variant B · post-onboard</span>
-        </div>
-        <div class="gc-card">
-          <h3 style="font-size:14px;font-weight:700;margin:0">Up to 3 sponsors</h3>
-          <p style="font-size:12.5px;color:var(--text-secondary);line-height:1.5;margin:0">Per <a href="../41-decisions-log.html" style="color:var(--accent)">GEN-07</a> cap. Each invited + verified independently. Authorisations any-of-N; notifications broadcast-all (mutable per sponsor).</p>
-        </div>
-        <div style="display:flex;gap:10px">
-          <button class="gc-btn gc-btn--ghost gc-btn--full">Skip for now</button>
-          <button class="gc-btn gc-btn--primary gc-btn--full" onclick="next()">Send invite</button>
-        </div>
-      </div>
-    </div>`),
+ sp1: () => PAGE('user', 'Invite a sponsor', 'Three required fields. Joanna will read what sponsorship means before she commits.', `
+ <div class="row-2">
+ <div class="stack">
+ <div class="gc-card">
+ <h3 style="font-size:16px;font-weight:700;margin:0">Sponsor details</h3>
+ <div><span class="sp-label">Their full name</span><input class="sp-input sp-input--filled" value="Joanna Murray"></div>
+ <div>
+ <span class="sp-label">Relationship</span>
+ <div class="sp-rel-grid">
+ <button class="sp-rel" onclick="pickRel(this)">Partner</button>
+ <button class="sp-rel" onclick="pickRel(this)">Parent</button>
+ <button class="sp-rel is-on" onclick="pickRel(this)">Sibling</button>
+ <button class="sp-rel" onclick="pickRel(this)">Clinician</button>
+ <button class="sp-rel" onclick="pickRel(this)">Friend</button>
+ <button class="sp-rel" onclick="pickRel(this)">Other</button>
+ </div>
+ </div>
+ <div><span class="sp-label">Their email</span><input class="sp-input sp-input--filled" type="email" value="joanna.m@hotmail.co.uk"></div>
+ <div>
+ <div class="sp-label-row"><span class="sp-label">A note (optional, 280 chars)</span><span class="sp-counter">87 / 280</span></div>
+ <textarea class="sp-textarea">Hey Jo. Would you do this with me? I've explained it on the call. No pressure x</textarea>
+ </div>
+ </div>
+ <div class="gc-card gc-card--info">
+ <h3 style="font-size:14px;font-weight:700;margin:0">What Joanna will go through</h3>
+ <ol style="margin:0;padding:0 0 0 18px;font-size:13px;color:var(--text-secondary);line-height:1.7">
+ <li>Get this invite via email · with your note · ~30s</li>
+ <li>Open the explainer landing · sees abilities matrix · ~3 min</li>
+ <li>Light KYC via Vouchsafe · name, DOB, ID, selfie · ~3 min</li>
+ <li>Bank link via TrueLayer · liveness + AML · ~2 min</li>
+ <li>Land on sponsor dashboard · she's done</li>
+ </ol>
+ <p style="font-size:12px;color:var(--text-muted);margin:6px 0 0">Total active time: ~10 minutes. Same KYC vendor she might have used at her own bank.</p>
+ </div>
+ </div>
+ <div class="stack">
+ <div class="gc-card">
+ <h3 style="font-size:15px;font-weight:700;margin:0 0 4px">Two entry points · same flow</h3>
+ <p style="font-size:13px;color:var(--text-secondary);line-height:1.55;margin:0">Per <a href="../41-decisions-log.html" style="color:var(--accent)">ON-04</a> A/B. Variant A invites during onboarding at ON6, variant B invites later from §07 Controls. Users randomised. Downstream identical.</p>
+ <span style="display:inline-flex;padding:5px 11px;border-radius:999px;background:var(--s-20);color:var(--s-80);font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:0.05em;font-weight:700;align-self:flex-start;margin-top:4px">You're in · variant B · post-onboard</span>
+ </div>
+ <div class="gc-card">
+ <h3 style="font-size:14px;font-weight:700;margin:0">Up to 3 sponsors</h3>
+ <p style="font-size:12.5px;color:var(--text-secondary);line-height:1.5;margin:0">Per <a href="../41-decisions-log.html" style="color:var(--accent)">GEN-07</a> cap. Each invited + verified independently. Authorisations any-of-N; notifications broadcast-all (mutable per sponsor).</p>
+ </div>
+ <div style="display:flex;gap:10px">
+ <button class="gc-btn gc-btn--ghost gc-btn--full">Skip for now</button>
+ <button class="gc-btn gc-btn--primary gc-btn--full" onclick="next()">Send invite</button>
+ </div>
+ </div>
+ </div>`),
 
-  sp3: () => PAGE('sponsor', 'Welcome', '', `
-    <div class="stack">
-      <div class="sp-landing-hero">
-        <span class="sp-landing-hero__tag">Sponsorship · GaimControl</span>
-        <h1 class="sp-landing-hero__h">Hi Joanna. Your sister Sam wants you in her corner.</h1>
-        <p class="sp-landing-hero__p">Sam has chosen GaimControl to support her gambling recovery — and she's chosen you as her sponsor. That means you'll see her milestones, hear if something goes off, and (with her permission) co-sign big transfers. You won't see day-to-day spending or her chats with Anna.</p>
-        <div class="sp-landing-hero__cta">
-          <button class="gc-btn gc-btn--white gc-btn--lg" onclick="next()">Sponsor Sam · ~8 min</button>
-          <button class="gc-btn gc-btn--ghost-light gc-btn--lg">I can't do this right now</button>
-        </div>
-      </div>
-      <div class="row-2">
-        <div class="stack">
-          <div class="gc-card">
-            <h3 style="font-size:17px;font-weight:700;margin:0">What you'll see</h3>
-            <div class="sp-matrix">
-              <div class="sp-matrix__row"><span class="sp-matrix__ic sp-matrix__ic--y"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="sp-matrix__t">Streak status &amp; milestones</div><div class="sp-matrix__s">Day count clean · therapy session attendance · payment progress</div></div></div>
-              <div class="sp-matrix__row"><span class="sp-matrix__ic sp-matrix__ic--y"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="sp-matrix__t">Relapse Hold notices</div><div class="sp-matrix__s">If her card auto-pauses (e.g. she tries a betting MCC) you get told — no transaction detail</div></div></div>
-              <div class="sp-matrix__row"><span class="sp-matrix__ic sp-matrix__ic--y"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="sp-matrix__t">Sponsor-message inbox</div><div class="sp-matrix__s">Sam can send you pre-written templates or free text — you reply outside the app</div></div></div>
-              <div class="sp-matrix__row"><span class="sp-matrix__ic sp-matrix__ic--y"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="sp-matrix__t">Loan agreement (SECCI)</div><div class="sp-matrix__s">Per LO-07 default-on · pre-contract terms before Sam signs anything</div></div></div>
-              <div class="sp-matrix__row"><span class="sp-matrix__ic sp-matrix__ic--y"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="sp-matrix__t">Per-MCC spend categories</div><div class="sp-matrix__s">"Groceries: ok · subscriptions: ok · alcohol: blocked" — not individual merchants</div></div></div>
-              <div class="sp-matrix__row"><span class="sp-matrix__ic sp-matrix__ic--y"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="sp-matrix__t">Authorise transfers above threshold</div><div class="sp-matrix__s">Sam sets the threshold · you approve or reject in-app · reject blocks</div></div></div>
-            </div>
-          </div>
-          <div class="gc-card">
-            <h3 style="font-size:17px;font-weight:700;margin:0">What you won't see</h3>
-            <div class="sp-matrix">
-              <div class="sp-matrix__row"><span class="sp-matrix__ic sp-matrix__ic--n"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6 6 18M6 6l12 12"/></svg></span><div><div class="sp-matrix__t">Anna chat content</div><div class="sp-matrix__s">Verbatim CBT chat is never exposed · honesty in therapy depends on privacy</div></div></div>
-              <div class="sp-matrix__row"><span class="sp-matrix__ic sp-matrix__ic--n"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6 6 18M6 6l12 12"/></svg></span><div><div class="sp-matrix__t">Sam's linked third-party accounts</div><div class="sp-matrix__s">Her Monzo/Barclays/Revolut · not your business</div></div></div>
-              <div class="sp-matrix__row"><span class="sp-matrix__ic sp-matrix__ic--n"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6 6 18M6 6l12 12"/></svg></span><div><div class="sp-matrix__t">Power to initiate a Relapse Hold</div><div class="sp-matrix__s">Hold is user-initiated · you can flag concern (routes to ops + Anna) but can't force</div></div></div>
-              <div class="sp-matrix__row"><span class="sp-matrix__ic sp-matrix__ic--n"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6 6 18M6 6l12 12"/></svg></span><div><div class="sp-matrix__t">Power to close her account</div><div class="sp-matrix__s">Off-boarding is always user-initiated · §16</div></div></div>
-              <div class="sp-matrix__row"><span class="sp-matrix__ic sp-matrix__ic--n"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6 6 18M6 6l12 12"/></svg></span><div><div class="sp-matrix__t">Power to add or remove other sponsors</div><div class="sp-matrix__s">Sam-only action · §12 PR4</div></div></div>
-            </div>
-          </div>
-        </div>
-        <div class="stack">
-          <div class="gc-card">
-            <h3 style="font-size:15px;font-weight:700;margin:0">Why we KYC sponsors</h3>
-            <p style="font-size:12.5px;color:var(--text-secondary);line-height:1.55;margin:0">A sponsor with authorisation powers needs to be a real verified person — reduces coercion risk + AML exposure. Light KYC + open banking is the bar. Per <a href="../41-decisions-log.html" style="color:var(--accent)">GEN-03</a>.</p>
-          </div>
-          <div class="gc-card">
-            <h3 style="font-size:15px;font-weight:700;margin:0">If you say no</h3>
-            <p style="font-size:12.5px;color:var(--text-secondary);line-height:1.55;margin:0">Polite ack screen · Sam is notified that you declined · no follow-up emails from us · no judgment. People say no for lots of good reasons.</p>
-          </div>
-          <div class="sp-decision">decisions · <a href="../41-decisions-log.html">GEN-03</a> sponsor KYC required · <a href="../41-decisions-log.html">CC-03</a> Vouchsafe vendor</div>
-        </div>
-      </div>
-    </div>`),
+ sp3: () => PAGE('sponsor', 'Welcome', '', `
+ <div class="stack">
+ <div class="sp-landing-hero">
+ <span class="sp-landing-hero__tag">Sponsorship · GaimControl</span>
+ <h1 class="sp-landing-hero__h">Hi Joanna. Your sister Sam wants you in her corner.</h1>
+ <p class="sp-landing-hero__p">Sam has chosen GaimControl to support her gambling recovery. And she's chosen you as her sponsor. That means you'll see her milestones, hear if something goes off, and (with her permission) co-sign big transfers. You won't see day-to-day spending or her chats with Anna.</p>
+ <div class="sp-landing-hero__cta">
+ <button class="gc-btn gc-btn--white gc-btn--lg" onclick="next()">Sponsor Sam · ~8 min</button>
+ <button class="gc-btn gc-btn--ghost-light gc-btn--lg">I can't do this right now</button>
+ </div>
+ </div>
+ <div class="row-2">
+ <div class="stack">
+ <div class="gc-card">
+ <h3 style="font-size:17px;font-weight:700;margin:0">What you'll see</h3>
+ <div class="sp-matrix">
+ <div class="sp-matrix__row"><span class="sp-matrix__ic sp-matrix__ic--y"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="sp-matrix__t">Streak status &amp; milestones</div><div class="sp-matrix__s">Day count clean · therapy session attendance · payment progress</div></div></div>
+ <div class="sp-matrix__row"><span class="sp-matrix__ic sp-matrix__ic--y"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="sp-matrix__t">Relapse Hold notices</div><div class="sp-matrix__s">If her card auto-pauses (e.g. She tries a betting MCC) you get told. No transaction detail</div></div></div>
+ <div class="sp-matrix__row"><span class="sp-matrix__ic sp-matrix__ic--y"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="sp-matrix__t">Sponsor-message inbox</div><div class="sp-matrix__s">Sam can send you pre-written templates or free text. You reply outside the app</div></div></div>
+ <div class="sp-matrix__row"><span class="sp-matrix__ic sp-matrix__ic--y"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="sp-matrix__t">Loan agreement (SECCI)</div><div class="sp-matrix__s">Per LO-07 default-on · pre-contract terms before Sam signs anything</div></div></div>
+ <div class="sp-matrix__row"><span class="sp-matrix__ic sp-matrix__ic--y"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="sp-matrix__t">Per-MCC spend categories</div><div class="sp-matrix__s">"Groceries: ok · subscriptions: ok · alcohol: blocked". not individual merchants</div></div></div>
+ <div class="sp-matrix__row"><span class="sp-matrix__ic sp-matrix__ic--y"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="sp-matrix__t">Authorise transfers above threshold</div><div class="sp-matrix__s">Sam sets the threshold · you approve or reject in-app · reject blocks</div></div></div>
+ </div>
+ </div>
+ <div class="gc-card">
+ <h3 style="font-size:17px;font-weight:700;margin:0">What you won't see</h3>
+ <div class="sp-matrix">
+ <div class="sp-matrix__row"><span class="sp-matrix__ic sp-matrix__ic--n"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6 6 18M6 6l12 12"/></svg></span><div><div class="sp-matrix__t">Anna chat content</div><div class="sp-matrix__s">Verbatim CBT chat is never exposed · honesty in therapy depends on privacy</div></div></div>
+ <div class="sp-matrix__row"><span class="sp-matrix__ic sp-matrix__ic--n"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6 6 18M6 6l12 12"/></svg></span><div><div class="sp-matrix__t">Sam's linked third-party accounts</div><div class="sp-matrix__s">Her Monzo/Barclays/Revolut · not your business</div></div></div>
+ <div class="sp-matrix__row"><span class="sp-matrix__ic sp-matrix__ic--n"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6 6 18M6 6l12 12"/></svg></span><div><div class="sp-matrix__t">Power to initiate a Relapse Hold</div><div class="sp-matrix__s">Hold is user-initiated · you can flag concern (routes to ops + Anna) but can't force</div></div></div>
+ <div class="sp-matrix__row"><span class="sp-matrix__ic sp-matrix__ic--n"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6 6 18M6 6l12 12"/></svg></span><div><div class="sp-matrix__t">Power to close her account</div><div class="sp-matrix__s">Off-boarding is always user-initiated · §16</div></div></div>
+ <div class="sp-matrix__row"><span class="sp-matrix__ic sp-matrix__ic--n"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6 6 18M6 6l12 12"/></svg></span><div><div class="sp-matrix__t">Power to add or remove other sponsors</div><div class="sp-matrix__s">Sam-only action · §12 PR4</div></div></div>
+ </div>
+ </div>
+ </div>
+ <div class="stack">
+ <div class="gc-card">
+ <h3 style="font-size:15px;font-weight:700;margin:0">Why we KYC sponsors</h3>
+ <p style="font-size:12.5px;color:var(--text-secondary);line-height:1.55;margin:0">A sponsor with authorisation powers needs to be a real verified person. Reduces coercion risk + AML exposure. Light KYC + open banking is the bar. Per <a href="../41-decisions-log.html" style="color:var(--accent)">GEN-03</a>.</p>
+ </div>
+ <div class="gc-card">
+ <h3 style="font-size:15px;font-weight:700;margin:0">If you say no</h3>
+ <p style="font-size:12.5px;color:var(--text-secondary);line-height:1.55;margin:0">Polite ack screen · Sam is notified that you declined · no follow-up emails from us · no judgment. People say no for lots of good reasons.</p>
+ </div>
+ <div class="sp-decision">decisions · <a href="../41-decisions-log.html">GEN-03</a> sponsor KYC required · <a href="../41-decisions-log.html">CC-03</a> Vouchsafe vendor</div>
+ </div>
+ </div>
+ </div>`),
 
-  sp4: () => PAGE('sponsor', 'Verify your identity', 'Vouchsafe-powered · same vendor as user KYC. ~3 minutes. Light set — no income or affordability check.', `
-    <div class="row-2">
-      <div class="stack">
-        <div class="sp-kyc-step sp-kyc-step--done">
-          <span class="sp-kyc-step__n"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></span>
-          <div><div class="sp-kyc-step__t">Name + DOB</div><div class="sp-kyc-step__s">Joanna Catherine Murray · 04 Aug 1988</div></div>
-          <span class="sp-kyc-step__pill">Done</span>
-        </div>
-        <div class="sp-kyc-step sp-kyc-step--done">
-          <span class="sp-kyc-step__n"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></span>
-          <div><div class="sp-kyc-step__t">Address</div><div class="sp-kyc-step__s">22 Carlton Grove, Leeds LS6 2NP</div></div>
-          <span class="sp-kyc-step__pill">Done</span>
-        </div>
-        <div class="sp-kyc-step sp-kyc-step--done">
-          <span class="sp-kyc-step__n"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></span>
-          <div><div class="sp-kyc-step__t">Photo ID</div><div class="sp-kyc-step__s">UK passport · scanned + verified</div></div>
-          <span class="sp-kyc-step__pill">Done</span>
-        </div>
-        <div class="sp-kyc-step sp-kyc-step--current">
-          <span class="sp-kyc-step__n">4</span>
-          <div><div class="sp-kyc-step__t">Selfie · liveness check</div><div class="sp-kyc-step__s">Match against your ID photo</div></div>
-          <span class="sp-kyc-step__pill">Now</span>
-        </div>
-        <div class="sp-cam-frame">
-          <span class="sp-cam-frame__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></span>
-          <div class="sp-cam-frame__t">Align your face in the oval</div>
-          <div class="sp-cam-frame__s">Look at the camera · blink when prompted · we capture in ~3 seconds. Vouchsafe never stores raw biometric data.</div>
-          <button class="gc-btn gc-btn--primary gc-btn--lg" style="margin-top:4px" onclick="next()">Start capture</button>
-        </div>
-      </div>
-      <div class="stack">
-        <div class="gc-card">
-          <h3 style="font-size:15px;font-weight:700;margin:0">What this is for</h3>
-          <p style="font-size:13px;color:var(--text-secondary);line-height:1.55;margin:0">We KYC sponsors so authorisation powers can't be exploited by a fake email. Per <a href="../41-decisions-log.html" style="color:var(--accent)">GEN-03</a> · <a href="../41-decisions-log.html" style="color:var(--accent)">CC-03</a>. Light KYC means: identity verification only · no credit check · no income check.</p>
-        </div>
-        <div class="gc-card">
-          <h3 style="font-size:14px;font-weight:700;margin:0">If something fails</h3>
-          <p style="font-size:12.5px;color:var(--text-secondary);line-height:1.55;margin:0">Vouchsafe flags routed to ops review · resolved manually within 24h · you'll get an email either way.</p>
-        </div>
-        <div class="gc-card gc-card--anna"><span class="anna-av"><img src="../assets/gc-mark-mono-light.svg" alt=""></span><div><div class="anna-name">A note from Sam's coach</div><p>"Joanna — this step exists so Sam can trust the system that's about to trust you. The selfie is over in seconds."</p></div></div>
-        <div class="sp-decision">vendor: Vouchsafe · same provider as user KYC · GDPR-compliant biometric flow</div>
-      </div>
-    </div>`),
+ sp4: () => PAGE('sponsor', 'Verify your identity', 'Vouchsafe-powered · same vendor as user KYC. ~3 minutes. Light set. No income or affordability check.', `
+ <div class="row-2">
+ <div class="stack">
+ <div class="sp-kyc-step sp-kyc-step--done">
+ <span class="sp-kyc-step__n"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></span>
+ <div><div class="sp-kyc-step__t">Name + DOB</div><div class="sp-kyc-step__s">Joanna Catherine Murray · 04 Aug 1988</div></div>
+ <span class="sp-kyc-step__pill">Done</span>
+ </div>
+ <div class="sp-kyc-step sp-kyc-step--done">
+ <span class="sp-kyc-step__n"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></span>
+ <div><div class="sp-kyc-step__t">Address</div><div class="sp-kyc-step__s">22 Carlton Grove, Leeds LS6 2NP</div></div>
+ <span class="sp-kyc-step__pill">Done</span>
+ </div>
+ <div class="sp-kyc-step sp-kyc-step--done">
+ <span class="sp-kyc-step__n"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></span>
+ <div><div class="sp-kyc-step__t">Photo ID</div><div class="sp-kyc-step__s">UK passport · scanned + verified</div></div>
+ <span class="sp-kyc-step__pill">Done</span>
+ </div>
+ <div class="sp-kyc-step sp-kyc-step--current">
+ <span class="sp-kyc-step__n">4</span>
+ <div><div class="sp-kyc-step__t">Selfie · liveness check</div><div class="sp-kyc-step__s">Match against your ID photo</div></div>
+ <span class="sp-kyc-step__pill">Now</span>
+ </div>
+ <div class="sp-cam-frame">
+ <span class="sp-cam-frame__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></span>
+ <div class="sp-cam-frame__t">Align your face in the oval</div>
+ <div class="sp-cam-frame__s">Look at the camera · blink when prompted · we capture in ~3 seconds. Vouchsafe never stores raw biometric data.</div>
+ <button class="gc-btn gc-btn--primary gc-btn--lg" style="margin-top:4px" onclick="next()">Start capture</button>
+ </div>
+ </div>
+ <div class="stack">
+ <div class="gc-card">
+ <h3 style="font-size:15px;font-weight:700;margin:0">What this is for</h3>
+ <p style="font-size:13px;color:var(--text-secondary);line-height:1.55;margin:0">We KYC sponsors so authorisation powers can't be exploited by a fake email. Per <a href="../41-decisions-log.html" style="color:var(--accent)">GEN-03</a> · <a href="../41-decisions-log.html" style="color:var(--accent)">CC-03</a>. Light KYC means: identity verification only · no credit check · no income check.</p>
+ </div>
+ <div class="gc-card">
+ <h3 style="font-size:14px;font-weight:700;margin:0">If something fails</h3>
+ <p style="font-size:12.5px;color:var(--text-secondary);line-height:1.55;margin:0">Vouchsafe flags routed to ops review · resolved manually within 24h · you'll get an email either way.</p>
+ </div>
+ <div class="gc-card gc-card--anna"><span class="anna-av"><img src="../assets/gc-mark-mono-light.svg" alt=""></span><div><div class="anna-name">A note from Sam's coach</div><p>"Joanna. This step exists so Sam can trust the system that's about to trust you. The selfie is over in seconds."</p></div></div>
+ <div class="sp-decision">vendor: Vouchsafe · same provider as user KYC · GDPR-compliant biometric flow</div>
+ </div>
+ </div>`),
 
-  sp5: () => PAGE('sponsor', 'Link a bank account', 'TrueLayer · single account · liveness + AML cross-check only. We don\'t analyse your spending.', `
-    <div class="row-2">
-      <div class="stack">
-        <div class="gc-card">
-          <h3 style="font-size:16px;font-weight:700;margin:0 0 4px">Pick the bank you'll link</h3>
-          <p style="font-size:12.5px;color:var(--text-secondary);margin:0">Any account in your own name. We confirm the name matches your KYC, then disconnect. We don't read your transactions.</p>
-          <div class="sp-bank-grid" style="margin-top:6px">
-            <button class="sp-bank is-on" onclick="pickBank(this)"><span class="sp-bank__logo" style="background:#0075a4">B</span><span class="sp-bank__n">Barclays</span></button>
-            <button class="sp-bank" onclick="pickBank(this)"><span class="sp-bank__logo" style="background:#db0011">H</span><span class="sp-bank__n">HSBC</span></button>
-            <button class="sp-bank" onclick="pickBank(this)"><span class="sp-bank__logo" style="background:#1c1c1c">M</span><span class="sp-bank__n">Monzo</span></button>
-            <button class="sp-bank" onclick="pickBank(this)"><span class="sp-bank__logo" style="background:#006a4d">L</span><span class="sp-bank__n">Lloyds</span></button>
-            <button class="sp-bank" onclick="pickBank(this)"><span class="sp-bank__logo" style="background:#5f259f">N</span><span class="sp-bank__n">NatWest</span></button>
-            <button class="sp-bank" onclick="pickBank(this)"><span class="sp-bank__logo" style="background:#ec0000">S</span><span class="sp-bank__n">Santander</span></button>
-            <button class="sp-bank" onclick="pickBank(this)"><span class="sp-bank__logo" style="background:#7d3c98">S</span><span class="sp-bank__n">Starling</span></button>
-            <button class="sp-bank" onclick="pickBank(this)"><span class="sp-bank__logo" style="background:#0075c9">N</span><span class="sp-bank__n">Nationwide</span></button>
-          </div>
-        </div>
-        <div class="gc-card">
-          <h3 style="font-size:15px;font-weight:700;margin:0">What we'll do once linked</h3>
-          <div class="sp-matrix">
-            <div class="sp-matrix__row"><span class="sp-matrix__ic sp-matrix__ic--y"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="sp-matrix__t">Confirm account name matches your KYC</div><div class="sp-matrix__s">"Joanna C Murray" = "Joanna Catherine Murray". One-time check.</div></div></div>
-            <div class="sp-matrix__row"><span class="sp-matrix__ic sp-matrix__ic--y"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="sp-matrix__t">AML cross-check via Algbra</div><div class="sp-matrix__s">PEP / sanctions / fraud list scan. Standard FCA stuff.</div></div></div>
-            <div class="sp-matrix__row"><span class="sp-matrix__ic sp-matrix__ic--n"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6 6 18M6 6l12 12"/></svg></span><div><div class="sp-matrix__t">Analyse your spending</div><div class="sp-matrix__s">We don't look at your transactions. Per GEN-03 the link is for liveness only.</div></div></div>
-            <div class="sp-matrix__row"><span class="sp-matrix__ic sp-matrix__ic--n"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6 6 18M6 6l12 12"/></svg></span><div><div class="sp-matrix__t">Move money between you and Sam</div><div class="sp-matrix__s">The sponsor relationship has no payment rail. Co-sign means approve, not transfer.</div></div></div>
-          </div>
-        </div>
-      </div>
-      <div class="stack">
-        <div class="gc-card">
-          <h3 style="font-size:15px;font-weight:700;margin:0 0 4px">Why a bank link?</h3>
-          <p style="font-size:13px;color:var(--text-secondary);line-height:1.55;margin:0">Tying you to a real verified account in your own name reduces coercion risk. Without it, a controlling partner could create a sponsor identity and exploit Sam's authorisations. Per <a href="../41-decisions-log.html" style="color:var(--accent)">GEN-03</a>.</p>
-        </div>
-        <div class="gc-card">
-          <h3 style="font-size:14px;font-weight:700;margin:0">Open-banking renewal</h3>
-          <p style="font-size:12.5px;color:var(--text-secondary);line-height:1.55;margin:0">FCA mandates re-consent every 90 days. We'll email you when it's due · ~30 seconds to renew. (Same rule applies to Sam's bank link.)</p>
-        </div>
-        <button class="gc-btn gc-btn--primary gc-btn--lg gc-btn--full" onclick="next()">Continue with Barclays →</button>
-        <button class="gc-btn gc-btn--ghost gc-btn--full">Use a different bank</button>
-        <div class="sp-decision">vendor: TrueLayer · FCA-authorised AISP · link kept active for 90-day windows</div>
-      </div>
-    </div>`),
+ sp5: () => PAGE('sponsor', 'Link a bank account', 'TrueLayer · single account · liveness + AML cross-check only. We don\'t analyse your spending.', `
+ <div class="row-2">
+ <div class="stack">
+ <div class="gc-card">
+ <h3 style="font-size:16px;font-weight:700;margin:0 0 4px">Pick the bank you'll link</h3>
+ <p style="font-size:12.5px;color:var(--text-secondary);margin:0">Any account in your own name. We confirm the name matches your KYC, then disconnect. We don't read your transactions.</p>
+ <div class="sp-bank-grid" style="margin-top:6px">
+ <button class="sp-bank is-on" onclick="pickBank(this)"><span class="sp-bank__logo" style="background:#0075a4">B</span><span class="sp-bank__n">Barclays</span></button>
+ <button class="sp-bank" onclick="pickBank(this)"><span class="sp-bank__logo" style="background:#db0011">H</span><span class="sp-bank__n">HSBC</span></button>
+ <button class="sp-bank" onclick="pickBank(this)"><span class="sp-bank__logo" style="background:#1c1c1c">M</span><span class="sp-bank__n">Monzo</span></button>
+ <button class="sp-bank" onclick="pickBank(this)"><span class="sp-bank__logo" style="background:#006a4d">L</span><span class="sp-bank__n">Lloyds</span></button>
+ <button class="sp-bank" onclick="pickBank(this)"><span class="sp-bank__logo" style="background:#5f259f">N</span><span class="sp-bank__n">NatWest</span></button>
+ <button class="sp-bank" onclick="pickBank(this)"><span class="sp-bank__logo" style="background:#ec0000">S</span><span class="sp-bank__n">Santander</span></button>
+ <button class="sp-bank" onclick="pickBank(this)"><span class="sp-bank__logo" style="background:#7d3c98">S</span><span class="sp-bank__n">Starling</span></button>
+ <button class="sp-bank" onclick="pickBank(this)"><span class="sp-bank__logo" style="background:#0075c9">N</span><span class="sp-bank__n">Nationwide</span></button>
+ </div>
+ </div>
+ <div class="gc-card">
+ <h3 style="font-size:15px;font-weight:700;margin:0">What we'll do once linked</h3>
+ <div class="sp-matrix">
+ <div class="sp-matrix__row"><span class="sp-matrix__ic sp-matrix__ic--y"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="sp-matrix__t">Confirm account name matches your KYC</div><div class="sp-matrix__s">"Joanna C Murray" = "Joanna Catherine Murray". One-time check.</div></div></div>
+ <div class="sp-matrix__row"><span class="sp-matrix__ic sp-matrix__ic--y"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="sp-matrix__t">AML cross-check via Algbra</div><div class="sp-matrix__s">PEP / sanctions / fraud list scan. Standard FCA stuff.</div></div></div>
+ <div class="sp-matrix__row"><span class="sp-matrix__ic sp-matrix__ic--n"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6 6 18M6 6l12 12"/></svg></span><div><div class="sp-matrix__t">Analyse your spending</div><div class="sp-matrix__s">We don't look at your transactions. Per GEN-03 the link is for liveness only.</div></div></div>
+ <div class="sp-matrix__row"><span class="sp-matrix__ic sp-matrix__ic--n"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6 6 18M6 6l12 12"/></svg></span><div><div class="sp-matrix__t">Move money between you and Sam</div><div class="sp-matrix__s">The sponsor relationship has no payment rail. Co-sign means approve, not transfer.</div></div></div>
+ </div>
+ </div>
+ </div>
+ <div class="stack">
+ <div class="gc-card">
+ <h3 style="font-size:15px;font-weight:700;margin:0 0 4px">Why a bank link?</h3>
+ <p style="font-size:13px;color:var(--text-secondary);line-height:1.55;margin:0">Tying you to a real verified account in your own name reduces coercion risk. Without it, a controlling partner could create a sponsor identity and exploit Sam's authorisations. Per <a href="../41-decisions-log.html" style="color:var(--accent)">GEN-03</a>.</p>
+ </div>
+ <div class="gc-card">
+ <h3 style="font-size:14px;font-weight:700;margin:0">Open-banking renewal</h3>
+ <p style="font-size:12.5px;color:var(--text-secondary);line-height:1.55;margin:0">FCA mandates re-consent every 90 days. We'll email you when it's due · ~30 seconds to renew (Same rule applies to Sam's bank link.)</p>
+ </div>
+ <button class="gc-btn gc-btn--primary gc-btn--lg gc-btn--full" onclick="next()">Continue with Barclays →</button>
+ <button class="gc-btn gc-btn--ghost gc-btn--full">Use a different bank</button>
+ <div class="sp-decision">vendor: TrueLayer · FCA-authorised AISP · link kept active for 90-day windows</div>
+ </div>
+ </div>`),
 
-  sp6: () => PAGE('sponsor', 'Sam · sponsor dashboard', 'sponsor.gaimcontrol.com · web only at MVP. Push + email on subscribed events. You can\'t DM Sam in here.', `
-    <div class="stack">
-      <div class="row-3">
-        <div class="sp-stat">
-          <div class="sp-stat__l">Clean streak</div>
-          <div class="sp-stat__n">Day 58</div>
-          <div class="sp-stat__d sp-stat__d--ok">↑ Longest yet · prev best 23</div>
-        </div>
-        <div class="sp-stat">
-          <div class="sp-stat__l">Loan payments</div>
-          <div class="sp-stat__n">1 / 36</div>
-          <div class="sp-stat__d">£311.20 cleared on 30 May · next 30 Jun</div>
-        </div>
-        <div class="sp-stat">
-          <div class="sp-stat__l">Anna sessions</div>
-          <div class="sp-stat__n">47</div>
-          <div class="sp-stat__d">4 of 4 CBT weekly · 12/12 daily check-ins</div>
-        </div>
-      </div>
-      <div class="row-2">
-        <div class="stack">
-          <div class="gc-card">
-            <h3 style="font-size:16px;font-weight:700;margin:0 0 4px">Last 14 days</h3>
-            <p style="font-size:12.5px;color:var(--text-secondary);margin:0 0 6px">Everything you're permitted to see · transactions never appear here.</p>
-            <div class="sp-tl"><span class="sp-tl__when">14 May · 09:01</span><div><span class="sp-tl__pill sp-tl__pill--milestone">Milestone</span><span class="sp-tl__t" style="display:inline">Day 58 clean</span><div class="sp-tl__s">New personal best. The previous longest was 23 days back in February.</div></div></div>
-            <div class="sp-tl"><span class="sp-tl__when">12 May · 21:30</span><div><span class="sp-tl__pill sp-tl__pill--message">Message</span><span class="sp-tl__t" style="display:inline">"Just checking in"</span><div class="sp-tl__s">Sam sent the standard check-in template · no action needed unless you want to reply.</div></div></div>
-            <div class="sp-tl"><span class="sp-tl__when">09 May · 14:48</span><div><span class="sp-tl__pill sp-tl__pill--milestone">Milestone</span><span class="sp-tl__t" style="display:inline">Weekly CBT module 3 complete</span><div class="sp-tl__s">Urge-surfing module · 3 of 4 sessions done.</div></div></div>
-            <div class="sp-tl"><span class="sp-tl__when">06 May · 22:14</span><div><span class="sp-tl__pill sp-tl__pill--hold">Hold</span><span class="sp-tl__t" style="display:inline">Auto Relapse Hold opened</span><div class="sp-tl__s">Card refused a betting-MCC transaction. System paused repayment 7 days · no action needed.</div></div></div>
-            <div class="sp-tl"><span class="sp-tl__when">01 May · 09:00</span><div><span class="sp-tl__pill sp-tl__pill--milestone">Payment</span><span class="sp-tl__t" style="display:inline">Loan payment 1/36 cleared</span><div class="sp-tl__s">£311.20 · 35 to go · new balance £8,089.</div></div></div>
-          </div>
-          <div class="gc-card">
-            <h3 style="font-size:15px;font-weight:700;margin:0 0 4px">Sam's loan · SECCI</h3>
-            <p style="font-size:12.5px;color:var(--text-secondary);margin:0 0 4px">Default-on per <a href="../41-decisions-log.html" style="color:var(--accent)">LO-07</a>. Sam's pre-contract terms.</p>
-            <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;padding-top:4px">
-              <div style="padding:11px 12px;background:var(--bg-base);border-radius:10px"><div style="font-size:10.5px;color:var(--text-muted);font-family:'JetBrains Mono',monospace;letter-spacing:0.05em;text-transform:uppercase">Borrowed</div><div style="font-size:18px;font-weight:700;margin-top:2px">£8,400</div></div>
-              <div style="padding:11px 12px;background:var(--bg-base);border-radius:10px"><div style="font-size:10.5px;color:var(--text-muted);font-family:'JetBrains Mono',monospace;letter-spacing:0.05em;text-transform:uppercase">APR</div><div style="font-size:18px;font-weight:700;margin-top:2px">19.9%</div></div>
-              <div style="padding:11px 12px;background:var(--bg-base);border-radius:10px"><div style="font-size:10.5px;color:var(--text-muted);font-family:'JetBrains Mono',monospace;letter-spacing:0.05em;text-transform:uppercase">Term</div><div style="font-size:18px;font-weight:700;margin-top:2px">36 mo</div></div>
-              <div style="padding:11px 12px;background:var(--bg-base);border-radius:10px"><div style="font-size:10.5px;color:var(--text-muted);font-family:'JetBrains Mono',monospace;letter-spacing:0.05em;text-transform:uppercase">Monthly</div><div style="font-size:18px;font-weight:700;margin-top:2px">£311.20</div></div>
-            </div>
-          </div>
-        </div>
-        <div class="stack">
-          <div class="gc-card">
-            <h3 style="font-size:15px;font-weight:700;margin:0">Per-MCC last 30 days</h3>
-            <p style="font-size:12px;color:var(--text-secondary);margin:0 0 6px">Categories only · never merchants.</p>
-            <div style="display:flex;flex-direction:column;gap:8px">
-              <div><div style="display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:4px"><span>Groceries</span><span style="font-family:'JetBrains Mono',monospace;color:var(--text-muted)">£312</span></div><div style="height:6px;background:var(--bg-surface-2);border-radius:99px"><div style="width:78%;height:100%;background:var(--t-50);border-radius:99px"></div></div></div>
-              <div><div style="display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:4px"><span>Subscriptions</span><span style="font-family:'JetBrains Mono',monospace;color:var(--text-muted)">£64</span></div><div style="height:6px;background:var(--bg-surface-2);border-radius:99px"><div style="width:30%;height:100%;background:var(--t-50);border-radius:99px"></div></div></div>
-              <div><div style="display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:4px"><span>Transport</span><span style="font-family:'JetBrains Mono',monospace;color:var(--text-muted)">£104</span></div><div style="height:6px;background:var(--bg-surface-2);border-radius:99px"><div style="width:48%;height:100%;background:var(--t-50);border-radius:99px"></div></div></div>
-              <div><div style="display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:4px"><span>Alcohol</span><span style="font-family:'JetBrains Mono',monospace;color:var(--text-muted)">£0</span></div><div style="height:6px;background:var(--bg-surface-2);border-radius:99px"><div style="width:0%;height:100%;background:var(--e-50);border-radius:99px"></div></div><div style="font-size:10.5px;color:var(--text-muted);font-family:'JetBrains Mono',monospace;margin-top:3px">Blocked at MCC</div></div>
-              <div><div style="display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:4px"><span>Gambling (MCC 7995)</span><span style="font-family:'JetBrains Mono',monospace;color:var(--text-muted)">£0</span></div><div style="height:6px;background:var(--bg-surface-2);border-radius:99px"><div style="width:0%;height:100%;background:var(--e-50);border-radius:99px"></div></div><div style="font-size:10.5px;color:var(--text-muted);font-family:'JetBrains Mono',monospace;margin-top:3px">Blocked · 2 declines this month</div></div>
-            </div>
-          </div>
-          <div class="gc-card">
-            <h3 style="font-size:14px;font-weight:700;margin:0 0 2px">Co-sign queue</h3>
-            <p style="font-size:12px;color:var(--text-secondary);margin:0">No pending requests. Threshold currently set by Sam at £500 outgoing.</p>
-          </div>
-          <div class="sp-decision">decisions · <a href="../41-decisions-log.html">GEN-03</a> · <a href="../41-decisions-log.html">GEN-07</a> · SP6.A any-of-N · SP6.B broadcast-all</div>
-        </div>
-      </div>
-    </div>`),
+ sp6: () => PAGE('sponsor', 'Sam · sponsor dashboard', 'sponsor.gaimcontrol.com · web only at MVP. Push + email on subscribed events. You can\'t DM Sam in here.', `
+ <div class="stack">
+ <div class="row-3">
+ <div class="sp-stat">
+ <div class="sp-stat__l">Clean streak</div>
+ <div class="sp-stat__n">Day 58</div>
+ <div class="sp-stat__d sp-stat__d--ok">↑ Longest yet · prev best 23</div>
+ </div>
+ <div class="sp-stat">
+ <div class="sp-stat__l">Loan payments</div>
+ <div class="sp-stat__n">1 / 36</div>
+ <div class="sp-stat__d">£311.20 cleared on 30 May · next 30 Jun</div>
+ </div>
+ <div class="sp-stat">
+ <div class="sp-stat__l">Anna sessions</div>
+ <div class="sp-stat__n">47</div>
+ <div class="sp-stat__d">4 of 4 CBT weekly · 12/12 daily check-ins</div>
+ </div>
+ </div>
+ <div class="row-2">
+ <div class="stack">
+ <div class="gc-card">
+ <h3 style="font-size:16px;font-weight:700;margin:0 0 4px">Last 14 days</h3>
+ <p style="font-size:12.5px;color:var(--text-secondary);margin:0 0 6px">Everything you're permitted to see · transactions never appear here.</p>
+ <div class="sp-tl"><span class="sp-tl__when">14 May · 09:01</span><div><span class="sp-tl__pill sp-tl__pill--milestone">Milestone</span><span class="sp-tl__t" style="display:inline">Day 58 clean</span><div class="sp-tl__s">New personal best. The previous longest was 23 days back in February.</div></div></div>
+ <div class="sp-tl"><span class="sp-tl__when">12 May · 21:30</span><div><span class="sp-tl__pill sp-tl__pill--message">Message</span><span class="sp-tl__t" style="display:inline">"Just checking in"</span><div class="sp-tl__s">Sam sent the standard check-in template · no action needed unless you want to reply.</div></div></div>
+ <div class="sp-tl"><span class="sp-tl__when">09 May · 14:48</span><div><span class="sp-tl__pill sp-tl__pill--milestone">Milestone</span><span class="sp-tl__t" style="display:inline">Weekly CBT module 3 complete</span><div class="sp-tl__s">Urge-surfing module · 3 of 4 sessions done.</div></div></div>
+ <div class="sp-tl"><span class="sp-tl__when">06 May · 22:14</span><div><span class="sp-tl__pill sp-tl__pill--hold">Hold</span><span class="sp-tl__t" style="display:inline">Auto Relapse Hold opened</span><div class="sp-tl__s">Card refused a betting-MCC transaction. System paused repayment 7 days · no action needed.</div></div></div>
+ <div class="sp-tl"><span class="sp-tl__when">01 May · 09:00</span><div><span class="sp-tl__pill sp-tl__pill--milestone">Payment</span><span class="sp-tl__t" style="display:inline">Loan payment 1/36 cleared</span><div class="sp-tl__s">£311.20 · 35 to go · new balance £8,089.</div></div></div>
+ </div>
+ <div class="gc-card">
+ <h3 style="font-size:15px;font-weight:700;margin:0 0 4px">Sam's loan · SECCI</h3>
+ <p style="font-size:12.5px;color:var(--text-secondary);margin:0 0 4px">Default-on per <a href="../41-decisions-log.html" style="color:var(--accent)">LO-07</a>. Sam's pre-contract terms.</p>
+ <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;padding-top:4px">
+ <div style="padding:11px 12px;background:var(--bg-base);border-radius:10px"><div style="font-size:10.5px;color:var(--text-muted);font-family:'JetBrains Mono',monospace;letter-spacing:0.05em;text-transform:uppercase">Borrowed</div><div style="font-size:18px;font-weight:700;margin-top:2px">£8,400</div></div>
+ <div style="padding:11px 12px;background:var(--bg-base);border-radius:10px"><div style="font-size:10.5px;color:var(--text-muted);font-family:'JetBrains Mono',monospace;letter-spacing:0.05em;text-transform:uppercase">APR</div><div style="font-size:18px;font-weight:700;margin-top:2px">19.9%</div></div>
+ <div style="padding:11px 12px;background:var(--bg-base);border-radius:10px"><div style="font-size:10.5px;color:var(--text-muted);font-family:'JetBrains Mono',monospace;letter-spacing:0.05em;text-transform:uppercase">Term</div><div style="font-size:18px;font-weight:700;margin-top:2px">36 mo</div></div>
+ <div style="padding:11px 12px;background:var(--bg-base);border-radius:10px"><div style="font-size:10.5px;color:var(--text-muted);font-family:'JetBrains Mono',monospace;letter-spacing:0.05em;text-transform:uppercase">Monthly</div><div style="font-size:18px;font-weight:700;margin-top:2px">£311.20</div></div>
+ </div>
+ </div>
+ </div>
+ <div class="stack">
+ <div class="gc-card">
+ <h3 style="font-size:15px;font-weight:700;margin:0">Per-MCC last 30 days</h3>
+ <p style="font-size:12px;color:var(--text-secondary);margin:0 0 6px">Categories only · never merchants.</p>
+ <div style="display:flex;flex-direction:column;gap:8px">
+ <div><div style="display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:4px"><span>Groceries</span><span style="font-family:'JetBrains Mono',monospace;color:var(--text-muted)">£312</span></div><div style="height:6px;background:var(--bg-surface-2);border-radius:99px"><div style="width:78%;height:100%;background:var(--t-50);border-radius:99px"></div></div></div>
+ <div><div style="display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:4px"><span>Subscriptions</span><span style="font-family:'JetBrains Mono',monospace;color:var(--text-muted)">£64</span></div><div style="height:6px;background:var(--bg-surface-2);border-radius:99px"><div style="width:30%;height:100%;background:var(--t-50);border-radius:99px"></div></div></div>
+ <div><div style="display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:4px"><span>Transport</span><span style="font-family:'JetBrains Mono',monospace;color:var(--text-muted)">£104</span></div><div style="height:6px;background:var(--bg-surface-2);border-radius:99px"><div style="width:48%;height:100%;background:var(--t-50);border-radius:99px"></div></div></div>
+ <div><div style="display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:4px"><span>Alcohol</span><span style="font-family:'JetBrains Mono',monospace;color:var(--text-muted)">£0</span></div><div style="height:6px;background:var(--bg-surface-2);border-radius:99px"><div style="width:0%;height:100%;background:var(--e-50);border-radius:99px"></div></div><div style="font-size:10.5px;color:var(--text-muted);font-family:'JetBrains Mono',monospace;margin-top:3px">Blocked at MCC</div></div>
+ <div><div style="display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:4px"><span>Gambling (MCC 7995)</span><span style="font-family:'JetBrains Mono',monospace;color:var(--text-muted)">£0</span></div><div style="height:6px;background:var(--bg-surface-2);border-radius:99px"><div style="width:0%;height:100%;background:var(--e-50);border-radius:99px"></div></div><div style="font-size:10.5px;color:var(--text-muted);font-family:'JetBrains Mono',monospace;margin-top:3px">Blocked · 2 declines this month</div></div>
+ </div>
+ </div>
+ <div class="gc-card">
+ <h3 style="font-size:14px;font-weight:700;margin:0 0 2px">Co-sign queue</h3>
+ <p style="font-size:12px;color:var(--text-secondary);margin:0">No pending requests. Threshold currently set by Sam at £500 outgoing.</p>
+ </div>
+ <div class="sp-decision">decisions · <a href="../41-decisions-log.html">GEN-03</a> · <a href="../41-decisions-log.html">GEN-07</a> · SP6.A any-of-N · SP6.B broadcast-all</div>
+ </div>
+ </div>
+ </div>`),
 
-  sp7: () => PAGE('user', 'Sponsor', 'Up to 3 active sponsors · any-of-N authorisations · broadcast notifications.', `
-    <div class="row-2">
-      <div class="stack">
-        <div class="gc-card">
-          <h3 style="font-size:16px;font-weight:700;margin:0 0 4px">Your sponsors</h3>
-          <div style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:var(--bg-base);border:1px solid var(--border);border-radius:12px">
-            <span style="width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,var(--s-50),var(--p-40));color:white;display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:18px">JM</span>
-            <div style="flex:1">
-              <div style="font-size:15px;font-weight:700">Joanna Murray <span style="font-family:'JetBrains Mono',monospace;font-size:10px;padding:2px 8px;border-radius:999px;background:var(--t-20);color:var(--t-80);margin-left:6px;letter-spacing:0.04em;font-weight:700">ACTIVE</span></div>
-              <div style="font-size:12px;color:var(--text-secondary);font-family:'JetBrains Mono',monospace;margin-top:3px">Sister · sponsor since 18 Apr 2026 · 7/7 digests opened</div>
-            </div>
-            <button class="gc-btn gc-btn--ghost" style="padding:9px 14px;font-size:12px">Manage</button>
-          </div>
-          <div style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:var(--bg-surface-2);border:1px solid var(--w-60);border-left-width:3px;border-radius:4px 12px 12px 4px">
-            <span style="width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,var(--w-60),var(--w-30));color:white;display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:18px">DW</span>
-            <div style="flex:1">
-              <div style="font-size:15px;font-weight:700">Dr Williams <span style="font-family:'JetBrains Mono',monospace;font-size:10px;padding:2px 8px;border-radius:999px;background:var(--w-30);color:var(--w-80);margin-left:6px;letter-spacing:0.04em;font-weight:700">SP4 · KYC</span></div>
-              <div style="font-size:12px;color:var(--text-secondary);font-family:'JetBrains Mono',monospace;margin-top:3px">Clinician · invited 10 May · awaiting KYC + bank link</div>
-            </div>
-            <button class="gc-btn gc-btn--ghost" style="padding:9px 14px;font-size:12px">Resend · cancel</button>
-          </div>
-          <button class="gc-btn gc-btn--ghost gc-btn--full" style="border-style:dashed" onclick="go(0)">+ Invite a third sponsor (1 slot left)</button>
-        </div>
-        <div class="gc-card">
-          <h3 style="font-size:15px;font-weight:700;margin:0 0 4px">Sponsor abilities · current</h3>
-          <p style="font-size:12.5px;color:var(--text-secondary);margin:0 0 4px">Identical for all sponsors at MVP — no role differences. Toggle visibility per-sponsor below.</p>
-          <div class="sp-matrix">
-            <div class="sp-matrix__row"><span class="sp-matrix__ic sp-matrix__ic--y"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="sp-matrix__t">Receive monthly digest</div><div class="sp-matrix__s">Streak · payment · session attendance</div></div></div>
-            <div class="sp-matrix__row"><span class="sp-matrix__ic sp-matrix__ic--y"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="sp-matrix__t">See Relapse Hold notices</div><div class="sp-matrix__s">Auto + manual · no transaction detail</div></div></div>
-            <div class="sp-matrix__row"><span class="sp-matrix__ic sp-matrix__ic--y"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="sp-matrix__t">Authorise transfers &gt; £500</div><div class="sp-matrix__s">Any-of-N · either sponsor can approve / reject</div></div></div>
-            <div class="sp-matrix__row"><span class="sp-matrix__ic sp-matrix__ic--n"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6 6 18M6 6l12 12"/></svg></span><div><div class="sp-matrix__t">See Anna chat content</div><div class="sp-matrix__s">Sponsor-blind per AN-05</div></div></div>
-            <div class="sp-matrix__row"><span class="sp-matrix__ic sp-matrix__ic--n"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6 6 18M6 6l12 12"/></svg></span><div><div class="sp-matrix__t">Initiate Hold or close account</div><div class="sp-matrix__s">Always user-initiated · §10, §16</div></div></div>
-            <div class="sp-matrix__row"><span class="sp-matrix__ic sp-matrix__ic--n"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6 6 18M6 6l12 12"/></svg></span><div><div class="sp-matrix__t">Add or remove other sponsors</div><div class="sp-matrix__s">Your action only · this screen</div></div></div>
-          </div>
-        </div>
-      </div>
-      <div class="stack">
-        <div class="gc-card">
-          <h3 style="font-size:14px;font-weight:700;margin:0 0 4px">Rules</h3>
-          <ul style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:7px;font-size:12.5px;color:var(--text-secondary);line-height:1.5">
-            <li><strong style="color:var(--text-primary)">SP6.A</strong> Any-of-N · either sponsor can approve · saves you waiting</li>
-            <li><strong style="color:var(--text-primary)">SP6.B</strong> Notifications broadcast-all · each sponsor mutes categories on their own dash</li>
-            <li><strong style="color:var(--text-primary)">SP6.C</strong> Cap at 3 active · per <a href="../41-decisions-log.html" style="color:var(--accent)">GEN-07</a></li>
-          </ul>
-        </div>
-        <div class="gc-card">
-          <h3 style="font-size:14px;font-weight:700;margin:0 0 4px">Suspend vs remove</h3>
-          <p style="font-size:12.5px;color:var(--text-secondary);line-height:1.55;margin:0">Suspend revokes access immediately + retains audit log entry · reversible. Remove = full revocation + cascade · sponsor learns when they next open their dashboard.</p>
-        </div>
-        ${''}
-        <div class="sp-decision">decisions · <a href="../41-decisions-log.html">GEN-03</a> · <a href="../41-decisions-log.html">GEN-07</a> · <a href="../41-decisions-log.html">CC-03</a> · <a href="../41-decisions-log.html">ON-04</a></div>
-      </div>
-    </div>`),
+ sp7: () => PAGE('user', 'Sponsor', 'Up to 3 active sponsors · any-of-N authorisations · broadcast notifications.', `
+ <div class="row-2">
+ <div class="stack">
+ <div class="gc-card">
+ <h3 style="font-size:16px;font-weight:700;margin:0 0 4px">Your sponsors</h3>
+ <div style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:var(--bg-base);border:1px solid var(--border);border-radius:12px">
+ <span style="width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,var(--s-50),var(--p-40));color:white;display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:18px">JM</span>
+ <div style="flex:1">
+ <div style="font-size:15px;font-weight:700">Joanna Murray <span style="font-family:'JetBrains Mono',monospace;font-size:10px;padding:2px 8px;border-radius:999px;background:var(--t-20);color:var(--t-80);margin-left:6px;letter-spacing:0.04em;font-weight:700">ACTIVE</span></div>
+ <div style="font-size:12px;color:var(--text-secondary);font-family:'JetBrains Mono',monospace;margin-top:3px">Sister · sponsor since 18 Apr 2026 · 7/7 digests opened</div>
+ </div>
+ <button class="gc-btn gc-btn--ghost" style="padding:9px 14px;font-size:12px">Manage</button>
+ </div>
+ <div style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:var(--bg-surface-2);border:1px solid var(--w-60);border-left-width:3px;border-radius:4px 12px 12px 4px">
+ <span style="width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,var(--w-60),var(--w-30));color:white;display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:18px">DW</span>
+ <div style="flex:1">
+ <div style="font-size:15px;font-weight:700">Dr Williams <span style="font-family:'JetBrains Mono',monospace;font-size:10px;padding:2px 8px;border-radius:999px;background:var(--w-30);color:var(--w-80);margin-left:6px;letter-spacing:0.04em;font-weight:700">SP4 · KYC</span></div>
+ <div style="font-size:12px;color:var(--text-secondary);font-family:'JetBrains Mono',monospace;margin-top:3px">Clinician · invited 10 May · awaiting KYC + bank link</div>
+ </div>
+ <button class="gc-btn gc-btn--ghost" style="padding:9px 14px;font-size:12px">Resend · cancel</button>
+ </div>
+ <button class="gc-btn gc-btn--ghost gc-btn--full" style="border-style:dashed" onclick="go(0)">+ Invite a third sponsor (1 slot left)</button>
+ </div>
+ <div class="gc-card">
+ <h3 style="font-size:15px;font-weight:700;margin:0 0 4px">Sponsor abilities · current</h3>
+ <p style="font-size:12.5px;color:var(--text-secondary);margin:0 0 4px">Identical for all sponsors at MVP. No role differences. Toggle visibility per-sponsor below.</p>
+ <div class="sp-matrix">
+ <div class="sp-matrix__row"><span class="sp-matrix__ic sp-matrix__ic--y"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="sp-matrix__t">Receive monthly digest</div><div class="sp-matrix__s">Streak · payment · session attendance</div></div></div>
+ <div class="sp-matrix__row"><span class="sp-matrix__ic sp-matrix__ic--y"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="sp-matrix__t">See Relapse Hold notices</div><div class="sp-matrix__s">Auto + manual · no transaction detail</div></div></div>
+ <div class="sp-matrix__row"><span class="sp-matrix__ic sp-matrix__ic--y"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="sp-matrix__t">Authorise transfers &gt; £500</div><div class="sp-matrix__s">Any-of-N · either sponsor can approve / reject</div></div></div>
+ <div class="sp-matrix__row"><span class="sp-matrix__ic sp-matrix__ic--n"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6 6 18M6 6l12 12"/></svg></span><div><div class="sp-matrix__t">See Anna chat content</div><div class="sp-matrix__s">Sponsor-blind per AN-05</div></div></div>
+ <div class="sp-matrix__row"><span class="sp-matrix__ic sp-matrix__ic--n"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6 6 18M6 6l12 12"/></svg></span><div><div class="sp-matrix__t">Initiate Hold or close account</div><div class="sp-matrix__s">Always user-initiated · §10, §16</div></div></div>
+ <div class="sp-matrix__row"><span class="sp-matrix__ic sp-matrix__ic--n"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6 6 18M6 6l12 12"/></svg></span><div><div class="sp-matrix__t">Add or remove other sponsors</div><div class="sp-matrix__s">Your action only · this screen</div></div></div>
+ </div>
+ </div>
+ </div>
+ <div class="stack">
+ <div class="gc-card">
+ <h3 style="font-size:14px;font-weight:700;margin:0 0 4px">Rules</h3>
+ <ul style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:7px;font-size:12.5px;color:var(--text-secondary);line-height:1.5">
+ <li><strong style="color:var(--text-primary)">SP6.A</strong> Any-of-N · either sponsor can approve · saves you waiting</li>
+ <li><strong style="color:var(--text-primary)">SP6.B</strong> Notifications broadcast-all · each sponsor mutes categories on their own dash</li>
+ <li><strong style="color:var(--text-primary)">SP6.C</strong> Cap at 3 active · per <a href="../41-decisions-log.html" style="color:var(--accent)">GEN-07</a></li>
+ </ul>
+ </div>
+ <div class="gc-card">
+ <h3 style="font-size:14px;font-weight:700;margin:0 0 4px">Suspend vs remove</h3>
+ <p style="font-size:12.5px;color:var(--text-secondary);line-height:1.55;margin:0">Suspend revokes access immediately + retains audit log entry · reversible. Remove = full revocation + cascade · sponsor learns when they next open their dashboard.</p>
+ </div>
+ ${''}
+ <div class="sp-decision">decisions · <a href="../41-decisions-log.html">GEN-03</a> · <a href="../41-decisions-log.html">GEN-07</a> · <a href="../41-decisions-log.html">CC-03</a> · <a href="../41-decisions-log.html">ON-04</a></div>
+ </div>
+ </div>`),
 };
 
 let idx = 0;
@@ -681,26 +681,26 @@ function pickRel(el) { el.parentElement.querySelectorAll('.is-on').forEach(s => 
 function pickBank(el) { el.parentElement.querySelectorAll('.is-on').forEach(s => s.classList.remove('is-on')); el.classList.add('is-on'); }
 
 function render() {
-  const screen = SCREENS[idx];
-  const viewport = document.getElementById('viewport');
-  viewport.className = 'browser__viewport browser__viewport--' + (screen.audience === 'sponsor' ? 'sponsor' : 'user-nav');
-  viewport.innerHTML = builders[screen.kind]();
-  const url = document.getElementById('browserUrl');
-  url.textContent = (screen.audience === 'sponsor' ? 'sponsor.gaimcontrol.com' : 'app.gaimcontrol.com') + screen.url;
-  url.className = screen.audience === 'sponsor' ? 'browser__url__sponsor' : '';
-  document.getElementById('screenId').textContent = screen.id;
-  document.getElementById('screenName').textContent = screen.name;
-  const aud = document.getElementById('audiencePill');
-  aud.textContent = screen.audience === 'sponsor' ? 'Sponsor-side · Joanna' : 'User-side · Sam';
-  aud.className = 'proto-modebar__pill' + (screen.audience === 'sponsor' ? ' proto-modebar__pill--sponsor' : '');
-  document.getElementById('progressFill').style.width = ((idx + 1) / SCREENS.length * 100) + '%';
-  document.getElementById('navPrev').disabled = idx === 0;
-  document.getElementById('navNext').disabled = idx === SCREENS.length - 1;
-  document.querySelectorAll('.proto-scrubber__item').forEach((el, i) => {
-    el.classList.toggle('is-active', i === idx);
-    if (i === idx) el.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
-  });
-  document.getElementById('contextBody').innerHTML = CTX[screen.kind] || screen.name;
+ const screen = SCREENS[idx];
+ const viewport = document.getElementById('viewport');
+ viewport.className = 'browser__viewport browser__viewport--' + (screen.audience === 'sponsor' ? 'sponsor' : 'user-nav');
+ viewport.innerHTML = builders[screen.kind]();
+ const url = document.getElementById('browserUrl');
+ url.textContent = (screen.audience === 'sponsor' ? 'sponsor.gaimcontrol.com' : 'app.gaimcontrol.com') + screen.url;
+ url.className = screen.audience === 'sponsor' ? 'browser__url__sponsor' : '';
+ document.getElementById('screenId').textContent = screen.id;
+ document.getElementById('screenName').textContent = screen.name;
+ const aud = document.getElementById('audiencePill');
+ aud.textContent = screen.audience === 'sponsor' ? 'Sponsor-side · Joanna' : 'User-side · Sam';
+ aud.className = 'proto-modebar__pill' + (screen.audience === 'sponsor' ? ' proto-modebar__pill--sponsor' : '');
+ document.getElementById('progressFill').style.width = ((idx + 1) / SCREENS.length * 100) + '%';
+ document.getElementById('navPrev').disabled = idx === 0;
+ document.getElementById('navNext').disabled = idx === SCREENS.length - 1;
+ document.querySelectorAll('.proto-scrubber__item').forEach((el, i) => {
+ el.classList.toggle('is-active', i === idx);
+ if (i === idx) el.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+ });
+ document.getElementById('contextBody').innerHTML = CTX[screen.kind] || screen.name;
 }
 
 function next() { if (idx < SCREENS.length - 1) { idx++; render(); } }
@@ -708,28 +708,28 @@ function prev() { if (idx > 0) { idx--; render(); } }
 function go(i) { idx = i; render(); }
 
 function buildScrubber() {
-  const nav = document.getElementById('scrubber');
-  SCREENS.forEach((s, i) => {
-    const btn = document.createElement('button');
-    btn.className = 'proto-scrubber__item';
-    btn.innerHTML = `<span class="proto-scrubber__id">${s.id}</span><span class="proto-scrubber__name">${s.name}</span>`;
-    btn.addEventListener('click', () => go(i));
-    nav.appendChild(btn);
-  });
+ const nav = document.getElementById('scrubber');
+ SCREENS.forEach((s, i) => {
+ const btn = document.createElement('button');
+ btn.className = 'proto-scrubber__item';
+ btn.innerHTML = `<span class="proto-scrubber__id">${s.id}</span><span class="proto-scrubber__name">${s.name}</span>`;
+ btn.addEventListener('click', () => go(i));
+ nav.appendChild(btn);
+ });
 }
 
 function initTheme() {
-  const root = document.documentElement;
-  const stored = localStorage.getItem('gc-proto-theme');
-  const initial = stored || 'dark';
-  root.setAttribute('data-theme', initial);
-  document.querySelector('.theme-label').textContent = initial === 'dark' ? 'Dark' : 'Light';
-  document.querySelector('.proto-theme-toggle').addEventListener('click', () => {
-    const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-    root.setAttribute('data-theme', next);
-    document.querySelector('.theme-label').textContent = next === 'dark' ? 'Dark' : 'Light';
-    try { localStorage.setItem('gc-proto-theme', next); } catch(e) {}
-  });
+ const root = document.documentElement;
+ const stored = localStorage.getItem('gc-proto-theme');
+ const initial = stored || 'dark';
+ root.setAttribute('data-theme', initial);
+ document.querySelector('.theme-label').textContent = initial === 'dark' ? 'Dark' : 'Light';
+ document.querySelector('.proto-theme-toggle').addEventListener('click', () => {
+ const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+ root.setAttribute('data-theme', next);
+ document.querySelector('.theme-label').textContent = next === 'dark' ? 'Dark' : 'Light';
+ try { localStorage.setItem('gc-proto-theme', next); } catch(e) {}
+ });
 }
 
 document.getElementById('navPrev').addEventListener('click', prev);

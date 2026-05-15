@@ -10,12 +10,12 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --p-10:#0B0F1C;--p-20:#161B2D;--p-30:#20273C;--p-40:#354872;--p-50:#4D608C;--p-60:#6B7DA6;--p-90:#DCE2F0;--p-95:#ECF0F9;--p-99:#FAFBFE;--p-100:#FFF;
-  --s-10:#28215A;--s-20:#3E3478;--s-30:#534792;--s-40:#6B5DAC;--s-50:#8576C2;--s-70:#B5ACDF;--s-80:#CFC8EA;--s-90:#E8E4F4;
-  --t-20:#1A6047;--t-30:#1F7058;--t-50:#399971;--t-60:#5BB088;--t-80:#ADDCC2;--t-90:#D5EDDF;
-  --w-30:#6B4500;--w-60:#C28200;--w-80:#FAB44A;--w-90:#FFDFA8;
-  --e-30:#7A1F1F;--e-50:#C73838;--e-80:#F4A4A4;--e-90:#FBD9D9;
-  --n-50:#76798A;--n-80:#C5C8D2;--n-95:#F1F2F5;--nv-80:#C5C9DD;
+ --p-10:#0B0F1C;--p-20:#161B2D;--p-30:#20273C;--p-40:#354872;--p-50:#4D608C;--p-60:#6B7DA6;--p-90:#DCE2F0;--p-95:#ECF0F9;--p-99:#FAFBFE;--p-100:#FFF;
+ --s-10:#28215A;--s-20:#3E3478;--s-30:#534792;--s-40:#6B5DAC;--s-50:#8576C2;--s-70:#B5ACDF;--s-80:#CFC8EA;--s-90:#E8E4F4;
+ --t-20:#1A6047;--t-30:#1F7058;--t-50:#399971;--t-60:#5BB088;--t-80:#ADDCC2;--t-90:#D5EDDF;
+ --w-30:#6B4500;--w-60:#C28200;--w-80:#FAB44A;--w-90:#FFDFA8;
+ --e-30:#7A1F1F;--e-50:#C73838;--e-80:#F4A4A4;--e-90:#FBD9D9;
+ --n-50:#76798A;--n-80:#C5C8D2;--n-95:#F1F2F5;--nv-80:#C5C9DD;
 }
 [data-theme="dark"] { --bg-base: var(--p-30); --bg-surface: var(--p-20); --bg-surface-2: var(--p-10); --border: rgba(255,255,255,0.08); --text-primary: var(--n-95); --text-secondary: var(--nv-80); --text-muted: rgba(255,255,255,0.4); --accent: var(--s-70); --accent-strong: var(--s-50); --on-accent: #fff; --page-bg: #0a0e1a; --page-fg: var(--n-95); --page-fg-muted: var(--nv-80); --page-card-bg: var(--p-20); --page-divider: rgba(255,255,255,0.06); }
 [data-theme="light"] { --bg-base: var(--p-99); --bg-surface: #fff; --bg-surface-2: var(--p-95); --border: rgba(22,27,45,0.08); --text-primary: var(--p-20); --text-secondary: var(--n-50); --text-muted: var(--n-50); --accent: var(--p-40); --accent-strong: var(--s-40); --on-accent: #fff; --page-bg: var(--p-95); --page-fg: var(--p-20); --page-fg-muted: var(--n-50); --page-card-bg: #fff; --page-divider: rgba(22,27,45,0.08); }
@@ -24,9 +24,9 @@ html, body { background: var(--page-bg); color: var(--page-fg); margin: 0; trans
 body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif; font-size: 14px; line-height: 1.5; -webkit-font-smoothing: antialiased; min-height: 100vh; }
 
 .proto-shell { display: grid; grid-template-columns: 280px 1fr; gap: 0; min-height: 100vh; }
-@media (max-width: 1100px) { .proto-shell { grid-template-columns: 1fr; } }
+@media (max-width: 1100px) {.proto-shell { grid-template-columns: 1fr; } }
 .proto-sidebar { background: var(--page-card-bg); border-right: 1px solid var(--page-divider); padding: 28px 22px; position: sticky; top: 0; height: 100vh; overflow-y: auto; display: flex; flex-direction: column; gap: 16px; }
-@media (max-width: 1100px) { .proto-sidebar { position: static; height: auto; max-height: 50vh; border-right: none; border-bottom: 1px solid var(--page-divider); } }
+@media (max-width: 1100px) {.proto-sidebar { position: static; height: auto; max-height: 50vh; border-right: none; border-bottom: 1px solid var(--page-divider); } }
 .proto-sidebar__brand { display: flex; align-items: center; gap: 10px; }
 .proto-sidebar__mark { width: 36px; height: 36px; border-radius: 10px; background: var(--p-30); display: inline-flex; align-items: center; justify-content: center; }
 .proto-sidebar__mark img { width: 70%; height: 70%; }
@@ -38,15 +38,15 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-
 .proto-scrubber__item { display: grid; grid-template-columns: 44px 1fr; gap: 8px; align-items: center; padding: 7px 10px; border-radius: 8px; cursor: pointer; border: none; background: transparent; color: inherit; font-family: inherit; text-align: left; }
 .proto-scrubber__item:hover { background: rgba(127,127,127,0.08); }
 .proto-scrubber__item.is-active { background: var(--accent-strong); color: var(--on-accent); }
-.proto-scrubber__item.is-active .proto-scrubber__id { color: rgba(255,255,255,0.85); }
+.proto-scrubber__item.is-active.proto-scrubber__id { color: rgba(255,255,255,0.85); }
 .proto-scrubber__id { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; color: var(--page-fg-muted); letter-spacing: 0.06em; }
 .proto-scrubber__name { font-size: 12.5px; font-weight: 500; }
 .proto-sidebar__footer { margin-top: auto; padding-top: 16px; border-top: 1px solid var(--page-divider); font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--page-fg-muted); }
 .proto-sidebar__footer a { color: var(--page-fg-muted); text-decoration: none; border-bottom: 1px dotted currentColor; }
 .proto-theme-toggle { display: inline-flex; align-items: center; gap: 8px; padding: 7px 12px; border-radius: 8px; background: var(--bg-surface-2); border: 1px solid var(--border); color: var(--page-fg-muted); cursor: pointer; font-family: 'JetBrains Mono', monospace; font-size: 11px; align-self: flex-start; }
 .proto-theme-toggle svg { width: 12px; height: 12px; }
-[data-theme="dark"] .proto-theme-toggle .icon-moon { display: none; }
-[data-theme="light"] .proto-theme-toggle .icon-sun { display: none; }
+[data-theme="dark"].proto-theme-toggle.icon-moon { display: none; }
+[data-theme="light"].proto-theme-toggle.icon-sun { display: none; }
 
 .proto-stage { display: flex; flex-direction: column; align-items: center; padding: 32px 24px 64px; gap: 18px; }
 .proto-modebar { display: flex; align-items: center; gap: 10px; padding: 10px 16px; background: var(--page-card-bg); border: 1px solid var(--page-divider); border-radius: 12px; font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: var(--page-fg-muted); flex-wrap: wrap; justify-content: center; }
@@ -61,24 +61,24 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-
 .proto-arrow svg { width: 18px; height: 18px; }
 
 .browser { width: 100%; max-width: 1380px; background: var(--bg-base); border-radius: 18px; overflow: hidden; border: 1px solid var(--border); box-shadow: 0 24px 60px -20px rgba(0,0,0,0.45), 0 8px 24px -12px rgba(0,0,0,0.25); }
-[data-theme="light"] .browser { box-shadow: 0 24px 60px -20px rgba(22,27,45,0.18), 0 8px 24px -12px rgba(22,27,45,0.08); }
+[data-theme="light"].browser { box-shadow: 0 24px 60px -20px rgba(22,27,45,0.18), 0 8px 24px -12px rgba(22,27,45,0.08); }
 .browser__chrome { display: flex; align-items: center; gap: 14px; padding: 12px 16px; background: var(--p-20); border-bottom: 1px solid var(--border); }
-[data-theme="light"] .browser__chrome { background: var(--n-95); }
+[data-theme="light"].browser__chrome { background: var(--n-95); }
 .browser__dots { display: inline-flex; gap: 7px; flex-shrink: 0; }
 .browser__dot { width: 11px; height: 11px; border-radius: 50%; }
-.browser__dot:nth-child(1) { background: #FF5F57; } .browser__dot:nth-child(2) { background: #FEBC2E; } .browser__dot:nth-child(3) { background: #28C840; }
+.browser__dot:nth-child(1) { background: #FF5F57; }.browser__dot:nth-child(2) { background: #FEBC2E; }.browser__dot:nth-child(3) { background: #28C840; }
 .browser__url { flex: 1; background: var(--bg-base); border: 1px solid var(--border); border-radius: 7px; padding: 6px 14px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--text-secondary); text-align: center; display: flex; align-items: center; justify-content: center; gap: 8px; }
 .browser__url svg { width: 12px; height: 12px; opacity: 0.7; flex-shrink: 0; }
 .browser__viewport { background: var(--bg-base); min-height: 820px; max-height: 820px; position: relative; color: var(--text-primary); display: grid; grid-template-columns: 240px 1fr; }
 
 .appnav { background: var(--bg-surface); border-right: 1px solid var(--border); padding: 20px 16px; display: flex; flex-direction: column; gap: 16px; }
-[data-theme="light"] .appnav { background: var(--bg-surface-2); border-right: 1px solid rgba(22,27,45,0.12); }
-[data-theme="light"] .appnav__item { color: var(--p-40); }
-[data-theme="light"] .appnav__item:hover { color: var(--p-20); }
-[data-theme="light"] .appnav__subitem { color: var(--p-50); }
-[data-theme="light"] .appnav__subitem:hover { color: var(--p-20); }
-[data-theme="light"] .appnav__user-sub { color: var(--p-50); }
-[data-theme="light"] .appnav .appnav__help div:nth-of-type(2) { color: var(--p-50); }
+[data-theme="light"].appnav { background: var(--bg-surface-2); border-right: 1px solid rgba(22,27,45,0.12); }
+[data-theme="light"].appnav__item { color: var(--p-40); }
+[data-theme="light"].appnav__item:hover { color: var(--p-20); }
+[data-theme="light"].appnav__subitem { color: var(--p-50); }
+[data-theme="light"].appnav__subitem:hover { color: var(--p-20); }
+[data-theme="light"].appnav__user-sub { color: var(--p-50); }
+[data-theme="light"].appnav.appnav__help div:nth-of-type(2) { color: var(--p-50); }
 .appnav__brand { display: flex; align-items: center; gap: 10px; padding: 4px 4px 12px; border-bottom: 1px solid var(--border); margin-bottom: 4px; }
 .appnav__mark { width: 32px; height: 32px; border-radius: 9px; background: var(--p-30); display: inline-flex; align-items: center; justify-content: center; }
 .appnav__mark img { width: 70%; height: 70%; }
@@ -113,16 +113,16 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-
 .gc-card--alert { background: var(--bg-surface-2); border-left: 4px solid var(--w-60); border-radius: 6px 16px 16px 6px; padding: 22px 24px; }
 .gc-card--danger { background: var(--bg-surface-2); border-left: 4px solid var(--e-50); border-radius: 6px 16px 16px 6px; padding: 22px 24px; }
 .gc-card--anna { background: linear-gradient(135deg, rgba(133,118,194,0.12), rgba(83,71,146,0.06)); border-color: rgba(133,118,194,0.25); flex-direction: row; align-items: flex-start; gap: 14px; padding: 16px 20px; }
-.gc-card--anna .anna-av { width: 38px; height: 38px; border-radius: 50%; background: var(--p-30); display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
-.gc-card--anna .anna-av img { width: 60%; height: 60%; }
-.gc-card--anna .anna-name { font-size: 13px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 2px; }
+.gc-card--anna.anna-av { width: 38px; height: 38px; border-radius: 50%; background: var(--p-30); display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.gc-card--anna.anna-av img { width: 60%; height: 60%; }
+.gc-card--anna.anna-name { font-size: 13px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 2px; }
 .gc-card--anna strong { display: block; font-size: 14px; margin-bottom: 4px; }
 .gc-card--anna p { font-size: 13.5px; line-height: 1.55; margin: 0; }
 
 .row-2 { display: grid; grid-template-columns: 2fr 1fr; gap: 16px; align-items: start; }
 .row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; align-items: stretch; }
 .stack { display: flex; flex-direction: column; gap: 16px; }
-@media (max-width: 1000px) { .row-2 { grid-template-columns: 1fr; } .row-3 { grid-template-columns: 1fr; } }
+@media (max-width: 1000px) {.row-2 { grid-template-columns: 1fr; }.row-3 { grid-template-columns: 1fr; } }
 
 /* PR1 · Settings home hero + tile grid */
 .pr-hero { background: var(--bg-surface); border: 1px solid var(--border); border-radius: 16px; padding: 24px; display: flex; align-items: center; gap: 16px; }
@@ -130,12 +130,12 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-
 .pr-hero__nm { font-size: 22px; font-weight: 800; letter-spacing: -0.02em; margin: 0; }
 .pr-hero__sub { font-size: 13px; color: var(--text-secondary); margin: 3px 0 0; font-family: 'JetBrains Mono', monospace; }
 .pr-hero__pill { display: inline-flex; align-items: center; gap: 6px; padding: 4px 11px; border-radius: 999px; background: var(--t-20); color: var(--t-80); font-size: 10.5px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; margin-top: 6px; align-self: flex-start; }
-[data-theme="light"] .pr-hero__pill { background: var(--t-90); color: var(--t-30); }
+[data-theme="light"].pr-hero__pill { background: var(--t-90); color: var(--t-30); }
 .pr-hero__pill::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--t-50); }
 .pr-hero__cta { margin-left: auto; align-self: flex-start; }
 
 .pr-tile-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
-@media (max-width: 1000px) { .pr-tile-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 1000px) {.pr-tile-grid { grid-template-columns: 1fr 1fr; } }
 .pr-tile { display: flex; flex-direction: column; gap: 8px; padding: 18px 20px; background: var(--bg-surface); border: 1px solid var(--border); border-radius: 14px; cursor: pointer; font-family: inherit; color: inherit; text-align: left; transition: border-color 160ms ease, transform 160ms ease; min-height: 124px; }
 .pr-tile:hover { border-color: var(--accent); transform: translateY(-2px); }
 .pr-tile__ic { width: 38px; height: 38px; border-radius: 11px; display: inline-flex; align-items: center; justify-content: center; }
@@ -160,13 +160,13 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-
 .pr-notif-group__h__ic { width: 28px; height: 28px; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
 .pr-notif-group__h__ic svg { width: 14px; height: 14px; }
 .pr-notif-group__h__new { font-family: 'JetBrains Mono', monospace; font-size: 10px; padding: 3px 8px; border-radius: 999px; background: var(--t-20); color: var(--t-80); margin-left: auto; letter-spacing: 0.05em; font-weight: 700; }
-[data-theme="light"] .pr-notif-group__h__new { background: var(--t-90); color: var(--t-30); }
+[data-theme="light"].pr-notif-group__h__new { background: var(--t-90); color: var(--t-30); }
 .pr-notif-row { display: grid; grid-template-columns: 1fr auto; gap: 14px; align-items: center; padding: 12px 0; border-top: 1px solid var(--border); }
 .pr-notif-row:first-of-type { border-top: none; padding-top: 4px; }
 .pr-notif-row__t { font-size: 14px; font-weight: 600; }
 .pr-notif-row__s { font-size: 12.5px; color: var(--text-secondary); margin-top: 2px; }
 .pr-notif-row__lock { font-size: 10px; color: var(--w-80); font-family: 'JetBrains Mono', monospace; padding: 2px 7px; border-radius: 999px; background: var(--w-30); display: inline-flex; align-items: center; gap: 4px; margin-top: 4px; }
-[data-theme="light"] .pr-notif-row__lock { background: var(--w-90); color: var(--w-30); }
+[data-theme="light"].pr-notif-row__lock { background: var(--w-90); color: var(--w-30); }
 .gc-switch { width: 42px; height: 24px; border-radius: 999px; background: var(--bg-surface-2); border: 1px solid var(--border); position: relative; cursor: pointer; flex-shrink: 0; }
 .gc-switch::after { content: ''; position: absolute; left: 2px; top: 1px; width: 18px; height: 18px; border-radius: 50%; background: var(--text-muted); transition: all 180ms ease; }
 .gc-switch.is-on { background: var(--accent-strong); border-color: transparent; }
@@ -184,9 +184,9 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-
 .pr-rule__ic { width: 24px; height: 24px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
 .pr-rule__ic svg { width: 12px; height: 12px; }
 .pr-rule__ic--y { background: var(--t-20); color: var(--t-80); }
-[data-theme="light"] .pr-rule__ic--y { background: var(--t-90); color: var(--t-30); }
+[data-theme="light"].pr-rule__ic--y { background: var(--t-90); color: var(--t-30); }
 .pr-rule__ic--n { background: var(--e-30); color: var(--e-90); }
-[data-theme="light"] .pr-rule__ic--n { background: var(--e-90); color: var(--e-30); }
+[data-theme="light"].pr-rule__ic--n { background: var(--e-90); color: var(--e-30); }
 .pr-rule__t { font-size: 13.5px; font-weight: 600; }
 .pr-rule__s { font-size: 12px; color: var(--text-secondary); margin-top: 1px; line-height: 1.45; }
 
@@ -201,20 +201,20 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-
 .pr-export-item { display: grid; grid-template-columns: 30px 1fr auto; gap: 12px; align-items: center; padding: 11px 0; border-top: 1px solid var(--border); }
 .pr-export-item:first-of-type { border-top: none; padding-top: 0; }
 .pr-export-item__ic { width: 30px; height: 30px; border-radius: 50%; background: var(--t-20); color: var(--t-80); display: inline-flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 700; }
-[data-theme="light"] .pr-export-item__ic { background: var(--t-90); color: var(--t-30); }
+[data-theme="light"].pr-export-item__ic { background: var(--t-90); color: var(--t-30); }
 .pr-export-item__ic--excl { background: var(--w-30); color: var(--w-80); }
-[data-theme="light"] .pr-export-item__ic--excl { background: var(--w-90); color: var(--w-30); }
+[data-theme="light"].pr-export-item__ic--excl { background: var(--w-90); color: var(--w-30); }
 .pr-export-item__t { font-size: 13.5px; font-weight: 600; }
 .pr-export-item__s { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
 .pr-export-item__sz { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--text-muted); }
 
 /* PR6 · Close account */
 .pr-close-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
-@media (max-width: 1000px) { .pr-close-grid { grid-template-columns: 1fr; } }
+@media (max-width: 1000px) {.pr-close-grid { grid-template-columns: 1fr; } }
 .pr-close-tile { padding: 18px; background: var(--bg-surface); border: 1px solid var(--border); border-radius: 14px; display: flex; flex-direction: column; gap: 8px; }
 .pr-close-tile--current { border-color: var(--accent-strong); box-shadow: 0 0 0 3px rgba(133,118,194,0.2); }
 .pr-close-tile__pill { display: inline-flex; padding: 3px 10px; border-radius: 999px; background: var(--bg-surface-2); color: var(--text-secondary); font-size: 10.5px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; align-self: flex-start; font-family: 'JetBrains Mono', monospace; }
-.pr-close-tile--current .pr-close-tile__pill { background: var(--accent-strong); color: white; }
+.pr-close-tile--current.pr-close-tile__pill { background: var(--accent-strong); color: white; }
 .pr-close-tile__h { font-size: 16px; font-weight: 700; margin: 4px 0 0; letter-spacing: -0.01em; }
 .pr-close-tile__d { font-size: 12.5px; color: var(--text-secondary); line-height: 1.5; margin: 0; }
 
@@ -244,430 +244,430 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-
 
 <div class="proto-shell">
 
-  <aside class="proto-sidebar">
-    <div class="proto-sidebar__brand">
-      <span class="proto-sidebar__mark"><img src="../assets/gc-mark-mono-light.svg" alt=""></span>
-      <span>
-        <div class="proto-sidebar__name">GaimControl</div>
-        <span class="proto-sidebar__pill">web</span>
-      </span>
-    </div>
-    <a class="proto-sidebar__back" href="index.html">← prototype index</a>
-    <button class="proto-theme-toggle" type="button" aria-label="Toggle theme">
-      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
-      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
-      <span class="theme-label">Dark</span>
-    </button>
-    <div class="proto-section-title">§12 · PR1 – PR6</div>
-    <nav class="proto-scrubber" id="scrubber"></nav>
-    <div class="proto-sidebar__footer">Source: <a href="../web-ui/12-profile.html">web-ui/12</a><br>Decisions: PR-01..08</div>
-  </aside>
+ <aside class="proto-sidebar">
+ <div class="proto-sidebar__brand">
+ <span class="proto-sidebar__mark"><img src="../assets/gc-mark-mono-light.svg" alt=""></span>
+ <span>
+ <div class="proto-sidebar__name">GaimControl</div>
+ <span class="proto-sidebar__pill">web</span>
+ </span>
+ </div>
+ <a class="proto-sidebar__back" href="index.html">← prototype index</a>
+ <button class="proto-theme-toggle" type="button" aria-label="Toggle theme">
+ <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+ <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+ <span class="theme-label">Dark</span>
+ </button>
+ <div class="proto-section-title">§12 · PR1 – PR6</div>
+ <nav class="proto-scrubber" id="scrubber"></nav>
+ <div class="proto-sidebar__footer">Source: <a href="../web-ui/12-profile.html">web-ui/12</a><br>Decisions: PR-01..08</div>
+ </aside>
 
-  <main class="proto-stage">
+ <main class="proto-stage">
 
-    <div class="proto-modebar">
-      <span>Screen <span class="proto-modebar__id" id="screenId">PR1</span></span>
-      <span class="proto-modebar__pill" id="screenName">Settings home</span>
-      <div class="proto-modebar__bar"><div class="proto-modebar__bar__fill" id="progressFill" style="width:17%"></div></div>
-      <div class="proto-arrows">
-        <button class="proto-arrow" id="navPrev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
-        <button class="proto-arrow" id="navNext"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
-      </div>
-    </div>
+ <div class="proto-modebar">
+ <span>Screen <span class="proto-modebar__id" id="screenId">PR1</span></span>
+ <span class="proto-modebar__pill" id="screenName">Settings home</span>
+ <div class="proto-modebar__bar"><div class="proto-modebar__bar__fill" id="progressFill" style="width:17%"></div></div>
+ <div class="proto-arrows">
+ <button class="proto-arrow" id="navPrev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+ <button class="proto-arrow" id="navNext"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
+ </div>
+ </div>
 
-    <div class="browser">
-      <div class="browser__chrome">
-        <span class="browser__dots"><span class="browser__dot"></span><span class="browser__dot"></span><span class="browser__dot"></span></span>
-        <span class="browser__url">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-          <span id="browserUrl">app.gaimcontrol.com/profile</span>
-        </span>
-      </div>
-      <div class="browser__viewport" id="viewport"></div>
-    </div>
+ <div class="browser">
+ <div class="browser__chrome">
+ <span class="browser__dots"><span class="browser__dot"></span><span class="browser__dot"></span><span class="browser__dot"></span></span>
+ <span class="browser__url">
+ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+ <span id="browserUrl">app.gaimcontrol.com/profile</span>
+ </span>
+ </div>
+ <div class="browser__viewport" id="viewport"></div>
+ </div>
 
-    <div class="proto-context" id="contextPanel">
-      <div class="proto-context__head">Screen context</div>
-      <div id="contextBody"></div>
-    </div>
+ <div class="proto-context" id="contextPanel">
+ <div class="proto-context__head">Screen context</div>
+ <div id="contextBody"></div>
+ </div>
 
-  </main>
+ </main>
 </div>
 
 <script>
 const SCREENS = [
-  { id: 'PR1', name: 'Settings home', kind: 'pr1', url: '/profile' },
-  { id: 'PR2', name: 'Personal info', kind: 'pr2', url: '/profile/personal' },
-  { id: 'PR3', name: 'Notifications · 5 sections', kind: 'pr3', url: '/profile/notifications' },
-  { id: 'PR4', name: 'Sponsor', kind: 'pr4', url: '/profile/sponsor' },
-  { id: 'PR5', name: 'Data export · GDPR Art. 20', kind: 'pr5', url: '/profile/export' },
-  { id: 'PR6', name: 'Close account · Art. 17', kind: 'pr6', url: '/profile/close' },
+ { id: 'PR1', name: 'Settings home', kind: 'pr1', url: '/profile' },
+ { id: 'PR2', name: 'Personal info', kind: 'pr2', url: '/profile/personal' },
+ { id: 'PR3', name: 'Notifications · 5 sections', kind: 'pr3', url: '/profile/notifications' },
+ { id: 'PR4', name: 'Sponsor', kind: 'pr4', url: '/profile/sponsor' },
+ { id: 'PR5', name: 'Data export · GDPR Art. 20', kind: 'pr5', url: '/profile/export' },
+ { id: 'PR6', name: 'Close account · Art. 17', kind: 'pr6', url: '/profile/close' },
 ];
 
 const CTX = {
-  pr1: '<strong>PR1 Settings home.</strong> Top-level profile route. Hero + 6 tiles routing to detail pages. Bell badge shows unread count, dropdown depth set to 5 per <a href="../41-decisions-log.html">PR-01</a> (no change · full inbox accessible from footer link).',
-  pr2: '<strong>PR2 Personal info.</strong> Identity (name + DOB + NI) locked by FCA KYC. Address-change AML threshold (£150 outstanding) under review per <a href="../41-decisions-log.html">PR-03</a> — likely raised before MVP cohort. Onboarding-quiz re-take is now a 6-Q delta (not full 22-Q) per <a href="../41-decisions-log.html">PR-08</a>.',
-  pr3: '<strong>PR3 Notifications · 5 sections.</strong> New 5th section "System &amp; vendors" added per <a href="../41-decisions-log.html">PR-02</a> for open-banking renewals, KYC re-verify prompts, vendor outages. FCA-locked toggles cannot be turned off. Crisis-language SMS stays default-on (no PAYG carve-out) per <a href="../41-decisions-log.html">PR-04</a>.',
-  pr4: '<strong>PR4 Sponsor.</strong> Single canonical sponsor surface — Profile + §07 both route here. Joanna shown with full visibility breakdown · last digest preview · invite second sponsor / remove flow.',
-  pr5: '<strong>PR5 Data export.</strong> GDPR Article 20 portability — JSON + PDF ZIP via email. Algbra credit-decision algorithm output excluded per Article 22 carve-out, confirmed per <a href="../41-decisions-log.html">PR-05</a>.',
-  pr6: '<strong>PR6 Close account.</strong> Article 17 right-to-erasure constraint ("requires £0 outstanding") surfaced up-front per <a href="../41-decisions-log.html">PR-07</a>. Cool-off length scales by profile per <a href="../41-decisions-log.html">PR-06</a> — defers to §16 off-boarding flows (Recreational 30d · Habitual 14d · Compulsive 7d).',
+ pr1: '<strong>PR1 Settings home.</strong> Top-level profile route. Hero + 6 tiles routing to detail pages. Bell badge shows unread count, dropdown depth set to 5 per <a href="../41-decisions-log.html">PR-01</a> (no change · full inbox accessible from footer link).',
+ pr2: '<strong>PR2 Personal info.</strong> Identity (name + DOB + NI) locked by FCA KYC. Address-change AML threshold (£150 outstanding) under review per <a href="../41-decisions-log.html">PR-03</a>. likely raised before MVP cohort. Onboarding-quiz re-take is now a 6-Q delta (not full 22-Q) per <a href="../41-decisions-log.html">PR-08</a>.',
+ pr3: '<strong>PR3 Notifications · 5 sections.</strong> New 5th section "System &amp; vendors" added per <a href="../41-decisions-log.html">PR-02</a> for open-banking renewals, KYC re-verify prompts, vendor outages. FCA-locked toggles cannot be turned off. Crisis-language SMS stays default-on (no PAYG carve-out) per <a href="../41-decisions-log.html">PR-04</a>.',
+ pr4: '<strong>PR4 Sponsor.</strong> Single canonical sponsor surface. Profile + §07 both route here. Joanna shown with full visibility breakdown · last digest preview · invite second sponsor / remove flow.',
+ pr5: '<strong>PR5 Data export.</strong> GDPR Article 20 portability. JSON + PDF ZIP via email. Algbra credit-decision algorithm output excluded per Article 22 carve-out, confirmed per <a href="../41-decisions-log.html">PR-05</a>.',
+ pr6: '<strong>PR6 Close account.</strong> Article 17 right-to-erasure constraint ("requires £0 outstanding") surfaced up-front per <a href="../41-decisions-log.html">PR-07</a>. Cool-off length scales by profile per <a href="../41-decisions-log.html">PR-06</a>. defers to §16 off-boarding flows (Recreational 30d · Habitual 14d · Compulsive 7d).',
 };
 
 const APPNAV = () => `
-  <aside class="appnav">
-    <div class="appnav__brand">
-      <span class="appnav__mark"><img src="../assets/gc-mark-mono-light.svg" alt=""></span>
-      <span class="appnav__name">GaimControl</span>
-    </div>
-    <div class="appnav__user">
-      <span class="appnav__avatar">S</span>
-      <div><div class="appnav__user-name">Sam Kennedy</div><div class="appnav__user-sub">Habitual · Day 58</div></div>
-    </div>
-    <nav class="appnav__list">
-      <a class="appnav__item is-disabled"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>Home</a>
-      <a class="appnav__item is-disabled"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Banking</a>
-      <a class="appnav__item is-disabled"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg>Anna</a>
-      <a class="appnav__item is-disabled"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m7 14 4-4 4 4 5-5"/></svg>Activity</a>
-      <a class="appnav__item is-on" style="cursor:pointer" onclick="go(0)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>Profile</a>
-      <div class="appnav__subnav">
-        <a class="appnav__subitem ${idx===0?'is-on':''}" style="cursor:pointer" onclick="go(0)">Settings home</a>
-        <a class="appnav__subitem ${idx===1?'is-on':''}" style="cursor:pointer" onclick="go(1)">Personal info</a>
-        <a class="appnav__subitem ${idx===2?'is-on':''}" style="cursor:pointer" onclick="go(2)">Notifications</a>
-        <a class="appnav__subitem ${idx===3?'is-on':''}" style="cursor:pointer" onclick="go(3)">Sponsor</a>
-        <a class="appnav__subitem ${idx===4?'is-on':''}" style="cursor:pointer" onclick="go(4)">Download data</a>
-        <a class="appnav__subitem ${idx===5?'is-on':''}" style="cursor:pointer" onclick="go(5)">Close account</a>
-      </div>
-    </nav>
-    <div class="appnav__help">
-      <div style="font-size:12px;font-weight:700;margin-bottom:3px">Need help?</div>
-      <div style="font-size:11px;color:var(--text-secondary);line-height:1.4">Anna's always there. Crisis line is one tap away.</div>
-      <button class="gc-crisis-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7-4.5-9-9.5C2 7 5 4 8 4c1.7 0 3.2.8 4 2 .8-1.2 2.3-2 4-2 3 0 6 3 5 7.5C19 16.5 12 21 12 21z"/></svg>Get help now</button>
-    </div>
-  </aside>`;
+ <aside class="appnav">
+ <div class="appnav__brand">
+ <span class="appnav__mark"><img src="../assets/gc-mark-mono-light.svg" alt=""></span>
+ <span class="appnav__name">GaimControl</span>
+ </div>
+ <div class="appnav__user">
+ <span class="appnav__avatar">S</span>
+ <div><div class="appnav__user-name">Sam Kennedy</div><div class="appnav__user-sub">Habitual · Day 58</div></div>
+ </div>
+ <nav class="appnav__list">
+ <a class="appnav__item is-disabled"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>Home</a>
+ <a class="appnav__item is-disabled"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Banking</a>
+ <a class="appnav__item is-disabled"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg>Anna</a>
+ <a class="appnav__item is-disabled"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m7 14 4-4 4 4 5-5"/></svg>Activity</a>
+ <a class="appnav__item is-on" style="cursor:pointer" onclick="go(0)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>Profile</a>
+ <div class="appnav__subnav">
+ <a class="appnav__subitem ${idx===0?'is-on':''}" style="cursor:pointer" onclick="go(0)">Settings home</a>
+ <a class="appnav__subitem ${idx===1?'is-on':''}" style="cursor:pointer" onclick="go(1)">Personal info</a>
+ <a class="appnav__subitem ${idx===2?'is-on':''}" style="cursor:pointer" onclick="go(2)">Notifications</a>
+ <a class="appnav__subitem ${idx===3?'is-on':''}" style="cursor:pointer" onclick="go(3)">Sponsor</a>
+ <a class="appnav__subitem ${idx===4?'is-on':''}" style="cursor:pointer" onclick="go(4)">Download data</a>
+ <a class="appnav__subitem ${idx===5?'is-on':''}" style="cursor:pointer" onclick="go(5)">Close account</a>
+ </div>
+ </nav>
+ <div class="appnav__help">
+ <div style="font-size:12px;font-weight:700;margin-bottom:3px">Need help?</div>
+ <div style="font-size:11px;color:var(--text-secondary);line-height:1.4">Anna's always there. Crisis line is one tap away.</div>
+ <button class="gc-crisis-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7-4.5-9-9.5C2 7 5 4 8 4c1.7 0 3.2.8 4 2.8-1.2 2.3-2 4-2 3 0 6 3 5 7.5C19 16.5 12 21 12 21z"/></svg>Get help now</button>
+ </div>
+ </aside>`;
 
 const ANNA = (title, body) => `
-  <div class="gc-card gc-card--anna">
-    <span class="anna-av"><img src="../assets/gc-mark-mono-light.svg" alt=""></span>
-    <div><div class="anna-name">Anna</div>${title ? `<strong>${title}</strong>` : ''}<p>${body}</p></div>
-  </div>`;
+ <div class="gc-card gc-card--anna">
+ <span class="anna-av"><img src="../assets/gc-mark-mono-light.svg" alt=""></span>
+ <div><div class="anna-name">Anna</div>${title ? `<strong>${title}</strong>` : ''}<p>${body}</p></div>
+ </div>`;
 
 const PAGE = (title, sub, content) => `
-  <div class="screen" style="display:contents">
-    ${APPNAV()}
-    <div class="main">
-      <div class="main__head"><div><h1 class="main__title">${title}</h1>${sub ? `<p class="main__sub">${sub}</p>` : ''}</div></div>
-      ${content}
-    </div>
-  </div>`;
+ <div class="screen" style="display:contents">
+ ${APPNAV()}
+ <div class="main">
+ <div class="main__head"><div><h1 class="main__title">${title}</h1>${sub ? `<p class="main__sub">${sub}</p>` : ''}</div></div>
+ ${content}
+ </div>
+ </div>`;
 
 const builders = {
-  pr1: () => PAGE('Profile', 'Settings, sponsor, data, account. Everything that\'s yours to change.', `
-    <div class="stack">
-      <div class="pr-hero">
-        <span class="pr-hero__av">S</span>
-        <div style="flex:1">
-          <h2 class="pr-hero__nm">Sam Kennedy</h2>
-          <p class="pr-hero__sub">sam.k@hotmail.co.uk · Member since 27 Mar 2026 · 7 weeks</p>
-          <span class="pr-hero__pill">Habitual · Day 58 clean</span>
-        </div>
-        <button class="gc-btn gc-btn--ghost pr-hero__cta">Sign out</button>
-      </div>
-      <div class="pr-tile-grid">
-        <button class="pr-tile" onclick="go(1)">
-          <div style="display:flex;align-items:center;gap:10px"><span class="pr-tile__ic" style="background:var(--p-40);color:var(--p-95)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="7" r="4"/><path d="M5 21a7 7 0 0 1 14 0"/></svg></span></div>
-          <div><div class="pr-tile__t">Personal info</div><div class="pr-tile__s">Name, DOB, address. KYC-locked fields shown read-only.</div></div>
-        </button>
-        <button class="pr-tile" onclick="go(2)">
-          <div style="display:flex;align-items:center;gap:10px"><span class="pr-tile__ic" style="background:var(--s-20);color:var(--s-80)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/></svg></span><span class="pr-tile__badge">3 new</span></div>
-          <div><div class="pr-tile__t">Notifications</div><div class="pr-tile__s">5 sections including the new system-level group (PR-02).</div></div>
-        </button>
-        <button class="pr-tile" onclick="go(3)">
-          <span class="pr-tile__ic" style="background:var(--t-20);color:var(--t-80)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 2 4.5 6v6c0 5 3.5 9 7.5 10 4-1 7.5-5 7.5-10V6Z"/></svg></span>
-          <div><div class="pr-tile__t">Sponsor</div><div class="pr-tile__s">Joanna Murray · 7/7 digests opened · invite a second</div></div>
-        </button>
-        <button class="pr-tile" onclick="go(4)">
-          <span class="pr-tile__ic" style="background:var(--w-30);color:var(--w-80)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span>
-          <div><div class="pr-tile__t">Download my data</div><div class="pr-tile__s">GDPR Art. 20 · ZIP with JSON + PDF summary · ~7MB</div></div>
-        </button>
-        <button class="pr-tile" onclick="go(5)">
-          <span class="pr-tile__ic" style="background:var(--e-30);color:var(--e-90)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg></span>
-          <div><div class="pr-tile__t">Close my account</div><div class="pr-tile__s">Cool-off length scales by profile (PR-06). Art. 17 requires £0.</div></div>
-        </button>
-        <button class="pr-tile">
-          <span class="pr-tile__ic" style="background:var(--e-30);color:var(--e-90)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 21s-7-4.5-9-9.5C2 7 5 4 8 4c1.7 0 3.2.8 4 2 .8-1.2 2.3-2 4-2 3 0 6 3 5 7.5C19 16.5 12 21 12 21z"/></svg></span>
-          <div><div class="pr-tile__t">Help &amp; crisis</div><div class="pr-tile__s">§11 · always one click · 6 verified UK helplines</div></div>
-        </button>
-      </div>
-      <div class="row-2">
-        <div class="gc-card">
-          <h3 style="font-size:15px;font-weight:700;margin:0 0 4px">Recent activity</h3>
-          <div style="display:grid;grid-template-columns:auto 1fr auto;gap:12px;font-size:13px;color:var(--text-secondary);padding:9px 0;border-top:1px solid var(--border)"><span style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--text-muted)">14 May 09:22</span><span>Notification preferences updated · system-level alerts on</span><span></span></div>
-          <div style="display:grid;grid-template-columns:auto 1fr auto;gap:12px;font-size:13px;color:var(--text-secondary);padding:9px 0;border-top:1px solid var(--border)"><span style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--text-muted)">12 May 19:01</span><span>Logged in · Pixel 8 · Sheffield</span><span></span></div>
-          <div style="display:grid;grid-template-columns:auto 1fr auto;gap:12px;font-size:13px;color:var(--text-secondary);padding:9px 0;border-top:1px solid var(--border)"><span style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--text-muted)">09 May 14:48</span><span>Sponsor digest sent to Joanna</span><span></span></div>
-          <div style="display:grid;grid-template-columns:auto 1fr auto;gap:12px;font-size:13px;color:var(--text-secondary);padding:9px 0;border-top:1px solid var(--border)"><span style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--text-muted)">01 May 09:01</span><span>Loan payment 1/36 cleared · £311.20</span><span></span></div>
-        </div>
-        ${ANNA("You don't have to set everything today.", "Most users come to Settings once a month — that's the right cadence. The defaults are tuned for your profile (Habitual · PGSI 14). If something feels off, change it.")}
-      </div>
-    </div>`),
+ pr1: () => PAGE('Profile', 'Settings, sponsor, data, account. Everything that\'s yours to change.', `
+ <div class="stack">
+ <div class="pr-hero">
+ <span class="pr-hero__av">S</span>
+ <div style="flex:1">
+ <h2 class="pr-hero__nm">Sam Kennedy</h2>
+ <p class="pr-hero__sub">sam.k@hotmail.co.uk · Member since 27 Mar 2026 · 7 weeks</p>
+ <span class="pr-hero__pill">Habitual · Day 58 clean</span>
+ </div>
+ <button class="gc-btn gc-btn--ghost pr-hero__cta">Sign out</button>
+ </div>
+ <div class="pr-tile-grid">
+ <button class="pr-tile" onclick="go(1)">
+ <div style="display:flex;align-items:center;gap:10px"><span class="pr-tile__ic" style="background:var(--p-40);color:var(--p-95)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="7" r="4"/><path d="M5 21a7 7 0 0 1 14 0"/></svg></span></div>
+ <div><div class="pr-tile__t">Personal info</div><div class="pr-tile__s">Name, DOB, address. KYC-locked fields shown read-only.</div></div>
+ </button>
+ <button class="pr-tile" onclick="go(2)">
+ <div style="display:flex;align-items:center;gap:10px"><span class="pr-tile__ic" style="background:var(--s-20);color:var(--s-80)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/></svg></span><span class="pr-tile__badge">3 new</span></div>
+ <div><div class="pr-tile__t">Notifications</div><div class="pr-tile__s">5 sections including the new system-level group (PR-02).</div></div>
+ </button>
+ <button class="pr-tile" onclick="go(3)">
+ <span class="pr-tile__ic" style="background:var(--t-20);color:var(--t-80)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 2 4.5 6v6c0 5 3.5 9 7.5 10 4-1 7.5-5 7.5-10V6Z"/></svg></span>
+ <div><div class="pr-tile__t">Sponsor</div><div class="pr-tile__s">Joanna Murray · 7/7 digests opened · invite a second</div></div>
+ </button>
+ <button class="pr-tile" onclick="go(4)">
+ <span class="pr-tile__ic" style="background:var(--w-30);color:var(--w-80)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span>
+ <div><div class="pr-tile__t">Download my data</div><div class="pr-tile__s">GDPR Art. 20 · ZIP with JSON + PDF summary · ~7MB</div></div>
+ </button>
+ <button class="pr-tile" onclick="go(5)">
+ <span class="pr-tile__ic" style="background:var(--e-30);color:var(--e-90)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg></span>
+ <div><div class="pr-tile__t">Close my account</div><div class="pr-tile__s">Cool-off length scales by profile (PR-06). Art. 17 requires £0.</div></div>
+ </button>
+ <button class="pr-tile">
+ <span class="pr-tile__ic" style="background:var(--e-30);color:var(--e-90)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 21s-7-4.5-9-9.5C2 7 5 4 8 4c1.7 0 3.2.8 4 2.8-1.2 2.3-2 4-2 3 0 6 3 5 7.5C19 16.5 12 21 12 21z"/></svg></span>
+ <div><div class="pr-tile__t">Help &amp; crisis</div><div class="pr-tile__s">§11 · always one click · 6 verified UK helplines</div></div>
+ </button>
+ </div>
+ <div class="row-2">
+ <div class="gc-card">
+ <h3 style="font-size:15px;font-weight:700;margin:0 0 4px">Recent activity</h3>
+ <div style="display:grid;grid-template-columns:auto 1fr auto;gap:12px;font-size:13px;color:var(--text-secondary);padding:9px 0;border-top:1px solid var(--border)"><span style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--text-muted)">14 May 09:22</span><span>Notification preferences updated · system-level alerts on</span><span></span></div>
+ <div style="display:grid;grid-template-columns:auto 1fr auto;gap:12px;font-size:13px;color:var(--text-secondary);padding:9px 0;border-top:1px solid var(--border)"><span style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--text-muted)">12 May 19:01</span><span>Logged in · Pixel 8 · Sheffield</span><span></span></div>
+ <div style="display:grid;grid-template-columns:auto 1fr auto;gap:12px;font-size:13px;color:var(--text-secondary);padding:9px 0;border-top:1px solid var(--border)"><span style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--text-muted)">09 May 14:48</span><span>Sponsor digest sent to Joanna</span><span></span></div>
+ <div style="display:grid;grid-template-columns:auto 1fr auto;gap:12px;font-size:13px;color:var(--text-secondary);padding:9px 0;border-top:1px solid var(--border)"><span style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--text-muted)">01 May 09:01</span><span>Loan payment 1/36 cleared · £311.20</span><span></span></div>
+ </div>
+ ${ANNA("You don't have to set everything today.", "Most users come to Settings once a month. That's the right cadence. The defaults are tuned for your profile (Habitual · PGSI 14). If something feels off, change it.")}
+ </div>
+ </div>`),
 
-  pr2: () => PAGE('Personal info', 'Identity is FCA-locked. Contact and address are yours to change.', `
-    <div class="row-2">
-      <div class="stack">
-        <div class="gc-card">
-          <h3 style="font-size:16px;font-weight:700;margin:0">Identity · FCA-verified</h3>
-          <div class="pr-field">
-            <div>
-              <div class="pr-field__l">Full name</div>
-              <div class="pr-field__v">Samantha Jane Kennedy <span class="pr-field__lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>locked</span></div>
-            </div>
-          </div>
-          <div class="pr-field">
-            <div>
-              <div class="pr-field__l">Date of birth</div>
-              <div class="pr-field__v">12 March 1991 <span class="pr-field__lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="11" x="3" y="11" rx="2"/></svg>locked</span></div>
-            </div>
-          </div>
-          <div class="pr-field">
-            <div>
-              <div class="pr-field__l">National Insurance</div>
-              <div class="pr-field__v">QQ•••••B <span class="pr-field__lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="11" x="3" y="11" rx="2"/></svg>locked</span></div>
-            </div>
-          </div>
-          <p style="font-size:12.5px;color:var(--text-secondary);margin:4px 0 0;line-height:1.5">Locked because FCA KYC requires us to hold these immutably. To change, upload new documentary evidence — link routes to <a href="#" style="color:var(--accent)">Verify identity</a>.</p>
-        </div>
-        <div class="gc-card">
-          <h3 style="font-size:16px;font-weight:700;margin:0">Contact</h3>
-          <div class="pr-field">
-            <div><div class="pr-field__l">Email</div><div class="pr-field__v">sam.k@hotmail.co.uk</div></div>
-            <button class="pr-field__edit">Edit</button>
-          </div>
-          <div class="pr-field">
-            <div><div class="pr-field__l">Phone</div><div class="pr-field__v">+44 7•••• 581</div></div>
-            <button class="pr-field__edit">Edit</button>
-          </div>
-        </div>
-        <div class="gc-card gc-card--alert">
-          <span style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;color:var(--w-80);align-self:flex-start">AML re-verify · address change</span>
-          <h3 style="font-size:16px;font-weight:700;margin:4px 0 0">Address</h3>
-          <div class="pr-field" style="padding-top:0">
-            <div><div class="pr-field__l">Current</div><div class="pr-field__v" style="display:block;margin-top:4px">14 Mill Rise<br>Sheffield S2 4LP</div></div>
-            <button class="pr-field__edit">Edit</button>
-          </div>
-          <p style="font-size:12.5px;color:var(--text-secondary);line-height:1.55;margin:0">Changes above <strong style="color:var(--text-primary)">£150 outstanding</strong> trigger Algbra AML re-check (proof of new address + 5–8 min KYC flow). Per <a href="../41-decisions-log.html" style="color:var(--accent)">PR-03</a> threshold is <strong style="color:var(--text-primary)">under review</strong> — likely too low (every post-loan user would trip it). Risk + ops re-tuning before MVP cohort.</p>
-        </div>
-      </div>
-      <div class="stack">
-        <div class="gc-card">
-          <span style="font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;color:var(--text-muted)">Profile · 6-month re-take</span>
-          <h3 style="font-size:15px;font-weight:700;margin:4px 0 0">Re-take the onboarding quiz</h3>
-          <p style="font-size:12.5px;color:var(--text-secondary);line-height:1.55;margin:0">You're 7 weeks in. Re-take is optional now · prompt fires automatically at 6 months. Per <a href="../41-decisions-log.html" style="color:var(--accent)">PR-08</a> it's a <strong style="color:var(--text-primary)">6-question delta</strong> (not the full 22-Q) — captures profile drift, ~3 minutes.</p>
-          <div style="display:flex;gap:8px;flex-wrap:wrap;padding-top:4px">
-            <button class="gc-btn gc-btn--ghost">Preview the 6 Qs</button>
-            <button class="gc-btn gc-btn--primary">Re-take now</button>
-          </div>
-        </div>
-        <div class="gc-card">
-          <h3 style="font-size:14px;font-weight:700;margin:0">What you can do without re-verify</h3>
-          <div class="pr-rule"><span class="pr-rule__ic pr-rule__ic--y"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="pr-rule__t">Change email or phone</div><div class="pr-rule__s">2FA verify only · no AML re-check</div></div></div>
-          <div class="pr-rule"><span class="pr-rule__ic pr-rule__ic--y"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="pr-rule__t">Set preferred name (display only)</div><div class="pr-rule__s">Legal name stays on docs</div></div></div>
-          <div class="pr-rule"><span class="pr-rule__ic pr-rule__ic--n"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></span><div><div class="pr-rule__t">Change address mid-loan</div><div class="pr-rule__s">Triggers AML if &gt; threshold</div></div></div>
-          <div class="pr-rule"><span class="pr-rule__ic pr-rule__ic--n"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></span><div><div class="pr-rule__t">Change legal name / DOB</div><div class="pr-rule__s">Full KYC re-run · evidence required</div></div></div>
-        </div>
-        ${ANNA("Identity is locked because the FCA wants it locked.", "Contact and address are yours — we just re-check the latter when there's money in play. PR-03 is up for review, so the £150 threshold may rise.")}
-        <div class="pr-decision">decisions · <a href="../41-decisions-log.html">PR-03</a> AML threshold TBD · <a href="../41-decisions-log.html">PR-08</a> 6-Q delta re-take</div>
-      </div>
-    </div>`),
+ pr2: () => PAGE('Personal info', 'Identity is FCA-locked. Contact and address are yours to change.', `
+ <div class="row-2">
+ <div class="stack">
+ <div class="gc-card">
+ <h3 style="font-size:16px;font-weight:700;margin:0">Identity · FCA-verified</h3>
+ <div class="pr-field">
+ <div>
+ <div class="pr-field__l">Full name</div>
+ <div class="pr-field__v">Samantha Jane Kennedy <span class="pr-field__lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>locked</span></div>
+ </div>
+ </div>
+ <div class="pr-field">
+ <div>
+ <div class="pr-field__l">Date of birth</div>
+ <div class="pr-field__v">12 March 1991 <span class="pr-field__lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="11" x="3" y="11" rx="2"/></svg>locked</span></div>
+ </div>
+ </div>
+ <div class="pr-field">
+ <div>
+ <div class="pr-field__l">National Insurance</div>
+ <div class="pr-field__v">QQ•••••B <span class="pr-field__lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="11" x="3" y="11" rx="2"/></svg>locked</span></div>
+ </div>
+ </div>
+ <p style="font-size:12.5px;color:var(--text-secondary);margin:4px 0 0;line-height:1.5">Locked because FCA KYC requires us to hold these immutably. To change, upload new documentary evidence. Link routes to <a href="#" style="color:var(--accent)">Verify identity</a>.</p>
+ </div>
+ <div class="gc-card">
+ <h3 style="font-size:16px;font-weight:700;margin:0">Contact</h3>
+ <div class="pr-field">
+ <div><div class="pr-field__l">Email</div><div class="pr-field__v">sam.k@hotmail.co.uk</div></div>
+ <button class="pr-field__edit">Edit</button>
+ </div>
+ <div class="pr-field">
+ <div><div class="pr-field__l">Phone</div><div class="pr-field__v">+44 7•••• 581</div></div>
+ <button class="pr-field__edit">Edit</button>
+ </div>
+ </div>
+ <div class="gc-card gc-card--alert">
+ <span style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;color:var(--w-80);align-self:flex-start">AML re-verify · address change</span>
+ <h3 style="font-size:16px;font-weight:700;margin:4px 0 0">Address</h3>
+ <div class="pr-field" style="padding-top:0">
+ <div><div class="pr-field__l">Current</div><div class="pr-field__v" style="display:block;margin-top:4px">14 Mill Rise<br>Sheffield S2 4LP</div></div>
+ <button class="pr-field__edit">Edit</button>
+ </div>
+ <p style="font-size:12.5px;color:var(--text-secondary);line-height:1.55;margin:0">Changes above <strong style="color:var(--text-primary)">£150 outstanding</strong> trigger Algbra AML re-check (proof of new address + 5–8 min KYC flow). Per <a href="../41-decisions-log.html" style="color:var(--accent)">PR-03</a> threshold is <strong style="color:var(--text-primary)">under review</strong>. likely too low (every post-loan user would trip it). Risk + ops re-tuning before MVP cohort.</p>
+ </div>
+ </div>
+ <div class="stack">
+ <div class="gc-card">
+ <span style="font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;color:var(--text-muted)">Profile · 6-month re-take</span>
+ <h3 style="font-size:15px;font-weight:700;margin:4px 0 0">Re-take the onboarding quiz</h3>
+ <p style="font-size:12.5px;color:var(--text-secondary);line-height:1.55;margin:0">You're 7 weeks in. Re-take is optional now · prompt fires automatically at 6 months. Per <a href="../41-decisions-log.html" style="color:var(--accent)">PR-08</a> it's a <strong style="color:var(--text-primary)">6-question delta</strong> (not the full 22-Q). captures profile drift, ~3 minutes.</p>
+ <div style="display:flex;gap:8px;flex-wrap:wrap;padding-top:4px">
+ <button class="gc-btn gc-btn--ghost">Preview the 6 Qs</button>
+ <button class="gc-btn gc-btn--primary">Re-take now</button>
+ </div>
+ </div>
+ <div class="gc-card">
+ <h3 style="font-size:14px;font-weight:700;margin:0">What you can do without re-verify</h3>
+ <div class="pr-rule"><span class="pr-rule__ic pr-rule__ic--y"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="pr-rule__t">Change email or phone</div><div class="pr-rule__s">2FA verify only · no AML re-check</div></div></div>
+ <div class="pr-rule"><span class="pr-rule__ic pr-rule__ic--y"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="pr-rule__t">Set preferred name (display only)</div><div class="pr-rule__s">Legal name stays on docs</div></div></div>
+ <div class="pr-rule"><span class="pr-rule__ic pr-rule__ic--n"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></span><div><div class="pr-rule__t">Change address mid-loan</div><div class="pr-rule__s">Triggers AML if &gt; threshold</div></div></div>
+ <div class="pr-rule"><span class="pr-rule__ic pr-rule__ic--n"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></span><div><div class="pr-rule__t">Change legal name / DOB</div><div class="pr-rule__s">Full KYC re-run · evidence required</div></div></div>
+ </div>
+ ${ANNA("Identity is locked because the FCA wants it locked.", "Contact and address are yours. We just re-check the latter when there's money in play. PR-03 is up for review, so the £150 threshold may rise.")}
+ <div class="pr-decision">decisions · <a href="../41-decisions-log.html">PR-03</a> AML threshold TBD · <a href="../41-decisions-log.html">PR-08</a> 6-Q delta re-take</div>
+ </div>
+ </div>`),
 
-  pr3: () => PAGE('Notifications', 'Five sections. FCA-locked toggles can\'t be turned off — everything else is yours.', `
-    <div class="row-2">
-      <div class="stack">
-        <div class="pr-notif-group">
-          <div class="pr-notif-group__h"><span class="pr-notif-group__h__ic" style="background:var(--p-40);color:var(--p-95)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 1 0 0 7h5a3.5 3.5 0 1 1 0 7H6"/></svg></span>Loan &amp; payments</div>
-          <div class="pr-notif-row"><div><div class="pr-notif-row__t">Payment due reminder</div><div class="pr-notif-row__s">48h before · email + push</div><span class="pr-notif-row__lock"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>FCA-locked</span></div><div class="gc-switch is-on is-locked"></div></div>
-          <div class="pr-notif-row"><div><div class="pr-notif-row__t">Persistent debt (CONC 6.7.27)</div><div class="pr-notif-row__s">Statutory letter when triggered</div><span class="pr-notif-row__lock"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="11" x="3" y="11" rx="2"/></svg>FCA-locked</span></div><div class="gc-switch is-on is-locked"></div></div>
-          <div class="pr-notif-row"><div><div class="pr-notif-row__t">Relapse Hold opened</div><div class="pr-notif-row__s">Auto or manual · email + push</div></div><div class="gc-switch is-on" onclick="toggleSwitch(this)"></div></div>
-          <div class="pr-notif-row"><div><div class="pr-notif-row__t">Card decline · MCC block</div><div class="pr-notif-row__s">Real-time push when card is refused</div></div><div class="gc-switch is-on" onclick="toggleSwitch(this)"></div></div>
-        </div>
-        <div class="pr-notif-group">
-          <div class="pr-notif-group__h"><span class="pr-notif-group__h__ic" style="background:var(--s-20);color:var(--s-80)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg></span>Anna</div>
-          <div class="pr-notif-row"><div><div class="pr-notif-row__t">Daily check-in</div><div class="pr-notif-row__s">~20:00 · varies by profile + quiet hours</div></div><div class="gc-switch is-on" onclick="toggleSwitch(this)"></div></div>
-          <div class="pr-notif-row"><div><div class="pr-notif-row__t">Urge-surfing reminder</div><div class="pr-notif-row__s">When pattern matches your risk windows</div></div><div class="gc-switch is-on" onclick="toggleSwitch(this)"></div></div>
-          <div class="pr-notif-row"><div><div class="pr-notif-row__t">Crisis-language detected</div><div class="pr-notif-row__s">Email + push + SMS — default-on for all plans per PR-04</div><span class="pr-notif-row__lock"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="11" x="3" y="11" rx="2"/></svg>Safety-locked</span></div><div class="gc-switch is-on is-locked"></div></div>
-        </div>
-        <div class="pr-notif-group">
-          <div class="pr-notif-group__h"><span class="pr-notif-group__h__ic" style="background:var(--t-20);color:var(--t-80)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 2 4.5 6v6c0 5 3.5 9 7.5 10 4-1 7.5-5 7.5-10V6Z"/></svg></span>Sponsor</div>
-          <div class="pr-notif-row"><div><div class="pr-notif-row__t">Monthly digest sent</div><div class="pr-notif-row__s">First of month · preview before send</div></div><div class="gc-switch is-on" onclick="toggleSwitch(this)"></div></div>
-          <div class="pr-notif-row"><div><div class="pr-notif-row__t">Sponsor read-receipts</div><div class="pr-notif-row__s">When Joanna opens a digest</div></div><div class="gc-switch" onclick="toggleSwitch(this)"></div></div>
-        </div>
-      </div>
-      <div class="stack">
-        <div class="pr-notif-group">
-          <div class="pr-notif-group__h"><span class="pr-notif-group__h__ic" style="background:var(--w-30);color:var(--w-80)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 2"/></svg></span>Quiet hours</div>
-          <div class="pr-notif-row"><div><div class="pr-notif-row__t">22:00 – 07:30</div><div class="pr-notif-row__s">Non-crisis silenced</div></div><div class="gc-switch is-on" onclick="toggleSwitch(this)"></div></div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;padding-top:6px"><button class="gc-btn gc-btn--ghost" style="padding:9px 12px;font-size:12.5px">22:00 start</button><button class="gc-btn gc-btn--ghost" style="padding:9px 12px;font-size:12.5px">07:30 end</button></div>
-        </div>
-        <div class="pr-notif-group" style="border-color:var(--t-50)">
-          <div class="pr-notif-group__h"><span class="pr-notif-group__h__ic" style="background:var(--t-20);color:var(--t-80)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>System &amp; vendors<span class="pr-notif-group__h__new">New · PR-02</span></div>
-          <div class="pr-notif-row"><div><div class="pr-notif-row__t">Open-banking renewal</div><div class="pr-notif-row__s">90-day re-consent · TrueLayer</div><span class="pr-notif-row__lock"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="11" x="3" y="11" rx="2"/></svg>Required</span></div><div class="gc-switch is-on is-locked"></div></div>
-          <div class="pr-notif-row"><div><div class="pr-notif-row__t">KYC re-verify prompts</div><div class="pr-notif-row__s">Algbra · every 18 months</div><span class="pr-notif-row__lock"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="11" x="3" y="11" rx="2"/></svg>FCA-locked</span></div><div class="gc-switch is-on is-locked"></div></div>
-          <div class="pr-notif-row"><div><div class="pr-notif-row__t">Vendor outage notices</div><div class="pr-notif-row__s">TrueLayer / Algbra / GamCare degraded</div></div><div class="gc-switch is-on" onclick="toggleSwitch(this)"></div></div>
-          <div class="pr-notif-row"><div><div class="pr-notif-row__t">Scheduled maintenance</div><div class="pr-notif-row__s">48h advance warning</div></div><div class="gc-switch is-on" onclick="toggleSwitch(this)"></div></div>
-        </div>
-        ${ANNA("FCA-locks aren't about you.", "They're about the regulator's view of what we can't switch off — payment due, persistent debt, KYC. Crisis-language SMS is locked too, because per PR-04 we keep it on across all plans.")}
-        <div class="pr-decision">decisions · <a href="../41-decisions-log.html">PR-01</a> bell depth = 5 · <a href="../41-decisions-log.html">PR-02</a> 5th section added · <a href="../41-decisions-log.html">PR-04</a> SMS default-on</div>
-      </div>
-    </div>`),
+ pr3: () => PAGE('Notifications', 'Five sections. FCA-locked toggles can\'t be turned off. Everything else is yours.', `
+ <div class="row-2">
+ <div class="stack">
+ <div class="pr-notif-group">
+ <div class="pr-notif-group__h"><span class="pr-notif-group__h__ic" style="background:var(--p-40);color:var(--p-95)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 1 0 0 7h5a3.5 3.5 0 1 1 0 7H6"/></svg></span>Loan &amp; payments</div>
+ <div class="pr-notif-row"><div><div class="pr-notif-row__t">Payment due reminder</div><div class="pr-notif-row__s">48h before · email + push</div><span class="pr-notif-row__lock"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>FCA-locked</span></div><div class="gc-switch is-on is-locked"></div></div>
+ <div class="pr-notif-row"><div><div class="pr-notif-row__t">Persistent debt (CONC 6.7.27)</div><div class="pr-notif-row__s">Statutory letter when triggered</div><span class="pr-notif-row__lock"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="11" x="3" y="11" rx="2"/></svg>FCA-locked</span></div><div class="gc-switch is-on is-locked"></div></div>
+ <div class="pr-notif-row"><div><div class="pr-notif-row__t">Relapse Hold opened</div><div class="pr-notif-row__s">Auto or manual · email + push</div></div><div class="gc-switch is-on" onclick="toggleSwitch(this)"></div></div>
+ <div class="pr-notif-row"><div><div class="pr-notif-row__t">Card decline · MCC block</div><div class="pr-notif-row__s">Real-time push when card is refused</div></div><div class="gc-switch is-on" onclick="toggleSwitch(this)"></div></div>
+ </div>
+ <div class="pr-notif-group">
+ <div class="pr-notif-group__h"><span class="pr-notif-group__h__ic" style="background:var(--s-20);color:var(--s-80)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg></span>Anna</div>
+ <div class="pr-notif-row"><div><div class="pr-notif-row__t">Daily check-in</div><div class="pr-notif-row__s">~20:00 · varies by profile + quiet hours</div></div><div class="gc-switch is-on" onclick="toggleSwitch(this)"></div></div>
+ <div class="pr-notif-row"><div><div class="pr-notif-row__t">Urge-surfing reminder</div><div class="pr-notif-row__s">When pattern matches your risk windows</div></div><div class="gc-switch is-on" onclick="toggleSwitch(this)"></div></div>
+ <div class="pr-notif-row"><div><div class="pr-notif-row__t">Crisis-language detected</div><div class="pr-notif-row__s">Email + push + SMS. Default-on for all plans per PR-04</div><span class="pr-notif-row__lock"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="11" x="3" y="11" rx="2"/></svg>Safety-locked</span></div><div class="gc-switch is-on is-locked"></div></div>
+ </div>
+ <div class="pr-notif-group">
+ <div class="pr-notif-group__h"><span class="pr-notif-group__h__ic" style="background:var(--t-20);color:var(--t-80)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 2 4.5 6v6c0 5 3.5 9 7.5 10 4-1 7.5-5 7.5-10V6Z"/></svg></span>Sponsor</div>
+ <div class="pr-notif-row"><div><div class="pr-notif-row__t">Monthly digest sent</div><div class="pr-notif-row__s">First of month · preview before send</div></div><div class="gc-switch is-on" onclick="toggleSwitch(this)"></div></div>
+ <div class="pr-notif-row"><div><div class="pr-notif-row__t">Sponsor read-receipts</div><div class="pr-notif-row__s">When Joanna opens a digest</div></div><div class="gc-switch" onclick="toggleSwitch(this)"></div></div>
+ </div>
+ </div>
+ <div class="stack">
+ <div class="pr-notif-group">
+ <div class="pr-notif-group__h"><span class="pr-notif-group__h__ic" style="background:var(--w-30);color:var(--w-80)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 2"/></svg></span>Quiet hours</div>
+ <div class="pr-notif-row"><div><div class="pr-notif-row__t">22:00 – 07:30</div><div class="pr-notif-row__s">Non-crisis silenced</div></div><div class="gc-switch is-on" onclick="toggleSwitch(this)"></div></div>
+ <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;padding-top:6px"><button class="gc-btn gc-btn--ghost" style="padding:9px 12px;font-size:12.5px">22:00 start</button><button class="gc-btn gc-btn--ghost" style="padding:9px 12px;font-size:12.5px">07:30 end</button></div>
+ </div>
+ <div class="pr-notif-group" style="border-color:var(--t-50)">
+ <div class="pr-notif-group__h"><span class="pr-notif-group__h__ic" style="background:var(--t-20);color:var(--t-80)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>System &amp; vendors<span class="pr-notif-group__h__new">New · PR-02</span></div>
+ <div class="pr-notif-row"><div><div class="pr-notif-row__t">Open-banking renewal</div><div class="pr-notif-row__s">90-day re-consent · TrueLayer</div><span class="pr-notif-row__lock"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="11" x="3" y="11" rx="2"/></svg>Required</span></div><div class="gc-switch is-on is-locked"></div></div>
+ <div class="pr-notif-row"><div><div class="pr-notif-row__t">KYC re-verify prompts</div><div class="pr-notif-row__s">Algbra · every 18 months</div><span class="pr-notif-row__lock"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="11" x="3" y="11" rx="2"/></svg>FCA-locked</span></div><div class="gc-switch is-on is-locked"></div></div>
+ <div class="pr-notif-row"><div><div class="pr-notif-row__t">Vendor outage notices</div><div class="pr-notif-row__s">TrueLayer / Algbra / GamCare degraded</div></div><div class="gc-switch is-on" onclick="toggleSwitch(this)"></div></div>
+ <div class="pr-notif-row"><div><div class="pr-notif-row__t">Scheduled maintenance</div><div class="pr-notif-row__s">48h advance warning</div></div><div class="gc-switch is-on" onclick="toggleSwitch(this)"></div></div>
+ </div>
+ ${ANNA("FCA-locks aren't about you.", "They're about the regulator's view of what we can't switch off. Payment due, persistent debt, KYC. Crisis-language SMS is locked too, because per PR-04 we keep it on across all plans.")}
+ <div class="pr-decision">decisions · <a href="../41-decisions-log.html">PR-01</a> bell depth = 5 · <a href="../41-decisions-log.html">PR-02</a> 5th section added · <a href="../41-decisions-log.html">PR-04</a> SMS default-on</div>
+ </div>
+ </div>`),
 
-  pr4: () => PAGE('Sponsor', 'Single canonical sponsor surface — Profile and §07 both route here.', `
-    <div class="stack">
-      <div class="pr-sponsor-hero">
-        <span class="pr-sponsor-hero__av">JM</span>
-        <div>
-          <div class="pr-sponsor-hero__nm">Joanna Murray</div>
-          <div class="pr-sponsor-hero__sub">Sister · Sponsor since 18 Apr 2026 · 7 of 7 digests opened</div>
-        </div>
-      </div>
-      <div class="row-2">
-        <div class="stack">
-          <div class="gc-card">
-            <h3 style="font-size:16px;font-weight:700;margin:0">What Joanna sees</h3>
-            <div class="pr-rule"><span class="pr-rule__ic pr-rule__ic--y"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="pr-rule__t">Monthly digest · summary only</div><div class="pr-rule__s">Streak status · payment status · no transaction detail</div></div></div>
-            <div class="pr-rule"><span class="pr-rule__ic pr-rule__ic--y"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="pr-rule__t">Relapse Hold notices</div><div class="pr-rule__s">Hold opened · "no action needed, reach out if helpful"</div></div></div>
-            <div class="pr-rule"><span class="pr-rule__ic pr-rule__ic--y"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="pr-rule__t">Your direct messages</div><div class="pr-rule__s">Templates from §11 SF4 or free-text</div></div></div>
-            <div class="pr-rule"><span class="pr-rule__ic pr-rule__ic--y"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="pr-rule__t">Loan SECCI (default per LO-07)</div><div class="pr-rule__s">Pre-contract info doc · loan amount + APR + term</div></div></div>
-            <div class="pr-rule"><span class="pr-rule__ic pr-rule__ic--n"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></span><div><div class="pr-rule__t">Never — transactions, MCC blocks, declines</div><div class="pr-rule__s">Day-to-day spending is private</div></div></div>
-            <div class="pr-rule"><span class="pr-rule__ic pr-rule__ic--n"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></span><div><div class="pr-rule__t">Never — Anna chat content (AN-05)</div><div class="pr-rule__s">Sponsor-blind by design</div></div></div>
-            <div class="pr-rule"><span class="pr-rule__ic pr-rule__ic--n"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></span><div><div class="pr-rule__t">Never — vulnerability flags, location, device</div><div class="pr-rule__s">Off by default · you choose if &amp; when to share</div></div></div>
-          </div>
-          <div class="gc-card">
-            <h3 style="font-size:15px;font-weight:700;margin:0">Last digest · sent 01 May</h3>
-            <div style="background:var(--bg-base);border:1px solid var(--border);border-radius:12px;padding:14px 16px;font-size:13.5px;line-height:1.6;color:var(--text-primary);font-style:italic">"Sam · 1 May 2026 · payment 1/36 cleared, Day 28 clean. No relapse signals this month. She's reading affirmations and finished week 3 of the urge-surfing module."</div>
-            <div style="font-size:12px;color:var(--text-muted);font-family:'JetBrains Mono',monospace">Sent 01 May 09:00 · opened by Joanna 01 May 09:42 · replied by Joanna 01 May 11:14</div>
-          </div>
-        </div>
-        <div class="stack">
-          <div class="gc-card">
-            <h3 style="font-size:15px;font-weight:700;margin:0 0 4px">Manage</h3>
-            <button class="gc-btn gc-btn--ghost gc-btn--full" style="justify-content:flex-start"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" width="16" height="16"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4Z"/></svg>Adjust visibility</button>
-            <button class="gc-btn gc-btn--ghost gc-btn--full" style="justify-content:flex-start"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" width="16" height="16"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>Invite a second sponsor</button>
-            <button class="gc-btn gc-btn--ghost gc-btn--full" style="justify-content:flex-start"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" width="16" height="16"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Sponsor handbook (PDF)</button>
-            <button class="gc-btn gc-btn--ghost gc-btn--full" style="justify-content:flex-start;color:var(--e-50);border-color:rgba(199,56,56,0.3)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" width="16" height="16"><circle cx="12" cy="12" r="10"/><path d="M4.93 4.93l14.14 14.14"/></svg>Remove Joanna · 7-day cool-off</button>
-          </div>
-          ${ANNA("Sponsorship is a one-way mirror.", "She sees enough to care, never enough to control. That's the whole bargain — designed with §15 sponsor onboarding so she understands the constraint before saying yes.")}
-          <div class="pr-decision">decision <a href="../41-decisions-log.html">PR-04</a> · crisis-detection SMS stays default-on across all plans</div>
-        </div>
-      </div>
-    </div>`),
+ pr4: () => PAGE('Sponsor', 'Single canonical sponsor surface. Profile and §07 both route here.', `
+ <div class="stack">
+ <div class="pr-sponsor-hero">
+ <span class="pr-sponsor-hero__av">JM</span>
+ <div>
+ <div class="pr-sponsor-hero__nm">Joanna Murray</div>
+ <div class="pr-sponsor-hero__sub">Sister · Sponsor since 18 Apr 2026 · 7 of 7 digests opened</div>
+ </div>
+ </div>
+ <div class="row-2">
+ <div class="stack">
+ <div class="gc-card">
+ <h3 style="font-size:16px;font-weight:700;margin:0">What Joanna sees</h3>
+ <div class="pr-rule"><span class="pr-rule__ic pr-rule__ic--y"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="pr-rule__t">Monthly digest · summary only</div><div class="pr-rule__s">Streak status · payment status · no transaction detail</div></div></div>
+ <div class="pr-rule"><span class="pr-rule__ic pr-rule__ic--y"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="pr-rule__t">Relapse Hold notices</div><div class="pr-rule__s">Hold opened · "no action needed, reach out if helpful"</div></div></div>
+ <div class="pr-rule"><span class="pr-rule__ic pr-rule__ic--y"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="pr-rule__t">Your direct messages</div><div class="pr-rule__s">Templates from §11 SF4 or free-text</div></div></div>
+ <div class="pr-rule"><span class="pr-rule__ic pr-rule__ic--y"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="pr-rule__t">Loan SECCI (default per LO-07)</div><div class="pr-rule__s">Pre-contract info doc · loan amount + APR + term</div></div></div>
+ <div class="pr-rule"><span class="pr-rule__ic pr-rule__ic--n"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></span><div><div class="pr-rule__t">Never. Transactions, MCC blocks, declines</div><div class="pr-rule__s">Day-to-day spending is private</div></div></div>
+ <div class="pr-rule"><span class="pr-rule__ic pr-rule__ic--n"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></span><div><div class="pr-rule__t">Never. Anna chat content (AN-05)</div><div class="pr-rule__s">Sponsor-blind on purpose</div></div></div>
+ <div class="pr-rule"><span class="pr-rule__ic pr-rule__ic--n"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></span><div><div class="pr-rule__t">Never. Vulnerability flags, location, device</div><div class="pr-rule__s">Off by default · you choose if &amp; when to share</div></div></div>
+ </div>
+ <div class="gc-card">
+ <h3 style="font-size:15px;font-weight:700;margin:0">Last digest · sent 01 May</h3>
+ <div style="background:var(--bg-base);border:1px solid var(--border);border-radius:12px;padding:14px 16px;font-size:13.5px;line-height:1.6;color:var(--text-primary);font-style:italic">"Sam · 1 May 2026 · payment 1/36 cleared, Day 28 clean. No relapse signals this month. She's reading affirmations and finished week 3 of the urge-surfing module."</div>
+ <div style="font-size:12px;color:var(--text-muted);font-family:'JetBrains Mono',monospace">Sent 01 May 09:00 · opened by Joanna 01 May 09:42 · replied by Joanna 01 May 11:14</div>
+ </div>
+ </div>
+ <div class="stack">
+ <div class="gc-card">
+ <h3 style="font-size:15px;font-weight:700;margin:0 0 4px">Manage</h3>
+ <button class="gc-btn gc-btn--ghost gc-btn--full" style="justify-content:flex-start"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" width="16" height="16"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4Z"/></svg>Adjust visibility</button>
+ <button class="gc-btn gc-btn--ghost gc-btn--full" style="justify-content:flex-start"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" width="16" height="16"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>Invite a second sponsor</button>
+ <button class="gc-btn gc-btn--ghost gc-btn--full" style="justify-content:flex-start"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" width="16" height="16"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Sponsor handbook (PDF)</button>
+ <button class="gc-btn gc-btn--ghost gc-btn--full" style="justify-content:flex-start;color:var(--e-50);border-color:rgba(199,56,56,0.3)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" width="16" height="16"><circle cx="12" cy="12" r="10"/><path d="M4.93 4.93l14.14 14.14"/></svg>Remove Joanna · 7-day cool-off</button>
+ </div>
+ ${ANNA("Sponsorship is a one-way mirror.", "She sees enough to care, never enough to control. That's the whole bargain. Designed with §15 sponsor onboarding so she understands the constraint before saying yes.")}
+ <div class="pr-decision">decision <a href="../41-decisions-log.html">PR-04</a> · crisis-detection SMS stays default-on across all plans</div>
+ </div>
+ </div>
+ </div>`),
 
-  pr5: () => PAGE('Download my data', 'GDPR Article 20 · everything we hold about you, machine-readable + human-readable.', `
-    <div class="row-2">
-      <div class="stack">
-        <div class="pr-progress">
-          <div class="pr-progress__h"><span class="pr-progress__t">Ready to export</span><span class="pr-progress__pct">~7.1 MB ZIP</span></div>
-          <div class="pr-progress__bar"><div style="width:100%"></div></div>
-          <span class="pr-progress__s">All data through 14 May 2026 · email arrives in ~10 min</span>
-        </div>
-        <div class="gc-card">
-          <h3 style="font-size:16px;font-weight:700;margin:0 0 4px">What's included</h3>
-          <p style="font-size:12.5px;color:var(--text-secondary);margin:0">JSON for machines, PDF summary for humans. Standard GDPR Article 20 portability format.</p>
-          <div class="pr-export-item"><span class="pr-export-item__ic">✓</span><div><div class="pr-export-item__t">Onboarding answers · all 22 Qs</div><div class="pr-export-item__s">JSON · raw responses + assigned profile</div></div><span class="pr-export-item__sz">12 KB</span></div>
-          <div class="pr-export-item"><span class="pr-export-item__ic">✓</span><div><div class="pr-export-item__t">Anna chat history</div><div class="pr-export-item__s">JSON · all 47 sessions · 7 weeks</div></div><span class="pr-export-item__sz">3.4 MB</span></div>
-          <div class="pr-export-item"><span class="pr-export-item__ic">✓</span><div><div class="pr-export-item__t">Transactions · MCC blocks · declines</div><div class="pr-export-item__s">CSV + JSON · 30-day window</div></div><span class="pr-export-item__sz">2.1 MB</span></div>
-          <div class="pr-export-item"><span class="pr-export-item__ic">✓</span><div><div class="pr-export-item__t">Loan agreement &amp; payments</div><div class="pr-export-item__s">PDF · signed SECCI + monthly statements</div></div><span class="pr-export-item__sz">680 KB</span></div>
-          <div class="pr-export-item"><span class="pr-export-item__ic">✓</span><div><div class="pr-export-item__t">KYC documents</div><div class="pr-export-item__s">Originals you uploaded · ID + proof of address</div></div><span class="pr-export-item__sz">420 KB</span></div>
-          <div class="pr-export-item"><span class="pr-export-item__ic">✓</span><div><div class="pr-export-item__t">Sponsor digests · sent to Joanna</div><div class="pr-export-item__s">PDF · 7 of 7 monthly digests</div></div><span class="pr-export-item__sz">95 KB</span></div>
-          <div class="pr-export-item"><span class="pr-export-item__ic">✓</span><div><div class="pr-export-item__t">Vulnerability flags &amp; notification preferences</div><div class="pr-export-item__s">JSON · current state + history</div></div><span class="pr-export-item__sz">8 KB</span></div>
-        </div>
-        <div class="gc-card gc-card--alert">
-          <span style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;color:var(--w-80);align-self:flex-start">Article 22 · excluded</span>
-          <h3 style="font-size:15px;font-weight:700;margin:4px 0 0">What's not included</h3>
-          <div class="pr-export-item" style="padding-top:0;border-top:none"><span class="pr-export-item__ic pr-export-item__ic--excl">!</span><div><div class="pr-export-item__t">Algbra credit-decision algorithm output</div><div class="pr-export-item__s">Carve-out · per <a href="../41-decisions-log.html" style="color:var(--accent)">PR-05</a></div></div></div>
-          <p style="font-size:12.5px;color:var(--text-secondary);line-height:1.55;margin:0">GDPR Article 22 gives you the right to challenge an automated credit decision. <strong style="color:var(--text-primary)">The decision output</strong> (approved / rejected / amount / APR / term) is in your loan agreement and we provide it. <strong style="color:var(--text-primary)">The algorithm weights themselves</strong> are Algbra's IP and excluded — standard for credit decisioning, confirmed legal. If you want to challenge, write to us — we have a process under §13 Admin.</p>
-        </div>
-      </div>
-      <div class="stack">
-        <div class="gc-card">
-          <h3 style="font-size:15px;font-weight:700;margin:0">Format</h3>
-          <div class="pr-rule"><span class="pr-rule__ic pr-rule__ic--y"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="pr-rule__t">JSON · per-domain files</div><div class="pr-rule__s">Standard ISO-8601 dates · UTF-8</div></div></div>
-          <div class="pr-rule"><span class="pr-rule__ic pr-rule__ic--y"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="pr-rule__t">PDF · human-readable summary</div><div class="pr-rule__s">For another lender · solicitor · charity</div></div></div>
-          <div class="pr-rule"><span class="pr-rule__ic pr-rule__ic--y"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="pr-rule__t">SHA-256 checksum + signature</div><div class="pr-rule__s">Proves it came from us · not tampered with</div></div></div>
-        </div>
-        <button class="gc-btn gc-btn--primary gc-btn--lg gc-btn--full">Email me the ZIP</button>
-        <button class="gc-btn gc-btn--ghost gc-btn--full">Schedule monthly exports</button>
-        ${ANNA("Article 20 is the law you're using.", "Article 22 is the law that lets us hold back the model weights. We give you what's yours · we keep what's structurally not. If something there feels wrong, we'll talk it through.")}
-        <div class="pr-decision">decision <a href="../41-decisions-log.html">PR-05</a> · Algbra Article 22 carve-out confirmed (legal-approved)</div>
-      </div>
-    </div>`),
+ pr5: () => PAGE('Download my data', 'GDPR Article 20 · everything we hold about you, machine-readable + human-readable.', `
+ <div class="row-2">
+ <div class="stack">
+ <div class="pr-progress">
+ <div class="pr-progress__h"><span class="pr-progress__t">Ready to export</span><span class="pr-progress__pct">~7.1 MB ZIP</span></div>
+ <div class="pr-progress__bar"><div style="width:100%"></div></div>
+ <span class="pr-progress__s">All data through 14 May 2026 · email arrives in ~10 min</span>
+ </div>
+ <div class="gc-card">
+ <h3 style="font-size:16px;font-weight:700;margin:0 0 4px">What's included</h3>
+ <p style="font-size:12.5px;color:var(--text-secondary);margin:0">JSON for machines, PDF summary for humans. Standard GDPR Article 20 portability format.</p>
+ <div class="pr-export-item"><span class="pr-export-item__ic">✓</span><div><div class="pr-export-item__t">Onboarding answers · all 22 Qs</div><div class="pr-export-item__s">JSON · raw responses + assigned profile</div></div><span class="pr-export-item__sz">12 KB</span></div>
+ <div class="pr-export-item"><span class="pr-export-item__ic">✓</span><div><div class="pr-export-item__t">Anna chat history</div><div class="pr-export-item__s">JSON · all 47 sessions · 7 weeks</div></div><span class="pr-export-item__sz">3.4 MB</span></div>
+ <div class="pr-export-item"><span class="pr-export-item__ic">✓</span><div><div class="pr-export-item__t">Transactions · MCC blocks · declines</div><div class="pr-export-item__s">CSV + JSON · 30-day window</div></div><span class="pr-export-item__sz">2.1 MB</span></div>
+ <div class="pr-export-item"><span class="pr-export-item__ic">✓</span><div><div class="pr-export-item__t">Loan agreement &amp; payments</div><div class="pr-export-item__s">PDF · signed SECCI + monthly statements</div></div><span class="pr-export-item__sz">680 KB</span></div>
+ <div class="pr-export-item"><span class="pr-export-item__ic">✓</span><div><div class="pr-export-item__t">KYC documents</div><div class="pr-export-item__s">Originals you uploaded · ID + proof of address</div></div><span class="pr-export-item__sz">420 KB</span></div>
+ <div class="pr-export-item"><span class="pr-export-item__ic">✓</span><div><div class="pr-export-item__t">Sponsor digests · sent to Joanna</div><div class="pr-export-item__s">PDF · 7 of 7 monthly digests</div></div><span class="pr-export-item__sz">95 KB</span></div>
+ <div class="pr-export-item"><span class="pr-export-item__ic">✓</span><div><div class="pr-export-item__t">Vulnerability flags &amp; notification preferences</div><div class="pr-export-item__s">JSON · current state + history</div></div><span class="pr-export-item__sz">8 KB</span></div>
+ </div>
+ <div class="gc-card gc-card--alert">
+ <span style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;color:var(--w-80);align-self:flex-start">Article 22 · excluded</span>
+ <h3 style="font-size:15px;font-weight:700;margin:4px 0 0">What's not included</h3>
+ <div class="pr-export-item" style="padding-top:0;border-top:none"><span class="pr-export-item__ic pr-export-item__ic--excl">!</span><div><div class="pr-export-item__t">Algbra credit-decision algorithm output</div><div class="pr-export-item__s">Carve-out · per <a href="../41-decisions-log.html" style="color:var(--accent)">PR-05</a></div></div></div>
+ <p style="font-size:12.5px;color:var(--text-secondary);line-height:1.55;margin:0">GDPR Article 22 gives you the right to challenge an automated credit decision. <strong style="color:var(--text-primary)">The decision output</strong> (approved / rejected / amount / APR / term) is in your loan agreement and we provide it. <strong style="color:var(--text-primary)">The algorithm weights themselves</strong> are Algbra's IP and excluded. Standard for credit decisioning, confirmed legal. If you want to challenge, write to us. We have a process under §13 Admin.</p>
+ </div>
+ </div>
+ <div class="stack">
+ <div class="gc-card">
+ <h3 style="font-size:15px;font-weight:700;margin:0">Format</h3>
+ <div class="pr-rule"><span class="pr-rule__ic pr-rule__ic--y"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="pr-rule__t">JSON · per-domain files</div><div class="pr-rule__s">Standard ISO-8601 dates · UTF-8</div></div></div>
+ <div class="pr-rule"><span class="pr-rule__ic pr-rule__ic--y"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="pr-rule__t">PDF · human-readable summary</div><div class="pr-rule__s">For another lender · solicitor · charity</div></div></div>
+ <div class="pr-rule"><span class="pr-rule__ic pr-rule__ic--y"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="pr-rule__t">SHA-256 checksum + signature</div><div class="pr-rule__s">Proves it came from us · not tampered with</div></div></div>
+ </div>
+ <button class="gc-btn gc-btn--primary gc-btn--lg gc-btn--full">Email me the ZIP</button>
+ <button class="gc-btn gc-btn--ghost gc-btn--full">Schedule monthly exports</button>
+ ${ANNA("Article 20 is the law you're using.", "Article 22 is the law that lets us hold back the model weights. We give you what's yours · we keep what's structurally not. If something there feels wrong, we'll talk it through.")}
+ <div class="pr-decision">decision <a href="../41-decisions-log.html">PR-05</a> · Algbra Article 22 carve-out confirmed (legal-approved)</div>
+ </div>
+ </div>`),
 
-  pr6: () => PAGE('Close my account', 'GDPR Article 17 right to erasure · with caveats up-front so nothing surprises you.', `
-    <div class="row-2">
-      <div class="stack">
-        <div class="gc-card gc-card--danger">
-          <span style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;color:var(--e-80);align-self:flex-start">GDPR Article 17 · constraint surfaced up-front (PR-07)</span>
-          <h2 style="font-size:26px;font-weight:800;letter-spacing:-0.02em;line-height:1.2;margin:4px 0 0">Right to erasure requires £0 outstanding.</h2>
-          <p style="font-size:14px;color:var(--text-secondary);line-height:1.55;margin:0;max-width:60ch">You currently owe <strong style="color:var(--text-primary)">£8,089</strong> on loan LO-289-A1F4. Full deletion is <strong style="color:var(--text-primary)">blocked</strong> until that's settled — FCA + AML record-keeping requires us to hold the loan record. This used to be buried; per <a href="../41-decisions-log.html" style="color:var(--accent)">PR-07</a> we now show it on screen 1, not screen 4.</p>
-        </div>
-        <div class="gc-card">
-          <h3 style="font-size:16px;font-weight:700;margin:0 0 4px">What you can do now</h3>
-          <div class="pr-rule"><span class="pr-rule__ic pr-rule__ic--y"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="pr-rule__t">Pause the account (cool-off, then re-decide)</div><div class="pr-rule__s">Logged out · no Anna · no sponsor digests · DD continues. Account auto-resumes after cool-off, or you delete on settlement.</div></div></div>
-          <div class="pr-rule"><span class="pr-rule__ic pr-rule__ic--y"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="pr-rule__t">Settle early</div><div class="pr-rule__s">£8,089 in full · no early-settlement fee (per RP-07) · then full Article 17 deletion is available.</div></div></div>
-          <div class="pr-rule"><span class="pr-rule__ic pr-rule__ic--y"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="pr-rule__t">Schedule auto-close on final payment</div><div class="pr-rule__s">Account closes itself once balance hits £0 · ~April 2029 on current schedule.</div></div></div>
-          <div class="pr-rule"><span class="pr-rule__ic pr-rule__ic--n"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></span><div><div class="pr-rule__t">Cannot — full deletion now</div><div class="pr-rule__s">Loan record must persist until settled (FCA + AML)</div></div></div>
-        </div>
-        <div class="gc-card">
-          <h3 style="font-size:16px;font-weight:700;margin:0 0 4px">Cool-off length · scales by profile</h3>
-          <p style="font-size:12.5px;color:var(--text-secondary);margin:0 0 4px">Per <a href="../41-decisions-log.html" style="color:var(--accent)">PR-06</a> — defers to §16 off-boarding flows. The old flat 14-day was wrong for Compulsive (too long) and Recreational (too short).</p>
-          <div class="pr-close-grid">
-            <div class="pr-close-tile">
-              <span class="pr-close-tile__pill">Recreational</span>
-              <h4 class="pr-close-tile__h">30-day cool-off</h4>
-              <p class="pr-close-tile__d">Lower-risk users · longer reflection window. Anna offers re-entry conversation around day 21.</p>
-            </div>
-            <div class="pr-close-tile pr-close-tile--current">
-              <span class="pr-close-tile__pill">Habitual · you</span>
-              <h4 class="pr-close-tile__h">14-day cool-off</h4>
-              <p class="pr-close-tile__d">Default · matches PGSI-mid risk. Anna check-in at day 7, day 13.</p>
-            </div>
-            <div class="pr-close-tile">
-              <span class="pr-close-tile__pill">Compulsive</span>
-              <h4 class="pr-close-tile__h">7-day cool-off</h4>
-              <p class="pr-close-tile__d">Shorter · longer window risks paralysis. Safeguarding ops makes contact day 1.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="stack">
-        <div class="gc-card">
-          <h3 style="font-size:14px;font-weight:700;margin:0 0 4px">If you proceed</h3>
-          <div style="font-size:12.5px;color:var(--text-secondary);line-height:1.55"><strong style="color:var(--text-primary)">Today:</strong> logged out · sponsor notified · DD continues automatically</div>
-          <div style="font-size:12.5px;color:var(--text-secondary);line-height:1.55"><strong style="color:var(--text-primary)">Day 14:</strong> cool-off ends · re-enter normally or proceed to formal close</div>
-          <div style="font-size:12.5px;color:var(--text-secondary);line-height:1.55"><strong style="color:var(--text-primary)">On settlement:</strong> Article 17 deletion offered · ZIP export delivered first</div>
-        </div>
-        ${ANNA("Closing isn't failure.", "It's a decision. We just want you to make it knowing the rules. Take the 14 days. The system stays paused. We'll still be here if you change your mind — and the loan keeps paying itself down regardless.")}
-        <button class="gc-btn gc-btn--danger gc-btn--lg gc-btn--full">Start 14-day cool-off</button>
-        <button class="gc-btn gc-btn--ghost gc-btn--full" onclick="go(0)">Cancel · keep account</button>
-        <div class="pr-decision">decisions · <a href="../41-decisions-log.html">PR-06</a> profile-scaled cool-off · <a href="../41-decisions-log.html">PR-07</a> Art. 17 surfaced up-front</div>
-      </div>
-    </div>`),
+ pr6: () => PAGE('Close my account', 'GDPR Article 17 right to erasure · with caveats up-front so nothing surprises you.', `
+ <div class="row-2">
+ <div class="stack">
+ <div class="gc-card gc-card--danger">
+ <span style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;color:var(--e-80);align-self:flex-start">GDPR Article 17 · constraint surfaced up-front (PR-07)</span>
+ <h2 style="font-size:26px;font-weight:800;letter-spacing:-0.02em;line-height:1.2;margin:4px 0 0">Right to erasure requires £0 outstanding.</h2>
+ <p style="font-size:14px;color:var(--text-secondary);line-height:1.55;margin:0;max-width:60ch">You currently owe <strong style="color:var(--text-primary)">£8,089</strong> on loan LO-289-A1F4. Full deletion is <strong style="color:var(--text-primary)">blocked</strong> until that's settled. FCA + AML record-keeping requires us to hold the loan record. This used to be buried; per <a href="../41-decisions-log.html" style="color:var(--accent)">PR-07</a> we now show it on screen 1, not screen 4.</p>
+ </div>
+ <div class="gc-card">
+ <h3 style="font-size:16px;font-weight:700;margin:0 0 4px">What you can do now</h3>
+ <div class="pr-rule"><span class="pr-rule__ic pr-rule__ic--y"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="pr-rule__t">Pause the account (cool-off, then re-decide)</div><div class="pr-rule__s">Logged out · no Anna · no sponsor digests · DD continues. Account auto-resumes after cool-off, or you delete on settlement.</div></div></div>
+ <div class="pr-rule"><span class="pr-rule__ic pr-rule__ic--y"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="pr-rule__t">Settle early</div><div class="pr-rule__s">£8,089 in full · no early-settlement fee (per RP-07) · then full Article 17 deletion is available.</div></div></div>
+ <div class="pr-rule"><span class="pr-rule__ic pr-rule__ic--y"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="pr-rule__t">Schedule auto-close on final payment</div><div class="pr-rule__s">Account closes itself once balance hits £0 · ~April 2029 on current schedule.</div></div></div>
+ <div class="pr-rule"><span class="pr-rule__ic pr-rule__ic--n"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></span><div><div class="pr-rule__t">Cannot. Full deletion now</div><div class="pr-rule__s">Loan record must persist until settled (FCA + AML)</div></div></div>
+ </div>
+ <div class="gc-card">
+ <h3 style="font-size:16px;font-weight:700;margin:0 0 4px">Cool-off length · scales by profile</h3>
+ <p style="font-size:12.5px;color:var(--text-secondary);margin:0 0 4px">Per <a href="../41-decisions-log.html" style="color:var(--accent)">PR-06</a>. defers to §16 off-boarding flows. The old flat 14-day was wrong for Compulsive (too long) and Recreational (too short).</p>
+ <div class="pr-close-grid">
+ <div class="pr-close-tile">
+ <span class="pr-close-tile__pill">Recreational</span>
+ <h4 class="pr-close-tile__h">30-day cool-off</h4>
+ <p class="pr-close-tile__d">Lower-risk users · longer reflection window. Anna offers re-entry conversation around day 21.</p>
+ </div>
+ <div class="pr-close-tile pr-close-tile--current">
+ <span class="pr-close-tile__pill">Habitual · you</span>
+ <h4 class="pr-close-tile__h">14-day cool-off</h4>
+ <p class="pr-close-tile__d">Default · matches PGSI-mid risk. Anna check-in at day 7, day 13.</p>
+ </div>
+ <div class="pr-close-tile">
+ <span class="pr-close-tile__pill">Compulsive</span>
+ <h4 class="pr-close-tile__h">7-day cool-off</h4>
+ <p class="pr-close-tile__d">Shorter · longer window risks paralysis. Safeguarding ops makes contact day 1.</p>
+ </div>
+ </div>
+ </div>
+ </div>
+ <div class="stack">
+ <div class="gc-card">
+ <h3 style="font-size:14px;font-weight:700;margin:0 0 4px">If you proceed</h3>
+ <div style="font-size:12.5px;color:var(--text-secondary);line-height:1.55"><strong style="color:var(--text-primary)">Today:</strong> logged out · sponsor notified · DD continues automatically</div>
+ <div style="font-size:12.5px;color:var(--text-secondary);line-height:1.55"><strong style="color:var(--text-primary)">Day 14:</strong> cool-off ends · re-enter normally or proceed to formal close</div>
+ <div style="font-size:12.5px;color:var(--text-secondary);line-height:1.55"><strong style="color:var(--text-primary)">On settlement:</strong> Article 17 deletion offered · ZIP export delivered first</div>
+ </div>
+ ${ANNA("Closing isn't failure.", "It's a decision. We just want you to make it knowing the rules. Take the 14 days. The system stays paused. We'll still be here if you change your mind. And the loan keeps paying itself down regardless.")}
+ <button class="gc-btn gc-btn--danger gc-btn--lg gc-btn--full">Start 14-day cool-off</button>
+ <button class="gc-btn gc-btn--ghost gc-btn--full" onclick="go(0)">Cancel · keep account</button>
+ <div class="pr-decision">decisions · <a href="../41-decisions-log.html">PR-06</a> profile-scaled cool-off · <a href="../41-decisions-log.html">PR-07</a> Art. 17 surfaced up-front</div>
+ </div>
+ </div>`),
 };
 
 let idx = 0;
 function toggleSwitch(el) { if (!el.classList.contains('is-locked')) el.classList.toggle('is-on'); }
 
 function render() {
-  const screen = SCREENS[idx];
-  document.getElementById('viewport').innerHTML = builders[screen.kind]();
-  document.getElementById('browserUrl').textContent = 'app.gaimcontrol.com' + screen.url;
-  document.getElementById('screenId').textContent = screen.id;
-  document.getElementById('screenName').textContent = screen.name;
-  document.getElementById('progressFill').style.width = ((idx + 1) / SCREENS.length * 100) + '%';
-  document.getElementById('navPrev').disabled = idx === 0;
-  document.getElementById('navNext').disabled = idx === SCREENS.length - 1;
-  document.querySelectorAll('.proto-scrubber__item').forEach((el, i) => {
-    el.classList.toggle('is-active', i === idx);
-    if (i === idx) el.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
-  });
-  document.getElementById('contextBody').innerHTML = CTX[screen.kind] || screen.name;
+ const screen = SCREENS[idx];
+ document.getElementById('viewport').innerHTML = builders[screen.kind]();
+ document.getElementById('browserUrl').textContent = 'app.gaimcontrol.com' + screen.url;
+ document.getElementById('screenId').textContent = screen.id;
+ document.getElementById('screenName').textContent = screen.name;
+ document.getElementById('progressFill').style.width = ((idx + 1) / SCREENS.length * 100) + '%';
+ document.getElementById('navPrev').disabled = idx === 0;
+ document.getElementById('navNext').disabled = idx === SCREENS.length - 1;
+ document.querySelectorAll('.proto-scrubber__item').forEach((el, i) => {
+ el.classList.toggle('is-active', i === idx);
+ if (i === idx) el.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+ });
+ document.getElementById('contextBody').innerHTML = CTX[screen.kind] || screen.name;
 }
 
 function next() { if (idx < SCREENS.length - 1) { idx++; render(); } }
@@ -675,28 +675,28 @@ function prev() { if (idx > 0) { idx--; render(); } }
 function go(i) { idx = i; render(); }
 
 function buildScrubber() {
-  const nav = document.getElementById('scrubber');
-  SCREENS.forEach((s, i) => {
-    const btn = document.createElement('button');
-    btn.className = 'proto-scrubber__item';
-    btn.innerHTML = `<span class="proto-scrubber__id">${s.id}</span><span class="proto-scrubber__name">${s.name}</span>`;
-    btn.addEventListener('click', () => go(i));
-    nav.appendChild(btn);
-  });
+ const nav = document.getElementById('scrubber');
+ SCREENS.forEach((s, i) => {
+ const btn = document.createElement('button');
+ btn.className = 'proto-scrubber__item';
+ btn.innerHTML = `<span class="proto-scrubber__id">${s.id}</span><span class="proto-scrubber__name">${s.name}</span>`;
+ btn.addEventListener('click', () => go(i));
+ nav.appendChild(btn);
+ });
 }
 
 function initTheme() {
-  const root = document.documentElement;
-  const stored = localStorage.getItem('gc-proto-theme');
-  const initial = stored || 'dark';
-  root.setAttribute('data-theme', initial);
-  document.querySelector('.theme-label').textContent = initial === 'dark' ? 'Dark' : 'Light';
-  document.querySelector('.proto-theme-toggle').addEventListener('click', () => {
-    const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-    root.setAttribute('data-theme', next);
-    document.querySelector('.theme-label').textContent = next === 'dark' ? 'Dark' : 'Light';
-    try { localStorage.setItem('gc-proto-theme', next); } catch(e) {}
-  });
+ const root = document.documentElement;
+ const stored = localStorage.getItem('gc-proto-theme');
+ const initial = stored || 'dark';
+ root.setAttribute('data-theme', initial);
+ document.querySelector('.theme-label').textContent = initial === 'dark' ? 'Dark' : 'Light';
+ document.querySelector('.proto-theme-toggle').addEventListener('click', () => {
+ const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+ root.setAttribute('data-theme', next);
+ document.querySelector('.theme-label').textContent = next === 'dark' ? 'Dark' : 'Light';
+ try { localStorage.setItem('gc-proto-theme', next); } catch(e) {}
+ });
 }
 
 document.getElementById('navPrev').addEventListener('click', prev);

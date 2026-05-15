@@ -10,12 +10,12 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --p-10:#0B0F1C;--p-20:#161B2D;--p-30:#20273C;--p-40:#354872;--p-50:#4D608C;--p-60:#6B7DA6;--p-90:#DCE2F0;--p-95:#ECF0F9;--p-99:#FAFBFE;--p-100:#FFF;
-  --s-10:#28215A;--s-20:#3E3478;--s-30:#534792;--s-40:#6B5DAC;--s-50:#8576C2;--s-70:#B5ACDF;--s-80:#CFC8EA;--s-90:#E8E4F4;
-  --t-20:#1A6047;--t-30:#1F7058;--t-50:#399971;--t-60:#5BB088;--t-80:#ADDCC2;--t-90:#D5EDDF;
-  --w-30:#6B4500;--w-60:#C28200;--w-80:#FAB44A;--w-90:#FFDFA8;
-  --e-30:#7A1F1F;--e-50:#C73838;--e-80:#F4A4A4;--e-90:#FBD9D9;
-  --n-50:#76798A;--n-80:#C5C8D2;--n-95:#F1F2F5;--nv-80:#C5C9DD;
+ --p-10:#0B0F1C;--p-20:#161B2D;--p-30:#20273C;--p-40:#354872;--p-50:#4D608C;--p-60:#6B7DA6;--p-90:#DCE2F0;--p-95:#ECF0F9;--p-99:#FAFBFE;--p-100:#FFF;
+ --s-10:#28215A;--s-20:#3E3478;--s-30:#534792;--s-40:#6B5DAC;--s-50:#8576C2;--s-70:#B5ACDF;--s-80:#CFC8EA;--s-90:#E8E4F4;
+ --t-20:#1A6047;--t-30:#1F7058;--t-50:#399971;--t-60:#5BB088;--t-80:#ADDCC2;--t-90:#D5EDDF;
+ --w-30:#6B4500;--w-60:#C28200;--w-80:#FAB44A;--w-90:#FFDFA8;
+ --e-30:#7A1F1F;--e-50:#C73838;--e-80:#F4A4A4;--e-90:#FBD9D9;
+ --n-50:#76798A;--n-80:#C5C8D2;--n-95:#F1F2F5;--nv-80:#C5C9DD;
 }
 [data-theme="dark"] { --bg-base: var(--p-30); --bg-surface: var(--p-20); --bg-surface-2: var(--p-10); --border: rgba(255,255,255,0.08); --text-primary: var(--n-95); --text-secondary: var(--nv-80); --text-muted: rgba(255,255,255,0.4); --accent: var(--s-70); --accent-strong: var(--s-50); --on-accent: #fff; --page-bg: #0a0e1a; --page-fg: var(--n-95); --page-fg-muted: var(--nv-80); --page-card-bg: var(--p-20); --page-divider: rgba(255,255,255,0.06); }
 [data-theme="light"] { --bg-base: var(--p-99); --bg-surface: #fff; --bg-surface-2: var(--p-95); --border: rgba(22,27,45,0.08); --text-primary: var(--p-20); --text-secondary: var(--n-50); --text-muted: var(--n-50); --accent: var(--p-40); --accent-strong: var(--s-40); --on-accent: #fff; --page-bg: var(--p-95); --page-fg: var(--p-20); --page-fg-muted: var(--n-50); --page-card-bg: #fff; --page-divider: rgba(22,27,45,0.08); }
@@ -24,9 +24,9 @@ html, body { background: var(--page-bg); color: var(--page-fg); margin: 0; trans
 body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif; font-size: 14px; line-height: 1.5; -webkit-font-smoothing: antialiased; min-height: 100vh; }
 
 .proto-shell { display: grid; grid-template-columns: 280px 1fr; gap: 0; min-height: 100vh; }
-@media (max-width: 1100px) { .proto-shell { grid-template-columns: 1fr; } }
+@media (max-width: 1100px) {.proto-shell { grid-template-columns: 1fr; } }
 .proto-sidebar { background: var(--page-card-bg); border-right: 1px solid var(--page-divider); padding: 28px 22px; position: sticky; top: 0; height: 100vh; overflow-y: auto; display: flex; flex-direction: column; gap: 16px; }
-@media (max-width: 1100px) { .proto-sidebar { position: static; height: auto; max-height: 50vh; border-right: none; border-bottom: 1px solid var(--page-divider); } }
+@media (max-width: 1100px) {.proto-sidebar { position: static; height: auto; max-height: 50vh; border-right: none; border-bottom: 1px solid var(--page-divider); } }
 .proto-sidebar__brand { display: flex; align-items: center; gap: 10px; }
 .proto-sidebar__mark { width: 36px; height: 36px; border-radius: 10px; background: var(--p-30); display: inline-flex; align-items: center; justify-content: center; }
 .proto-sidebar__mark img { width: 70%; height: 70%; }
@@ -39,15 +39,15 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-
 .proto-scrubber__item { display: grid; grid-template-columns: 44px 1fr; gap: 8px; align-items: center; padding: 7px 10px; border-radius: 8px; cursor: pointer; border: none; background: transparent; color: inherit; font-family: inherit; text-align: left; }
 .proto-scrubber__item:hover { background: rgba(127,127,127,0.08); }
 .proto-scrubber__item.is-active { background: var(--accent-strong); color: var(--on-accent); }
-.proto-scrubber__item.is-active .proto-scrubber__id { color: rgba(255,255,255,0.85); }
+.proto-scrubber__item.is-active.proto-scrubber__id { color: rgba(255,255,255,0.85); }
 .proto-scrubber__id { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; color: var(--page-fg-muted); letter-spacing: 0.06em; }
 .proto-scrubber__name { font-size: 12.5px; font-weight: 500; }
 .proto-sidebar__footer { margin-top: auto; padding-top: 16px; border-top: 1px solid var(--page-divider); font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--page-fg-muted); }
 .proto-sidebar__footer a { color: var(--page-fg-muted); text-decoration: none; border-bottom: 1px dotted currentColor; }
 .proto-theme-toggle { display: inline-flex; align-items: center; gap: 8px; padding: 7px 12px; border-radius: 8px; background: var(--bg-surface-2); border: 1px solid var(--border); color: var(--page-fg-muted); cursor: pointer; font-family: 'JetBrains Mono', monospace; font-size: 11px; align-self: flex-start; }
 .proto-theme-toggle svg { width: 12px; height: 12px; }
-[data-theme="dark"] .proto-theme-toggle .icon-moon { display: none; }
-[data-theme="light"] .proto-theme-toggle .icon-sun { display: none; }
+[data-theme="dark"].proto-theme-toggle.icon-moon { display: none; }
+[data-theme="light"].proto-theme-toggle.icon-sun { display: none; }
 
 .proto-stage { display: flex; flex-direction: column; align-items: center; padding: 32px 24px 64px; gap: 18px; }
 .proto-modebar { display: flex; align-items: center; gap: 10px; padding: 10px 16px; background: var(--page-card-bg); border: 1px solid var(--page-divider); border-radius: 12px; font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: var(--page-fg-muted); flex-wrap: wrap; justify-content: center; }
@@ -62,24 +62,24 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-
 .proto-arrow svg { width: 18px; height: 18px; }
 
 .browser { width: 100%; max-width: 1380px; background: var(--bg-base); border-radius: 18px; overflow: hidden; border: 1px solid var(--border); box-shadow: 0 24px 60px -20px rgba(0,0,0,0.45), 0 8px 24px -12px rgba(0,0,0,0.25); }
-[data-theme="light"] .browser { box-shadow: 0 24px 60px -20px rgba(22,27,45,0.18), 0 8px 24px -12px rgba(22,27,45,0.08); }
+[data-theme="light"].browser { box-shadow: 0 24px 60px -20px rgba(22,27,45,0.18), 0 8px 24px -12px rgba(22,27,45,0.08); }
 .browser__chrome { display: flex; align-items: center; gap: 14px; padding: 12px 16px; background: var(--p-20); border-bottom: 1px solid var(--border); }
-[data-theme="light"] .browser__chrome { background: var(--n-95); }
+[data-theme="light"].browser__chrome { background: var(--n-95); }
 .browser__dots { display: inline-flex; gap: 7px; flex-shrink: 0; }
 .browser__dot { width: 11px; height: 11px; border-radius: 50%; }
-.browser__dot:nth-child(1) { background: #FF5F57; } .browser__dot:nth-child(2) { background: #FEBC2E; } .browser__dot:nth-child(3) { background: #28C840; }
+.browser__dot:nth-child(1) { background: #FF5F57; }.browser__dot:nth-child(2) { background: #FEBC2E; }.browser__dot:nth-child(3) { background: #28C840; }
 .browser__url { flex: 1; background: var(--bg-base); border: 1px solid var(--border); border-radius: 7px; padding: 6px 14px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--text-secondary); text-align: center; display: flex; align-items: center; justify-content: center; gap: 8px; }
 .browser__url svg { width: 12px; height: 12px; opacity: 0.7; flex-shrink: 0; }
 .browser__viewport { background: var(--bg-base); min-height: 820px; max-height: 820px; position: relative; color: var(--text-primary); display: grid; grid-template-columns: 240px 1fr; }
 
 .appnav { background: var(--bg-surface); border-right: 1px solid var(--border); padding: 20px 16px; display: flex; flex-direction: column; gap: 16px; }
-[data-theme="light"] .appnav { background: var(--bg-surface-2); border-right: 1px solid rgba(22,27,45,0.12); }
-[data-theme="light"] .appnav__item { color: var(--p-40); }
-[data-theme="light"] .appnav__item:hover { color: var(--p-20); }
-[data-theme="light"] .appnav__subitem { color: var(--p-50); }
-[data-theme="light"] .appnav__subitem:hover { color: var(--p-20); }
-[data-theme="light"] .appnav__user-sub { color: var(--p-50); }
-[data-theme="light"] .appnav .appnav__help div:nth-of-type(2) { color: var(--p-50); }
+[data-theme="light"].appnav { background: var(--bg-surface-2); border-right: 1px solid rgba(22,27,45,0.12); }
+[data-theme="light"].appnav__item { color: var(--p-40); }
+[data-theme="light"].appnav__item:hover { color: var(--p-20); }
+[data-theme="light"].appnav__subitem { color: var(--p-50); }
+[data-theme="light"].appnav__subitem:hover { color: var(--p-20); }
+[data-theme="light"].appnav__user-sub { color: var(--p-50); }
+[data-theme="light"].appnav.appnav__help div:nth-of-type(2) { color: var(--p-50); }
 .appnav__brand { display: flex; align-items: center; gap: 10px; padding: 4px 4px 12px; border-bottom: 1px solid var(--border); margin-bottom: 4px; }
 .appnav__mark { width: 32px; height: 32px; border-radius: 9px; background: var(--p-30); display: inline-flex; align-items: center; justify-content: center; }
 .appnav__mark img { width: 70%; height: 70%; }
@@ -96,8 +96,8 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-
 .appnav__item.is-disabled:hover { background: transparent; color: var(--text-secondary); }
 .appnav__item svg { width: 18px; height: 18px; flex-shrink: 0; }
 .appnav__help { margin-top: auto; padding: 14px 14px; border-radius: 12px; background: var(--e-50); color: white; border: 1px solid transparent; }
-[data-theme="light"] .appnav__help { background: var(--e-50); }
-[data-theme="light"] .appnav .appnav__help div:nth-of-type(2) { color: rgba(255,255,255,0.85); }
+[data-theme="light"].appnav__help { background: var(--e-50); }
+[data-theme="light"].appnav.appnav__help div:nth-of-type(2) { color: rgba(255,255,255,0.85); }
 .appnav__help-head { display:flex; align-items:center; gap:7px; font-size:12px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase; }
 .appnav__help-head svg { width: 13px; height: 13px; }
 .gc-crisis-btn { width: 100%; padding: 9px 12px; border-radius: 10px; background: white; color: var(--e-50); border: none; font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 6px; margin-top: 8px; }
@@ -113,16 +113,16 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-
 .gc-card { padding: 20px; background: var(--bg-surface); border: 1px solid var(--border); border-radius: 16px; display: flex; flex-direction: column; gap: 12px; }
 .gc-card--alert { background: var(--bg-surface-2); border-left: 4px solid var(--e-50); border-radius: 6px 16px 16px 6px; padding: 22px 24px; }
 .gc-card--anna { background: linear-gradient(135deg, rgba(133,118,194,0.12), rgba(83,71,146,0.06)); border-color: rgba(133,118,194,0.25); flex-direction: row; align-items: flex-start; gap: 14px; padding: 16px 20px; }
-.gc-card--anna .anna-av { width: 38px; height: 38px; border-radius: 50%; background: var(--p-30); display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
-.gc-card--anna .anna-av img { width: 60%; height: 60%; }
-.gc-card--anna .anna-name { font-size: 13px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 2px; }
+.gc-card--anna.anna-av { width: 38px; height: 38px; border-radius: 50%; background: var(--p-30); display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.gc-card--anna.anna-av img { width: 60%; height: 60%; }
+.gc-card--anna.anna-name { font-size: 13px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 2px; }
 .gc-card--anna strong { display: block; font-size: 14px; margin-bottom: 4px; }
 .gc-card--anna p { font-size: 13.5px; line-height: 1.55; margin: 0; }
 
 .row-2 { display: grid; grid-template-columns: 2fr 1fr; gap: 16px; align-items: start; }
 .row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; align-items: start; }
 .stack { display: flex; flex-direction: column; gap: 16px; }
-@media (max-width: 1000px) { .row-2 { grid-template-columns: 1fr; } .row-3 { grid-template-columns: 1fr; } }
+@media (max-width: 1000px) {.row-2 { grid-template-columns: 1fr; }.row-3 { grid-template-columns: 1fr; } }
 
 /* ─── SF1 · Help home · crisis ladder ─── */
 .sf-hero { background: var(--bg-surface-2); border: 1px solid var(--border); border-left: 4px solid var(--e-50); border-radius: 6px 16px 16px 6px; padding: 24px 28px; display: flex; flex-direction: column; gap: 10px; }
@@ -140,16 +140,16 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-
 .sf-quick__num { font-family: 'JetBrains Mono', monospace; font-size: 32px; font-weight: 800; letter-spacing: 0.01em; line-height: 1; }
 .sf-quick__l { font-size: 13px; font-weight: 600; }
 .sf-quick__d { font-size: 11.5px; opacity: 0.78; }
-.sf-quick--999 .sf-quick__l, .sf-quick--samaritans .sf-quick__l { color: rgba(255,255,255,0.92); }
+.sf-quick--999.sf-quick__l,.sf-quick--samaritans.sf-quick__l { color: rgba(255,255,255,0.92); }
 
 .sf-bsl { display: inline-flex; align-items: center; gap: 7px; padding: 6px 12px; border-radius: 999px; background: var(--p-40); color: var(--p-95); font-size: 11.5px; font-family: 'JetBrains Mono', monospace; font-weight: 600; align-self: flex-start; }
-[data-theme="light"] .sf-bsl { background: var(--p-90); color: var(--p-30); }
+[data-theme="light"].sf-bsl { background: var(--p-90); color: var(--p-30); }
 .sf-bsl svg { width: 12px; height: 12px; }
 
 .sf-rung { display: grid; grid-template-columns: 32px 1fr auto; gap: 14px; align-items: center; padding: 13px 0; border-top: 1px solid var(--border); }
 .sf-rung:first-of-type { border-top: none; padding-top: 0; }
 .sf-rung__n { width: 32px; height: 32px; border-radius: 50%; background: var(--bg-surface-2); border: 1px solid var(--border); display: inline-flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 13px; color: var(--text-secondary); }
-.sf-rung--999 .sf-rung__n { background: var(--e-50); color: white; border-color: transparent; }
+.sf-rung--999.sf-rung__n { background: var(--e-50); color: white; border-color: transparent; }
 .sf-rung__t { font-size: 14px; font-weight: 600; }
 .sf-rung__s { font-size: 12.5px; color: var(--text-secondary); margin-top: 2px; }
 .sf-rung__cta { font-family: 'JetBrains Mono', monospace; font-weight: 700; padding: 8px 14px; border-radius: 9px; background: var(--bg-surface-2); border: 1px solid var(--border); color: var(--text-primary); font-size: 12.5px; text-decoration: none; cursor: pointer; }
@@ -188,7 +188,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-
 .sf-effect { display: grid; grid-template-columns: 26px 1fr; gap: 10px; padding: 9px 0; border-top: 1px solid var(--border); }
 .sf-effect:first-of-type { border-top: none; padding-top: 0; }
 .sf-effect__ic { width: 26px; height: 26px; border-radius: 8px; background: var(--t-20); color: var(--t-80); display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
-[data-theme="light"] .sf-effect__ic { background: var(--t-90); color: var(--t-30); }
+[data-theme="light"].sf-effect__ic { background: var(--t-90); color: var(--t-30); }
 .sf-effect__ic svg { width: 13px; height: 13px; }
 .sf-effect__t { font-size: 13.5px; font-weight: 600; }
 .sf-effect__s { font-size: 12px; color: var(--text-secondary); margin-top: 2px; line-height: 1.5; }
@@ -200,12 +200,12 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-
 .sf-sponsor-head { display: flex; align-items: center; gap: 14px; padding-bottom: 12px; border-bottom: 1px solid var(--border); margin-bottom: 4px; }
 .sf-sponsor-head__av { width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, var(--s-50), var(--p-40)); color: white; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; font-size: 16px; }
 .sf-sponsor-head__tag { display: inline-flex; align-items: center; gap: 5px; padding: 3px 9px; border-radius: 999px; background: var(--s-20); color: var(--s-80); font-size: 10px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; }
-[data-theme="light"] .sf-sponsor-head__tag { background: var(--s-90); color: var(--s-30); }
+[data-theme="light"].sf-sponsor-head__tag { background: var(--s-90); color: var(--s-30); }
 .sf-sponsor-head__tag svg { width: 9px; height: 9px; }
 .sf-sponsor-head__name { font-size: 17px; font-weight: 800; margin: 3px 0 0; letter-spacing: -0.01em; }
 
 .sf-tmpl-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-@media (max-width: 1100px) { .sf-tmpl-grid { grid-template-columns: 1fr; } }
+@media (max-width: 1100px) {.sf-tmpl-grid { grid-template-columns: 1fr; } }
 .sf-tmpl { background: var(--bg-base); border: 1px solid var(--border); border-radius: 14px; padding: 14px 16px; cursor: pointer; text-align: left; font-family: inherit; color: inherit; display: flex; flex-direction: column; gap: 6px; }
 .sf-tmpl:hover { border-color: var(--accent); }
 .sf-tmpl.is-on { background: var(--accent-strong); color: white; border-color: transparent; }
@@ -213,7 +213,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-
 .sf-tmpl__icon { font-size: 18px; flex-shrink: 0; }
 .sf-tmpl__t { font-size: 13.5px; font-weight: 700; }
 .sf-tmpl__msg { font-size: 12.5px; line-height: 1.5; opacity: 0.85; font-style: italic; }
-.sf-tmpl.is-on .sf-tmpl__msg { opacity: 0.95; }
+.sf-tmpl.is-on.sf-tmpl__msg { opacity: 0.95; }
 
 .sf-ch { display: grid; grid-template-columns: 32px 1fr auto; gap: 12px; align-items: center; padding: 11px 0; border-top: 1px solid var(--border); }
 .sf-ch:first-of-type { border-top: none; padding-top: 0; }
@@ -250,308 +250,308 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-
 
 <div class="proto-shell">
 
-  <aside class="proto-sidebar">
-    <div class="proto-sidebar__brand">
-      <span class="proto-sidebar__mark"><img src="../assets/gc-mark-mono-light.svg" alt=""></span>
-      <span>
-        <div class="proto-sidebar__name">GaimControl</div>
-        <span class="proto-sidebar__pill">web</span>
-      </span>
-    </div>
-    <a class="proto-sidebar__back" href="index.html">← prototype index</a>
-    <button class="proto-theme-toggle" type="button" aria-label="Toggle theme">
-      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
-      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
-      <span class="theme-label">Dark</span>
-    </button>
-    <div class="proto-section-title">§11 · SF1 – SF4</div>
-    <nav class="proto-scrubber" id="scrubber"></nav>
-    <div class="proto-sidebar__footer">Source: <a href="../web-ui/11-safeguarding.html">web-ui/11</a><br>Decisions: SF-01..06</div>
-  </aside>
+ <aside class="proto-sidebar">
+ <div class="proto-sidebar__brand">
+ <span class="proto-sidebar__mark"><img src="../assets/gc-mark-mono-light.svg" alt=""></span>
+ <span>
+ <div class="proto-sidebar__name">GaimControl</div>
+ <span class="proto-sidebar__pill">web</span>
+ </span>
+ </div>
+ <a class="proto-sidebar__back" href="index.html">← prototype index</a>
+ <button class="proto-theme-toggle" type="button" aria-label="Toggle theme">
+ <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+ <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+ <span class="theme-label">Dark</span>
+ </button>
+ <div class="proto-section-title">§11 · SF1 – SF4</div>
+ <nav class="proto-scrubber" id="scrubber"></nav>
+ <div class="proto-sidebar__footer">Source: <a href="../web-ui/11-safeguarding.html">web-ui/11</a><br>Decisions: SF-01..06</div>
+ </aside>
 
-  <main class="proto-stage">
+ <main class="proto-stage">
 
-    <div class="proto-modebar">
-      <span>Screen <span class="proto-modebar__id" id="screenId">SF1</span></span>
-      <span class="proto-modebar__pill" id="screenName">Help home</span>
-      <div class="proto-modebar__bar"><div class="proto-modebar__bar__fill" id="progressFill" style="width:25%"></div></div>
-      <div class="proto-arrows">
-        <button class="proto-arrow" id="navPrev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
-        <button class="proto-arrow" id="navNext"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
-      </div>
-    </div>
+ <div class="proto-modebar">
+ <span>Screen <span class="proto-modebar__id" id="screenId">SF1</span></span>
+ <span class="proto-modebar__pill" id="screenName">Help home</span>
+ <div class="proto-modebar__bar"><div class="proto-modebar__bar__fill" id="progressFill" style="width:25%"></div></div>
+ <div class="proto-arrows">
+ <button class="proto-arrow" id="navPrev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+ <button class="proto-arrow" id="navNext"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
+ </div>
+ </div>
 
-    <div class="browser">
-      <div class="browser__chrome">
-        <span class="browser__dots"><span class="browser__dot"></span><span class="browser__dot"></span><span class="browser__dot"></span></span>
-        <span class="browser__url">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-          <span id="browserUrl">app.gaimcontrol.com/help</span>
-        </span>
-      </div>
-      <div class="browser__viewport" id="viewport"></div>
-    </div>
+ <div class="browser">
+ <div class="browser__chrome">
+ <span class="browser__dots"><span class="browser__dot"></span><span class="browser__dot"></span><span class="browser__dot"></span></span>
+ <span class="browser__url">
+ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+ <span id="browserUrl">app.gaimcontrol.com/help</span>
+ </span>
+ </div>
+ <div class="browser__viewport" id="viewport"></div>
+ </div>
 
-    <div class="proto-context" id="contextPanel">
-      <div class="proto-context__head">Screen context</div>
-      <div id="contextBody"></div>
-    </div>
+ <div class="proto-context" id="contextPanel">
+ <div class="proto-context__head">Screen context</div>
+ <div id="contextBody"></div>
+ </div>
 
-  </main>
+ </main>
 </div>
 
 <script>
 const SCREENS = [
-  { id: 'SF1', name: 'Help home · crisis ladder', kind: 'sf1', url: '/help' },
-  { id: 'SF2', name: 'Helplines · detail', kind: 'sf2', url: '/help/helplines' },
-  { id: 'SF3', name: 'Vulnerability self-report', kind: 'sf3', url: '/help/vulnerability' },
-  { id: 'SF4', name: 'Sponsor templates', kind: 'sf4', url: '/help/sponsor-alert' },
+ { id: 'SF1', name: 'Help home · crisis ladder', kind: 'sf1', url: '/help' },
+ { id: 'SF2', name: 'Helplines · detail', kind: 'sf2', url: '/help/helplines' },
+ { id: 'SF3', name: 'Vulnerability self-report', kind: 'sf3', url: '/help/vulnerability' },
+ { id: 'SF4', name: 'Sponsor templates', kind: 'sf4', url: '/help/sponsor-alert' },
 ];
 
 const CTX = {
-  sf1: '<strong>SF1 Help home.</strong> Always reachable from the persistent crisis button (top-right and sidebar). 5-rung crisis ladder (999 / Samaritans / NHS 111 / GamCare / Anna) plus quick actions. Per <a href="../41-decisions-log.html">SF-01</a> crisis-language classifier (TBD between dedicated model and chat LLM) opens this surface pre-emptively. Per <a href="../41-decisions-log.html">SF-02</a> BSL relay (18000) chip added for non-emergency rungs.',
-  sf2: '<strong>SF2 Helplines · detail.</strong> Six verified UK numbers — 999 · 116 123 (Samaritans) · 111 (NHS) · 0808 8020 133 (GamCare) · 0808 808 4000 (National Debtline) · 0800 138 1111 (StepChange). Each card answers "what is this for, when do I use it?" Per <a href="../41-decisions-log.html">SF-06</a> English-only at MVP — i18n scaffolding built day-one.',
-  sf3: '<strong>SF3 Vulnerability self-report.</strong> FCA Vulnerable Customer driver categorisation (CONC App 1.4): Health · Life event · Resilience · Capability · Coercion. Per <a href="../41-decisions-log.html">SF-04</a> 3-month re-review cadence (Profile §12 also surfaces). Per <a href="../41-decisions-log.html">SF-05</a> coercion flag routes to manual safeguarding queue, separate from financial-vulnerability ops.',
-  sf4: '<strong>SF4 Sponsor templates.</strong> Pre-written messages bypass Anna entirely. Per <a href="../41-decisions-log.html">SF-03</a> SMS is restricted to crisis-only template subset (Twilio cost + copy review). Three channels: email + push + SMS (crisis only). Joanna is the demo sponsor.',
+ sf1: '<strong>SF1 Help home.</strong> Always reachable from the persistent crisis button (top-right and sidebar). 5-rung crisis ladder (999 / Samaritans / NHS 111 / GamCare / Anna) plus quick actions. Per <a href="../41-decisions-log.html">SF-01</a> crisis-language classifier (TBD between dedicated model and chat LLM) opens this surface pre-emptively. Per <a href="../41-decisions-log.html">SF-02</a> BSL relay (18000) chip added for non-emergency rungs.',
+ sf2: '<strong>SF2 Helplines · detail.</strong> Six verified UK numbers. 999 · 116 123 (Samaritans) · 111 (NHS) · 0808 8020 133 (GamCare) · 0808 808 4000 (National Debtline) · 0800 138 1111 (StepChange). Each card answers "what is this for, when do I use it?" Per <a href="../41-decisions-log.html">SF-06</a> English-only at MVP. i18n scaffolding built day-one.',
+ sf3: '<strong>SF3 Vulnerability self-report.</strong> FCA Vulnerable Customer driver categorisation (CONC App 1.4): Health · Life event · Resilience · Capability · Coercion. Per <a href="../41-decisions-log.html">SF-04</a> 3-month re-review cadence (Profile §12 also surfaces). Per <a href="../41-decisions-log.html">SF-05</a> coercion flag routes to manual safeguarding queue, separate from financial-vulnerability ops.',
+ sf4: '<strong>SF4 Sponsor templates.</strong> Pre-written messages bypass Anna entirely. Per <a href="../41-decisions-log.html">SF-03</a> SMS is restricted to crisis-only template subset (Twilio cost + copy review). Three channels: email + push + SMS (crisis only). Joanna is the demo sponsor.',
 };
 
 const APPNAV = () => `
-  <aside class="appnav">
-    <div class="appnav__brand">
-      <span class="appnav__mark"><img src="../assets/gc-mark-mono-light.svg" alt=""></span>
-      <span class="appnav__name">GaimControl</span>
-    </div>
-    <div class="appnav__user">
-      <span class="appnav__avatar">S</span>
-      <div><div class="appnav__user-name">Sam Kennedy</div><div class="appnav__user-sub">Habitual · Day 58</div></div>
-    </div>
-    <nav class="appnav__list">
-      <a class="appnav__item is-disabled"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>Home</a>
-      <a class="appnav__item is-disabled"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Banking</a>
-      <a class="appnav__item is-disabled"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg>Anna</a>
-      <a class="appnav__item is-disabled"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m7 14 4-4 4 4 5-5"/></svg>Activity</a>
-      <a class="appnav__item is-disabled"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>Profile</a>
-    </nav>
-    <div class="appnav__help">
-      <div class="appnav__help-head"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7-4.5-9-9.5C2 7 5 4 8 4c1.7 0 3.2.8 4 2 .8-1.2 2.3-2 4-2 3 0 6 3 5 7.5C19 16.5 12 21 12 21z"/></svg> Help · always on</div>
-      <div style="font-size:11.5px;line-height:1.45;margin-top:4px;color:rgba(255,255,255,0.85)">If you're in immediate danger, ring 999.</div>
-      <button class="gc-crisis-btn" onclick="go(0)"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7-4.5-9-9.5C2 7 5 4 8 4c1.7 0 3.2.8 4 2 .8-1.2 2.3-2 4-2 3 0 6 3 5 7.5C19 16.5 12 21 12 21z"/></svg>Open help home</button>
-    </div>
-  </aside>`;
+ <aside class="appnav">
+ <div class="appnav__brand">
+ <span class="appnav__mark"><img src="../assets/gc-mark-mono-light.svg" alt=""></span>
+ <span class="appnav__name">GaimControl</span>
+ </div>
+ <div class="appnav__user">
+ <span class="appnav__avatar">S</span>
+ <div><div class="appnav__user-name">Sam Kennedy</div><div class="appnav__user-sub">Habitual · Day 58</div></div>
+ </div>
+ <nav class="appnav__list">
+ <a class="appnav__item is-disabled"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>Home</a>
+ <a class="appnav__item is-disabled"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Banking</a>
+ <a class="appnav__item is-disabled"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg>Anna</a>
+ <a class="appnav__item is-disabled"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m7 14 4-4 4 4 5-5"/></svg>Activity</a>
+ <a class="appnav__item is-disabled"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>Profile</a>
+ </nav>
+ <div class="appnav__help">
+ <div class="appnav__help-head"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7-4.5-9-9.5C2 7 5 4 8 4c1.7 0 3.2.8 4 2.8-1.2 2.3-2 4-2 3 0 6 3 5 7.5C19 16.5 12 21 12 21z"/></svg> Help · always on</div>
+ <div style="font-size:11.5px;line-height:1.45;margin-top:4px;color:rgba(255,255,255,0.85)">If you're in immediate danger, ring 999.</div>
+ <button class="gc-crisis-btn" onclick="go(0)"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7-4.5-9-9.5C2 7 5 4 8 4c1.7 0 3.2.8 4 2.8-1.2 2.3-2 4-2 3 0 6 3 5 7.5C19 16.5 12 21 12 21z"/></svg>Open help home</button>
+ </div>
+ </aside>`;
 
 const ANNA = (title, body) => `
-  <div class="gc-card gc-card--anna">
-    <span class="anna-av"><img src="../assets/gc-mark-mono-light.svg" alt=""></span>
-    <div><div class="anna-name">Anna</div>${title ? `<strong>${title}</strong>` : ''}<p>${body}</p></div>
-  </div>`;
+ <div class="gc-card gc-card--anna">
+ <span class="anna-av"><img src="../assets/gc-mark-mono-light.svg" alt=""></span>
+ <div><div class="anna-name">Anna</div>${title ? `<strong>${title}</strong>` : ''}<p>${body}</p></div>
+ </div>`;
 
 const PAGE = (title, sub, content) => `
-  <div class="screen" style="display:contents">
-    ${APPNAV()}
-    <div class="main">
-      <div class="main__head"><div><h1 class="main__title">${title}</h1>${sub ? `<p class="main__sub">${sub}</p>` : ''}</div></div>
-      ${content}
-    </div>
-  </div>`;
+ <div class="screen" style="display:contents">
+ ${APPNAV()}
+ <div class="main">
+ <div class="main__head"><div><h1 class="main__title">${title}</h1>${sub ? `<p class="main__sub">${sub}</p>` : ''}</div></div>
+ ${content}
+ </div>
+ </div>`;
 
 const builders = {
-  sf1: () => PAGE('Help', 'You opened this. That counts. Pick what fits — nothing here costs money or affects your loan.', `
-    <div class="row-2">
-      <div class="stack">
-        <div class="sf-hero">
-          <span class="sf-hero__tag"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7-4.5-9-9.5C2 7 5 4 8 4c1.7 0 3.2.8 4 2 .8-1.2 2.3-2 4-2 3 0 6 3 5 7.5C19 16.5 12 21 12 21z"/></svg> You opened Help</span>
-          <h2>We're here. Pick what fits.</h2>
-          <p>Nothing here costs money or affects your loan. <strong>If you're in immediate danger, ring 999.</strong></p>
-        </div>
-        <div class="sf-quick-grid">
-          <a href="tel:999" class="sf-quick sf-quick--999"><span class="sf-quick__num">999</span><span class="sf-quick__l">Police · ambulance · fire</span><span class="sf-quick__d">Immediate physical danger</span></a>
-          <a href="tel:116123" class="sf-quick sf-quick--samaritans"><span class="sf-quick__num">116 123</span><span class="sf-quick__l">Samaritans · 24/7 free</span><span class="sf-quick__d">When you can't see how to keep going</span></a>
-          <a href="tel:111" class="sf-quick"><span class="sf-quick__num">111</span><span class="sf-quick__l">NHS · urgent non-emergency</span><span class="sf-quick__d">Mental-health crisis · press 2</span></a>
-        </div>
-        <span class="sf-bsl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg> BSL relay · dial 18000 first (decision SF-02)</span>
-        <div class="gc-card">
-          <h3 style="font-size:16px;font-weight:700;margin:0 0 4px">The crisis ladder</h3>
-          <p style="font-size:12.5px;color:var(--text-secondary);margin:0 0 4px">Anchored from severity 5 down to a 5-minute conversation. Each rung is one tap or one number.</p>
-          <div class="sf-rung sf-rung--999"><span class="sf-rung__n">5</span><div><div class="sf-rung__t">Immediate danger</div><div class="sf-rung__s">Suicide attempt · violence · medical emergency.</div></div><a class="sf-rung__cta sf-rung__cta--danger" href="tel:999">Call 999</a></div>
-          <div class="sf-rung"><span class="sf-rung__n">4</span><div><div class="sf-rung__t">Suicidal thoughts · unbearable distress</div><div class="sf-rung__s">Samaritans · free · 24/7 · anonymous. BSL via 18000 then 116 123.</div></div><a class="sf-rung__cta" href="tel:116123">116 123</a></div>
-          <div class="sf-rung"><span class="sf-rung__n">3</span><div><div class="sf-rung__t">Mental-health crisis (not life-threatening)</div><div class="sf-rung__s">NHS 111 routes to your local crisis line · press 2 for MH.</div></div><a class="sf-rung__cta" href="tel:111">111</a></div>
-          <div class="sf-rung"><span class="sf-rung__n">2</span><div><div class="sf-rung__t">Gambling urge · loss spiral</div><div class="sf-rung__s">GamCare · UK national gambling helpline · trained advisers.</div></div><a class="sf-rung__cta" href="tel:08088020133">0808 802 0133</a></div>
-          <div class="sf-rung"><span class="sf-rung__n">1</span><div><div class="sf-rung__t">5-minute conversation</div><div class="sf-rung__s">Anna · sponsor never sees this thread. Crisis-language model opens this rung automatically per SF-01.</div></div><button class="sf-rung__cta sf-rung__cta--anna">Open Anna</button></div>
-        </div>
-      </div>
-      <div class="stack">
-        <div class="gc-card">
-          <h3 style="font-size:15px;font-weight:700;margin:0 0 4px">Other things you can do here</h3>
-          <div class="sf-opt" onclick="go(2)"><span class="sf-opt__ic" style="background:var(--w-30);color:var(--w-80)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span><div><div class="sf-opt__t">Tell us about a vulnerability</div><div class="sf-opt__s">FCA flag · changes how we behave with you.</div></div><span class="sf-opt__chev">→</span></div>
-          <div class="sf-opt" onclick="go(3)"><span class="sf-opt__ic" style="background:var(--s-20);color:var(--s-80)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 12h6"/></svg></span><div><div class="sf-opt__t">Send my sponsor a message</div><div class="sf-opt__s">Pre-written templates · bypasses Anna.</div></div><span class="sf-opt__chev">→</span></div>
-          <div class="sf-opt"><span class="sf-opt__ic" style="background:var(--p-40);color:var(--p-95)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect width="14" height="9" x="5" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span><div><div class="sf-opt__t">Freeze card · 24h cool-off</div><div class="sf-opt__s">Pause spend · sponsor notified.</div></div><span class="sf-opt__chev">→</span></div>
-          <div class="sf-opt"><span class="sf-opt__ic" style="background:var(--t-20);color:var(--t-80)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 2"/></svg></span><div><div class="sf-opt__t">Request a Relapse Hold</div><div class="sf-opt__s">7-day pause · §10 RP4 · Anna 1:1 first.</div></div><span class="sf-opt__chev">→</span></div>
-        </div>
-        ${ANNA("You opened this. That counts.", "We can sit on this page together for a minute. Or pick a number. Crisis-language classifier on standby — if you write something I should hear, I'll open this surface even before you tap.")}
-        <div class="sf-decision">decisions · <a href="../41-decisions-log.html">SF-01</a> classifier (TBD) · <a href="../41-decisions-log.html">SF-02</a> BSL relay added</div>
-      </div>
-    </div>`),
+ sf1: () => PAGE('Help', 'You opened this. That counts. Pick what fits. Nothing here costs money or affects your loan.', `
+ <div class="row-2">
+ <div class="stack">
+ <div class="sf-hero">
+ <span class="sf-hero__tag"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7-4.5-9-9.5C2 7 5 4 8 4c1.7 0 3.2.8 4 2.8-1.2 2.3-2 4-2 3 0 6 3 5 7.5C19 16.5 12 21 12 21z"/></svg> You opened Help</span>
+ <h2>We're here. Pick what fits.</h2>
+ <p>Nothing here costs money or affects your loan. <strong>If you're in immediate danger, ring 999.</strong></p>
+ </div>
+ <div class="sf-quick-grid">
+ <a href="tel:999" class="sf-quick sf-quick--999"><span class="sf-quick__num">999</span><span class="sf-quick__l">Police · ambulance · fire</span><span class="sf-quick__d">Immediate physical danger</span></a>
+ <a href="tel:116123" class="sf-quick sf-quick--samaritans"><span class="sf-quick__num">116 123</span><span class="sf-quick__l">Samaritans · 24/7 free</span><span class="sf-quick__d">When you can't see how to keep going</span></a>
+ <a href="tel:111" class="sf-quick"><span class="sf-quick__num">111</span><span class="sf-quick__l">NHS · urgent non-emergency</span><span class="sf-quick__d">Mental-health crisis · press 2</span></a>
+ </div>
+ <span class="sf-bsl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg> BSL relay · dial 18000 first (decision SF-02)</span>
+ <div class="gc-card">
+ <h3 style="font-size:16px;font-weight:700;margin:0 0 4px">The crisis ladder</h3>
+ <p style="font-size:12.5px;color:var(--text-secondary);margin:0 0 4px">Anchored from severity 5 down to a 5-minute conversation. Each rung is one tap or one number.</p>
+ <div class="sf-rung sf-rung--999"><span class="sf-rung__n">5</span><div><div class="sf-rung__t">Immediate danger</div><div class="sf-rung__s">Suicide attempt · violence · medical emergency.</div></div><a class="sf-rung__cta sf-rung__cta--danger" href="tel:999">Call 999</a></div>
+ <div class="sf-rung"><span class="sf-rung__n">4</span><div><div class="sf-rung__t">Suicidal thoughts · unbearable distress</div><div class="sf-rung__s">Samaritans · free · 24/7 · anonymous. BSL via 18000 then 116 123.</div></div><a class="sf-rung__cta" href="tel:116123">116 123</a></div>
+ <div class="sf-rung"><span class="sf-rung__n">3</span><div><div class="sf-rung__t">Mental-health crisis (not life-threatening)</div><div class="sf-rung__s">NHS 111 routes to your local crisis line · press 2 for MH.</div></div><a class="sf-rung__cta" href="tel:111">111</a></div>
+ <div class="sf-rung"><span class="sf-rung__n">2</span><div><div class="sf-rung__t">Gambling urge · loss spiral</div><div class="sf-rung__s">GamCare · UK national gambling helpline · trained advisers.</div></div><a class="sf-rung__cta" href="tel:08088020133">0808 802 0133</a></div>
+ <div class="sf-rung"><span class="sf-rung__n">1</span><div><div class="sf-rung__t">5-minute conversation</div><div class="sf-rung__s">Anna · sponsor never sees this thread. Crisis-language model opens this rung automatically per SF-01.</div></div><button class="sf-rung__cta sf-rung__cta--anna">Open Anna</button></div>
+ </div>
+ </div>
+ <div class="stack">
+ <div class="gc-card">
+ <h3 style="font-size:15px;font-weight:700;margin:0 0 4px">Other things you can do here</h3>
+ <div class="sf-opt" onclick="go(2)"><span class="sf-opt__ic" style="background:var(--w-30);color:var(--w-80)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span><div><div class="sf-opt__t">Tell us about a vulnerability</div><div class="sf-opt__s">FCA flag · changes how we behave with you.</div></div><span class="sf-opt__chev">→</span></div>
+ <div class="sf-opt" onclick="go(3)"><span class="sf-opt__ic" style="background:var(--s-20);color:var(--s-80)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 12h6"/></svg></span><div><div class="sf-opt__t">Send my sponsor a message</div><div class="sf-opt__s">Pre-written templates · bypasses Anna.</div></div><span class="sf-opt__chev">→</span></div>
+ <div class="sf-opt"><span class="sf-opt__ic" style="background:var(--p-40);color:var(--p-95)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect width="14" height="9" x="5" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span><div><div class="sf-opt__t">Freeze card · 24h cool-off</div><div class="sf-opt__s">Pause spend · sponsor notified.</div></div><span class="sf-opt__chev">→</span></div>
+ <div class="sf-opt"><span class="sf-opt__ic" style="background:var(--t-20);color:var(--t-80)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 2"/></svg></span><div><div class="sf-opt__t">Request a Relapse Hold</div><div class="sf-opt__s">7-day pause · §10 RP4 · Anna 1:1 first.</div></div><span class="sf-opt__chev">→</span></div>
+ </div>
+ ${ANNA("You opened this. That counts.", "We can sit on this page together for a minute. Or pick a number. Crisis-language classifier on standby. If you write something I should hear, I'll open this surface even before you tap.")}
+ <div class="sf-decision">decisions · <a href="../41-decisions-log.html">SF-01</a> classifier (TBD) · <a href="../41-decisions-log.html">SF-02</a> BSL relay added</div>
+ </div>
+ </div>`),
 
-  sf2: () => PAGE('Helplines', 'Six verified UK numbers · what each is for, when to use it. Verified May 2026.', `
-    <div class="row-2">
-      <div class="stack">
-        <div class="sf-line">
-          <div class="sf-line__head"><div class="sf-line__num">999</div><span class="sf-line__tag">Emergency</span></div>
-          <h3 class="sf-line__t">Police · ambulance · fire</h3>
-          <p class="sf-line__d">Immediate physical danger to you or someone else. Free from any phone, including locked phones and phones with no SIM.</p>
-          <div style="display:flex;gap:10px"><a href="tel:999" class="gc-btn gc-btn--danger gc-btn--lg">Call 999</a><a href="sms:999" class="gc-btn gc-btn--ghost gc-btn--lg">SMS 999 (registered phones)</a></div>
-        </div>
-        <div class="sf-line">
-          <div class="sf-line__head"><div class="sf-line__num">116 123</div><span class="sf-line__tag">Samaritans</span></div>
-          <h3 class="sf-line__t">When you can't see how to keep going</h3>
-          <p class="sf-line__d">Free · 24 hours · anonymous. They listen — they don't fix. <strong>BSL relay:</strong> dial 18000 then 116 123 (per <a href="../41-decisions-log.html" style="color:var(--accent)">SF-02</a>). Welsh language: same number, ask for Welsh-speaking volunteer.</p>
-          <div style="display:flex;gap:10px"><a href="tel:116123" class="gc-btn gc-btn--primary gc-btn--lg">Call 116 123</a><a href="mailto:jo@samaritans.org" class="gc-btn gc-btn--ghost gc-btn--lg">Email · jo@samaritans.org</a></div>
-        </div>
-        <div class="sf-line">
-          <div class="sf-line__head"><div class="sf-line__num">111</div><span class="sf-line__tag">NHS · urgent</span></div>
-          <h3 class="sf-line__t">Mental-health crisis · not immediately life-threatening</h3>
-          <p class="sf-line__d">Routes to your local NHS mental-health crisis line. Press 2 for the mental-health route. BSL relay: 18000 then 111.</p>
-          <a href="tel:111" class="gc-btn gc-btn--ghost gc-btn--lg" style="align-self:flex-start">Call 111</a>
-        </div>
-      </div>
-      <div class="stack">
-        <div class="sf-line">
-          <div class="sf-line__head"><div class="sf-line__num sf-line__num--sm">0808 8020 133</div><span class="sf-line__tag">GamCare</span></div>
-          <h3 class="sf-line__t">UK national gambling helpline</h3>
-          <p class="sf-line__d">Trained gambling-recovery advisers. Free · confidential · 24/7. Live chat 8am–midnight at gamcare.org.uk. Also runs the National Gambling Treatment Service referral.</p>
-          <a href="tel:08088020133" class="gc-btn gc-btn--ghost">Call</a>
-        </div>
-        <div class="sf-line">
-          <div class="sf-line__head"><div class="sf-line__num sf-line__num--sm">0808 808 4000</div><span class="sf-line__tag">Debt</span></div>
-          <h3 class="sf-line__t">National Debtline · money crisis</h3>
-          <p class="sf-line__d">FCA-regulated · funded by Money &amp; Pensions Service. 9am–8pm weekdays · 9:30–1pm Sat. Use this if money is the proximate crisis driver.</p>
-          <a href="tel:08088084000" class="gc-btn gc-btn--ghost">Call</a>
-        </div>
-        <div class="sf-line">
-          <div class="sf-line__head"><div class="sf-line__num sf-line__num--sm">0800 138 1111</div><span class="sf-line__tag">StepChange</span></div>
-          <h3 class="sf-line__t">Debt-management plans</h3>
-          <p class="sf-line__d">Charity · FCA-regulated. Useful for a second opinion on debt structure. 8am–8pm weekdays.</p>
-          <a href="tel:08001381111" class="gc-btn gc-btn--ghost">Call</a>
-        </div>
-        <div class="sf-decision">decision · <a href="../41-decisions-log.html">SF-06</a> English-only copy at MVP; i18n scaffolding built day one; Welsh + Polish next</div>
-      </div>
-    </div>`),
+ sf2: () => PAGE('Helplines', 'Six verified UK numbers · what each is for, when to use it. Verified May 2026.', `
+ <div class="row-2">
+ <div class="stack">
+ <div class="sf-line">
+ <div class="sf-line__head"><div class="sf-line__num">999</div><span class="sf-line__tag">Emergency</span></div>
+ <h3 class="sf-line__t">Police · ambulance · fire</h3>
+ <p class="sf-line__d">Immediate physical danger to you or someone else. Free from any phone, including locked phones and phones with no SIM.</p>
+ <div style="display:flex;gap:10px"><a href="tel:999" class="gc-btn gc-btn--danger gc-btn--lg">Call 999</a><a href="sms:999" class="gc-btn gc-btn--ghost gc-btn--lg">SMS 999 (registered phones)</a></div>
+ </div>
+ <div class="sf-line">
+ <div class="sf-line__head"><div class="sf-line__num">116 123</div><span class="sf-line__tag">Samaritans</span></div>
+ <h3 class="sf-line__t">When you can't see how to keep going</h3>
+ <p class="sf-line__d">Free · 24 hours · anonymous. They listen. They don't fix. <strong>BSL relay:</strong> dial 18000 then 116 123 (per <a href="../41-decisions-log.html" style="color:var(--accent)">SF-02</a>). Welsh language: same number, ask for Welsh-speaking volunteer.</p>
+ <div style="display:flex;gap:10px"><a href="tel:116123" class="gc-btn gc-btn--primary gc-btn--lg">Call 116 123</a><a href="mailto:jo@samaritans.org" class="gc-btn gc-btn--ghost gc-btn--lg">Email · jo@samaritans.org</a></div>
+ </div>
+ <div class="sf-line">
+ <div class="sf-line__head"><div class="sf-line__num">111</div><span class="sf-line__tag">NHS · urgent</span></div>
+ <h3 class="sf-line__t">Mental-health crisis · not immediately life-threatening</h3>
+ <p class="sf-line__d">Routes to your local NHS mental-health crisis line. Press 2 for the mental-health route. BSL relay: 18000 then 111.</p>
+ <a href="tel:111" class="gc-btn gc-btn--ghost gc-btn--lg" style="align-self:flex-start">Call 111</a>
+ </div>
+ </div>
+ <div class="stack">
+ <div class="sf-line">
+ <div class="sf-line__head"><div class="sf-line__num sf-line__num--sm">0808 8020 133</div><span class="sf-line__tag">GamCare</span></div>
+ <h3 class="sf-line__t">UK national gambling helpline</h3>
+ <p class="sf-line__d">Trained gambling-recovery advisers. Free · confidential · 24/7. Live chat 8am–midnight at gamcare.org.uk. Also runs the National Gambling Treatment Service referral.</p>
+ <a href="tel:08088020133" class="gc-btn gc-btn--ghost">Call</a>
+ </div>
+ <div class="sf-line">
+ <div class="sf-line__head"><div class="sf-line__num sf-line__num--sm">0808 808 4000</div><span class="sf-line__tag">Debt</span></div>
+ <h3 class="sf-line__t">National Debtline · money crisis</h3>
+ <p class="sf-line__d">FCA-regulated · funded by Money &amp; Pensions Service. 9am–8pm weekdays · 9:30–1pm Sat. Use this if money is the proximate crisis driver.</p>
+ <a href="tel:08088084000" class="gc-btn gc-btn--ghost">Call</a>
+ </div>
+ <div class="sf-line">
+ <div class="sf-line__head"><div class="sf-line__num sf-line__num--sm">0800 138 1111</div><span class="sf-line__tag">StepChange</span></div>
+ <h3 class="sf-line__t">Debt-management plans</h3>
+ <p class="sf-line__d">Charity · FCA-regulated. Useful for a second opinion on debt structure. 8am–8pm weekdays.</p>
+ <a href="tel:08001381111" class="gc-btn gc-btn--ghost">Call</a>
+ </div>
+ <div class="sf-decision">decision · <a href="../41-decisions-log.html">SF-06</a> English-only copy at MVP; i18n scaffolding built day one; Welsh + Polish next</div>
+ </div>
+ </div>`),
 
-  sf3: () => PAGE('Vulnerability self-report', 'FCA Vulnerable Customer · CONC App 1. Doesn\'t change the price of anything · changes how we behave with you.', `
-    <div class="row-2">
-      <div class="stack">
-        <div class="gc-card gc-card--alert" style="border-left-color: var(--w-60)">
-          <span style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;color:var(--text-muted);align-self:flex-start">FCA Vulnerable Customer · CONC App 1.4</span>
-          <h2 style="font-size:26px;font-weight:800;letter-spacing:-0.02em;line-height:1.15;margin:6px 0 0">Tell us about anything we should know.</h2>
-          <p style="font-size:14px;color:var(--text-secondary);line-height:1.55;margin:0;max-width:60ch">Each option maps to a specific FCA driver of vulnerability. You'll see what changes after you save.</p>
-        </div>
-        <div class="gc-card">
-          <h3 style="font-size:16px;font-weight:700;margin:0 0 4px">Pick what fits — multiple are OK</h3>
-          <label class="sf-vuln" onclick="toggleCheck(this)">
-            <span class="gc-checkbox"></span>
-            <div><div class="sf-vuln__t">Health</div><div class="sf-vuln__s">Long-term physical condition · disability · current mental-health treatment · learning differences.</div></div>
-            <span class="sf-vuln__cat">FCA · health</span>
-          </label>
-          <label class="sf-vuln" onclick="toggleCheck(this)">
-            <span class="gc-checkbox"></span>
-            <div><div class="sf-vuln__t">Life event</div><div class="sf-vuln__s">Bereavement · separation · job loss · being a carer · pregnancy or new baby · recently incarcerated.</div></div>
-            <span class="sf-vuln__cat">FCA · life event</span>
-          </label>
-          <label class="sf-vuln" onclick="toggleCheck(this)">
-            <span class="gc-checkbox is-on"></span>
-            <div><div class="sf-vuln__t">Resilience</div><div class="sf-vuln__s">No savings · close to overdraft · housing precarious · benefits-dependent. Pre-checked from onboarding answers — uncheck if wrong.</div></div>
-            <span class="sf-vuln__cat">FCA · resilience</span>
-          </label>
-          <label class="sf-vuln" onclick="toggleCheck(this)">
-            <span class="gc-checkbox"></span>
-            <div><div class="sf-vuln__t">Capability</div><div class="sf-vuln__s">English not first language · low confidence with money · reading or writing difficulty · digital access patchy.</div></div>
-            <span class="sf-vuln__cat">FCA · capability</span>
-          </label>
-          <label class="sf-vuln" onclick="toggleCheck(this)">
-            <span class="gc-checkbox"></span>
-            <div><div class="sf-vuln__t">Coercion or pressure</div><div class="sf-vuln__s">Someone else making financial decisions for you · domestic abuse · controlling partner. <strong>This routes to safeguarding ops, not financial-vulnerability ops (per <a href="../41-decisions-log.html" style="color:var(--accent)">SF-05</a>)</strong>.</div></div>
-            <span class="sf-vuln__cat">Safeguarding</span>
-          </label>
-        </div>
-        <div class="gc-card">
-          <h3 style="font-size:15px;font-weight:700;margin:0 0 4px">Anything else? (optional · free text)</h3>
-          <p style="font-size:12.5px;color:var(--text-secondary);margin:0 0 4px">We read this — it isn't piped to a model. Read by humans on the vulnerability ops team only.</p>
-          <textarea class="sf-textarea" placeholder="A few lines. Tell us what we'd want to know if we cared about you, because we do."></textarea>
-        </div>
-      </div>
-      <div class="stack">
-        <div class="gc-card">
-          <h3 style="font-size:15px;font-weight:700;margin:0 0 4px">What changes when you save</h3>
-          <div class="sf-effect"><span class="sf-effect__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="sf-effect__t">Anna gets the categories · never the words you wrote</div><div class="sf-effect__s">Plainer language · longer reply windows · gentler nudges.</div></div></div>
-          <div class="sf-effect"><span class="sf-effect__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="sf-effect__t">Repayment grace · Hold allowance extendable</div><div class="sf-effect__s">Default 1/yr can be raised case-by-case.</div></div></div>
-          <div class="sf-effect"><span class="sf-effect__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="sf-effect__t">Sponsor visibility unchanged by default</div><div class="sf-effect__s">Vulnerability is between you and us — share only if you choose.</div></div></div>
-          <div class="sf-effect"><span class="sf-effect__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="sf-effect__t">Pricing unaffected · CONC App 1.4 + Consumer Duty</div><div class="sf-effect__s">Vulnerability flags never increase APR.</div></div></div>
-          <div class="sf-effect"><span class="sf-effect__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="sf-effect__t">Re-review every 3 months</div><div class="sf-effect__s">Per <a href="../41-decisions-log.html" style="color:var(--accent);text-decoration:none">SF-04</a>. Profile §12 shows next-review date · prompt fires in chat.</div></div></div>
-        </div>
-        ${ANNA("Vulnerability isn't a label.", "It's a description of where you are right now. The FCA write the rule in technical language; we read it as: tell us what we'd want to know if we cared about you, because we do.")}
-        <div style="display:flex;gap:8px">
-          <button class="gc-btn gc-btn--ghost gc-btn--full" onclick="prev()">Cancel</button>
-          <button class="gc-btn gc-btn--primary gc-btn--full" onclick="go(0)">Save · take effect now</button>
-        </div>
-        <div class="sf-decision">decisions · <a href="../41-decisions-log.html">SF-04</a> 3-month re-review · <a href="../41-decisions-log.html">SF-05</a> coercion → safeguarding queue</div>
-      </div>
-    </div>`),
+ sf3: () => PAGE('Vulnerability self-report', 'FCA Vulnerable Customer · CONC App 1. Doesn\'t change the price of anything · changes how we behave with you.', `
+ <div class="row-2">
+ <div class="stack">
+ <div class="gc-card gc-card--alert" style="border-left-color: var(--w-60)">
+ <span style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;color:var(--text-muted);align-self:flex-start">FCA Vulnerable Customer · CONC App 1.4</span>
+ <h2 style="font-size:26px;font-weight:800;letter-spacing:-0.02em;line-height:1.15;margin:6px 0 0">Tell us about anything we should know.</h2>
+ <p style="font-size:14px;color:var(--text-secondary);line-height:1.55;margin:0;max-width:60ch">Each option maps to a specific FCA driver of vulnerability. You'll see what changes after you save.</p>
+ </div>
+ <div class="gc-card">
+ <h3 style="font-size:16px;font-weight:700;margin:0 0 4px">Pick what fits. Multiple are OK</h3>
+ <label class="sf-vuln" onclick="toggleCheck(this)">
+ <span class="gc-checkbox"></span>
+ <div><div class="sf-vuln__t">Health</div><div class="sf-vuln__s">Long-term physical condition · disability · current mental-health treatment · learning differences.</div></div>
+ <span class="sf-vuln__cat">FCA · health</span>
+ </label>
+ <label class="sf-vuln" onclick="toggleCheck(this)">
+ <span class="gc-checkbox"></span>
+ <div><div class="sf-vuln__t">Life event</div><div class="sf-vuln__s">Bereavement · separation · job loss · being a carer · pregnancy or new baby · recently incarcerated.</div></div>
+ <span class="sf-vuln__cat">FCA · life event</span>
+ </label>
+ <label class="sf-vuln" onclick="toggleCheck(this)">
+ <span class="gc-checkbox is-on"></span>
+ <div><div class="sf-vuln__t">Resilience</div><div class="sf-vuln__s">No savings · close to overdraft · housing precarious · benefits-dependent. Pre-checked from onboarding answers. Uncheck if wrong.</div></div>
+ <span class="sf-vuln__cat">FCA · resilience</span>
+ </label>
+ <label class="sf-vuln" onclick="toggleCheck(this)">
+ <span class="gc-checkbox"></span>
+ <div><div class="sf-vuln__t">Capability</div><div class="sf-vuln__s">English not first language · low confidence with money · reading or writing difficulty · digital access patchy.</div></div>
+ <span class="sf-vuln__cat">FCA · capability</span>
+ </label>
+ <label class="sf-vuln" onclick="toggleCheck(this)">
+ <span class="gc-checkbox"></span>
+ <div><div class="sf-vuln__t">Coercion or pressure</div><div class="sf-vuln__s">Someone else making financial decisions for you · domestic abuse · controlling partner. <strong>This routes to safeguarding ops, not financial-vulnerability ops (per <a href="../41-decisions-log.html" style="color:var(--accent)">SF-05</a>)</strong>.</div></div>
+ <span class="sf-vuln__cat">Safeguarding</span>
+ </label>
+ </div>
+ <div class="gc-card">
+ <h3 style="font-size:15px;font-weight:700;margin:0 0 4px">Anything else? (optional · free text)</h3>
+ <p style="font-size:12.5px;color:var(--text-secondary);margin:0 0 4px">We read this. It isn't piped to a model. Read by humans on the vulnerability ops team only.</p>
+ <textarea class="sf-textarea" placeholder="A few lines. Tell us what we'd want to know if we cared about you, because we do."></textarea>
+ </div>
+ </div>
+ <div class="stack">
+ <div class="gc-card">
+ <h3 style="font-size:15px;font-weight:700;margin:0 0 4px">What changes when you save</h3>
+ <div class="sf-effect"><span class="sf-effect__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="sf-effect__t">Anna gets the categories · never the words you wrote</div><div class="sf-effect__s">Plainer language · longer reply windows · gentler nudges.</div></div></div>
+ <div class="sf-effect"><span class="sf-effect__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="sf-effect__t">Repayment grace · Hold allowance extendable</div><div class="sf-effect__s">Default 1/yr can be raised case-by-case.</div></div></div>
+ <div class="sf-effect"><span class="sf-effect__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="sf-effect__t">Sponsor visibility unchanged by default</div><div class="sf-effect__s">Vulnerability is between you and us. Share only if you choose.</div></div></div>
+ <div class="sf-effect"><span class="sf-effect__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="sf-effect__t">Pricing unaffected · CONC App 1.4 + Consumer Duty</div><div class="sf-effect__s">Vulnerability flags never increase APR.</div></div></div>
+ <div class="sf-effect"><span class="sf-effect__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="sf-effect__t">Re-review every 3 months</div><div class="sf-effect__s">Per <a href="../41-decisions-log.html" style="color:var(--accent);text-decoration:none">SF-04</a>. Profile §12 shows next-review date · prompt fires in chat.</div></div></div>
+ </div>
+ ${ANNA("Vulnerability isn't a label.", "It's a description of where you are right now. The FCA write the rule in technical language; we read it as: tell us what we'd want to know if we cared about you, because we do.")}
+ <div style="display:flex;gap:8px">
+ <button class="gc-btn gc-btn--ghost gc-btn--full" onclick="prev()">Cancel</button>
+ <button class="gc-btn gc-btn--primary gc-btn--full" onclick="go(0)">Save · take effect now</button>
+ </div>
+ <div class="sf-decision">decisions · <a href="../41-decisions-log.html">SF-04</a> 3-month re-review · <a href="../41-decisions-log.html">SF-05</a> coercion → safeguarding queue</div>
+ </div>
+ </div>`),
 
-  sf4: () => PAGE('Send Joanna a message', 'Pre-written templates · arrives as email + push (+ SMS for crisis only). Bypasses Anna entirely.', `
-    <div class="row-2">
-      <div class="stack">
-        <div class="gc-card">
-          <div class="sf-sponsor-head">
-            <span class="sf-sponsor-head__av">JM</span>
-            <div>
-              <span class="sf-sponsor-head__tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 4.5 6v6c0 5 3.5 9 7.5 10 4-1 7.5-5 7.5-10V6Z"/></svg> Sponsor · Joanna Murray</span>
-              <h2 class="sf-sponsor-head__name">Send Joanna a message</h2>
-            </div>
-          </div>
-          <p style="font-size:13.5px;color:var(--text-secondary);line-height:1.55;margin:0">Joanna won't see Anna content or transactional detail by default — these templates exist because writing is hard when you're struggling. Pick one, edit if you want, send.</p>
-        </div>
-        <div class="gc-card">
-          <h3 style="font-size:16px;font-weight:700;margin:0">Templates</h3>
-          <div class="sf-tmpl-grid">
-            <button class="sf-tmpl" onclick="pickTmpl(this)"><div class="sf-tmpl__head"><span class="sf-tmpl__icon">👋</span><div class="sf-tmpl__t">"Just checking in"</div></div><div class="sf-tmpl__msg">"Hi Joanna · I'm OK, just wanted you to know I'm here."</div></button>
-            <button class="sf-tmpl is-on" onclick="pickTmpl(this)"><div class="sf-tmpl__head"><span class="sf-tmpl__icon">🌧️</span><div class="sf-tmpl__t">"I'm struggling tonight"</div></div><div class="sf-tmpl__msg">"Hi Joanna · having a hard evening. Not in trouble · a text would help."</div></button>
-            <button class="sf-tmpl" onclick="pickTmpl(this)"><div class="sf-tmpl__head"><span class="sf-tmpl__icon">⏸️</span><div class="sf-tmpl__t">"I need a 24h pause"</div></div><div class="sf-tmpl__msg">"Hi Joanna · putting card on freeze · system will email you anyway."</div></button>
-            <button class="sf-tmpl" onclick="pickTmpl(this)"><div class="sf-tmpl__head"><span class="sf-tmpl__icon">📞</span><div class="sf-tmpl__t">"Can you call me?"</div></div><div class="sf-tmpl__msg">"Hi Joanna · could we talk on the phone? Not urgent · better hearing your voice."</div></button>
-            <button class="sf-tmpl" onclick="pickTmpl(this)"><div class="sf-tmpl__head"><span class="sf-tmpl__icon">🔕</span><div class="sf-tmpl__t">"Don't worry · I'm fine"</div></div><div class="sf-tmpl__msg">"Hi Joanna · GC sent you a digest alert · I'm fine · slip caught at the card."</div></button>
-            <button class="sf-tmpl" onclick="pickTmpl(this)"><div class="sf-tmpl__head"><span class="sf-tmpl__icon">✏️</span><div class="sf-tmpl__t">Write my own</div></div><div class="sf-tmpl__msg">Free-text · sent the same way as a template.</div></button>
-          </div>
-        </div>
-        <div class="gc-card">
-          <h3 style="font-size:15px;font-weight:700;margin:0 0 4px">Preview · "I'm struggling tonight"</h3>
-          <div style="background:var(--bg-base);border:1px solid var(--border);border-radius:11px;padding:14px 16px;font-size:13.5px;line-height:1.6;font-style:italic;color:var(--text-primary)">"Hi Joanna · having a hard evening. Not in trouble · a text would help."</div>
-          <textarea class="sf-textarea" style="min-height:60px" placeholder="Edit before sending (optional) · keep it short. The shorter, the more likely Joanna will reply within the hour.">Hi Joanna · having a hard evening. Not in trouble · a text would help.</textarea>
-        </div>
-      </div>
-      <div class="stack">
-        <div class="gc-card">
-          <h3 style="font-size:15px;font-weight:700;margin:0 0 4px">Three channels at once</h3>
-          <p style="font-size:12px;color:var(--text-secondary);margin:0 0 4px">Per <a href="../41-decisions-log.html" style="color:var(--accent);text-decoration:none">SF-03</a>, SMS only fires for crisis-level templates · Twilio cost + copy-review trade-off.</p>
-          <div class="sf-ch"><span class="sf-ch__ic" style="background:var(--p-40);color:var(--p-95)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-10 5L2 7"/></svg></span><div><div class="sf-ch__t">Email</div><div class="sf-ch__s">joanna.m@hotmail.co.uk · ~30s</div></div><span class="sf-ch__time">~30s</span></div>
-          <div class="sf-ch"><span class="sf-ch__ic" style="background:var(--s-20);color:var(--s-80)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect width="14" height="20" x="5" y="2" rx="2"/><path d="M12 18v.01"/></svg></span><div><div class="sf-ch__t">Push · Sponsor app</div><div class="sf-ch__s">iPhone 13 · last seen 22:01</div></div><span class="sf-ch__time">~5s</span></div>
-          <div class="sf-ch"><span class="sf-ch__ic" style="background:var(--w-30);color:var(--w-80)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span><div><div class="sf-ch__t">SMS · 07XXX XXX XXX</div><div class="sf-ch__s">Crisis-level only · this template qualifies (SF-03)</div></div><span class="sf-ch__time">~10s</span></div>
-        </div>
-        <div class="gc-card">
-          <h3 style="font-size:14px;font-weight:700;margin:0">What Joanna won't see</h3>
-          <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:6px;font-size:12.5px;color:var(--text-secondary);line-height:1.5">
-            <li>· transactions, MCC blocks, declined cards</li>
-            <li>· Anna chat content (sponsor-blind per AN-05)</li>
-            <li>· vulnerability flags you've set</li>
-            <li>· your location · device · IP</li>
-          </ul>
-        </div>
-        <div style="display:flex;gap:8px">
-          <button class="gc-btn gc-btn--ghost gc-btn--full" onclick="prev()">Cancel</button>
-          <button class="gc-btn gc-btn--primary gc-btn--full">Send to Joanna</button>
-        </div>
-        ${ANNA("Asking for help is the loudest signal of recovery there is.", "She'll get it on three channels. Even if she can't reply right away, you'll have done the hardest thing.")}
-        <div class="sf-decision">decision · <a href="../41-decisions-log.html">SF-03</a> SMS restricted to crisis-template subset</div>
-      </div>
-    </div>`),
+ sf4: () => PAGE('Send Joanna a message', 'Pre-written templates · arrives as email + push (+ SMS for crisis only). Bypasses Anna entirely.', `
+ <div class="row-2">
+ <div class="stack">
+ <div class="gc-card">
+ <div class="sf-sponsor-head">
+ <span class="sf-sponsor-head__av">JM</span>
+ <div>
+ <span class="sf-sponsor-head__tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 4.5 6v6c0 5 3.5 9 7.5 10 4-1 7.5-5 7.5-10V6Z"/></svg> Sponsor · Joanna Murray</span>
+ <h2 class="sf-sponsor-head__name">Send Joanna a message</h2>
+ </div>
+ </div>
+ <p style="font-size:13.5px;color:var(--text-secondary);line-height:1.55;margin:0">Joanna won't see Anna content or transactional detail by default. These templates exist because writing is hard when you're struggling. Pick one, edit if you want, send.</p>
+ </div>
+ <div class="gc-card">
+ <h3 style="font-size:16px;font-weight:700;margin:0">Templates</h3>
+ <div class="sf-tmpl-grid">
+ <button class="sf-tmpl" onclick="pickTmpl(this)"><div class="sf-tmpl__head"><span class="sf-tmpl__icon">👋</span><div class="sf-tmpl__t">"Just checking in"</div></div><div class="sf-tmpl__msg">"Hi Joanna · I'm OK, just wanted you to know I'm here."</div></button>
+ <button class="sf-tmpl is-on" onclick="pickTmpl(this)"><div class="sf-tmpl__head"><span class="sf-tmpl__icon">🌧️</span><div class="sf-tmpl__t">"I'm struggling tonight"</div></div><div class="sf-tmpl__msg">"Hi Joanna · having a hard evening. Not in trouble · a text would help."</div></button>
+ <button class="sf-tmpl" onclick="pickTmpl(this)"><div class="sf-tmpl__head"><span class="sf-tmpl__icon">⏸️</span><div class="sf-tmpl__t">"I need a 24h pause"</div></div><div class="sf-tmpl__msg">"Hi Joanna · putting card on freeze · system will email you anyway."</div></button>
+ <button class="sf-tmpl" onclick="pickTmpl(this)"><div class="sf-tmpl__head"><span class="sf-tmpl__icon">📞</span><div class="sf-tmpl__t">"Can you call me?"</div></div><div class="sf-tmpl__msg">"Hi Joanna · could we talk on the phone? Not urgent · better hearing your voice."</div></button>
+ <button class="sf-tmpl" onclick="pickTmpl(this)"><div class="sf-tmpl__head"><span class="sf-tmpl__icon">🔕</span><div class="sf-tmpl__t">"Don't worry · I'm fine"</div></div><div class="sf-tmpl__msg">"Hi Joanna · GC sent you a digest alert · I'm fine · slip caught at the card."</div></button>
+ <button class="sf-tmpl" onclick="pickTmpl(this)"><div class="sf-tmpl__head"><span class="sf-tmpl__icon">✏️</span><div class="sf-tmpl__t">Write my own</div></div><div class="sf-tmpl__msg">Free-text · sent the same way as a template.</div></button>
+ </div>
+ </div>
+ <div class="gc-card">
+ <h3 style="font-size:15px;font-weight:700;margin:0 0 4px">Preview · "I'm struggling tonight"</h3>
+ <div style="background:var(--bg-base);border:1px solid var(--border);border-radius:11px;padding:14px 16px;font-size:13.5px;line-height:1.6;font-style:italic;color:var(--text-primary)">"Hi Joanna · having a hard evening. Not in trouble · a text would help."</div>
+ <textarea class="sf-textarea" style="min-height:60px" placeholder="Edit before sending (optional) · keep it short. The shorter, the more likely Joanna will reply within the hour.">Hi Joanna · having a hard evening. Not in trouble · a text would help.</textarea>
+ </div>
+ </div>
+ <div class="stack">
+ <div class="gc-card">
+ <h3 style="font-size:15px;font-weight:700;margin:0 0 4px">Three channels at once</h3>
+ <p style="font-size:12px;color:var(--text-secondary);margin:0 0 4px">Per <a href="../41-decisions-log.html" style="color:var(--accent);text-decoration:none">SF-03</a>, SMS only fires for crisis-level templates · Twilio cost + copy-review trade-off.</p>
+ <div class="sf-ch"><span class="sf-ch__ic" style="background:var(--p-40);color:var(--p-95)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-10 5L2 7"/></svg></span><div><div class="sf-ch__t">Email</div><div class="sf-ch__s">joanna.m@hotmail.co.uk · ~30s</div></div><span class="sf-ch__time">~30s</span></div>
+ <div class="sf-ch"><span class="sf-ch__ic" style="background:var(--s-20);color:var(--s-80)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect width="14" height="20" x="5" y="2" rx="2"/><path d="M12 18v.01"/></svg></span><div><div class="sf-ch__t">Push · Sponsor app</div><div class="sf-ch__s">iPhone 13 · last seen 22:01</div></div><span class="sf-ch__time">~5s</span></div>
+ <div class="sf-ch"><span class="sf-ch__ic" style="background:var(--w-30);color:var(--w-80)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span><div><div class="sf-ch__t">SMS · 07XXX XXX XXX</div><div class="sf-ch__s">Crisis-level only · this template qualifies (SF-03)</div></div><span class="sf-ch__time">~10s</span></div>
+ </div>
+ <div class="gc-card">
+ <h3 style="font-size:14px;font-weight:700;margin:0">What Joanna won't see</h3>
+ <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:6px;font-size:12.5px;color:var(--text-secondary);line-height:1.5">
+ <li>· transactions, MCC blocks, declined cards</li>
+ <li>· Anna chat content (sponsor-blind per AN-05)</li>
+ <li>· vulnerability flags you've set</li>
+ <li>· your location · device · IP</li>
+ </ul>
+ </div>
+ <div style="display:flex;gap:8px">
+ <button class="gc-btn gc-btn--ghost gc-btn--full" onclick="prev()">Cancel</button>
+ <button class="gc-btn gc-btn--primary gc-btn--full">Send to Joanna</button>
+ </div>
+ ${ANNA("Asking for help is the loudest signal of recovery there is.", "She'll get it on three channels. Even if she can't reply right away, you'll have done the hardest thing.")}
+ <div class="sf-decision">decision · <a href="../41-decisions-log.html">SF-03</a> SMS restricted to crisis-template subset</div>
+ </div>
+ </div>`),
 };
 
 let idx = 0;
@@ -559,19 +559,19 @@ function toggleCheck(el) { el.querySelector('.gc-checkbox').classList.toggle('is
 function pickTmpl(el) { el.parentElement.querySelectorAll('.is-on').forEach(s => s.classList.remove('is-on')); el.classList.add('is-on'); }
 
 function render() {
-  const screen = SCREENS[idx];
-  document.getElementById('viewport').innerHTML = builders[screen.kind]();
-  document.getElementById('browserUrl').textContent = 'app.gaimcontrol.com' + screen.url;
-  document.getElementById('screenId').textContent = screen.id;
-  document.getElementById('screenName').textContent = screen.name;
-  document.getElementById('progressFill').style.width = ((idx + 1) / SCREENS.length * 100) + '%';
-  document.getElementById('navPrev').disabled = idx === 0;
-  document.getElementById('navNext').disabled = idx === SCREENS.length - 1;
-  document.querySelectorAll('.proto-scrubber__item').forEach((el, i) => {
-    el.classList.toggle('is-active', i === idx);
-    if (i === idx) el.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
-  });
-  document.getElementById('contextBody').innerHTML = CTX[screen.kind] || screen.name;
+ const screen = SCREENS[idx];
+ document.getElementById('viewport').innerHTML = builders[screen.kind]();
+ document.getElementById('browserUrl').textContent = 'app.gaimcontrol.com' + screen.url;
+ document.getElementById('screenId').textContent = screen.id;
+ document.getElementById('screenName').textContent = screen.name;
+ document.getElementById('progressFill').style.width = ((idx + 1) / SCREENS.length * 100) + '%';
+ document.getElementById('navPrev').disabled = idx === 0;
+ document.getElementById('navNext').disabled = idx === SCREENS.length - 1;
+ document.querySelectorAll('.proto-scrubber__item').forEach((el, i) => {
+ el.classList.toggle('is-active', i === idx);
+ if (i === idx) el.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+ });
+ document.getElementById('contextBody').innerHTML = CTX[screen.kind] || screen.name;
 }
 
 function next() { if (idx < SCREENS.length - 1) { idx++; render(); } }
@@ -579,28 +579,28 @@ function prev() { if (idx > 0) { idx--; render(); } }
 function go(i) { idx = i; render(); }
 
 function buildScrubber() {
-  const nav = document.getElementById('scrubber');
-  SCREENS.forEach((s, i) => {
-    const btn = document.createElement('button');
-    btn.className = 'proto-scrubber__item';
-    btn.innerHTML = `<span class="proto-scrubber__id">${s.id}</span><span class="proto-scrubber__name">${s.name}</span>`;
-    btn.addEventListener('click', () => go(i));
-    nav.appendChild(btn);
-  });
+ const nav = document.getElementById('scrubber');
+ SCREENS.forEach((s, i) => {
+ const btn = document.createElement('button');
+ btn.className = 'proto-scrubber__item';
+ btn.innerHTML = `<span class="proto-scrubber__id">${s.id}</span><span class="proto-scrubber__name">${s.name}</span>`;
+ btn.addEventListener('click', () => go(i));
+ nav.appendChild(btn);
+ });
 }
 
 function initTheme() {
-  const root = document.documentElement;
-  const stored = localStorage.getItem('gc-proto-theme');
-  const initial = stored || 'dark';
-  root.setAttribute('data-theme', initial);
-  document.querySelector('.theme-label').textContent = initial === 'dark' ? 'Dark' : 'Light';
-  document.querySelector('.proto-theme-toggle').addEventListener('click', () => {
-    const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-    root.setAttribute('data-theme', next);
-    document.querySelector('.theme-label').textContent = next === 'dark' ? 'Dark' : 'Light';
-    try { localStorage.setItem('gc-proto-theme', next); } catch(e) {}
-  });
+ const root = document.documentElement;
+ const stored = localStorage.getItem('gc-proto-theme');
+ const initial = stored || 'dark';
+ root.setAttribute('data-theme', initial);
+ document.querySelector('.theme-label').textContent = initial === 'dark' ? 'Dark' : 'Light';
+ document.querySelector('.proto-theme-toggle').addEventListener('click', () => {
+ const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+ root.setAttribute('data-theme', next);
+ document.querySelector('.theme-label').textContent = next === 'dark' ? 'Dark' : 'Light';
+ try { localStorage.setItem('gc-proto-theme', next); } catch(e) {}
+ });
 }
 
 document.getElementById('navPrev').addEventListener('click', prev);

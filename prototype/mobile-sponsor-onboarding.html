@@ -10,12 +10,12 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --p-10:#0B0F1C;--p-20:#161B2D;--p-30:#20273C;--p-40:#354872;--p-50:#4D608C;--p-60:#6B7DA6;--p-90:#DCE2F0;--p-95:#ECF0F9;--p-99:#FAFBFE;--p-100:#FFF;
-  --s-10:#28215A;--s-20:#3E3478;--s-30:#534792;--s-40:#6B5DAC;--s-50:#8576C2;--s-70:#B5ACDF;--s-80:#CFC8EA;--s-90:#E8E4F4;
-  --t-20:#1A6047;--t-30:#1F7058;--t-50:#399971;--t-60:#5BB088;--t-80:#ADDCC2;--t-90:#D5EDDF;
-  --w-30:#6B4500;--w-60:#C28200;--w-80:#FAB44A;--w-90:#FFDFA8;
-  --e-30:#7A1F1F;--e-50:#C73838;--e-80:#F4A4A4;--e-90:#FBD9D9;
-  --n-50:#76798A;--n-80:#C5C8D2;--n-95:#F1F2F5;--nv-80:#C5C9DD;
+ --p-10:#0B0F1C;--p-20:#161B2D;--p-30:#20273C;--p-40:#354872;--p-50:#4D608C;--p-60:#6B7DA6;--p-90:#DCE2F0;--p-95:#ECF0F9;--p-99:#FAFBFE;--p-100:#FFF;
+ --s-10:#28215A;--s-20:#3E3478;--s-30:#534792;--s-40:#6B5DAC;--s-50:#8576C2;--s-70:#B5ACDF;--s-80:#CFC8EA;--s-90:#E8E4F4;
+ --t-20:#1A6047;--t-30:#1F7058;--t-50:#399971;--t-60:#5BB088;--t-80:#ADDCC2;--t-90:#D5EDDF;
+ --w-30:#6B4500;--w-60:#C28200;--w-80:#FAB44A;--w-90:#FFDFA8;
+ --e-30:#7A1F1F;--e-50:#C73838;--e-80:#F4A4A4;--e-90:#FBD9D9;
+ --n-50:#76798A;--n-80:#C5C8D2;--n-95:#F1F2F5;--nv-80:#C5C9DD;
 }
 [data-theme="dark"] { --bg-base: var(--p-30); --bg-surface: var(--p-20); --bg-surface-2: var(--p-10); --border: rgba(255,255,255,0.08); --text-primary: var(--n-95); --text-secondary: var(--nv-80); --text-muted: rgba(255,255,255,0.4); --accent: var(--s-70); --accent-strong: var(--s-50); --on-accent: #fff; --page-bg: #0a0e1a; --page-fg: var(--n-95); --page-fg-muted: var(--nv-80); --page-card-bg: var(--p-20); --page-divider: rgba(255,255,255,0.06); }
 [data-theme="light"] { --bg-base: var(--p-99); --bg-surface: #fff; --bg-surface-2: var(--p-95); --border: rgba(22,27,45,0.08); --text-primary: var(--p-20); --text-secondary: var(--n-50); --text-muted: var(--n-50); --accent: var(--p-40); --accent-strong: var(--s-40); --on-accent: #fff; --page-bg: var(--p-95); --page-fg: var(--p-20); --page-fg-muted: var(--n-50); --page-card-bg: #fff; --page-divider: rgba(22,27,45,0.08); }
@@ -23,9 +23,9 @@
 html, body { background: var(--page-bg); color: var(--page-fg); margin: 0; transition: background-color 220ms ease, color 220ms ease; }
 body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif; font-size: 14px; line-height: 1.5; -webkit-font-smoothing: antialiased; min-height: 100vh; }
 .proto-shell { display: grid; grid-template-columns: 280px 1fr; gap: 0; min-height: 100vh; }
-@media (max-width: 960px) { .proto-shell { grid-template-columns: 1fr; } }
+@media (max-width: 960px) {.proto-shell { grid-template-columns: 1fr; } }
 .proto-sidebar { background: var(--page-card-bg); border-right: 1px solid var(--page-divider); padding: 28px 22px; position: sticky; top: 0; height: 100vh; overflow-y: auto; display: flex; flex-direction: column; gap: 16px; }
-@media (max-width: 960px) { .proto-sidebar { position: static; height: auto; max-height: 50vh; border-right: none; border-bottom: 1px solid var(--page-divider); } }
+@media (max-width: 960px) {.proto-sidebar { position: static; height: auto; max-height: 50vh; border-right: none; border-bottom: 1px solid var(--page-divider); } }
 .proto-sidebar__brand { display: flex; align-items: center; gap: 10px; }
 .proto-sidebar__mark { width: 36px; height: 36px; border-radius: 10px; background: var(--p-30); display: inline-flex; align-items: center; justify-content: center; }
 .proto-sidebar__mark img { width: 70%; height: 70%; }
@@ -37,15 +37,15 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-
 .proto-scrubber__item { display: grid; grid-template-columns: 44px 1fr; gap: 8px; align-items: center; padding: 7px 10px; border-radius: 8px; cursor: pointer; border: none; background: transparent; color: inherit; font-family: inherit; text-align: left; }
 .proto-scrubber__item:hover { background: rgba(127,127,127,0.08); }
 .proto-scrubber__item.is-active { background: var(--accent-strong); color: var(--on-accent); }
-.proto-scrubber__item.is-active .proto-scrubber__id { color: rgba(255,255,255,0.85); }
+.proto-scrubber__item.is-active.proto-scrubber__id { color: rgba(255,255,255,0.85); }
 .proto-scrubber__id { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; color: var(--page-fg-muted); letter-spacing: 0.06em; }
 .proto-scrubber__name { font-size: 12.5px; font-weight: 500; }
 .proto-sidebar__footer { margin-top: auto; padding-top: 16px; border-top: 1px solid var(--page-divider); font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--page-fg-muted); }
 .proto-sidebar__footer a { color: var(--page-fg-muted); text-decoration: none; border-bottom: 1px dotted currentColor; }
 .proto-theme-toggle { display: inline-flex; align-items: center; gap: 8px; padding: 7px 12px; border-radius: 8px; background: var(--bg-surface-2); border: 1px solid var(--border); color: var(--page-fg-muted); cursor: pointer; font-family: 'JetBrains Mono', monospace; font-size: 11px; align-self: flex-start; }
 .proto-theme-toggle svg { width: 12px; height: 12px; }
-[data-theme="dark"] .proto-theme-toggle .icon-moon { display: none; }
-[data-theme="light"] .proto-theme-toggle .icon-sun { display: none; }
+[data-theme="dark"].proto-theme-toggle.icon-moon { display: none; }
+[data-theme="light"].proto-theme-toggle.icon-sun { display: none; }
 .proto-stage { display: flex; flex-direction: column; align-items: center; padding: 32px 24px 64px; gap: 22px; }
 .proto-modebar { display: flex; align-items: center; gap: 10px; padding: 10px 16px; background: var(--page-card-bg); border: 1px solid var(--page-divider); border-radius: 12px; font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: var(--page-fg-muted); flex-wrap: wrap; justify-content: center; }
 .proto-modebar__pill { display: inline-flex; padding: 3px 9px; border-radius: 999px; background: var(--bg-surface-2); }
@@ -61,14 +61,14 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-
 .sp-kyc-step { display: grid; grid-template-columns: 30px 1fr auto; gap: 11px; align-items: center; padding: 11px 13px; background: var(--bg-surface); border: 1px solid var(--border); border-radius: 12px; }
 .sp-kyc-step--current { border-color: var(--accent-strong); box-shadow: 0 0 0 2px rgba(133,118,194,0.18); }
 .sp-kyc-step__n { width: 30px; height: 30px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 12px; background: var(--bg-surface-2); color: var(--text-secondary); flex-shrink: 0; }
-.sp-kyc-step--done .sp-kyc-step__n { background: var(--t-50); color: white; }
-.sp-kyc-step--current .sp-kyc-step__n { background: var(--accent-strong); color: white; }
+.sp-kyc-step--done.sp-kyc-step__n { background: var(--t-50); color: white; }
+.sp-kyc-step--current.sp-kyc-step__n { background: var(--accent-strong); color: white; }
 .sp-kyc-step__t { font-size: 13px; font-weight: 600; }
 .sp-kyc-step__s { font-size: 11.5px; color: var(--text-secondary); margin-top: 1px; }
 .sp-kyc-step__pill { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; font-weight: 700; letter-spacing: 0.05em; padding: 2px 7px; border-radius: 999px; background: var(--bg-surface-2); color: var(--text-muted); }
-.sp-kyc-step--current .sp-kyc-step__pill { background: var(--accent-strong); color: white; }
-.sp-kyc-step--done .sp-kyc-step__pill { background: var(--t-20); color: var(--t-80); }
-[data-theme="light"] .sp-kyc-step--done .sp-kyc-step__pill { background: var(--t-90); color: var(--t-30); }
+.sp-kyc-step--current.sp-kyc-step__pill { background: var(--accent-strong); color: white; }
+.sp-kyc-step--done.sp-kyc-step__pill { background: var(--t-20); color: var(--t-80); }
+[data-theme="light"].sp-kyc-step--done.sp-kyc-step__pill { background: var(--t-90); color: var(--t-30); }
 
 .sp-cam-frame { aspect-ratio: 4/5; background: var(--bg-base); border: 2px dashed var(--border); border-radius: 14px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; padding: 18px; color: var(--text-muted); position: relative; }
 .sp-cam-oval { width: 130px; height: 170px; border: 2.5px solid var(--accent); border-radius: 50%; opacity: 0.7; }
@@ -81,7 +81,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-
 .sp-bank-m:hover { border-color: var(--accent); }
 .sp-bank-m.is-on { border-color: var(--accent-strong); box-shadow: 0 0 0 2px rgba(133,118,194,0.18); }
 .sp-bank-m__logo { width: 32px; height: 32px; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; font-weight: 800; color: white; font-family: 'JetBrains Mono', monospace; font-size: 13px; flex-shrink: 0; box-shadow: 0 0 0 1px rgba(255,255,255,0.06); }
-[data-theme="light"] .sp-bank-m__logo { box-shadow: 0 0 0 1px rgba(22,27,45,0.08); }
+[data-theme="light"].sp-bank-m__logo { box-shadow: 0 0 0 1px rgba(22,27,45,0.08); }
 .sp-bank-m__n { font-size: 12.5px; font-weight: 600; }
 
 /* SP6 mobile sponsor dashboard */
@@ -90,18 +90,18 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-
 .sp6-stat__n { font-size: 21px; font-weight: 800; letter-spacing: -0.02em; line-height: 1; }
 .sp6-stat__d { font-size: 11px; color: var(--text-secondary); margin-top: 3px; }
 .sp6-stat__d--ok { color: var(--t-60); }
-[data-theme="light"] .sp6-stat__d--ok { color: var(--t-30); }
+[data-theme="light"].sp6-stat__d--ok { color: var(--t-30); }
 .sp6-stat-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 
 .sp6-tl { display: grid; grid-template-columns: auto 1fr; gap: 9px; align-items: flex-start; padding: 10px 0; border-top: 1px solid var(--border); }
 .sp6-tl:first-of-type { border-top: none; padding-top: 0; }
 .sp6-tl__pill { display: inline-flex; padding: 2px 8px; border-radius: 999px; font-size: 9px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; font-family: 'JetBrains Mono', monospace; flex-shrink: 0; height: fit-content; margin-top: 2px; }
 .sp6-tl__pill--milestone { background: var(--t-20); color: var(--t-80); }
-[data-theme="light"] .sp6-tl__pill--milestone { background: var(--t-90); color: var(--t-30); }
+[data-theme="light"].sp6-tl__pill--milestone { background: var(--t-90); color: var(--t-30); }
 .sp6-tl__pill--hold { background: var(--w-30); color: var(--w-80); }
-[data-theme="light"] .sp6-tl__pill--hold { background: var(--w-90); color: var(--w-30); }
+[data-theme="light"].sp6-tl__pill--hold { background: var(--w-90); color: var(--w-30); }
 .sp6-tl__pill--message { background: var(--s-20); color: var(--s-80); }
-[data-theme="light"] .sp6-tl__pill--message { background: var(--s-90); color: var(--s-20); }
+[data-theme="light"].sp6-tl__pill--message { background: var(--s-90); color: var(--s-20); }
 .sp6-tl__t { font-size: 12.5px; font-weight: 600; }
 .sp6-tl__s { font-size: 11px; color: var(--text-secondary); margin-top: 1px; line-height: 1.4; }
 .sp6-tl__when { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-muted); margin-top: 3px; }
@@ -121,7 +121,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-
 .proto-arrow:disabled { opacity: 0.3; cursor: not-allowed; }
 .proto-arrow svg { width: 18px; height: 18px; }
 .phone { width: 393px; height: 852px; flex-shrink: 0; border-radius: 56px; background: #000; padding: 13px; position: relative; box-shadow: 0 0 0 1.5px #2a2e3a, 0 30px 60px -20px rgba(0,0,0,0.7), 0 16px 32px -16px rgba(0,0,0,0.4); }
-.phone::before, .phone::after { content: ''; position: absolute; background: #2a2e3a; }
+.phone::before,.phone::after { content: ''; position: absolute; background: #2a2e3a; }
 .phone::before { left: -3px; top: 110px; width: 3px; height: 30px; border-radius: 3px 0 0 3px; }
 .phone::after { left: -3px; top: 160px; width: 3px; height: 60px; border-radius: 3px 0 0 3px; }
 .phone__inner { width: 100%; height: 100%; background: var(--bg-base); color: var(--text-primary); border-radius: 44px; overflow: hidden; position: relative; display: flex; flex-direction: column; }
@@ -141,8 +141,8 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-
 
 .gc-card { padding: 14px; background: var(--bg-surface); border: 1px solid var(--border); border-radius: 14px; display: flex; flex-direction: column; gap: 8px; }
 .gc-card--anna { background: linear-gradient(135deg, rgba(133,118,194,0.15), rgba(83,71,146,0.08)); border-color: rgba(133,118,194,0.25); flex-direction: row; align-items: center; gap: 10px; padding: 11px 13px; }
-.gc-card--anna .anna-av { width: 30px; height: 30px; border-radius: 50%; background: var(--p-30); display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
-.gc-card--anna .anna-av img { width: 60%; height: 60%; }
+.gc-card--anna.anna-av { width: 30px; height: 30px; border-radius: 50%; background: var(--p-30); display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.gc-card--anna.anna-av img { width: 60%; height: 60%; }
 .gc-card--anna p { font-size: 12px; line-height: 1.45; margin: 0; font-style: italic; }
 .gc-card--info { background: var(--bg-surface-2); border-left: 3px solid var(--s-50); border-radius: 4px 14px 14px 4px; padding: 13px 15px; }
 .gc-card--success { background: linear-gradient(135deg, var(--t-50), var(--t-30)); color: white; border-color: transparent; }
@@ -186,18 +186,18 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-
 .sp-state:first-of-type { border-top: none; padding-top: 0; }
 .sp-state__ic { width: 30px; height: 30px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; }
 .sp-state__ic--done { background: var(--t-20); color: var(--t-80); }
-[data-theme="light"] .sp-state__ic--done { background: var(--t-90); color: var(--t-30); }
+[data-theme="light"].sp-state__ic--done { background: var(--t-90); color: var(--t-30); }
 .sp-state__ic--pending { background: var(--w-30); color: var(--w-80); }
-[data-theme="light"] .sp-state__ic--pending { background: var(--w-90); color: var(--w-30); }
+[data-theme="light"].sp-state__ic--pending { background: var(--w-90); color: var(--w-30); }
 .sp-state__ic--waiting { background: var(--bg-surface-2); color: var(--text-muted); }
 .sp-state__ic svg { width: 14px; height: 14px; }
 .sp-state__t { font-size: 13px; font-weight: 600; }
 .sp-state__s { font-size: 11.5px; color: var(--text-secondary); margin-top: 1px; }
 .sp-state__pill { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; padding: 2px 7px; border-radius: 999px; letter-spacing: 0.05em; font-weight: 700; }
 .sp-state__pill--done { background: var(--t-20); color: var(--t-80); }
-[data-theme="light"] .sp-state__pill--done { background: var(--t-90); color: var(--t-30); }
+[data-theme="light"].sp-state__pill--done { background: var(--t-90); color: var(--t-30); }
 .sp-state__pill--pending { background: var(--w-30); color: var(--w-80); }
-[data-theme="light"] .sp-state__pill--pending { background: var(--w-90); color: var(--w-30); }
+[data-theme="light"].sp-state__pill--pending { background: var(--w-90); color: var(--w-30); }
 .sp-state__pill--waiting { background: var(--bg-surface-2); color: var(--text-muted); }
 
 /* SP7 sponsor management */
@@ -210,17 +210,17 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-
 
 .sp-cap { display: flex; gap: 8px; padding: 3px 9px; border-radius: 999px; font-size: 9.5px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; font-family: 'JetBrains Mono', monospace; }
 .sp-cap--active { background: var(--t-20); color: var(--t-80); }
-[data-theme="light"] .sp-cap--active { background: var(--t-90); color: var(--t-30); }
+[data-theme="light"].sp-cap--active { background: var(--t-90); color: var(--t-30); }
 .sp-cap--pending { background: var(--w-30); color: var(--w-80); }
-[data-theme="light"] .sp-cap--pending { background: var(--w-90); color: var(--w-30); }
+[data-theme="light"].sp-cap--pending { background: var(--w-90); color: var(--w-30); }
 
 .sp-perm { display: grid; grid-template-columns: 24px 1fr; gap: 10px; align-items: flex-start; padding: 9px 0; border-top: 1px solid var(--border); }
 .sp-perm:first-of-type { border-top: none; padding-top: 0; }
 .sp-perm__ic { width: 24px; height: 24px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
 .sp-perm__ic--y { background: var(--t-20); color: var(--t-80); }
-[data-theme="light"] .sp-perm__ic--y { background: var(--t-90); color: var(--t-30); }
+[data-theme="light"].sp-perm__ic--y { background: var(--t-90); color: var(--t-30); }
 .sp-perm__ic--n { background: var(--e-30); color: var(--e-90); }
-[data-theme="light"] .sp-perm__ic--n { background: var(--e-90); color: var(--e-30); }
+[data-theme="light"].sp-perm__ic--n { background: var(--e-90); color: var(--e-30); }
 .sp-perm__ic svg { width: 11px; height: 11px; }
 .sp-perm__t { font-size: 12.5px; font-weight: 600; }
 .sp-perm__s { font-size: 11px; color: var(--text-secondary); margin-top: 1px; line-height: 1.4; }
@@ -241,8 +241,8 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-
 
 .screen { animation: fade-in 220ms ease; }
 @keyframes fade-in { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
-@media (max-width: 720px) { .phone { transform: scale(0.92); transform-origin: top center; } }
-@media (max-width: 480px) { .phone { transform: scale(0.78); } }
+@media (max-width: 720px) {.phone { transform: scale(0.92); transform-origin: top center; } }
+@media (max-width: 480px) {.phone { transform: scale(0.78); } }
 </style>
 <script src="flow-chain.js" defer></script>
 </head>
@@ -250,412 +250,412 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-
 
 <div class="proto-shell">
 
-  <aside class="proto-sidebar">
-    <div class="proto-sidebar__brand">
-      <span class="proto-sidebar__mark"><img src="../assets/gc-mark-mono-light.svg" alt=""></span>
-      <span><div class="proto-sidebar__name">GaimControl</div><span class="proto-sidebar__pill">mobile</span></span>
-    </div>
-    <a class="proto-sidebar__back" href="index.html">← prototype index</a>
-    <button class="proto-theme-toggle" type="button">
-      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
-      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
-      <span class="theme-label">Dark</span>
-    </button>
-    <div class="proto-section-title">§15 · SP1 – SP7</div>
-    <nav class="proto-scrubber" id="scrubber"></nav>
-    <div class="proto-sidebar__footer">
-      Source: <a href="../15-sponsor-onboarding.html">15-sponsor-onboarding</a><br>
-      Decisions: GEN-03 · GEN-07 · ON-04 · CC-03<br>
-      <em>SP4–SP6 shown as Joanna's mobile-web view of sponsor.gaimcontrol.com (responsive · accessible from her phone)</em>
-    </div>
-  </aside>
+ <aside class="proto-sidebar">
+ <div class="proto-sidebar__brand">
+ <span class="proto-sidebar__mark"><img src="../assets/gc-mark-mono-light.svg" alt=""></span>
+ <span><div class="proto-sidebar__name">GaimControl</div><span class="proto-sidebar__pill">mobile</span></span>
+ </div>
+ <a class="proto-sidebar__back" href="index.html">← prototype index</a>
+ <button class="proto-theme-toggle" type="button">
+ <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+ <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+ <span class="theme-label">Dark</span>
+ </button>
+ <div class="proto-section-title">§15 · SP1 – SP7</div>
+ <nav class="proto-scrubber" id="scrubber"></nav>
+ <div class="proto-sidebar__footer">
+ Source: <a href="../15-sponsor-onboarding.html">15-sponsor-onboarding</a><br>
+ Decisions: GEN-03 · GEN-07 · ON-04 · CC-03<br>
+ <em>SP4–SP6 shown as Joanna's mobile-web view of sponsor.gaimcontrol.com (responsive · accessible from her phone)</em>
+ </div>
+ </aside>
 
-  <main class="proto-stage">
-    <div class="proto-modebar">
-      <span>Screen <span class="proto-modebar__id" id="screenId">SP1</span></span>
-      <span class="proto-modebar__pill" id="screenName">User invites a sponsor</span>
-      <span class="proto-modebar__pill" id="audiencePill" style="background:var(--bg-surface-2)">User · Sam</span>
-      <div class="proto-modebar__bar"><div class="proto-modebar__bar__fill" id="progressFill" style="width:14%"></div></div>
-      <div class="proto-arrows">
-        <button class="proto-arrow" id="navPrev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
-        <button class="proto-arrow" id="navNext"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
-      </div>
-    </div>
-    <div class="phone">
-      <div class="phone__notch"></div>
-      <div class="phone__inner">
-        <div class="phone__statusbar">
-          <span>9:41</span>
-          <span class="phone__statusbar__right"><span style="display:inline-flex;gap:3px"><span style="width:4px;height:4px;border-radius:50%;background:currentColor"></span><span style="width:4px;height:5px;border-radius:1px;background:currentColor"></span><span style="width:4px;height:6px;border-radius:1px;background:currentColor"></span><span style="width:4px;height:7px;border-radius:1px;background:currentColor"></span></span><span>100%</span></span>
-        </div>
-        <div id="stage" style="flex:1;display:flex;flex-direction:column;min-height:0"></div>
-      </div>
-    </div>
-    <div class="proto-context" id="contextPanel"><div class="proto-context__head">Screen context</div><div id="contextBody"></div></div>
-  </main>
+ <main class="proto-stage">
+ <div class="proto-modebar">
+ <span>Screen <span class="proto-modebar__id" id="screenId">SP1</span></span>
+ <span class="proto-modebar__pill" id="screenName">User invites a sponsor</span>
+ <span class="proto-modebar__pill" id="audiencePill" style="background:var(--bg-surface-2)">User · Sam</span>
+ <div class="proto-modebar__bar"><div class="proto-modebar__bar__fill" id="progressFill" style="width:14%"></div></div>
+ <div class="proto-arrows">
+ <button class="proto-arrow" id="navPrev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+ <button class="proto-arrow" id="navNext"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
+ </div>
+ </div>
+ <div class="phone">
+ <div class="phone__notch"></div>
+ <div class="phone__inner">
+ <div class="phone__statusbar">
+ <span>9:41</span>
+ <span class="phone__statusbar__right"><span style="display:inline-flex;gap:3px"><span style="width:4px;height:4px;border-radius:50%;background:currentColor"></span><span style="width:4px;height:5px;border-radius:1px;background:currentColor"></span><span style="width:4px;height:6px;border-radius:1px;background:currentColor"></span><span style="width:4px;height:7px;border-radius:1px;background:currentColor"></span></span><span>100%</span></span>
+ </div>
+ <div id="stage" style="flex:1;display:flex;flex-direction:column;min-height:0"></div>
+ </div>
+ </div>
+ <div class="proto-context" id="contextPanel"><div class="proto-context__head">Screen context</div><div id="contextBody"></div></div>
+ </main>
 </div>
 
 <script>
 const SCREENS = [
-  { id: 'SP1', name: 'User invites a sponsor', kind: 'sp1', audience: 'user' },
-  { id: 'SP2', name: 'Email preview (what Joanna gets)', kind: 'sp2', audience: 'user' },
-  { id: 'PEND', name: 'Invite sent · sponsor pending', kind: 'pend', audience: 'user' },
-  { id: 'SP4', name: 'Sponsor · light KYC (Vouchsafe)', kind: 'sp4', audience: 'sponsor' },
-  { id: 'SP5', name: 'Sponsor · open banking (TrueLayer)', kind: 'sp5', audience: 'sponsor' },
-  { id: 'SP6', name: 'Sponsor · dashboard (mobile-web)', kind: 'sp6', audience: 'sponsor' },
-  { id: 'SP7', name: 'Sponsor management · §12 PR4', kind: 'sp7', audience: 'user' },
+ { id: 'SP1', name: 'User invites a sponsor', kind: 'sp1', audience: 'user' },
+ { id: 'SP2', name: 'Email preview (what Joanna gets)', kind: 'sp2', audience: 'user' },
+ { id: 'PEND', name: 'Invite sent · sponsor pending', kind: 'pend', audience: 'user' },
+ { id: 'SP4', name: 'Sponsor · light KYC (Vouchsafe)', kind: 'sp4', audience: 'sponsor' },
+ { id: 'SP5', name: 'Sponsor · open banking (TrueLayer)', kind: 'sp5', audience: 'sponsor' },
+ { id: 'SP6', name: 'Sponsor · dashboard (mobile-web)', kind: 'sp6', audience: 'sponsor' },
+ { id: 'SP7', name: 'Sponsor management · §12 PR4', kind: 'sp7', audience: 'user' },
 ];
 
 const CTX = {
-  sp1: '<strong>SP1 User invites a sponsor.</strong> Three required fields (sponsor name · relationship · email) + optional 280-char note. Reachable from two entry points per <a href="../41-decisions-log.html">ON-04</a> A/B — variant A invites at ON6 during onboarding · variant B invites later from §07 Controls. Both downstream flows identical.',
-  sp2: '<strong>SP2 Email preview.</strong> Transactional email queued via Customer.io to Joanna. Subject auto-filled with Sam\'s name. Body includes the optional note from SP1. Signed-token URL routes to SP3 explainer landing (web · sponsor.gaimcontrol.com).',
-  pend: '<strong>Pending state.</strong> Sam sees this until Joanna completes SP3–SP6. Status pills track SP2 sent → SP3 viewed → SP4 KYC → SP5 open banking → SP6 dashboard activated.',
-  sp4: '<strong>SP4 Light KYC (Joanna on her phone).</strong> Spec says sponsor dash is web-only at MVP — but the surface is responsive, so Joanna clicking the email link on her phone lands here. Vouchsafe-powered (same vendor as user KYC per <a href="../41-decisions-log.html">CC-03</a>). Light set: name + DOB + address + photo ID + selfie. No income / affordability check.',
-  sp5: '<strong>SP5 Open banking (Joanna on her phone).</strong> TrueLayer · single account · liveness + AML cross-check only. We don\'t analyse Joanna\'s spending. Per <a href="../41-decisions-log.html">GEN-03</a> the bank link reduces coercion risk by tying her to a real verified account in her own name.',
-  sp6: '<strong>SP6 Sponsor dashboard (mobile-web view).</strong> Web-only at MVP per spec — but the same responsive page renders on her phone if she opens sponsor.gaimcontrol.com on mobile. Streak · payment · session attendance · Hold notices · per-MCC categories · sponsor message inbox. Push notifications still hit her phone via the browser. Cannot DM Sam in-app.',
-  sp7: '<strong>SP7 Sponsor management.</strong> Lives in §12 Profile under "Sponsor". Up to 3 sponsors per <a href="../41-decisions-log.html">GEN-07</a>. Any-of-N authorisations (SP6.A). Each invited + verified independently — no role differentiation at MVP. Suspend = revoke immediately + retain in audit log; remove = full revocation + cascade.',
+ sp1: '<strong>SP1 User invites a sponsor.</strong> Three required fields (sponsor name · relationship · email) + optional 280-char note. Reachable from two entry points per <a href="../41-decisions-log.html">ON-04</a> A/B. Variant A invites at ON6 during onboarding · variant B invites later from §07 Controls. Both downstream flows identical.',
+ sp2: '<strong>SP2 Email preview.</strong> Transactional email queued via Customer.io to Joanna. Subject auto-filled with Sam\'s name. Body includes the optional note from SP1. Signed-token URL routes to SP3 explainer landing (web · sponsor.gaimcontrol.com).',
+ pend: '<strong>Pending state.</strong> Sam sees this until Joanna completes SP3–SP6. Status pills track SP2 sent → SP3 viewed → SP4 KYC → SP5 open banking → SP6 dashboard activated.',
+ sp4: '<strong>SP4 Light KYC (Joanna on her phone).</strong> Spec says sponsor dash is web-only at MVP. But the surface is responsive, so Joanna clicking the email link on her phone lands here. Vouchsafe-powered (same vendor as user KYC per <a href="../41-decisions-log.html">CC-03</a>). Light set: name + DOB + address + photo ID + selfie. No income / affordability check.',
+ sp5: '<strong>SP5 Open banking (Joanna on her phone).</strong> TrueLayer · single account · liveness + AML cross-check only. We don\'t analyse Joanna\'s spending. Per <a href="../41-decisions-log.html">GEN-03</a> the bank link reduces coercion risk by tying her to a real verified account in her own name.',
+ sp6: '<strong>SP6 Sponsor dashboard (mobile-web view).</strong> Web-only at MVP per spec. But the same responsive page renders on her phone if she opens sponsor.gaimcontrol.com on mobile. Streak · payment · session attendance · Hold notices · per-MCC categories · sponsor message inbox. Push notifications still hit her phone via the browser. Cannot DM Sam in-app.',
+ sp7: '<strong>SP7 Sponsor management.</strong> Lives in §12 Profile under "Sponsor". Up to 3 sponsors per <a href="../41-decisions-log.html">GEN-07</a>. Any-of-N authorisations (SP6.A). Each invited + verified independently. No role differentiation at MVP. Suspend = revoke immediately + retain in audit log; remove = full revocation + cascade.',
 };
 
 const TOPBAR = (title, showBack) => `
-  <div class="phone__topbar">
-    ${showBack === false ? '<span style="width:32px"></span>' : `<button class="phone__back" onclick="prev()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>`}
-    <span class="phone__title">${title}</span>
-    <button class="gc-crisis-pill"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7-4.5-9-9.5C2 7 5 4 8 4c1.7 0 3.2.8 4 2 .8-1.2 2.3-2 4-2 3 0 6 3 5 7.5C19 16.5 12 21 12 21z"/></svg></button>
-  </div>`;
+ <div class="phone__topbar">
+ ${showBack === false ? '<span style="width:32px"></span>' : `<button class="phone__back" onclick="prev()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>`}
+ <span class="phone__title">${title}</span>
+ <button class="gc-crisis-pill"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7-4.5-9-9.5C2 7 5 4 8 4c1.7 0 3.2.8 4 2.8-1.2 2.3-2 4-2 3 0 6 3 5 7.5C19 16.5 12 21 12 21z"/></svg></button>
+ </div>`;
 
 const SPONSOR_HEADER = (title, urlPath) => `
-  <div class="phone__sponsor-strip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 4.5 6v6c0 5 3.5 9 7.5 10 4-1 7.5-5 7.5-10V6Z"/></svg> Sponsor view · Joanna</div>
-  <div class="phone__sponsor-url"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> sponsor.gaimcontrol.com${urlPath}</div>
-  <div class="phone__topbar" style="padding-top:10px">
-    <button class="phone__back" onclick="prev()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
-    <span class="phone__title">${title}</span>
-    <span style="width:32px"></span>
-  </div>`;
+ <div class="phone__sponsor-strip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 4.5 6v6c0 5 3.5 9 7.5 10 4-1 7.5-5 7.5-10V6Z"/></svg> Sponsor view · Joanna</div>
+ <div class="phone__sponsor-url"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> sponsor.gaimcontrol.com${urlPath}</div>
+ <div class="phone__topbar" style="padding-top:10px">
+ <button class="phone__back" onclick="prev()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
+ <span class="phone__title">${title}</span>
+ <span style="width:32px"></span>
+ </div>`;
 
 const builders = {
-  sp1: () => `
-    ${TOPBAR('Invite a sponsor')}
-    <div class="sp-body">
-      <div class="gc-card">
-        <span style="font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;color:var(--text-muted)">Step 1 of 5 · for the sponsor</span>
-        <h2 style="font-size:20px;font-weight:800;letter-spacing:-0.02em;margin:4px 0 0">Who's got your back?</h2>
-        <p style="font-size:12.5px;color:var(--text-secondary);line-height:1.55;margin:0">A real person you trust to see milestones, get an alert if something goes off, and (optionally) co-sign big transfers. They KYC, then they appear on your account.</p>
-      </div>
-      <div class="gc-card" style="gap:11px">
-        <div>
-          <span class="sp-label">Their name</span>
-          <input class="sp-input sp-input--filled" value="Joanna Murray">
-        </div>
-        <div>
-          <span class="sp-label">Relationship</span>
-          <div class="sp-rel-grid">
-            <button class="sp-rel" onclick="pickRel(this)">Partner</button>
-            <button class="sp-rel" onclick="pickRel(this)">Parent</button>
-            <button class="sp-rel is-on" onclick="pickRel(this)">Sibling</button>
-            <button class="sp-rel" onclick="pickRel(this)">Clinician</button>
-            <button class="sp-rel" onclick="pickRel(this)">Friend</button>
-            <button class="sp-rel" onclick="pickRel(this)">Other</button>
-          </div>
-        </div>
-        <div>
-          <span class="sp-label">Email</span>
-          <input class="sp-input sp-input--filled" type="email" value="joanna.m@hotmail.co.uk">
-        </div>
-        <div>
-          <div class="sp-label-row"><span class="sp-label">Note (optional)</span><span class="sp-counter">87 / 280</span></div>
-          <textarea class="sp-textarea">Hey Jo — would you do this with me? I've explained it on the call. No pressure x</textarea>
-        </div>
-      </div>
-      <div class="gc-card gc-card--info">
-        <h3 style="font-size:13px;font-weight:700;margin:0">What happens next</h3>
-        <ul style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:5px;font-size:12px;color:var(--text-secondary);line-height:1.5">
-          <li><strong style="color:var(--text-primary)">1.</strong> Joanna gets an email · the note above is included</li>
-          <li><strong style="color:var(--text-primary)">2.</strong> She opens it · sees what sponsorship means · decides</li>
-          <li><strong style="color:var(--text-primary)">3.</strong> Light KYC + bank link (~6 min) — same as you did</li>
-          <li><strong style="color:var(--text-primary)">4.</strong> Done · she sees milestones, never your transactions</li>
-        </ul>
-      </div>
-      <div class="gc-card--anna gc-card"><span class="anna-av"><img src="../assets/gc-mark-mono-light.svg" alt=""></span><div><p>"Recovering with a witness is harder, more uncomfortable, and roughly 40% more durable. Pick someone who'll be honest when it matters."</p></div></div>
-      <div style="display:flex;gap:8px;margin-top:auto">
-        <button class="gc-btn gc-btn--ghost" onclick="prev()">Skip for now</button>
-        <button class="gc-btn gc-btn--primary" style="flex:1" onclick="next()">Send invite to Joanna</button>
-      </div>
-    </div>`,
+ sp1: () => `
+ ${TOPBAR('Invite a sponsor')}
+ <div class="sp-body">
+ <div class="gc-card">
+ <span style="font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;color:var(--text-muted)">Step 1 of 5 · for the sponsor</span>
+ <h2 style="font-size:20px;font-weight:800;letter-spacing:-0.02em;margin:4px 0 0">Who's got your back?</h2>
+ <p style="font-size:12.5px;color:var(--text-secondary);line-height:1.55;margin:0">A real person you trust to see milestones, get an alert if something goes off, and (optionally) co-sign big transfers. They KYC, then they appear on your account.</p>
+ </div>
+ <div class="gc-card" style="gap:11px">
+ <div>
+ <span class="sp-label">Their name</span>
+ <input class="sp-input sp-input--filled" value="Joanna Murray">
+ </div>
+ <div>
+ <span class="sp-label">Relationship</span>
+ <div class="sp-rel-grid">
+ <button class="sp-rel" onclick="pickRel(this)">Partner</button>
+ <button class="sp-rel" onclick="pickRel(this)">Parent</button>
+ <button class="sp-rel is-on" onclick="pickRel(this)">Sibling</button>
+ <button class="sp-rel" onclick="pickRel(this)">Clinician</button>
+ <button class="sp-rel" onclick="pickRel(this)">Friend</button>
+ <button class="sp-rel" onclick="pickRel(this)">Other</button>
+ </div>
+ </div>
+ <div>
+ <span class="sp-label">Email</span>
+ <input class="sp-input sp-input--filled" type="email" value="joanna.m@hotmail.co.uk">
+ </div>
+ <div>
+ <div class="sp-label-row"><span class="sp-label">Note (optional)</span><span class="sp-counter">87 / 280</span></div>
+ <textarea class="sp-textarea">Hey Jo. Would you do this with me? I've explained it on the call. No pressure x</textarea>
+ </div>
+ </div>
+ <div class="gc-card gc-card--info">
+ <h3 style="font-size:13px;font-weight:700;margin:0">What happens next</h3>
+ <ul style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:5px;font-size:12px;color:var(--text-secondary);line-height:1.5">
+ <li><strong style="color:var(--text-primary)">1.</strong> Joanna gets an email · the note above is included</li>
+ <li><strong style="color:var(--text-primary)">2.</strong> She opens it · sees what sponsorship means · decides</li>
+ <li><strong style="color:var(--text-primary)">3.</strong> Light KYC + bank link (~6 min). same as you did</li>
+ <li><strong style="color:var(--text-primary)">4.</strong> Done · she sees milestones, never your transactions</li>
+ </ul>
+ </div>
+ <div class="gc-card--anna gc-card"><span class="anna-av"><img src="../assets/gc-mark-mono-light.svg" alt=""></span><div><p>"Recovering with a witness is harder, more uncomfortable, and roughly 40% more durable. Pick someone who'll be honest when it matters."</p></div></div>
+ <div style="display:flex;gap:8px;margin-top:auto">
+ <button class="gc-btn gc-btn--ghost" onclick="prev()">Skip for now</button>
+ <button class="gc-btn gc-btn--primary" style="flex:1" onclick="next()">Send invite to Joanna</button>
+ </div>
+ </div>`,
 
-  sp2: () => `
-    ${TOPBAR('Invite preview')}
-    <div class="sp-body">
-      <div class="gc-card">
-        <span style="font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;color:var(--text-muted)">Email preview · before send</span>
-        <h2 style="font-size:17px;font-weight:800;letter-spacing:-0.02em;margin:4px 0 0">This is what Joanna will see.</h2>
-        <p style="font-size:12px;color:var(--text-secondary);margin:0;line-height:1.5">Customer.io transactional · arrives in ~30 seconds.</p>
-      </div>
-      <div class="sp-email">
-        <div class="sp-email__head">
-          <div class="sp-email__from"><b>GaimControl</b> <span>noreply@gaimcontrol.com</span></div>
-          <div class="sp-email__from"><b>To</b> <span>joanna.m@hotmail.co.uk</span></div>
-          <div class="sp-email__subj">Sam would like you to be her GaimControl sponsor</div>
-        </div>
-        <div class="sp-email__body">
-          <div class="sp-email__hero">
-            <h3>Hi Joanna</h3>
-            <p>Your sister Sam has named you as a sponsor on her GaimControl account. Here's what that means.</p>
-          </div>
-          <p style="margin:0">A sponsor is someone Sam trusts to see her recovery milestones and act as a second pair of eyes. You won't see her transactions or Anna chat — just safety signals and major events.</p>
-          <div class="sp-email__note">"Hey Jo — would you do this with me? I've explained it on the call. No pressure x"</div>
-          <a class="sp-email__cta" href="#">Sponsor Sam · ~6 min</a>
-          <p style="font-size:11.5px;color:var(--text-muted);margin:0">Or read more: <a href="#" style="color:var(--accent)">What does sponsorship involve?</a></p>
-          <div class="sp-email__footer">Signed link · expires in 7 days · 14 May 2026 09:41</div>
-        </div>
-      </div>
-      <div class="gc-card gc-card--info">
-        <h3 style="font-size:12.5px;font-weight:700;margin:0">She can also decline</h3>
-        <p style="font-size:11.5px;color:var(--text-secondary);line-height:1.5;margin:0">"I can't do this right now" routes to a polite ack and you get notified — no awkwardness, no follow-up.</p>
-      </div>
-      <div style="display:flex;gap:8px;margin-top:auto">
-        <button class="gc-btn gc-btn--ghost" onclick="prev()">Edit</button>
-        <button class="gc-btn gc-btn--primary" style="flex:1" onclick="next()">Send now</button>
-      </div>
-    </div>`,
+ sp2: () => `
+ ${TOPBAR('Invite preview')}
+ <div class="sp-body">
+ <div class="gc-card">
+ <span style="font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;color:var(--text-muted)">Email preview · before send</span>
+ <h2 style="font-size:17px;font-weight:800;letter-spacing:-0.02em;margin:4px 0 0">This is what Joanna will see.</h2>
+ <p style="font-size:12px;color:var(--text-secondary);margin:0;line-height:1.5">Customer.io transactional · arrives in ~30 seconds.</p>
+ </div>
+ <div class="sp-email">
+ <div class="sp-email__head">
+ <div class="sp-email__from"><b>GaimControl</b> <span>noreply@gaimcontrol.com</span></div>
+ <div class="sp-email__from"><b>To</b> <span>joanna.m@hotmail.co.uk</span></div>
+ <div class="sp-email__subj">Sam would like you to be her GaimControl sponsor</div>
+ </div>
+ <div class="sp-email__body">
+ <div class="sp-email__hero">
+ <h3>Hi Joanna</h3>
+ <p>Your sister Sam has named you as a sponsor on her GaimControl account. Here's what that means.</p>
+ </div>
+ <p style="margin:0">A sponsor is someone Sam trusts to see her recovery milestones and act as a second pair of eyes. You won't see her transactions or Anna chat. Just safety signals and major events.</p>
+ <div class="sp-email__note">"Hey Jo. Would you do this with me? I've explained it on the call. No pressure x"</div>
+ <a class="sp-email__cta" href="#">Sponsor Sam · ~6 min</a>
+ <p style="font-size:11.5px;color:var(--text-muted);margin:0">Or read more: <a href="#" style="color:var(--accent)">What does sponsorship involve?</a></p>
+ <div class="sp-email__footer">Signed link · expires in 7 days · 14 May 2026 09:41</div>
+ </div>
+ </div>
+ <div class="gc-card gc-card--info">
+ <h3 style="font-size:12.5px;font-weight:700;margin:0">She can also decline</h3>
+ <p style="font-size:11.5px;color:var(--text-secondary);line-height:1.5;margin:0">"I can't do this right now" routes to a polite ack and you get notified. No awkwardness, no follow-up.</p>
+ </div>
+ <div style="display:flex;gap:8px;margin-top:auto">
+ <button class="gc-btn gc-btn--ghost" onclick="prev()">Edit</button>
+ <button class="gc-btn gc-btn--primary" style="flex:1" onclick="next()">Send now</button>
+ </div>
+ </div>`,
 
-  pend: () => `
-    ${TOPBAR('Invite sent')}
-    <div class="sp-body">
-      <div class="gc-card gc-card--success sp-sent-hero">
-        <span class="sp-sent-hero__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
-        <h2>Invite delivered.</h2>
-        <p>Joanna will get an email in ~30 seconds. Sponsor link expires in 7 days. We'll let you know each time her status changes.</p>
-      </div>
-      <div class="gc-card">
-        <h3 style="font-size:14px;font-weight:700;margin:0">Joanna's progress</h3>
-        <div class="sp-state">
-          <span class="sp-state__ic sp-state__ic--done"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></span>
-          <div><div class="sp-state__t">SP2 · Invite email sent</div><div class="sp-state__s">14 May 09:41 · via Customer.io</div></div>
-          <span class="sp-state__pill sp-state__pill--done">Done</span>
-        </div>
-        <div class="sp-state">
-          <span class="sp-state__ic sp-state__ic--pending"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l3 2"/></svg></span>
-          <div><div class="sp-state__t">SP3 · Explainer landing</div><div class="sp-state__s">Joanna reads what sponsorship means</div></div>
-          <span class="sp-state__pill sp-state__pill--pending">Waiting</span>
-        </div>
-        <div class="sp-state">
-          <span class="sp-state__ic sp-state__ic--waiting"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="10"/></svg></span>
-          <div><div class="sp-state__t">SP4 · Light KYC</div><div class="sp-state__s">Vouchsafe · name, DOB, ID, selfie · ~3 min</div></div>
-          <span class="sp-state__pill sp-state__pill--waiting">Not yet</span>
-        </div>
-        <div class="sp-state">
-          <span class="sp-state__ic sp-state__ic--waiting"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="10"/></svg></span>
-          <div><div class="sp-state__t">SP5 · Open banking link</div><div class="sp-state__s">TrueLayer · liveness + AML cross-check</div></div>
-          <span class="sp-state__pill sp-state__pill--waiting">Not yet</span>
-        </div>
-        <div class="sp-state">
-          <span class="sp-state__ic sp-state__ic--waiting"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="10"/></svg></span>
-          <div><div class="sp-state__t">SP6 · Sponsor dashboard</div><div class="sp-state__s">sponsor.gaimcontrol.com (web)</div></div>
-          <span class="sp-state__pill sp-state__pill--waiting">Not yet</span>
-        </div>
-      </div>
-      <div class="gc-card">
-        <h3 style="font-size:13px;font-weight:700;margin:0 0 4px">While you wait</h3>
-        <p style="font-size:12px;color:var(--text-secondary);line-height:1.5;margin:0">You can resend, cancel, or invite a second sponsor (up to 3 active per <a href="../41-decisions-log.html" style="color:var(--accent);text-decoration:none">GEN-07</a>).</p>
-        <div style="display:flex;gap:7px;flex-wrap:wrap;padding-top:5px">
-          <button class="gc-btn gc-btn--ghost" style="flex:1;font-size:12px;padding:9px 11px">Resend</button>
-          <button class="gc-btn gc-btn--ghost" style="flex:1;font-size:12px;padding:9px 11px">Cancel</button>
-          <button class="gc-btn gc-btn--ghost" style="flex:1;font-size:12px;padding:9px 11px">+ Sponsor</button>
-        </div>
-      </div>
-      <div class="gc-card--anna gc-card"><span class="anna-av"><img src="../assets/gc-mark-mono-light.svg" alt=""></span><div><p>"Joanna deciding is good either way — yes means a witness, no means she knew herself. Both are wins. The waiting isn't wasted."</p></div></div>
-    </div>`,
+ pend: () => `
+ ${TOPBAR('Invite sent')}
+ <div class="sp-body">
+ <div class="gc-card gc-card--success sp-sent-hero">
+ <span class="sp-sent-hero__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+ <h2>Invite delivered.</h2>
+ <p>Joanna will get an email in ~30 seconds. Sponsor link expires in 7 days. We'll let you know each time her status changes.</p>
+ </div>
+ <div class="gc-card">
+ <h3 style="font-size:14px;font-weight:700;margin:0">Joanna's progress</h3>
+ <div class="sp-state">
+ <span class="sp-state__ic sp-state__ic--done"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></span>
+ <div><div class="sp-state__t">SP2 · Invite email sent</div><div class="sp-state__s">14 May 09:41 · via Customer.io</div></div>
+ <span class="sp-state__pill sp-state__pill--done">Done</span>
+ </div>
+ <div class="sp-state">
+ <span class="sp-state__ic sp-state__ic--pending"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l3 2"/></svg></span>
+ <div><div class="sp-state__t">SP3 · Explainer landing</div><div class="sp-state__s">Joanna reads what sponsorship means</div></div>
+ <span class="sp-state__pill sp-state__pill--pending">Waiting</span>
+ </div>
+ <div class="sp-state">
+ <span class="sp-state__ic sp-state__ic--waiting"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="10"/></svg></span>
+ <div><div class="sp-state__t">SP4 · Light KYC</div><div class="sp-state__s">Vouchsafe · name, DOB, ID, selfie · ~3 min</div></div>
+ <span class="sp-state__pill sp-state__pill--waiting">Not yet</span>
+ </div>
+ <div class="sp-state">
+ <span class="sp-state__ic sp-state__ic--waiting"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="10"/></svg></span>
+ <div><div class="sp-state__t">SP5 · Open banking link</div><div class="sp-state__s">TrueLayer · liveness + AML cross-check</div></div>
+ <span class="sp-state__pill sp-state__pill--waiting">Not yet</span>
+ </div>
+ <div class="sp-state">
+ <span class="sp-state__ic sp-state__ic--waiting"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="10"/></svg></span>
+ <div><div class="sp-state__t">SP6 · Sponsor dashboard</div><div class="sp-state__s">sponsor.gaimcontrol.com (web)</div></div>
+ <span class="sp-state__pill sp-state__pill--waiting">Not yet</span>
+ </div>
+ </div>
+ <div class="gc-card">
+ <h3 style="font-size:13px;font-weight:700;margin:0 0 4px">While you wait</h3>
+ <p style="font-size:12px;color:var(--text-secondary);line-height:1.5;margin:0">You can resend, cancel, or invite a second sponsor (up to 3 active per <a href="../41-decisions-log.html" style="color:var(--accent);text-decoration:none">GEN-07</a>).</p>
+ <div style="display:flex;gap:7px;flex-wrap:wrap;padding-top:5px">
+ <button class="gc-btn gc-btn--ghost" style="flex:1;font-size:12px;padding:9px 11px">Resend</button>
+ <button class="gc-btn gc-btn--ghost" style="flex:1;font-size:12px;padding:9px 11px">Cancel</button>
+ <button class="gc-btn gc-btn--ghost" style="flex:1;font-size:12px;padding:9px 11px">+ Sponsor</button>
+ </div>
+ </div>
+ <div class="gc-card--anna gc-card"><span class="anna-av"><img src="../assets/gc-mark-mono-light.svg" alt=""></span><div><p>"Joanna deciding is good either way. Yes means a witness, no means she knew herself. Both are wins. The waiting isn't wasted."</p></div></div>
+ </div>`,
 
-  sp4: () => `
-    ${SPONSOR_HEADER('Verify your identity', '/verify/id')}
-    <div class="sp-body">
-      <div class="gc-card">
-        <span style="font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;color:var(--text-muted)">Step 1 · Light KYC · Vouchsafe</span>
-        <h2 style="font-size:18px;font-weight:800;letter-spacing:-0.02em;margin:4px 0 0">Quick identity check.</h2>
-        <p style="font-size:12px;color:var(--text-secondary);line-height:1.5;margin:0">Same vendor as user KYC (per <a href="../41-decisions-log.html" style="color:var(--accent);text-decoration:none">CC-03</a>). Light set — no income or affordability. ~3 minutes.</p>
-      </div>
-      <div class="sp-kyc-step sp-kyc-step--done">
-        <span class="sp-kyc-step__n"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></span>
-        <div><div class="sp-kyc-step__t">Name + DOB</div><div class="sp-kyc-step__s">Joanna Catherine Murray · 04 Aug 1988</div></div>
-        <span class="sp-kyc-step__pill">Done</span>
-      </div>
-      <div class="sp-kyc-step sp-kyc-step--done">
-        <span class="sp-kyc-step__n"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></span>
-        <div><div class="sp-kyc-step__t">Address</div><div class="sp-kyc-step__s">22 Carlton Grove, Leeds LS6 2NP</div></div>
-        <span class="sp-kyc-step__pill">Done</span>
-      </div>
-      <div class="sp-kyc-step sp-kyc-step--done">
-        <span class="sp-kyc-step__n"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></span>
-        <div><div class="sp-kyc-step__t">Photo ID</div><div class="sp-kyc-step__s">UK passport · scanned + verified</div></div>
-        <span class="sp-kyc-step__pill">Done</span>
-      </div>
-      <div class="sp-kyc-step sp-kyc-step--current">
-        <span class="sp-kyc-step__n">4</span>
-        <div><div class="sp-kyc-step__t">Selfie · liveness</div><div class="sp-kyc-step__s">Match against your ID photo</div></div>
-        <span class="sp-kyc-step__pill">Now</span>
-      </div>
-      <div class="sp-cam-frame">
-        <div class="sp-cam-oval"></div>
-        <div class="sp-cam-frame__t">Align your face in the oval</div>
-        <div class="sp-cam-frame__s">Blink when prompted · we capture in ~3 seconds. Vouchsafe never stores raw biometric data.</div>
-      </div>
-      <div class="gc-card gc-card--info">
-        <h3 style="font-size:12.5px;font-weight:700;margin:0">Why this exists</h3>
-        <p style="font-size:11.5px;color:var(--text-secondary);line-height:1.5;margin:0">We KYC sponsors so authorisation powers can't be exploited by a fake email. Per <a href="../41-decisions-log.html" style="color:var(--accent);text-decoration:none">GEN-03</a>.</p>
-      </div>
-      <button class="gc-btn gc-btn--primary gc-btn--full" onclick="next()" style="margin-top:auto">Start selfie capture</button>
-    </div>`,
+ sp4: () => `
+ ${SPONSOR_HEADER('Verify your identity', '/verify/id')}
+ <div class="sp-body">
+ <div class="gc-card">
+ <span style="font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;color:var(--text-muted)">Step 1 · Light KYC · Vouchsafe</span>
+ <h2 style="font-size:18px;font-weight:800;letter-spacing:-0.02em;margin:4px 0 0">Quick identity check.</h2>
+ <p style="font-size:12px;color:var(--text-secondary);line-height:1.5;margin:0">Same vendor as user KYC (per <a href="../41-decisions-log.html" style="color:var(--accent);text-decoration:none">CC-03</a>). Light set. No income or affordability. ~3 minutes.</p>
+ </div>
+ <div class="sp-kyc-step sp-kyc-step--done">
+ <span class="sp-kyc-step__n"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></span>
+ <div><div class="sp-kyc-step__t">Name + DOB</div><div class="sp-kyc-step__s">Joanna Catherine Murray · 04 Aug 1988</div></div>
+ <span class="sp-kyc-step__pill">Done</span>
+ </div>
+ <div class="sp-kyc-step sp-kyc-step--done">
+ <span class="sp-kyc-step__n"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></span>
+ <div><div class="sp-kyc-step__t">Address</div><div class="sp-kyc-step__s">22 Carlton Grove, Leeds LS6 2NP</div></div>
+ <span class="sp-kyc-step__pill">Done</span>
+ </div>
+ <div class="sp-kyc-step sp-kyc-step--done">
+ <span class="sp-kyc-step__n"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></span>
+ <div><div class="sp-kyc-step__t">Photo ID</div><div class="sp-kyc-step__s">UK passport · scanned + verified</div></div>
+ <span class="sp-kyc-step__pill">Done</span>
+ </div>
+ <div class="sp-kyc-step sp-kyc-step--current">
+ <span class="sp-kyc-step__n">4</span>
+ <div><div class="sp-kyc-step__t">Selfie · liveness</div><div class="sp-kyc-step__s">Match against your ID photo</div></div>
+ <span class="sp-kyc-step__pill">Now</span>
+ </div>
+ <div class="sp-cam-frame">
+ <div class="sp-cam-oval"></div>
+ <div class="sp-cam-frame__t">Align your face in the oval</div>
+ <div class="sp-cam-frame__s">Blink when prompted · we capture in ~3 seconds. Vouchsafe never stores raw biometric data.</div>
+ </div>
+ <div class="gc-card gc-card--info">
+ <h3 style="font-size:12.5px;font-weight:700;margin:0">Why this exists</h3>
+ <p style="font-size:11.5px;color:var(--text-secondary);line-height:1.5;margin:0">We KYC sponsors so authorisation powers can't be exploited by a fake email. Per <a href="../41-decisions-log.html" style="color:var(--accent);text-decoration:none">GEN-03</a>.</p>
+ </div>
+ <button class="gc-btn gc-btn--primary gc-btn--full" onclick="next()" style="margin-top:auto">Start selfie capture</button>
+ </div>`,
 
-  sp5: () => `
-    ${SPONSOR_HEADER('Link a bank account', '/verify/bank')}
-    <div class="sp-body">
-      <div class="gc-card">
-        <span style="font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;color:var(--text-muted)">Step 2 · Open banking · TrueLayer</span>
-        <h2 style="font-size:18px;font-weight:800;letter-spacing:-0.02em;margin:4px 0 0">Pick the bank you'll link.</h2>
-        <p style="font-size:12px;color:var(--text-secondary);line-height:1.5;margin:0">Any account in your own name. We confirm the name matches your KYC, then disconnect. We don't read your transactions.</p>
-      </div>
-      <div class="sp-bank-grid-m">
-        <button class="sp-bank-m is-on" onclick="pickBank(this)"><span class="sp-bank-m__logo" style="background:#0075a4">B</span><span class="sp-bank-m__n">Barclays</span></button>
-        <button class="sp-bank-m" onclick="pickBank(this)"><span class="sp-bank-m__logo" style="background:#db0011">H</span><span class="sp-bank-m__n">HSBC</span></button>
-        <button class="sp-bank-m" onclick="pickBank(this)"><span class="sp-bank-m__logo" style="background:#1c1c1c">M</span><span class="sp-bank-m__n">Monzo</span></button>
-        <button class="sp-bank-m" onclick="pickBank(this)"><span class="sp-bank-m__logo" style="background:#006a4d">L</span><span class="sp-bank-m__n">Lloyds</span></button>
-        <button class="sp-bank-m" onclick="pickBank(this)"><span class="sp-bank-m__logo" style="background:#5f259f">N</span><span class="sp-bank-m__n">NatWest</span></button>
-        <button class="sp-bank-m" onclick="pickBank(this)"><span class="sp-bank-m__logo" style="background:#ec0000">S</span><span class="sp-bank-m__n">Santander</span></button>
-        <button class="sp-bank-m" onclick="pickBank(this)"><span class="sp-bank-m__logo" style="background:#7d3c98">S</span><span class="sp-bank-m__n">Starling</span></button>
-        <button class="sp-bank-m" onclick="pickBank(this)"><span class="sp-bank-m__logo" style="background:#0075c9">N</span><span class="sp-bank-m__n">Nationwide</span></button>
-      </div>
-      <div class="gc-card" style="padding:13px 14px">
-        <h3 style="font-size:13px;font-weight:700;margin:0">What we'll do once linked</h3>
-        <ul style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:6px;font-size:11.5px;color:var(--text-secondary);line-height:1.5">
-          <li>✓ Confirm account name matches your KYC · one-time</li>
-          <li>✓ AML cross-check via Algbra (PEP / sanctions / fraud)</li>
-          <li>✗ Analyse your spending · we don't look at transactions</li>
-          <li>✗ Move money between you and Sam · sponsor has no payment rail</li>
-        </ul>
-      </div>
-      <div class="gc-card gc-card--info">
-        <h3 style="font-size:12.5px;font-weight:700;margin:0">Why a bank link?</h3>
-        <p style="font-size:11.5px;color:var(--text-secondary);line-height:1.5;margin:0">Ties you to a verified account in your own name. Reduces coercion risk · the alternative (email-only sponsor) is gameable. Per <a href="../41-decisions-log.html" style="color:var(--accent);text-decoration:none">GEN-03</a>. Re-consent every 90 days per FCA.</p>
-      </div>
-      <button class="gc-btn gc-btn--primary gc-btn--full" onclick="next()" style="margin-top:auto">Continue with Barclays →</button>
-    </div>`,
+ sp5: () => `
+ ${SPONSOR_HEADER('Link a bank account', '/verify/bank')}
+ <div class="sp-body">
+ <div class="gc-card">
+ <span style="font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;color:var(--text-muted)">Step 2 · Open banking · TrueLayer</span>
+ <h2 style="font-size:18px;font-weight:800;letter-spacing:-0.02em;margin:4px 0 0">Pick the bank you'll link.</h2>
+ <p style="font-size:12px;color:var(--text-secondary);line-height:1.5;margin:0">Any account in your own name. We confirm the name matches your KYC, then disconnect. We don't read your transactions.</p>
+ </div>
+ <div class="sp-bank-grid-m">
+ <button class="sp-bank-m is-on" onclick="pickBank(this)"><span class="sp-bank-m__logo" style="background:#0075a4">B</span><span class="sp-bank-m__n">Barclays</span></button>
+ <button class="sp-bank-m" onclick="pickBank(this)"><span class="sp-bank-m__logo" style="background:#db0011">H</span><span class="sp-bank-m__n">HSBC</span></button>
+ <button class="sp-bank-m" onclick="pickBank(this)"><span class="sp-bank-m__logo" style="background:#1c1c1c">M</span><span class="sp-bank-m__n">Monzo</span></button>
+ <button class="sp-bank-m" onclick="pickBank(this)"><span class="sp-bank-m__logo" style="background:#006a4d">L</span><span class="sp-bank-m__n">Lloyds</span></button>
+ <button class="sp-bank-m" onclick="pickBank(this)"><span class="sp-bank-m__logo" style="background:#5f259f">N</span><span class="sp-bank-m__n">NatWest</span></button>
+ <button class="sp-bank-m" onclick="pickBank(this)"><span class="sp-bank-m__logo" style="background:#ec0000">S</span><span class="sp-bank-m__n">Santander</span></button>
+ <button class="sp-bank-m" onclick="pickBank(this)"><span class="sp-bank-m__logo" style="background:#7d3c98">S</span><span class="sp-bank-m__n">Starling</span></button>
+ <button class="sp-bank-m" onclick="pickBank(this)"><span class="sp-bank-m__logo" style="background:#0075c9">N</span><span class="sp-bank-m__n">Nationwide</span></button>
+ </div>
+ <div class="gc-card" style="padding:13px 14px">
+ <h3 style="font-size:13px;font-weight:700;margin:0">What we'll do once linked</h3>
+ <ul style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:6px;font-size:11.5px;color:var(--text-secondary);line-height:1.5">
+ <li>✓ Confirm account name matches your KYC · one-time</li>
+ <li>✓ AML cross-check via Algbra (PEP / sanctions / fraud)</li>
+ <li>✗ Analyse your spending · we don't look at transactions</li>
+ <li>✗ Move money between you and Sam · sponsor has no payment rail</li>
+ </ul>
+ </div>
+ <div class="gc-card gc-card--info">
+ <h3 style="font-size:12.5px;font-weight:700;margin:0">Why a bank link?</h3>
+ <p style="font-size:11.5px;color:var(--text-secondary);line-height:1.5;margin:0">Ties you to a verified account in your own name. Reduces coercion risk · the alternative (email-only sponsor) is gameable. Per <a href="../41-decisions-log.html" style="color:var(--accent);text-decoration:none">GEN-03</a>. Re-consent every 90 days per FCA.</p>
+ </div>
+ <button class="gc-btn gc-btn--primary gc-btn--full" onclick="next()" style="margin-top:auto">Continue with Barclays →</button>
+ </div>`,
 
-  sp6: () => `
-    ${SPONSOR_HEADER('Sam · sponsor dashboard', '/dashboard')}
-    <div class="sp-body">
-      <div class="gc-card" style="background:linear-gradient(135deg,var(--s-50),var(--p-40));color:white;border-color:transparent;padding:15px 16px">
-        <div style="display:flex;align-items:center;gap:11px">
-          <span style="width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,0.18);color:white;display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:16px">S</span>
-          <div>
-            <div style="font-size:16px;font-weight:800;letter-spacing:-0.01em">Sam Kennedy</div>
-            <div style="font-size:11px;opacity:0.85;font-family:'JetBrains Mono',monospace;margin-top:2px">Sponsoring since 18 Apr · all good</div>
-          </div>
-        </div>
-      </div>
-      <div class="sp6-stat-row">
-        <div class="sp6-stat">
-          <div class="sp6-stat__l">Clean streak</div>
-          <div class="sp6-stat__n">Day 58</div>
-          <div class="sp6-stat__d sp6-stat__d--ok">↑ Longest yet</div>
-        </div>
-        <div class="sp6-stat">
-          <div class="sp6-stat__l">Loan</div>
-          <div class="sp6-stat__n">1 / 36</div>
-          <div class="sp6-stat__d">Next 30 Jun</div>
-        </div>
-      </div>
-      <div class="gc-card" style="padding:13px 14px">
-        <h3 style="font-size:13px;font-weight:700;margin:0">Last 14 days</h3>
-        <div class="sp6-tl">
-          <span class="sp6-tl__pill sp6-tl__pill--milestone">Milestone</span>
-          <div><div class="sp6-tl__t">Day 58 clean</div><div class="sp6-tl__s">New personal best · prev longest 23.</div><div class="sp6-tl__when">14 May · 09:01</div></div>
-        </div>
-        <div class="sp6-tl">
-          <span class="sp6-tl__pill sp6-tl__pill--message">Message</span>
-          <div><div class="sp6-tl__t">"Just checking in"</div><div class="sp6-tl__s">Standard check-in template · reply outside the app.</div><div class="sp6-tl__when">12 May · 21:30</div></div>
-        </div>
-        <div class="sp6-tl">
-          <span class="sp6-tl__pill sp6-tl__pill--hold">Hold</span>
-          <div><div class="sp6-tl__t">Auto Relapse Hold opened</div><div class="sp6-tl__s">Betting MCC refused · 7-day pause · no action needed.</div><div class="sp6-tl__when">06 May · 22:14</div></div>
-        </div>
-        <div class="sp6-tl">
-          <span class="sp6-tl__pill sp6-tl__pill--milestone">Payment</span>
-          <div><div class="sp6-tl__t">Loan 1/36 cleared</div><div class="sp6-tl__s">£311.20 · 35 to go · balance £8,089.</div><div class="sp6-tl__when">01 May · 09:00</div></div>
-        </div>
-      </div>
-      <div class="gc-card" style="padding:13px 14px">
-        <h3 style="font-size:13px;font-weight:700;margin:0">Per-MCC · last 30 days</h3>
-        <p style="font-size:11px;color:var(--text-muted);margin:0">Categories only · never merchants.</p>
-        <div class="sp6-mcc">
-          <div class="sp6-mcc-row"><div class="sp6-mcc-head"><span>Groceries</span><span class="sp6-mcc-head__n">£312</span></div><div class="sp6-mcc-bar"><div style="width:78%;background:var(--t-50)"></div></div></div>
-          <div class="sp6-mcc-row"><div class="sp6-mcc-head"><span>Transport</span><span class="sp6-mcc-head__n">£104</span></div><div class="sp6-mcc-bar"><div style="width:48%;background:var(--t-50)"></div></div></div>
-          <div class="sp6-mcc-row"><div class="sp6-mcc-head"><span>Subscriptions</span><span class="sp6-mcc-head__n">£64</span></div><div class="sp6-mcc-bar"><div style="width:30%;background:var(--t-50)"></div></div></div>
-          <div class="sp6-mcc-row"><div class="sp6-mcc-head"><span>Alcohol</span><span class="sp6-mcc-head__n">£0 · blocked</span></div><div class="sp6-mcc-bar"><div style="width:100%;background:var(--e-50)"></div></div></div>
-          <div class="sp6-mcc-row"><div class="sp6-mcc-head"><span>Gambling 7995</span><span class="sp6-mcc-head__n">£0 · 2 declines</span></div><div class="sp6-mcc-bar"><div style="width:100%;background:var(--e-50)"></div></div></div>
-        </div>
-      </div>
-      <div class="gc-card" style="padding:11px 13px;text-align:center">
-        <p style="font-size:11px;color:var(--text-muted);margin:0;line-height:1.5">Co-sign queue: empty · threshold £500.<br>Push + email enabled · cannot DM Sam in-app.</p>
-      </div>
-      <div class="gc-card gc-card--info">
-        <p style="font-size:11.5px;color:var(--text-secondary);line-height:1.5;margin:0">Web-only at MVP per spec — but the page is responsive, so this is what Joanna sees if she opens sponsor.gaimcontrol.com on her phone.</p>
-      </div>
-    </div>`,
+ sp6: () => `
+ ${SPONSOR_HEADER('Sam · sponsor dashboard', '/dashboard')}
+ <div class="sp-body">
+ <div class="gc-card" style="background:linear-gradient(135deg,var(--s-50),var(--p-40));color:white;border-color:transparent;padding:15px 16px">
+ <div style="display:flex;align-items:center;gap:11px">
+ <span style="width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,0.18);color:white;display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:16px">S</span>
+ <div>
+ <div style="font-size:16px;font-weight:800;letter-spacing:-0.01em">Sam Kennedy</div>
+ <div style="font-size:11px;opacity:0.85;font-family:'JetBrains Mono',monospace;margin-top:2px">Sponsoring since 18 Apr · all good</div>
+ </div>
+ </div>
+ </div>
+ <div class="sp6-stat-row">
+ <div class="sp6-stat">
+ <div class="sp6-stat__l">Clean streak</div>
+ <div class="sp6-stat__n">Day 58</div>
+ <div class="sp6-stat__d sp6-stat__d--ok">↑ Longest yet</div>
+ </div>
+ <div class="sp6-stat">
+ <div class="sp6-stat__l">Loan</div>
+ <div class="sp6-stat__n">1 / 36</div>
+ <div class="sp6-stat__d">Next 30 Jun</div>
+ </div>
+ </div>
+ <div class="gc-card" style="padding:13px 14px">
+ <h3 style="font-size:13px;font-weight:700;margin:0">Last 14 days</h3>
+ <div class="sp6-tl">
+ <span class="sp6-tl__pill sp6-tl__pill--milestone">Milestone</span>
+ <div><div class="sp6-tl__t">Day 58 clean</div><div class="sp6-tl__s">New personal best · prev longest 23.</div><div class="sp6-tl__when">14 May · 09:01</div></div>
+ </div>
+ <div class="sp6-tl">
+ <span class="sp6-tl__pill sp6-tl__pill--message">Message</span>
+ <div><div class="sp6-tl__t">"Just checking in"</div><div class="sp6-tl__s">Standard check-in template · reply outside the app.</div><div class="sp6-tl__when">12 May · 21:30</div></div>
+ </div>
+ <div class="sp6-tl">
+ <span class="sp6-tl__pill sp6-tl__pill--hold">Hold</span>
+ <div><div class="sp6-tl__t">Auto Relapse Hold opened</div><div class="sp6-tl__s">Betting MCC refused · 7-day pause · no action needed.</div><div class="sp6-tl__when">06 May · 22:14</div></div>
+ </div>
+ <div class="sp6-tl">
+ <span class="sp6-tl__pill sp6-tl__pill--milestone">Payment</span>
+ <div><div class="sp6-tl__t">Loan 1/36 cleared</div><div class="sp6-tl__s">£311.20 · 35 to go · balance £8,089.</div><div class="sp6-tl__when">01 May · 09:00</div></div>
+ </div>
+ </div>
+ <div class="gc-card" style="padding:13px 14px">
+ <h3 style="font-size:13px;font-weight:700;margin:0">Per-MCC · last 30 days</h3>
+ <p style="font-size:11px;color:var(--text-muted);margin:0">Categories only · never merchants.</p>
+ <div class="sp6-mcc">
+ <div class="sp6-mcc-row"><div class="sp6-mcc-head"><span>Groceries</span><span class="sp6-mcc-head__n">£312</span></div><div class="sp6-mcc-bar"><div style="width:78%;background:var(--t-50)"></div></div></div>
+ <div class="sp6-mcc-row"><div class="sp6-mcc-head"><span>Transport</span><span class="sp6-mcc-head__n">£104</span></div><div class="sp6-mcc-bar"><div style="width:48%;background:var(--t-50)"></div></div></div>
+ <div class="sp6-mcc-row"><div class="sp6-mcc-head"><span>Subscriptions</span><span class="sp6-mcc-head__n">£64</span></div><div class="sp6-mcc-bar"><div style="width:30%;background:var(--t-50)"></div></div></div>
+ <div class="sp6-mcc-row"><div class="sp6-mcc-head"><span>Alcohol</span><span class="sp6-mcc-head__n">£0 · blocked</span></div><div class="sp6-mcc-bar"><div style="width:100%;background:var(--e-50)"></div></div></div>
+ <div class="sp6-mcc-row"><div class="sp6-mcc-head"><span>Gambling 7995</span><span class="sp6-mcc-head__n">£0 · 2 declines</span></div><div class="sp6-mcc-bar"><div style="width:100%;background:var(--e-50)"></div></div></div>
+ </div>
+ </div>
+ <div class="gc-card" style="padding:11px 13px;text-align:center">
+ <p style="font-size:11px;color:var(--text-muted);margin:0;line-height:1.5">Co-sign queue: empty · threshold £500.<br>Push + email enabled · cannot DM Sam in-app.</p>
+ </div>
+ <div class="gc-card gc-card--info">
+ <p style="font-size:11.5px;color:var(--text-secondary);line-height:1.5;margin:0">Web-only at MVP per spec. But the page is responsive, so this is what Joanna sees if she opens sponsor.gaimcontrol.com on her phone.</p>
+ </div>
+ </div>`,
 
-  sp7: () => `
-    ${TOPBAR('Sponsor · §12 PR4')}
-    <div class="sp-body">
-      <div class="gc-card">
-        <span style="font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;color:var(--text-muted)">SP7 · sponsor management</span>
-        <h2 style="font-size:17px;font-weight:800;letter-spacing:-0.02em;margin:4px 0 0">Your sponsors</h2>
-        <p style="font-size:12px;color:var(--text-secondary);line-height:1.5;margin:0">Up to 3 active sponsors (GEN-07). Authorisations are any-of-N · notifications go to all. Each sponsor was invited and verified separately — no role differences at MVP.</p>
-      </div>
-      <div class="sp-mgmt-card">
-        <span class="sp-mgmt-card__av">JM</span>
-        <div style="flex:1">
-          <div class="sp-mgmt-card__nm">Joanna Murray <span class="sp-cap sp-cap--active">Active</span></div>
-          <div class="sp-mgmt-card__sub">Sister · since 18 Apr 2026 · 7/7 digests</div>
-        </div>
-        <span class="sp-mgmt-card__chev">→</span>
-      </div>
-      <div class="sp-mgmt-card sp-mgmt-card--pending">
-        <span class="sp-mgmt-card__av" style="background:linear-gradient(135deg,var(--w-60),var(--w-30))">DW</span>
-        <div style="flex:1">
-          <div class="sp-mgmt-card__nm">Dr Williams <span class="sp-cap sp-cap--pending">SP4 KYC</span></div>
-          <div class="sp-mgmt-card__sub">Clinician · invited 10 May · awaiting KYC</div>
-        </div>
-        <span class="sp-mgmt-card__chev">→</span>
-      </div>
-      <button class="gc-btn gc-btn--ghost gc-btn--full" style="border-style:dashed" onclick="go(0)">+ Invite a third sponsor</button>
-      <div class="gc-card">
-        <h3 style="font-size:13.5px;font-weight:700;margin:0">What Joanna can see</h3>
-        <div class="sp-perm"><span class="sp-perm__ic sp-perm__ic--y"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="sp-perm__t">Streak status &amp; milestones</div><div class="sp-perm__s">Day 58 clean · payment 1/36 cleared</div></div></div>
-        <div class="sp-perm"><span class="sp-perm__ic sp-perm__ic--y"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="sp-perm__t">Relapse Hold notices</div><div class="sp-perm__s">Auto + manual · no transaction detail</div></div></div>
-        <div class="sp-perm"><span class="sp-perm__ic sp-perm__ic--y"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="sp-perm__t">Loan SECCI (per LO-07)</div><div class="sp-perm__s">Pre-contract info · default-on</div></div></div>
-        <div class="sp-perm"><span class="sp-perm__ic sp-perm__ic--y"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="sp-perm__t">Authorise transfers &gt; threshold</div><div class="sp-perm__s">Any-of-N · she + Dr Williams</div></div></div>
-        <div class="sp-perm"><span class="sp-perm__ic sp-perm__ic--n"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6 6 18M6 6l12 12"/></svg></span><div><div class="sp-perm__t">Anna chat content</div><div class="sp-perm__s">Sponsor-blind per AN-05</div></div></div>
-        <div class="sp-perm"><span class="sp-perm__ic sp-perm__ic--n"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6 6 18M6 6l12 12"/></svg></span><div><div class="sp-perm__t">Transactions · MCC blocks</div><div class="sp-perm__s">Day-to-day private</div></div></div>
-      </div>
-      <div class="sp-decision">decisions · <a href="../41-decisions-log.html">GEN-03</a> KYC + open banking · <a href="../41-decisions-log.html">GEN-07</a> max 3 · <a href="../41-decisions-log.html">CC-03</a> light KYC · <a href="../41-decisions-log.html">ON-04</a> A/B invite timing</div>
-    </div>`,
+ sp7: () => `
+ ${TOPBAR('Sponsor · §12 PR4')}
+ <div class="sp-body">
+ <div class="gc-card">
+ <span style="font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;color:var(--text-muted)">SP7 · sponsor management</span>
+ <h2 style="font-size:17px;font-weight:800;letter-spacing:-0.02em;margin:4px 0 0">Your sponsors</h2>
+ <p style="font-size:12px;color:var(--text-secondary);line-height:1.5;margin:0">Up to 3 active sponsors (GEN-07). Authorisations are any-of-N · notifications go to all. Each sponsor was invited and verified separately. No role differences at MVP.</p>
+ </div>
+ <div class="sp-mgmt-card">
+ <span class="sp-mgmt-card__av">JM</span>
+ <div style="flex:1">
+ <div class="sp-mgmt-card__nm">Joanna Murray <span class="sp-cap sp-cap--active">Active</span></div>
+ <div class="sp-mgmt-card__sub">Sister · since 18 Apr 2026 · 7/7 digests</div>
+ </div>
+ <span class="sp-mgmt-card__chev">→</span>
+ </div>
+ <div class="sp-mgmt-card sp-mgmt-card--pending">
+ <span class="sp-mgmt-card__av" style="background:linear-gradient(135deg,var(--w-60),var(--w-30))">DW</span>
+ <div style="flex:1">
+ <div class="sp-mgmt-card__nm">Dr Williams <span class="sp-cap sp-cap--pending">SP4 KYC</span></div>
+ <div class="sp-mgmt-card__sub">Clinician · invited 10 May · awaiting KYC</div>
+ </div>
+ <span class="sp-mgmt-card__chev">→</span>
+ </div>
+ <button class="gc-btn gc-btn--ghost gc-btn--full" style="border-style:dashed" onclick="go(0)">+ Invite a third sponsor</button>
+ <div class="gc-card">
+ <h3 style="font-size:13.5px;font-weight:700;margin:0">What Joanna can see</h3>
+ <div class="sp-perm"><span class="sp-perm__ic sp-perm__ic--y"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="sp-perm__t">Streak status &amp; milestones</div><div class="sp-perm__s">Day 58 clean · payment 1/36 cleared</div></div></div>
+ <div class="sp-perm"><span class="sp-perm__ic sp-perm__ic--y"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="sp-perm__t">Relapse Hold notices</div><div class="sp-perm__s">Auto + manual · no transaction detail</div></div></div>
+ <div class="sp-perm"><span class="sp-perm__ic sp-perm__ic--y"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="sp-perm__t">Loan SECCI (per LO-07)</div><div class="sp-perm__s">Pre-contract info · default-on</div></div></div>
+ <div class="sp-perm"><span class="sp-perm__ic sp-perm__ic--y"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="sp-perm__t">Authorise transfers &gt; threshold</div><div class="sp-perm__s">Any-of-N · she + Dr Williams</div></div></div>
+ <div class="sp-perm"><span class="sp-perm__ic sp-perm__ic--n"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6 6 18M6 6l12 12"/></svg></span><div><div class="sp-perm__t">Anna chat content</div><div class="sp-perm__s">Sponsor-blind per AN-05</div></div></div>
+ <div class="sp-perm"><span class="sp-perm__ic sp-perm__ic--n"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6 6 18M6 6l12 12"/></svg></span><div><div class="sp-perm__t">Transactions · MCC blocks</div><div class="sp-perm__s">Day-to-day private</div></div></div>
+ </div>
+ <div class="sp-decision">decisions · <a href="../41-decisions-log.html">GEN-03</a> KYC + open banking · <a href="../41-decisions-log.html">GEN-07</a> max 3 · <a href="../41-decisions-log.html">CC-03</a> light KYC · <a href="../41-decisions-log.html">ON-04</a> A/B invite timing</div>
+ </div>`,
 };
 
 let idx = 0;
 function pickRel(el) { el.parentElement.querySelectorAll('.is-on').forEach(s => s.classList.remove('is-on')); el.classList.add('is-on'); }
 function pickBank(el) { el.parentElement.querySelectorAll('.is-on').forEach(s => s.classList.remove('is-on')); el.classList.add('is-on'); }
 function render() {
-  const screen = SCREENS[idx];
-  document.getElementById('stage').innerHTML = `<div class="screen" style="display:flex;flex-direction:column;flex:1;min-height:0">${builders[screen.kind]()}</div>`;
-  document.getElementById('screenId').textContent = screen.id;
-  document.getElementById('screenName').textContent = screen.name;
-  const aud = document.getElementById('audiencePill');
-  if (screen.audience === 'sponsor') { aud.textContent = 'Sponsor · Joanna'; aud.className = 'proto-modebar__pill proto-modebar__pill--sponsor'; }
-  else { aud.textContent = 'User · Sam'; aud.className = 'proto-modebar__pill'; aud.style.background = 'var(--bg-surface-2)'; }
-  document.getElementById('progressFill').style.width = ((idx + 1) / SCREENS.length * 100) + '%';
-  document.getElementById('navPrev').disabled = idx === 0;
-  document.getElementById('navNext').disabled = idx === SCREENS.length - 1;
-  document.querySelectorAll('.proto-scrubber__item').forEach((el, i) => { el.classList.toggle('is-active', i === idx); if (i === idx) el.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); });
-  document.getElementById('contextBody').innerHTML = CTX[screen.kind] || screen.name;
+ const screen = SCREENS[idx];
+ document.getElementById('stage').innerHTML = `<div class="screen" style="display:flex;flex-direction:column;flex:1;min-height:0">${builders[screen.kind]()}</div>`;
+ document.getElementById('screenId').textContent = screen.id;
+ document.getElementById('screenName').textContent = screen.name;
+ const aud = document.getElementById('audiencePill');
+ if (screen.audience === 'sponsor') { aud.textContent = 'Sponsor · Joanna'; aud.className = 'proto-modebar__pill proto-modebar__pill--sponsor'; }
+ else { aud.textContent = 'User · Sam'; aud.className = 'proto-modebar__pill'; aud.style.background = 'var(--bg-surface-2)'; }
+ document.getElementById('progressFill').style.width = ((idx + 1) / SCREENS.length * 100) + '%';
+ document.getElementById('navPrev').disabled = idx === 0;
+ document.getElementById('navNext').disabled = idx === SCREENS.length - 1;
+ document.querySelectorAll('.proto-scrubber__item').forEach((el, i) => { el.classList.toggle('is-active', i === idx); if (i === idx) el.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); });
+ document.getElementById('contextBody').innerHTML = CTX[screen.kind] || screen.name;
 }
 function next() { if (idx < SCREENS.length - 1) { idx++; render(); } }
 function prev() { if (idx > 0) { idx--; render(); } }

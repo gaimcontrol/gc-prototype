@@ -2,7 +2,7 @@
 
 A hand-coded HTML/CSS/JS prototype of GaimControl across mobile (iPhone 14 frame) and web. No build step. Every screen is wired straight from the spec section IDs (ON1, BK1, AN1, etc.) so engineers and reviewers can compare side-by-side with the canonical spec files in `../ui-specs/`.
 
-**Status:** 11 / 11 mobile flows + 13 / 13 web surfaces ready — 100%.
+**Status:** 11 / 11 mobile flows + 13 / 13 web surfaces ready. 100%.
 
 ---
 
@@ -16,24 +16,24 @@ A hand-coded HTML/CSS/JS prototype of GaimControl across mobile (iPhone 14 frame
 
 ### Mobile flows (11)
 
-1. §04 Auth & session — `mobile-auth.html`
-2. §05 Onboarding intake — `mobile-onboarding.html`
-3. §06 Banking dashboard — `mobile-banking.html`
-4. §07 Cards + sponsor — `mobile-cards.html`
-5. §08 Anna · CBT — `mobile-anna.html`
-6. §09 Loan + SECCI — `mobile-loan.html`
-7. §10 Repayment + Hold — `mobile-repayment.html`
-8. §11 Safeguarding — `mobile-safeguarding.html`
-9. §12 Profile & settings — `mobile-profile.html`
-10. §15 Sponsor onboarding — `mobile-sponsor-onboarding.html`
-11. §16 Off-boarding — `mobile-offboarding.html`
+1. §04 Auth & session. `mobile-auth.html`
+2. §05 Onboarding intake. `mobile-onboarding.html`
+3. §06 Banking dashboard. `mobile-banking.html`
+4. §07 Cards + sponsor. `mobile-cards.html`
+5. §08 Anna · CBT. `mobile-anna.html`
+6. §09 Loan + SECCI. `mobile-loan.html`
+7. §10 Repayment + Hold. `mobile-repayment.html`
+8. §11 Safeguarding. `mobile-safeguarding.html`
+9. §12 Profile & settings. `mobile-profile.html`
+10. §15 Sponsor onboarding. `mobile-sponsor-onboarding.html`
+11. §16 Off-boarding. `mobile-offboarding.html`
 
 ### Web flows (13)
 
 §04 → §16 same as mobile, plus:
 
-- §13 Admin console (ops-only, `admin.gaimcontrol.com`) — `web-admin.html`
-- §14 Marketing site (public, `gaimcontrol.com`) — `web-marketing.html`
+- §13 Admin console (ops-only, `admin.gaimcontrol.com`). `web-admin.html`
+- §14 Marketing site (public, `gaimcontrol.com`). `web-marketing.html`
 
 ---
 
@@ -41,9 +41,9 @@ A hand-coded HTML/CSS/JS prototype of GaimControl across mobile (iPhone 14 frame
 
 Every per-flow page has three layers of navigation:
 
-1. **Within a flow** — click the ← / → arrows in the centre toolbar to step between screens, or click any screen ID in the left scrubber. Plain **←** / **→** arrow keys do the same.
-2. **Between flows** — the sticky top bar shows every flow as a §xx pill (current one highlighted). Click any pill to jump, or use the **← prev-flow / next-flow →** buttons on the right. Keyboard: **Shift + ←** / **Shift + →**.
-3. **Direct entry** — the index pages list every flow with a "Ready · open →" button.
+1. **Within a flow**. click the ← / → arrows in the centre toolbar to step between screens, or click any screen ID in the left scrubber. Plain **←** / **→** arrow keys do the same.
+2. **Between flows**. the sticky top bar shows every flow as a §xx pill (current one highlighted). Click any pill to jump, or use the **← prev-flow / next-flow →** buttons on the right. Keyboard: **Shift + ←** / **Shift + →**.
+3. **Direct entry**. the index pages list every flow with a "Ready · open →" button.
 
 **Dark/light theme toggle** lives in the left sidebar of every per-flow page. State persists in `localStorage`.
 
@@ -57,12 +57,12 @@ The prototype is pure static HTML. No npm install, no build.
 cd prototype
 python3 -m http.server 8000
 # or
-npx serve .
+npx serve.
 ```
 
 Open `http://localhost:8000/index.html`.
 
-**Why a server, not file://** — the flow-chain script and a couple of in-flow features use relative paths to `../assets/`. Some browsers refuse to load those from `file://`. Any static server works.
+**Why a server, not file://**. the flow-chain script and a couple of in-flow features use relative paths to `../assets/`. Some browsers refuse to load those from `file://`. Any static server works.
 
 ---
 
@@ -70,17 +70,17 @@ Open `http://localhost:8000/index.html`.
 
 ```
 gaimcontrol-prototype/
-├── README.md              ← this file
-├── prototype/             ← all HTML pages (this folder)
-│   ├── index.html         ← cover · pick mobile or web
-│   ├── mobile-prototype.html  ← full mobile tour cover
-│   ├── web-prototype.html     ← full web tour cover
-│   ├── flow-chain.js      ← shared top-strip navigation
-│   ├── mobile-*.html      ← 11 mobile per-flow pages
-│   └── web-*.html         ← 13 web per-flow pages
-└── assets/                ← brand marks · favicons
-    ├── gc-mark-mono-light.svg
-    └── gc-favicon.svg
+├── README.md ← this file
+├── prototype/ ← all HTML pages (this folder)
+│ ├── index.html ← cover · pick mobile or web
+│ ├── mobile-prototype.html ← full mobile tour cover
+│ ├── web-prototype.html ← full web tour cover
+│ ├── flow-chain.js ← shared top-strip navigation
+│ ├── mobile-*.html ← 11 mobile per-flow pages
+│ └── web-*.html ← 13 web per-flow pages
+└── assets/ ← brand marks · favicons
+ ├── gc-mark-mono-light.svg
+ └── gc-favicon.svg
 ```
 
 **Important:** the HTML files reference `../assets/...` so the `assets/` folder must remain a sibling of `prototype/`. If you flatten the layout, the brand marks will 404.
@@ -89,7 +89,7 @@ gaimcontrol-prototype/
 
 ## Decisions log
 
-Every screen has a "context" panel underneath citing the relevant entries in the canonical decisions log (`../ui-specs/41-decisions-log.html`). Decision IDs follow the pattern `GEN-01`, `ON-04`, `BK-03`, `SF-02`, `PR-07`, etc. — matched to the screens that implement them.
+Every screen has a "context" panel underneath citing the relevant entries in the canonical decisions log (`../ui-specs/41-decisions-log.html`). Decision IDs follow the pattern `GEN-01`, `ON-04`, `BK-03`, `SF-02`, `PR-07`, etc.. matched to the screens that implement them.
 
 ---
 
@@ -104,7 +104,7 @@ Every screen has a "context" panel underneath citing the relevant entries in the
 5. **Output Directory:** leave empty.
 6. Deploy. Share `https://<project>.vercel.app/prototype/index.html`.
 
-Add a custom domain (e.g. `demo.gaimcontrol.com`) from the project's **Settings → Domains** — free.
+Add a custom domain (e.g. `demo.gaimcontrol.com`) from the project's **Settings → Domains**. free.
 
 ### Cloudflare Pages (free, supports private repos)
 
@@ -130,7 +130,7 @@ For a **private** repo + GitHub Pages, you need [GitHub Pro](https://github.com/
 
 ## Editing
 
-Each per-flow file is self-contained — no shared CSS or JS dependency except `flow-chain.js` (the top nav strip). Inside any file:
+Each per-flow file is self-contained. No shared CSS or JS dependency except `flow-chain.js` (the top nav strip). Inside any file:
 
 - **SCREENS array** at the top of the `<script>` block declares the screens in that flow.
 - **CTX object** has the contextual decision-log copy shown beneath each screen.
@@ -157,7 +157,7 @@ Colours, type, and tone are documented in `../ui-specs/01-brand.html` and `../ui
 
 ## Spec source
 
-Each prototype file links back to its canonical spec section in the sidebar footer. The canonical specs live in `../ui-specs/` and are the source of truth — the prototype reflects them, not the other way round.
+Each prototype file links back to its canonical spec section in the sidebar footer. The canonical specs live in `../ui-specs/` and are the source of truth. The prototype reflects them, not the other way round.
 
 For the spec index: [`../ui-specs/00-index.html`](../ui-specs/00-index.html).
 For decisions: [`../ui-specs/41-decisions-log.html`](../ui-specs/41-decisions-log.html).
@@ -168,4 +168,4 @@ For decisions: [`../ui-specs/41-decisions-log.html`](../ui-specs/41-decisions-lo
 
 Internal · GaimControl Ltd · FCA Sandbox Cohort 9 · 2026.
 
-Built as the working artefact for stakeholder demos and engineer hand-off. Not user-facing code. Versions reflect spec sign-off — see commit history.
+Built as the working artefact for stakeholder demos and engineer hand-off. Not user-facing code. Versions reflect spec sign-off. See commit history.

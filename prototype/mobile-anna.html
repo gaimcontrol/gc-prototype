@@ -10,12 +10,12 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --p-10:#0B0F1C;--p-20:#161B2D;--p-30:#20273C;--p-40:#354872;--p-50:#4D608C;--p-60:#6B7DA6;--p-90:#DCE2F0;--p-95:#ECF0F9;--p-99:#FAFBFE;--p-100:#FFF;
-  --s-10:#28215A;--s-20:#3E3478;--s-30:#534792;--s-40:#6B5DAC;--s-50:#8576C2;--s-70:#B5ACDF;--s-80:#CFC8EA;--s-90:#E8E4F4;
-  --t-20:#1A6047;--t-30:#1F7058;--t-50:#399971;--t-60:#5BB088;--t-80:#ADDCC2;--t-90:#D5EDDF;
-  --w-30:#6B4500;--w-60:#C28200;--w-80:#FAB44A;--w-90:#FFDFA8;
-  --e-30:#7A1F1F;--e-50:#C73838;--e-80:#F4A4A4;--e-90:#FBD9D9;
-  --n-50:#76798A;--n-80:#C5C8D2;--n-95:#F1F2F5;--nv-80:#C5C9DD;
+ --p-10:#0B0F1C;--p-20:#161B2D;--p-30:#20273C;--p-40:#354872;--p-50:#4D608C;--p-60:#6B7DA6;--p-90:#DCE2F0;--p-95:#ECF0F9;--p-99:#FAFBFE;--p-100:#FFF;
+ --s-10:#28215A;--s-20:#3E3478;--s-30:#534792;--s-40:#6B5DAC;--s-50:#8576C2;--s-70:#B5ACDF;--s-80:#CFC8EA;--s-90:#E8E4F4;
+ --t-20:#1A6047;--t-30:#1F7058;--t-50:#399971;--t-60:#5BB088;--t-80:#ADDCC2;--t-90:#D5EDDF;
+ --w-30:#6B4500;--w-60:#C28200;--w-80:#FAB44A;--w-90:#FFDFA8;
+ --e-30:#7A1F1F;--e-50:#C73838;--e-80:#F4A4A4;--e-90:#FBD9D9;
+ --n-50:#76798A;--n-80:#C5C8D2;--n-95:#F1F2F5;--nv-80:#C5C9DD;
 }
 [data-theme="dark"] { --bg-base: var(--p-30); --bg-surface: var(--p-20); --bg-surface-2: var(--p-10); --border: rgba(255,255,255,0.08); --text-primary: var(--n-95); --text-secondary: var(--nv-80); --text-muted: rgba(255,255,255,0.4); --accent: var(--s-70); --accent-strong: var(--s-50); --on-accent: #fff; --page-bg: #0a0e1a; --page-fg: var(--n-95); --page-fg-muted: var(--nv-80); --page-card-bg: var(--p-20); --page-divider: rgba(255,255,255,0.06); }
 [data-theme="light"] { --bg-base: var(--p-99); --bg-surface: #fff; --bg-surface-2: var(--p-95); --border: rgba(22,27,45,0.08); --text-primary: var(--p-20); --text-secondary: var(--n-50); --text-muted: var(--n-50); --accent: var(--p-40); --accent-strong: var(--s-40); --on-accent: #fff; --page-bg: var(--p-95); --page-fg: var(--p-20); --page-fg-muted: var(--n-50); --page-card-bg: #fff; --page-divider: rgba(22,27,45,0.08); }
@@ -24,9 +24,9 @@ html, body { background: var(--page-bg); color: var(--page-fg); margin: 0; trans
 body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif; font-size: 14px; line-height: 1.5; -webkit-font-smoothing: antialiased; min-height: 100vh; }
 
 .proto-shell { display: grid; grid-template-columns: 280px 1fr; gap: 0; min-height: 100vh; }
-@media (max-width: 960px) { .proto-shell { grid-template-columns: 1fr; } }
+@media (max-width: 960px) {.proto-shell { grid-template-columns: 1fr; } }
 .proto-sidebar { background: var(--page-card-bg); border-right: 1px solid var(--page-divider); padding: 28px 22px; position: sticky; top: 0; height: 100vh; overflow-y: auto; display: flex; flex-direction: column; gap: 16px; }
-@media (max-width: 960px) { .proto-sidebar { position: static; height: auto; max-height: 50vh; border-right: none; border-bottom: 1px solid var(--page-divider); } }
+@media (max-width: 960px) {.proto-sidebar { position: static; height: auto; max-height: 50vh; border-right: none; border-bottom: 1px solid var(--page-divider); } }
 .proto-sidebar__brand { display: flex; align-items: center; gap: 10px; }
 .proto-sidebar__mark { width: 36px; height: 36px; border-radius: 10px; background: var(--p-30); display: inline-flex; align-items: center; justify-content: center; }
 .proto-sidebar__mark img { width: 70%; height: 70%; }
@@ -39,15 +39,15 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-
 .proto-scrubber__item { display: grid; grid-template-columns: 44px 1fr; gap: 8px; align-items: center; padding: 7px 10px; border-radius: 8px; cursor: pointer; border: none; background: transparent; color: inherit; font-family: inherit; text-align: left; }
 .proto-scrubber__item:hover { background: rgba(127,127,127,0.08); }
 .proto-scrubber__item.is-active { background: var(--accent-strong); color: var(--on-accent); }
-.proto-scrubber__item.is-active .proto-scrubber__id { color: rgba(255,255,255,0.85); }
+.proto-scrubber__item.is-active.proto-scrubber__id { color: rgba(255,255,255,0.85); }
 .proto-scrubber__id { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; color: var(--page-fg-muted); letter-spacing: 0.06em; }
 .proto-scrubber__name { font-size: 12.5px; font-weight: 500; }
 .proto-sidebar__footer { margin-top: auto; padding-top: 16px; border-top: 1px solid var(--page-divider); font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--page-fg-muted); }
 .proto-sidebar__footer a { color: var(--page-fg-muted); text-decoration: none; border-bottom: 1px dotted currentColor; }
 .proto-theme-toggle { display: inline-flex; align-items: center; gap: 8px; padding: 7px 12px; border-radius: 8px; background: var(--bg-surface-2); border: 1px solid var(--border); color: var(--page-fg-muted); cursor: pointer; font-family: 'JetBrains Mono', monospace; font-size: 11px; align-self: flex-start; }
 .proto-theme-toggle svg { width: 12px; height: 12px; }
-[data-theme="dark"] .proto-theme-toggle .icon-moon { display: none; }
-[data-theme="light"] .proto-theme-toggle .icon-sun { display: none; }
+[data-theme="dark"].proto-theme-toggle.icon-moon { display: none; }
+[data-theme="light"].proto-theme-toggle.icon-sun { display: none; }
 
 .proto-stage { display: flex; flex-direction: column; align-items: center; padding: 32px 24px 64px; gap: 22px; }
 .proto-modebar { display: flex; align-items: center; gap: 10px; padding: 10px 16px; background: var(--page-card-bg); border: 1px solid var(--page-divider); border-radius: 12px; font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: var(--page-fg-muted); flex-wrap: wrap; justify-content: center; }
@@ -62,7 +62,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-
 .proto-arrow svg { width: 18px; height: 18px; }
 
 .phone { width: 393px; height: 852px; flex-shrink: 0; border-radius: 56px; background: #000; padding: 13px; position: relative; box-shadow: 0 0 0 1.5px #2a2e3a, 0 30px 60px -20px rgba(0,0,0,0.7), 0 16px 32px -16px rgba(0,0,0,0.4); }
-.phone::before, .phone::after { content: ''; position: absolute; background: #2a2e3a; }
+.phone::before,.phone::after { content: ''; position: absolute; background: #2a2e3a; }
 .phone::before { left: -3px; top: 110px; width: 3px; height: 30px; border-radius: 3px 0 0 3px; }
 .phone::after { left: -3px; top: 160px; width: 3px; height: 60px; border-radius: 3px 0 0 3px; }
 .phone__inner { width: 100%; height: 100%; background: var(--bg-base); color: var(--text-primary); border-radius: 44px; overflow: hidden; position: relative; display: flex; flex-direction: column; }
@@ -72,7 +72,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-
 .phone__topbar { display: flex; align-items: center; justify-content: space-between; padding: 8px 18px 12px; gap: 10px; flex-shrink: 0; }
 .phone__mark { width: 32px; height: 32px; border-radius: 9px; background: var(--bg-surface); border: 1px solid var(--border); display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
 .phone__mark img { width: 65%; height: 65%; }
-[data-theme="light"] .phone__mark img { filter: invert(1) brightness(0.3); }
+[data-theme="light"].phone__mark img { filter: invert(1) brightness(0.3); }
 .phone__back { width: 32px; height: 32px; border-radius: 50%; background: transparent; border: none; color: var(--text-primary); display: inline-flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; }
 .phone__back:hover { background: rgba(127,127,127,0.06); }
 .phone__back svg { width: 20px; height: 20px; }
@@ -95,7 +95,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-
 .an-pill { display: inline-flex; align-items: center; gap: 5px; padding: 3px 10px 3px 4px; border-radius: 999px; font-size: 10px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; align-self: flex-start; background: rgba(0,0,0,0.22); color: white; }
 .an-pill::before { content: ''; width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.8); }
 
-/* AN1 Home — Anna intro card */
+/* AN1 Home. Anna intro card */
 .an-anna-hero { display: flex; align-items: center; gap: 12px; }
 .an-anna-av { width: 44px; height: 44px; border-radius: 50%; background: rgba(255,255,255,0.18); display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; backdrop-filter: blur(8px); }
 .an-anna-av img { width: 60%; height: 60%; }
@@ -106,9 +106,9 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-
 .an-cbt-row { display: grid; grid-template-columns: 36px 1fr 14px; gap: 11px; align-items: center; padding: 10px 0; border-top: 1px solid var(--border); }
 .an-cbt-row:first-of-type { border-top: none; padding-top: 4px; }
 .an-cbt-num { width: 36px; height: 36px; border-radius: 10px; background: var(--bg-surface-2); border: 1px solid var(--border); display: inline-flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 13px; color: var(--text-secondary); }
-.an-cbt-row.is-done .an-cbt-num { background: var(--t-50); color: white; border-color: transparent; }
-.an-cbt-row.is-active .an-cbt-num { background: var(--accent-strong); color: white; border-color: transparent; }
-.an-cbt-row.is-locked .an-cbt-num { color: var(--text-muted); }
+.an-cbt-row.is-done.an-cbt-num { background: var(--t-50); color: white; border-color: transparent; }
+.an-cbt-row.is-active.an-cbt-num { background: var(--accent-strong); color: white; border-color: transparent; }
+.an-cbt-row.is-locked.an-cbt-num { color: var(--text-muted); }
 .an-cbt-t { font-size: 13.5px; font-weight: 600; }
 .an-cbt-s { font-size: 11.5px; color: var(--text-secondary); margin-top: 1px; }
 .an-cbt-chev { color: var(--text-muted); }
@@ -119,10 +119,10 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-
 .an-daily-row:first-of-type { border-top: none; padding-top: 4px; }
 .an-daily-ic { width: 36px; height: 36px; border-radius: 10px; display: inline-flex; align-items: center; justify-content: center; }
 .an-daily-ic svg { width: 18px; height: 18px; }
-.an-daily-row.is-done .an-daily-t::after { content: ' ✓'; color: var(--t-50); font-weight: 700; }
+.an-daily-row.is-done.an-daily-t::after { content: ' ✓'; color: var(--t-50); font-weight: 700; }
 .an-daily-t { font-size: 13.5px; font-weight: 600; }
 .an-daily-s { font-size: 11.5px; color: var(--text-secondary); margin-top: 1px; }
-.an-daily-row.is-due .an-daily-s { color: var(--w-60); font-weight: 600; }
+.an-daily-row.is-due.an-daily-s { color: var(--w-60); font-weight: 600; }
 
 /* Chat (AN2) */
 .an-chat-list { flex: 1; display: flex; flex-direction: column; gap: 10px; padding: 4px 0; min-height: 0; overflow-y: auto; }
@@ -136,11 +136,11 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-
 .an-msg__col { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
 .an-msg__meta { display: flex; align-items: center; gap: 6px; font-size: 10px; color: var(--text-muted); padding: 0 4px; }
 .an-msg__meta strong { color: var(--text-secondary); font-weight: 700; }
-.an-msg--user .an-msg__meta { justify-content: flex-end; }
+.an-msg--user.an-msg__meta { justify-content: flex-end; }
 .an-bubble { padding: 9px 12px; border-radius: 14px; font-size: 13px; line-height: 1.4; max-width: 88%; }
 .an-bubble--anna { background: var(--bg-surface); border: 1px solid var(--border); border-bottom-left-radius: 4px; }
 .an-bubble--user { background: var(--accent-strong); color: var(--on-accent); align-self: flex-end; border-bottom-right-radius: 4px; }
-.an-msg--user .an-bubble { margin-left: auto; }
+.an-msg--user.an-bubble { margin-left: auto; }
 .an-replies { display: flex; gap: 4px; padding: 4px 0 0; flex-wrap: wrap; }
 .an-reply { padding: 6px 11px; border-radius: 999px; background: var(--bg-surface); border: 1px solid var(--accent-strong); color: var(--accent); font-family: inherit; font-size: 12px; font-weight: 600; cursor: pointer; }
 .an-thinking { display: inline-flex; align-items: center; gap: 8px; padding: 9px 12px; border-radius: 14px 14px 14px 4px; background: var(--bg-surface); border: 1px solid var(--border); font-size: 12px; color: var(--text-secondary); }
@@ -152,9 +152,9 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-
 
 /* Composer */
 .an-composer { display: grid; grid-template-columns: 32px 1fr 32px; gap: 8px; align-items: center; padding: 8px 0; flex-shrink: 0; }
-.an-composer__attach, .an-composer__send { width: 32px; height: 32px; border-radius: 50%; background: var(--bg-surface); border: 1px solid var(--border); color: var(--text-secondary); display: inline-flex; align-items: center; justify-content: center; cursor: pointer; }
+.an-composer__attach,.an-composer__send { width: 32px; height: 32px; border-radius: 50%; background: var(--bg-surface); border: 1px solid var(--border); color: var(--text-secondary); display: inline-flex; align-items: center; justify-content: center; cursor: pointer; }
 .an-composer__send { background: var(--accent-strong); color: var(--on-accent); border-color: transparent; }
-.an-composer__send svg, .an-composer__attach svg { width: 13px; height: 13px; }
+.an-composer__send svg,.an-composer__attach svg { width: 13px; height: 13px; }
 .an-composer__input { padding: 8px 14px; background: var(--bg-surface); border: 1px solid var(--border); border-radius: 999px; font-family: inherit; font-size: 13px; color: var(--text-primary); resize: none; }
 .an-composer__input:focus { outline: none; border-color: var(--accent-strong); }
 
@@ -193,12 +193,12 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-
 /* Sponsor digest preview */
 .an-digest { background: var(--bg-surface-2); border: 1px solid var(--border); border-radius: 11px; padding: 11px 13px; display: flex; flex-direction: column; gap: 5px; }
 .an-digest__head { display: inline-flex; align-items: center; gap: 5px; font-size: 10px; padding: 2px 8px; border-radius: 999px; background: var(--s-20); color: var(--s-80); align-self: flex-start; letter-spacing: 0.04em; text-transform: uppercase; font-weight: 700; }
-[data-theme="light"] .an-digest__head { background: var(--s-90); color: var(--s-20); }
+[data-theme="light"].an-digest__head { background: var(--s-90); color: var(--s-20); }
 .an-digest__head svg { width: 9px; height: 9px; }
 .an-digest p { font-size: 12.5px; line-height: 1.45; margin: 0; color: var(--text-primary); font-style: italic; }
 .an-digest__note { font-size: 10.5px; color: var(--text-muted); margin-top: 4px; }
 
-/* Daily — mood faces */
+/* Daily. Mood faces */
 .an-daily-head { display: flex; align-items: flex-start; gap: 10px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
 .an-daily-ic-lg { width: 44px; height: 44px; border-radius: 11px; display: inline-flex; align-items: center; justify-content: center; }
 .an-daily-ic-lg svg { width: 22px; height: 22px; }
@@ -208,7 +208,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-
 .an-mood-btn > span:first-child { font-size: 20px; }
 .an-mood-btn > span:last-child { font-size: 11px; font-weight: 700; }
 
-/* Daily — urge slider */
+/* Daily. Urge slider */
 .an-urge-track { position: relative; width: 100%; height: 12px; background: linear-gradient(90deg, var(--t-50), var(--w-60), var(--e-50)); border-radius: 999px; }
 .an-urge-marker { position: absolute; top: -5px; bottom: -5px; width: 3px; background: var(--text-primary); border-radius: 2px; box-shadow: 0 0 0 2px var(--bg-base); }
 .an-urge-scale { display: flex; justify-content: space-between; font-family: 'JetBrains Mono', monospace; font-size: 9.5px; color: var(--text-muted); margin-top: 5px; }
@@ -217,7 +217,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-
 /* Gratitude inputs */
 .an-grat-row { display: grid; grid-template-columns: 24px 1fr; gap: 9px; align-items: center; }
 .an-grat-n { width: 24px; height: 24px; border-radius: 50%; background: var(--t-90); color: var(--t-30); display: inline-flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; }
-[data-theme="dark"] .an-grat-n { background: var(--t-20); color: var(--t-80); }
+[data-theme="dark"].an-grat-n { background: var(--t-20); color: var(--t-80); }
 .an-grat-input { background: var(--bg-base); border: 1px solid var(--border); border-radius: 9px; padding: 9px 12px; font-family: inherit; font-size: 12.5px; color: var(--text-primary); }
 .an-grat-input::placeholder { color: var(--text-muted); }
 
@@ -246,8 +246,8 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-
 
 .screen { animation: fade-in 220ms ease; }
 @keyframes fade-in { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
-@media (max-width: 720px) { .phone { transform: scale(0.92); transform-origin: top center; } }
-@media (max-width: 480px) { .phone { transform: scale(0.78); } }
+@media (max-width: 720px) {.phone { transform: scale(0.92); transform-origin: top center; } }
+@media (max-width: 480px) {.phone { transform: scale(0.78); } }
 </style>
 <script src="flow-chain.js" defer></script>
 </head>
@@ -255,365 +255,365 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-
 
 <div class="proto-shell">
 
-  <aside class="proto-sidebar">
-    <div class="proto-sidebar__brand">
-      <span class="proto-sidebar__mark"><img src="../assets/gc-mark-mono-light.svg" alt=""></span>
-      <span>
-        <div class="proto-sidebar__name">GaimControl</div>
-        <span class="proto-sidebar__pill">mobile</span>
-      </span>
-    </div>
-    <a class="proto-sidebar__back" href="index.html">← prototype index</a>
-    <button class="proto-theme-toggle" type="button" aria-label="Toggle theme">
-      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
-      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
-      <span class="theme-label">Dark</span>
-    </button>
-    <div class="proto-section-title">§08 · AN1 – AN8</div>
-    <nav class="proto-scrubber" id="scrubber"></nav>
-    <div class="proto-sidebar__footer">Source: <a href="../app-ui/08-anna-cbt.html">app-ui/08</a><br>Decisions: AN-01 · AN-04 · AN-05 · AN-07</div>
-  </aside>
+ <aside class="proto-sidebar">
+ <div class="proto-sidebar__brand">
+ <span class="proto-sidebar__mark"><img src="../assets/gc-mark-mono-light.svg" alt=""></span>
+ <span>
+ <div class="proto-sidebar__name">GaimControl</div>
+ <span class="proto-sidebar__pill">mobile</span>
+ </span>
+ </div>
+ <a class="proto-sidebar__back" href="index.html">← prototype index</a>
+ <button class="proto-theme-toggle" type="button" aria-label="Toggle theme">
+ <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+ <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+ <span class="theme-label">Dark</span>
+ </button>
+ <div class="proto-section-title">§08 · AN1 – AN8</div>
+ <nav class="proto-scrubber" id="scrubber"></nav>
+ <div class="proto-sidebar__footer">Source: <a href="../app-ui/08-anna-cbt.html">app-ui/08</a><br>Decisions: AN-01 · AN-04 · AN-05 · AN-07</div>
+ </aside>
 
-  <main class="proto-stage">
+ <main class="proto-stage">
 
-    <div class="proto-modebar">
-      <span>Screen <span class="proto-modebar__id" id="screenId">AN1</span></span>
-      <span class="proto-modebar__pill" id="screenName">Anna home</span>
-      <div class="proto-modebar__bar"><div class="proto-modebar__bar__fill" id="progressFill" style="width:13%"></div></div>
-      <div class="proto-arrows">
-        <button class="proto-arrow" id="navPrev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
-        <button class="proto-arrow" id="navNext"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
-      </div>
-    </div>
+ <div class="proto-modebar">
+ <span>Screen <span class="proto-modebar__id" id="screenId">AN1</span></span>
+ <span class="proto-modebar__pill" id="screenName">Anna home</span>
+ <div class="proto-modebar__bar"><div class="proto-modebar__bar__fill" id="progressFill" style="width:13%"></div></div>
+ <div class="proto-arrows">
+ <button class="proto-arrow" id="navPrev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+ <button class="proto-arrow" id="navNext"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
+ </div>
+ </div>
 
-    <div class="phone">
-      <div class="phone__notch"></div>
-      <div class="phone__inner">
-        <div class="phone__statusbar">
-          <span>9:41</span>
-          <span class="phone__statusbar__right">
-            <span style="display:inline-flex;gap:3px"><span style="width:4px;height:4px;border-radius:50%;background:currentColor"></span><span style="width:4px;height:5px;border-radius:1px;background:currentColor"></span><span style="width:4px;height:6px;border-radius:1px;background:currentColor"></span><span style="width:4px;height:7px;border-radius:1px;background:currentColor"></span></span>
-            <span>100%</span>
-          </span>
-        </div>
-        <div id="stage" style="flex:1;display:flex;flex-direction:column;min-height:0"></div>
-      </div>
-    </div>
+ <div class="phone">
+ <div class="phone__notch"></div>
+ <div class="phone__inner">
+ <div class="phone__statusbar">
+ <span>9:41</span>
+ <span class="phone__statusbar__right">
+ <span style="display:inline-flex;gap:3px"><span style="width:4px;height:4px;border-radius:50%;background:currentColor"></span><span style="width:4px;height:5px;border-radius:1px;background:currentColor"></span><span style="width:4px;height:6px;border-radius:1px;background:currentColor"></span><span style="width:4px;height:7px;border-radius:1px;background:currentColor"></span></span>
+ <span>100%</span>
+ </span>
+ </div>
+ <div id="stage" style="flex:1;display:flex;flex-direction:column;min-height:0"></div>
+ </div>
+ </div>
 
-    <div class="proto-context" id="contextPanel">
-      <div class="proto-context__head">Screen context</div>
-      <div id="contextBody"></div>
-    </div>
+ <div class="proto-context" id="contextPanel">
+ <div class="proto-context__head">Screen context</div>
+ <div id="contextBody"></div>
+ </div>
 
-  </main>
+ </main>
 </div>
 
 <script>
 const SCREENS = [
-  { id: 'AN1', name: 'Anna home', kind: 'an1' },
-  { id: 'AN2', name: 'Active chat', kind: 'an2' },
-  { id: 'AN3', name: 'CBT S1 · intro', kind: 'an3' },
-  { id: 'AN4', name: 'CBT in-flow · worksheet', kind: 'an4' },
-  { id: 'AN5', name: 'Session complete', kind: 'an5' },
-  { id: 'AN6', name: 'Daily · mood', kind: 'an6' },
-  { id: 'AN7', name: 'Daily · urge check', kind: 'an7' },
-  { id: 'AN8', name: 'Daily · gratitude', kind: 'an8' },
+ { id: 'AN1', name: 'Anna home', kind: 'an1' },
+ { id: 'AN2', name: 'Active chat', kind: 'an2' },
+ { id: 'AN3', name: 'CBT S1 · intro', kind: 'an3' },
+ { id: 'AN4', name: 'CBT in-flow · worksheet', kind: 'an4' },
+ { id: 'AN5', name: 'Session complete', kind: 'an5' },
+ { id: 'AN6', name: 'Daily · mood', kind: 'an6' },
+ { id: 'AN7', name: 'Daily · urge check', kind: 'an7' },
+ { id: 'AN8', name: 'Daily · gratitude', kind: 'an8' },
 ];
 
 const CTX = {
-  an1: '<strong>AN1 Anna home.</strong> Chat preview + 4 CBT sessions (Awareness · Goals · Attitude · Focus, weekly cadence) + today\'s daily check-ins (mood · urge · gratitude · alt-thought). Sessions 1–4 are by clinical lead Alan Curley.',
-  an2: '<strong>AN2 Active chat.</strong> ChatGPT/Claude-shape surface. Per <a href="../41-decisions-log.html">AN-01</a>, crisis-language detection uses the chat LLM\'s safety layer + a reviewed system-prompt (dedicated classifier deferred). Per <a href="../41-decisions-log.html">AN-04</a> voice mode is post-MVP. Per <a href="../41-decisions-log.html">AN-07</a> flagged threads route to in-house clinical via the admin dash.',
-  an3: '<strong>AN3 CBT S1 · Awareness intro.</strong> Every session is 4 beats: <strong>Mood-in → guided exercise → worksheet → Mood-out</strong>. ~25 min. S1 covers spotting patterns before changing them — triggers, body signals, naming the urge.',
-  an4: '<strong>AN4 CBT in-flow.</strong> Worksheet step (here S3 step 3 · Triggers). Trigger picker with emoji chips. Anna injects an inline observation tying tonight to a previous pattern.',
-  an5: '<strong>AN5 Session complete.</strong> Mood-out delta (2 → 4), worksheet summary, journal entry, sponsor digest preview. Per <a href="../41-decisions-log.html">AN-05</a> the digest is editable per session but <strong>not dismissible</strong> — sponsor sees session-completion summaries, never transcripts. Per <a href="../41-decisions-log.html">AN-06</a> gamification (streaks, "share to sponsor") is confirmed.',
-  an6: '<strong>AN6 Daily · mood.</strong> 1–5 scale, twice daily, 30 seconds. Logged 09:14, next 18:30. Feeds into Anna\'s pattern-spotting + the sponsor digest as a rolling chart.',
-  an7: '<strong>AN7 Daily · urge check.</strong> 0–10 slider for when the wave shows up. At 7/10, surfaces 3 quick actions: 5-min Anna talk · Tell sponsor · Walk 5 min. Per <a href="../41-decisions-log.html">AN-06</a> the urge-check pattern feeds daily gamification.',
-  an8: '<strong>AN8 Daily · gratitude.</strong> Optional evening check-in, ~2 min, 3 small things. Plus the alt-thought variant (Hot thought → Evidence for / against → Reframe) — from CBT S3 worksheet.',
+ an1: '<strong>AN1 Anna home.</strong> Chat preview + 4 CBT sessions (Awareness · Goals · Attitude · Focus, weekly cadence) + today\'s daily check-ins (mood · urge · gratitude · alt-thought). Sessions 1–4 are by clinical lead Alan Curley.',
+ an2: '<strong>AN2 Active chat.</strong> ChatGPT/Claude-shape surface. Per <a href="../41-decisions-log.html">AN-01</a>, crisis-language detection uses the chat LLM\'s safety layer + a reviewed system-prompt (dedicated classifier deferred). Per <a href="../41-decisions-log.html">AN-04</a> voice mode is post-MVP. Per <a href="../41-decisions-log.html">AN-07</a> flagged threads route to in-house clinical via the admin dash.',
+ an3: '<strong>AN3 CBT S1 · Awareness intro.</strong> Every session is 4 beats: <strong>Mood-in → guided exercise → worksheet → Mood-out</strong>. ~25 min. S1 covers spotting patterns before changing them. Triggers, body signals, naming the urge.',
+ an4: '<strong>AN4 CBT in-flow.</strong> Worksheet step (here S3 step 3 · Triggers). Trigger picker with emoji chips. Anna injects an inline observation tying tonight to a previous pattern.',
+ an5: '<strong>AN5 Session complete.</strong> Mood-out delta (2 → 4), worksheet summary, journal entry, sponsor digest preview. Per <a href="../41-decisions-log.html">AN-05</a> the digest is editable per session but <strong>not dismissible</strong>. sponsor sees session-completion summaries, never transcripts. Per <a href="../41-decisions-log.html">AN-06</a> gamification (streaks, "share to sponsor") is confirmed.',
+ an6: '<strong>AN6 Daily · mood.</strong> 1–5 scale, twice daily, 30 seconds. Logged 09:14, next 18:30. Feeds into Anna\'s pattern-spotting + the sponsor digest as a rolling chart.',
+ an7: '<strong>AN7 Daily · urge check.</strong> 0–10 slider for when the wave shows up. At 7/10, surfaces 3 quick actions: 5-min Anna talk · Tell sponsor · Walk 5 min. Per <a href="../41-decisions-log.html">AN-06</a> the urge-check pattern feeds daily gamification.',
+ an8: '<strong>AN8 Daily · gratitude.</strong> Optional evening check-in, ~2 min, 3 small things. Plus the alt-thought variant (Hot thought → Evidence for / against → Reframe). from CBT S3 worksheet.',
 };
 
 const TOPBAR = (title, back = false) => `
-  <div class="phone__topbar">
-    ${back ? `<button class="phone__back" onclick="prev()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>` : `<span class="phone__mark"><img src="../assets/gc-mark-mono-light.svg" alt=""></span>`}
-    <span class="phone__title">${title}</span>
-    <button class="gc-crisis-pill" type="button"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7-4.5-9-9.5C2 7 5 4 8 4c1.7 0 3.2.8 4 2 .8-1.2 2.3-2 4-2 3 0 6 3 5 7.5C19 16.5 12 21 12 21z"/></svg> Help</button>
-  </div>`;
+ <div class="phone__topbar">
+ ${back ? `<button class="phone__back" onclick="prev()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>` : `<span class="phone__mark"><img src="../assets/gc-mark-mono-light.svg" alt=""></span>`}
+ <span class="phone__title">${title}</span>
+ <button class="gc-crisis-pill" type="button"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7-4.5-9-9.5C2 7 5 4 8 4c1.7 0 3.2.8 4 2.8-1.2 2.3-2 4-2 3 0 6 3 5 7.5C19 16.5 12 21 12 21z"/></svg> Help</button>
+ </div>`;
 
 const TABBAR = () => `
-  <div class="phone__tabbar">
-    <div class="phone__tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span>Home</span></div>
-    <div class="phone__tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span>Banking</span></div>
-    <div class="phone__tab is-on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg><span>Anna</span></div>
-    <div class="phone__tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m7 14 4-4 4 4 5-5"/></svg><span>Activity</span></div>
-    <div class="phone__tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg><span>Profile</span></div>
-  </div>`;
+ <div class="phone__tabbar">
+ <div class="phone__tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span>Home</span></div>
+ <div class="phone__tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span>Banking</span></div>
+ <div class="phone__tab is-on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg><span>Anna</span></div>
+ <div class="phone__tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m7 14 4-4 4 4 5-5"/></svg><span>Activity</span></div>
+ <div class="phone__tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg><span>Profile</span></div>
+ </div>`;
 
 const builders = {
-  an1: () => `
-    ${TOPBAR('Anna')}
-    <div class="an-body">
-      <div class="gc-card gc-card--anna">
-        <div class="an-anna-hero">
-          <span class="an-anna-av"><img src="../assets/gc-mark-mono-light.svg" alt=""></span>
-          <div><div class="an-anna-name">Anna</div><div class="an-anna-meta">21 conversations · 2 sessions done</div></div>
-        </div>
-        <p style="font-size:13px;line-height:1.5;margin:4px 0 0">"You're 6 days in. Want to talk through tonight, or come back tomorrow?"</p>
-        <div style="display:flex;gap:7px;width:100%;margin-top:4px">
-          <button class="gc-btn gc-btn--white gc-btn--sm" style="flex:1" onclick="go(1)">Open chat</button>
-          <button class="gc-btn gc-btn--ghost gc-btn--sm" style="color:white;border-color:rgba(255,255,255,0.3)">Skip</button>
-        </div>
-      </div>
-      <div class="gc-card" style="padding:13px 14px">
-        <h3 style="font-size:13.5px;font-weight:700;margin:0">CBT · weekly</h3>
-        <div class="an-cbt-row is-done"><span class="an-cbt-num">S1</span><div><div class="an-cbt-t">Awareness</div><div class="an-cbt-s">Done · mood 2 → 3</div></div><span class="an-cbt-chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span></div>
-        <div class="an-cbt-row is-done"><span class="an-cbt-num">S2</span><div><div class="an-cbt-t">Goals</div><div class="an-cbt-s">Done · mood 3 → 4</div></div><span class="an-cbt-chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span></div>
-        <div class="an-cbt-row is-active" onclick="go(2)" style="cursor:pointer"><span class="an-cbt-num">S3</span><div><div class="an-cbt-t">Attitude</div><div class="an-cbt-s">Tonight 21:00</div></div><span class="an-cbt-chev">›</span></div>
-        <div class="an-cbt-row is-locked"><span class="an-cbt-num">S4</span><div><div class="an-cbt-t">Focus</div><div class="an-cbt-s">Locked · unlocks next week</div></div><span class="an-cbt-chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="10" x="5" y="11" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span></div>
-      </div>
-      <div class="gc-card" style="padding:13px 14px">
-        <h3 style="font-size:13.5px;font-weight:700;margin:0">Today</h3>
-        <div class="an-daily-row is-done" onclick="go(5)"><span class="an-daily-ic" style="background:var(--p-40);color:var(--p-95)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/></svg></span><div><div class="an-daily-t">Mood</div><div class="an-daily-s">3/5 · 09:14</div></div></div>
-        <div class="an-daily-row is-due" onclick="go(6)"><span class="an-daily-ic" style="background:var(--w-30);color:var(--w-80)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l2 2"/></svg></span><div><div class="an-daily-t">Urge check</div><div class="an-daily-s">Due now</div></div></div>
-        <div class="an-daily-row" onclick="go(7)"><span class="an-daily-ic" style="background:var(--t-20);color:var(--t-80)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 21s-7-4.5-9-9.5C2 7 5 4 8 4c1.7 0 3.2.8 4 2 .8-1.2 2.3-2 4-2 3 0 6 3 5 7.5C19 16.5 12 21 12 21z"/></svg></span><div><div class="an-daily-t">Gratitude · evening</div><div class="an-daily-s">Optional · 2 min</div></div></div>
-      </div>
-    </div>
-    ${TABBAR()}`,
+ an1: () => `
+ ${TOPBAR('Anna')}
+ <div class="an-body">
+ <div class="gc-card gc-card--anna">
+ <div class="an-anna-hero">
+ <span class="an-anna-av"><img src="../assets/gc-mark-mono-light.svg" alt=""></span>
+ <div><div class="an-anna-name">Anna</div><div class="an-anna-meta">21 conversations · 2 sessions done</div></div>
+ </div>
+ <p style="font-size:13px;line-height:1.5;margin:4px 0 0">"You're 6 days in. Want to talk through tonight, or come back tomorrow?"</p>
+ <div style="display:flex;gap:7px;width:100%;margin-top:4px">
+ <button class="gc-btn gc-btn--white gc-btn--sm" style="flex:1" onclick="go(1)">Open chat</button>
+ <button class="gc-btn gc-btn--ghost gc-btn--sm" style="color:white;border-color:rgba(255,255,255,0.3)">Skip</button>
+ </div>
+ </div>
+ <div class="gc-card" style="padding:13px 14px">
+ <h3 style="font-size:13.5px;font-weight:700;margin:0">CBT · weekly</h3>
+ <div class="an-cbt-row is-done"><span class="an-cbt-num">S1</span><div><div class="an-cbt-t">Awareness</div><div class="an-cbt-s">Done · mood 2 → 3</div></div><span class="an-cbt-chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span></div>
+ <div class="an-cbt-row is-done"><span class="an-cbt-num">S2</span><div><div class="an-cbt-t">Goals</div><div class="an-cbt-s">Done · mood 3 → 4</div></div><span class="an-cbt-chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span></div>
+ <div class="an-cbt-row is-active" onclick="go(2)" style="cursor:pointer"><span class="an-cbt-num">S3</span><div><div class="an-cbt-t">Attitude</div><div class="an-cbt-s">Tonight 21:00</div></div><span class="an-cbt-chev">›</span></div>
+ <div class="an-cbt-row is-locked"><span class="an-cbt-num">S4</span><div><div class="an-cbt-t">Focus</div><div class="an-cbt-s">Locked · unlocks next week</div></div><span class="an-cbt-chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="10" x="5" y="11" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span></div>
+ </div>
+ <div class="gc-card" style="padding:13px 14px">
+ <h3 style="font-size:13.5px;font-weight:700;margin:0">Today</h3>
+ <div class="an-daily-row is-done" onclick="go(5)"><span class="an-daily-ic" style="background:var(--p-40);color:var(--p-95)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/></svg></span><div><div class="an-daily-t">Mood</div><div class="an-daily-s">3/5 · 09:14</div></div></div>
+ <div class="an-daily-row is-due" onclick="go(6)"><span class="an-daily-ic" style="background:var(--w-30);color:var(--w-80)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l2 2"/></svg></span><div><div class="an-daily-t">Urge check</div><div class="an-daily-s">Due now</div></div></div>
+ <div class="an-daily-row" onclick="go(7)"><span class="an-daily-ic" style="background:var(--t-20);color:var(--t-80)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 21s-7-4.5-9-9.5C2 7 5 4 8 4c1.7 0 3.2.8 4 2.8-1.2 2.3-2 4-2 3 0 6 3 5 7.5C19 16.5 12 21 12 21z"/></svg></span><div><div class="an-daily-t">Gratitude · evening</div><div class="an-daily-s">Optional · 2 min</div></div></div>
+ </div>
+ </div>
+ ${TABBAR()}`,
 
-  an2: () => `
-    ${TOPBAR('Anna · chat', true)}
-    <div class="an-body" style="padding-bottom:0">
-      <div class="an-chat-list">
-        <div class="an-chat-sys">Today, 21:14 · CBT S3 · Attitude</div>
-        <div class="an-msg">
-          <span class="an-msg__av an-msg__av--anna"><img src="../assets/gc-mark-mono-light.svg" alt=""></span>
-          <div class="an-msg__col">
-            <div class="an-msg__meta"><strong>Anna</strong><span>21:14</span></div>
-            <div class="an-bubble an-bubble--anna">Hey — tonight is on attitude. Take it slow with me?</div>
-          </div>
-        </div>
-        <div class="an-msg an-msg--user">
-          <div class="an-msg__col">
-            <div class="an-msg__meta"><strong>You</strong><span>21:14</span></div>
-            <div class="an-bubble an-bubble--user">yeah ok</div>
-          </div>
-          <span class="an-msg__av an-msg__av--user">SK</span>
-        </div>
-        <div class="an-msg">
-          <span class="an-msg__av an-msg__av--anna"><img src="../assets/gc-mark-mono-light.svg" alt=""></span>
-          <div class="an-msg__col">
-            <div class="an-msg__meta"><strong>Anna</strong><span>21:14</span></div>
-            <div class="an-bubble an-bubble--anna">How are you feeling? 1 = bad, 5 = good.</div>
-            <div class="an-replies">
-              <button class="an-reply">1</button>
-              <button class="an-reply">2</button>
-              <button class="an-reply">3</button>
-              <button class="an-reply">4</button>
-              <button class="an-reply">5</button>
-            </div>
-          </div>
-        </div>
-        <div class="an-msg an-msg--user">
-          <div class="an-msg__col">
-            <div class="an-msg__meta"><strong>You</strong><span>21:15</span></div>
-            <div class="an-bubble an-bubble--user">2</div>
-          </div>
-          <span class="an-msg__av an-msg__av--user">SK</span>
-        </div>
-        <div class="an-msg">
-          <span class="an-msg__av an-msg__av--anna"><img src="../assets/gc-mark-mono-light.svg" alt=""></span>
-          <div class="an-msg__col">
-            <div class="an-msg__meta"><strong>Anna</strong><span style="color:var(--accent)">thinking…</span></div>
-            <div class="an-thinking"><span class="an-thinking__dots"><span></span><span></span><span></span></span><span>checking last week's mood pattern</span></div>
-          </div>
-        </div>
-      </div>
-      <div class="an-composer">
-        <button class="an-composer__attach"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg></button>
-        <textarea class="an-composer__input" placeholder="Write to Anna…" rows="1"></textarea>
-        <button class="an-composer__send" onclick="next()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg></button>
-      </div>
-    </div>
-    ${TABBAR()}`,
+ an2: () => `
+ ${TOPBAR('Anna · chat', true)}
+ <div class="an-body" style="padding-bottom:0">
+ <div class="an-chat-list">
+ <div class="an-chat-sys">Today, 21:14 · CBT S3 · Attitude</div>
+ <div class="an-msg">
+ <span class="an-msg__av an-msg__av--anna"><img src="../assets/gc-mark-mono-light.svg" alt=""></span>
+ <div class="an-msg__col">
+ <div class="an-msg__meta"><strong>Anna</strong><span>21:14</span></div>
+ <div class="an-bubble an-bubble--anna">Hey. Tonight is on attitude. Take it slow with me?</div>
+ </div>
+ </div>
+ <div class="an-msg an-msg--user">
+ <div class="an-msg__col">
+ <div class="an-msg__meta"><strong>You</strong><span>21:14</span></div>
+ <div class="an-bubble an-bubble--user">yeah ok</div>
+ </div>
+ <span class="an-msg__av an-msg__av--user">SK</span>
+ </div>
+ <div class="an-msg">
+ <span class="an-msg__av an-msg__av--anna"><img src="../assets/gc-mark-mono-light.svg" alt=""></span>
+ <div class="an-msg__col">
+ <div class="an-msg__meta"><strong>Anna</strong><span>21:14</span></div>
+ <div class="an-bubble an-bubble--anna">How are you feeling? 1 = bad, 5 = good.</div>
+ <div class="an-replies">
+ <button class="an-reply">1</button>
+ <button class="an-reply">2</button>
+ <button class="an-reply">3</button>
+ <button class="an-reply">4</button>
+ <button class="an-reply">5</button>
+ </div>
+ </div>
+ </div>
+ <div class="an-msg an-msg--user">
+ <div class="an-msg__col">
+ <div class="an-msg__meta"><strong>You</strong><span>21:15</span></div>
+ <div class="an-bubble an-bubble--user">2</div>
+ </div>
+ <span class="an-msg__av an-msg__av--user">SK</span>
+ </div>
+ <div class="an-msg">
+ <span class="an-msg__av an-msg__av--anna"><img src="../assets/gc-mark-mono-light.svg" alt=""></span>
+ <div class="an-msg__col">
+ <div class="an-msg__meta"><strong>Anna</strong><span style="color:var(--accent)">thinking…</span></div>
+ <div class="an-thinking"><span class="an-thinking__dots"><span></span><span></span><span></span></span><span>checking last week's mood pattern</span></div>
+ </div>
+ </div>
+ </div>
+ <div class="an-composer">
+ <button class="an-composer__attach"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg></button>
+ <textarea class="an-composer__input" placeholder="Write to Anna…" rows="1"></textarea>
+ <button class="an-composer__send" onclick="next()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg></button>
+ </div>
+ </div>
+ ${TABBAR()}`,
 
-  an3: () => `
-    ${TOPBAR('S1 · Awareness', true)}
-    <div class="an-body">
-      <div class="gc-card gc-card--milestone">
-        <span class="an-pill">CBT 1 of 4 · ~25 min</span>
-        <h2 style="font-size:26px;font-weight:800;letter-spacing:-0.02em;line-height:1.1;margin:6px 0 0">Awareness</h2>
-        <p style="font-size:13px;line-height:1.5;margin:0">Spotting the patterns before changing them. Tonight we name what the body and head do before the urge shows up.</p>
-        <div style="display:flex;gap:5px;flex-wrap:wrap;padding-top:6px">
-          <span style="padding:3px 10px;border-radius:999px;background:rgba(255,255,255,0.18);font-size:10.5px;font-weight:600">Triggers</span>
-          <span style="padding:3px 10px;border-radius:999px;background:rgba(255,255,255,0.18);font-size:10.5px;font-weight:600">Body signals</span>
-          <span style="padding:3px 10px;border-radius:999px;background:rgba(255,255,255,0.18);font-size:10.5px;font-weight:600">Naming the urge</span>
-        </div>
-        <div style="display:flex;gap:7px;width:100%;margin-top:8px">
-          <button class="gc-btn gc-btn--white gc-btn--sm" style="flex:1" onclick="next()">Start</button>
-          <button class="gc-btn gc-btn--ghost gc-btn--sm" style="color:white;border-color:rgba(255,255,255,0.3)">Overview</button>
-        </div>
-      </div>
-      <div class="gc-card" style="padding:13px 14px">
-        <h3 style="font-size:13.5px;font-weight:700;margin:0 0 4px">Tonight's plan · 4 beats</h3>
-        <div class="an-plan-row"><span class="an-plan-n">1</span><div><div class="an-plan-t">Mood-in</div><div class="an-plan-s">1–5 · 30 sec</div></div></div>
-        <div class="an-plan-row"><span class="an-plan-n">2</span><div><div class="an-plan-t">Guided exercise</div><div class="an-plan-s">Anna prompts · ~10 min</div></div></div>
-        <div class="an-plan-row"><span class="an-plan-n">3</span><div><div class="an-plan-t">Worksheet</div><div class="an-plan-s">Saved to journal</div></div></div>
-        <div class="an-plan-row"><span class="an-plan-n">4</span><div><div class="an-plan-t">Mood-out</div><div class="an-plan-s">Track delta</div></div></div>
-      </div>
-      <div class="an-decision">curriculum · Alan Curley · S1–S4 Awareness · Goals · Attitude · Focus</div>
-    </div>
-    ${TABBAR()}`,
+ an3: () => `
+ ${TOPBAR('S1 · Awareness', true)}
+ <div class="an-body">
+ <div class="gc-card gc-card--milestone">
+ <span class="an-pill">CBT 1 of 4 · ~25 min</span>
+ <h2 style="font-size:26px;font-weight:800;letter-spacing:-0.02em;line-height:1.1;margin:6px 0 0">Awareness</h2>
+ <p style="font-size:13px;line-height:1.5;margin:0">Spotting the patterns before changing them. Tonight we name what the body and head do before the urge shows up.</p>
+ <div style="display:flex;gap:5px;flex-wrap:wrap;padding-top:6px">
+ <span style="padding:3px 10px;border-radius:999px;background:rgba(255,255,255,0.18);font-size:10.5px;font-weight:600">Triggers</span>
+ <span style="padding:3px 10px;border-radius:999px;background:rgba(255,255,255,0.18);font-size:10.5px;font-weight:600">Body signals</span>
+ <span style="padding:3px 10px;border-radius:999px;background:rgba(255,255,255,0.18);font-size:10.5px;font-weight:600">Naming the urge</span>
+ </div>
+ <div style="display:flex;gap:7px;width:100%;margin-top:8px">
+ <button class="gc-btn gc-btn--white gc-btn--sm" style="flex:1" onclick="next()">Start</button>
+ <button class="gc-btn gc-btn--ghost gc-btn--sm" style="color:white;border-color:rgba(255,255,255,0.3)">Overview</button>
+ </div>
+ </div>
+ <div class="gc-card" style="padding:13px 14px">
+ <h3 style="font-size:13.5px;font-weight:700;margin:0 0 4px">Tonight's plan · 4 beats</h3>
+ <div class="an-plan-row"><span class="an-plan-n">1</span><div><div class="an-plan-t">Mood-in</div><div class="an-plan-s">1–5 · 30 sec</div></div></div>
+ <div class="an-plan-row"><span class="an-plan-n">2</span><div><div class="an-plan-t">Guided exercise</div><div class="an-plan-s">Anna prompts · ~10 min</div></div></div>
+ <div class="an-plan-row"><span class="an-plan-n">3</span><div><div class="an-plan-t">Worksheet</div><div class="an-plan-s">Saved to journal</div></div></div>
+ <div class="an-plan-row"><span class="an-plan-n">4</span><div><div class="an-plan-t">Mood-out</div><div class="an-plan-s">Track delta</div></div></div>
+ </div>
+ <div class="an-decision">curriculum · Alan Curley · S1–S4 Awareness · Goals · Attitude · Focus</div>
+ </div>
+ ${TABBAR()}`,
 
-  an4: () => `
-    ${TOPBAR('S3 · worksheet', true)}
-    <div class="an-body">
-      <div class="an-steps">
-        <div class="an-step is-done"></div>
-        <div class="an-step is-done"></div>
-        <div class="an-step is-active"></div>
-        <div class="an-step"></div>
-      </div>
-      <div class="gc-card" style="padding:14px;gap:10px">
-        <span style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted)">Step 3 · Triggers</span>
-        <h3 style="font-size:16px;font-weight:700;letter-spacing:-0.01em;line-height:1.3;margin:2px 0 0">What was happening 30 min before?</h3>
-        <p style="font-size:12px;color:var(--text-secondary);line-height:1.45;margin:0">Pick the ones that match. More than one is fine.</p>
-        <div class="an-chip-grid">
-          <button class="an-chip is-on" onclick="toggleChip(this)"><span>🌙</span><span>Alone, late</span></button>
-          <button class="an-chip is-on" onclick="toggleChip(this)"><span>📱</span><span>Phone in hand</span></button>
-          <button class="an-chip" onclick="toggleChip(this)"><span>🍷</span><span>Drinking</span></button>
-          <button class="an-chip" onclick="toggleChip(this)"><span>💸</span><span>Money tight</span></button>
-          <button class="an-chip is-on" onclick="toggleChip(this)"><span>😞</span><span>Low mood</span></button>
-          <button class="an-chip" onclick="toggleChip(this)"><span>⚽</span><span>Big match</span></button>
-        </div>
-      </div>
-      <div class="an-quote">Alone, late + low mood — same as last Sunday. Let's hold that for a minute.</div>
-      <div style="display:flex;gap:7px;margin-top:auto">
-        <button class="gc-btn gc-btn--ghost">Back</button>
-        <button class="gc-btn gc-btn--primary" style="flex:1" onclick="next()">Next →</button>
-      </div>
-    </div>
-    ${TABBAR()}`,
+ an4: () => `
+ ${TOPBAR('S3 · worksheet', true)}
+ <div class="an-body">
+ <div class="an-steps">
+ <div class="an-step is-done"></div>
+ <div class="an-step is-done"></div>
+ <div class="an-step is-active"></div>
+ <div class="an-step"></div>
+ </div>
+ <div class="gc-card" style="padding:14px;gap:10px">
+ <span style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted)">Step 3 · Triggers</span>
+ <h3 style="font-size:16px;font-weight:700;letter-spacing:-0.01em;line-height:1.3;margin:2px 0 0">What was happening 30 min before?</h3>
+ <p style="font-size:12px;color:var(--text-secondary);line-height:1.45;margin:0">Pick the ones that match. More than one is fine.</p>
+ <div class="an-chip-grid">
+ <button class="an-chip is-on" onclick="toggleChip(this)"><span>🌙</span><span>Alone, late</span></button>
+ <button class="an-chip is-on" onclick="toggleChip(this)"><span>📱</span><span>Phone in hand</span></button>
+ <button class="an-chip" onclick="toggleChip(this)"><span>🍷</span><span>Drinking</span></button>
+ <button class="an-chip" onclick="toggleChip(this)"><span>💸</span><span>Money tight</span></button>
+ <button class="an-chip is-on" onclick="toggleChip(this)"><span>😞</span><span>Low mood</span></button>
+ <button class="an-chip" onclick="toggleChip(this)"><span>⚽</span><span>Big match</span></button>
+ </div>
+ </div>
+ <div class="an-quote">Alone, late + low mood. Same as last Sunday. Let's hold that for a minute.</div>
+ <div style="display:flex;gap:7px;margin-top:auto">
+ <button class="gc-btn gc-btn--ghost">Back</button>
+ <button class="gc-btn gc-btn--primary" style="flex:1" onclick="next()">Next →</button>
+ </div>
+ </div>
+ ${TABBAR()}`,
 
-  an5: () => `
-    ${TOPBAR('S3 complete', true)}
-    <div class="an-body">
-      <div class="gc-card gc-card--complete">
-        <span class="an-pill" style="background:rgba(0,0,0,0.22)">
-          <span style="display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;border-radius:50%;background:white;color:var(--t-30)"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
-          S3 complete · Attitude
-        </span>
-        <h2 style="font-size:22px;font-weight:800;letter-spacing:-0.02em;line-height:1.1;margin:6px 0 0">You did the work tonight.</h2>
-        <p style="font-size:13px;line-height:1.5;margin:0">22 min · mood 2 → 4. Anna will nudge earlier on Sundays now.</p>
-      </div>
-      <div class="gc-card" style="padding:13px 14px">
-        <h3 style="font-size:13.5px;font-weight:700;margin:0 0 4px">What we covered</h3>
-        <div class="an-sum"><span class="an-sum-l">Trigger</span><span class="an-sum-v">Alone late · low mood</span></div>
-        <div class="an-sum"><span class="an-sum-l">Reframe</span><span class="an-sum-v">"I'm tired, not weak."</span></div>
-        <div class="an-sum"><span class="an-sum-l">Plan</span><span class="an-sum-v">Text Joanna · walk · chat</span></div>
-        <div class="an-sum"><span class="an-sum-l">Mood</span><span class="an-sum-v" style="color:var(--t-50)">2 → 4</span></div>
-      </div>
-      <div class="gc-card" style="padding:13px 14px">
-        <h3 style="font-size:13.5px;font-weight:700;margin:0">Journal entry</h3>
-        <textarea class="an-journal">Tonight felt like a 2 but I named it. The reframe felt corny when I said it but I think it's actually true.</textarea>
-      </div>
-      <div class="an-digest">
-        <span class="an-digest__head"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 4.5 6v6c0 5 3.5 9 7.5 10 4-1 7.5-5 7.5-10V6Z"/></svg> Sponsor digest</span>
-        <p>"Sam completed S3 (Attitude). Mood 2 → 4. Pattern: Sunday evenings."</p>
-        <div class="an-digest__note">Editable per session · not dismissible (decision AN-05). Sponsor never sees transcripts.</div>
-      </div>
-      <button class="gc-btn gc-btn--primary gc-btn--full" onclick="go(0)">Back to Anna home</button>
-    </div>
-    ${TABBAR()}`,
+ an5: () => `
+ ${TOPBAR('S3 complete', true)}
+ <div class="an-body">
+ <div class="gc-card gc-card--complete">
+ <span class="an-pill" style="background:rgba(0,0,0,0.22)">
+ <span style="display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;border-radius:50%;background:white;color:var(--t-30)"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+ S3 complete · Attitude
+ </span>
+ <h2 style="font-size:22px;font-weight:800;letter-spacing:-0.02em;line-height:1.1;margin:6px 0 0">You did the work tonight.</h2>
+ <p style="font-size:13px;line-height:1.5;margin:0">22 min · mood 2 → 4. Anna will nudge earlier on Sundays now.</p>
+ </div>
+ <div class="gc-card" style="padding:13px 14px">
+ <h3 style="font-size:13.5px;font-weight:700;margin:0 0 4px">What we covered</h3>
+ <div class="an-sum"><span class="an-sum-l">Trigger</span><span class="an-sum-v">Alone late · low mood</span></div>
+ <div class="an-sum"><span class="an-sum-l">Reframe</span><span class="an-sum-v">"I'm tired, not weak."</span></div>
+ <div class="an-sum"><span class="an-sum-l">Plan</span><span class="an-sum-v">Text Joanna · walk · chat</span></div>
+ <div class="an-sum"><span class="an-sum-l">Mood</span><span class="an-sum-v" style="color:var(--t-50)">2 → 4</span></div>
+ </div>
+ <div class="gc-card" style="padding:13px 14px">
+ <h3 style="font-size:13.5px;font-weight:700;margin:0">Journal entry</h3>
+ <textarea class="an-journal">Tonight felt like a 2 but I named it. The reframe felt corny when I said it but I think it's actually true.</textarea>
+ </div>
+ <div class="an-digest">
+ <span class="an-digest__head"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 4.5 6v6c0 5 3.5 9 7.5 10 4-1 7.5-5 7.5-10V6Z"/></svg> Sponsor digest</span>
+ <p>"Sam completed S3 (Attitude). Mood 2 → 4. Pattern: Sunday evenings."</p>
+ <div class="an-digest__note">Editable per session · not dismissible (decision AN-05). Sponsor never sees transcripts.</div>
+ </div>
+ <button class="gc-btn gc-btn--primary gc-btn--full" onclick="go(0)">Back to Anna home</button>
+ </div>
+ ${TABBAR()}`,
 
-  an6: () => `
-    ${TOPBAR('Mood', true)}
-    <div class="an-body">
-      <div class="gc-card" style="padding:14px;gap:10px">
-        <div class="an-daily-head">
-          <span class="an-daily-ic-lg" style="background:var(--p-40);color:var(--p-95)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" x2="9" y1="9" y2="9"/><line x1="15" x2="15" y1="9" y2="9"/></svg></span>
-          <div><h3 style="font-size:15px;font-weight:700;margin:0">Mood</h3><div style="font-size:11.5px;color:var(--text-secondary);margin-top:2px">Twice daily · 30 sec</div></div>
-        </div>
-        <p style="font-size:13.5px;line-height:1.5;margin:0;color:var(--text-primary)">"On a scale of 1 to 5, how are you?"</p>
-        <div class="an-mood-grid">
-          <button class="an-mood-btn" onclick="pickMood(this)"><span>😞</span><span>1</span></button>
-          <button class="an-mood-btn" onclick="pickMood(this)"><span>😕</span><span>2</span></button>
-          <button class="an-mood-btn is-on" onclick="pickMood(this)"><span>😐</span><span>3</span></button>
-          <button class="an-mood-btn" onclick="pickMood(this)"><span>🙂</span><span>4</span></button>
-          <button class="an-mood-btn" onclick="pickMood(this)"><span>😄</span><span>5</span></button>
-        </div>
-        <p style="font-size:11px;color:var(--text-muted);margin:0">Logged 09:14 · next 18:30</p>
-      </div>
-      <button class="gc-btn gc-btn--primary gc-btn--full" onclick="next()">Save</button>
-    </div>
-    ${TABBAR()}`,
+ an6: () => `
+ ${TOPBAR('Mood', true)}
+ <div class="an-body">
+ <div class="gc-card" style="padding:14px;gap:10px">
+ <div class="an-daily-head">
+ <span class="an-daily-ic-lg" style="background:var(--p-40);color:var(--p-95)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" x2="9" y1="9" y2="9"/><line x1="15" x2="15" y1="9" y2="9"/></svg></span>
+ <div><h3 style="font-size:15px;font-weight:700;margin:0">Mood</h3><div style="font-size:11.5px;color:var(--text-secondary);margin-top:2px">Twice daily · 30 sec</div></div>
+ </div>
+ <p style="font-size:13.5px;line-height:1.5;margin:0;color:var(--text-primary)">"On a scale of 1 to 5, how are you?"</p>
+ <div class="an-mood-grid">
+ <button class="an-mood-btn" onclick="pickMood(this)"><span>😞</span><span>1</span></button>
+ <button class="an-mood-btn" onclick="pickMood(this)"><span>😕</span><span>2</span></button>
+ <button class="an-mood-btn is-on" onclick="pickMood(this)"><span>😐</span><span>3</span></button>
+ <button class="an-mood-btn" onclick="pickMood(this)"><span>🙂</span><span>4</span></button>
+ <button class="an-mood-btn" onclick="pickMood(this)"><span>😄</span><span>5</span></button>
+ </div>
+ <p style="font-size:11px;color:var(--text-muted);margin:0">Logged 09:14 · next 18:30</p>
+ </div>
+ <button class="gc-btn gc-btn--primary gc-btn--full" onclick="next()">Save</button>
+ </div>
+ ${TABBAR()}`,
 
-  an7: () => `
-    ${TOPBAR('Urge check', true)}
-    <div class="an-body">
-      <div class="gc-card" style="padding:14px;gap:10px">
-        <div class="an-daily-head">
-          <span class="an-daily-ic-lg" style="background:var(--w-30);color:var(--w-80)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/><path d="M12 8v4l2 2"/></svg></span>
-          <div><h3 style="font-size:15px;font-weight:700;margin:0">Urge check</h3><div style="font-size:11.5px;color:var(--text-secondary);margin-top:2px">When the wave shows up · 1 min</div></div>
-        </div>
-        <p style="font-size:13.5px;line-height:1.5;margin:0;color:var(--text-primary)">"How strong is the pull right now?"</p>
-        <div>
-          <div class="an-urge-track">
-            <div class="an-urge-marker" style="left:65%"></div>
-          </div>
-          <div class="an-urge-scale"><span>1</span><span>3</span><span>5</span><span>7</span><span>9</span></div>
-          <div class="an-urge-readout">7 / 10</div>
-        </div>
-      </div>
-      <div style="display:flex;flex-direction:column;gap:7px">
-        <button class="gc-btn gc-btn--primary" onclick="go(1)">Anna · 5-min talk</button>
-        <div style="display:flex;gap:7px">
-          <button class="gc-btn gc-btn--ghost" style="flex:1">Tell Joanna</button>
-          <button class="gc-btn gc-btn--ghost" style="flex:1">Walk · 5 min</button>
-        </div>
-      </div>
-      <div class="an-decision">decision AN-06 · daily gamification confirmed — urge checks count toward streaks</div>
-    </div>
-    ${TABBAR()}`,
+ an7: () => `
+ ${TOPBAR('Urge check', true)}
+ <div class="an-body">
+ <div class="gc-card" style="padding:14px;gap:10px">
+ <div class="an-daily-head">
+ <span class="an-daily-ic-lg" style="background:var(--w-30);color:var(--w-80)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/><path d="M12 8v4l2 2"/></svg></span>
+ <div><h3 style="font-size:15px;font-weight:700;margin:0">Urge check</h3><div style="font-size:11.5px;color:var(--text-secondary);margin-top:2px">When the wave shows up · 1 min</div></div>
+ </div>
+ <p style="font-size:13.5px;line-height:1.5;margin:0;color:var(--text-primary)">"How strong is the pull right now?"</p>
+ <div>
+ <div class="an-urge-track">
+ <div class="an-urge-marker" style="left:65%"></div>
+ </div>
+ <div class="an-urge-scale"><span>1</span><span>3</span><span>5</span><span>7</span><span>9</span></div>
+ <div class="an-urge-readout">7 / 10</div>
+ </div>
+ </div>
+ <div style="display:flex;flex-direction:column;gap:7px">
+ <button class="gc-btn gc-btn--primary" onclick="go(1)">Anna · 5-min talk</button>
+ <div style="display:flex;gap:7px">
+ <button class="gc-btn gc-btn--ghost" style="flex:1">Tell Joanna</button>
+ <button class="gc-btn gc-btn--ghost" style="flex:1">Walk · 5 min</button>
+ </div>
+ </div>
+ <div class="an-decision">decision AN-06 · daily gamification confirmed. Urge checks count toward streaks</div>
+ </div>
+ ${TABBAR()}`,
 
-  an8: () => `
-    ${TOPBAR('Gratitude', true)}
-    <div class="an-body">
-      <div class="gc-card" style="padding:14px;gap:10px">
-        <div class="an-daily-head">
-          <span class="an-daily-ic-lg" style="background:var(--t-20);color:var(--t-80)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 21s-7-4.5-9-9.5C2 7 5 4 8 4c1.7 0 3.2.8 4 2 .8-1.2 2.3-2 4-2 3 0 6 3 5 7.5C19 16.5 12 21 12 21z"/></svg></span>
-          <div><h3 style="font-size:15px;font-weight:700;margin:0">Gratitude</h3><div style="font-size:11.5px;color:var(--text-secondary);margin-top:2px">Evening · optional · 2 min</div></div>
-        </div>
-        <p style="font-size:13.5px;line-height:1.5;margin:0;color:var(--text-primary)">"Three small things from today."</p>
-        <div style="display:flex;flex-direction:column;gap:7px">
-          <div class="an-grat-row"><span class="an-grat-n">1</span><input class="an-grat-input" type="text" placeholder="Specific. A coffee, a phone call."></div>
-          <div class="an-grat-row"><span class="an-grat-n">2</span><input class="an-grat-input" type="text" placeholder="Repeats are fine."></div>
-          <div class="an-grat-row"><span class="an-grat-n">3</span><input class="an-grat-input" type="text" placeholder="If you blank, leave it."></div>
-        </div>
-      </div>
-      <button class="gc-btn gc-btn--primary gc-btn--full" onclick="go(0)">Save · back to Anna</button>
-    </div>
-    ${TABBAR()}`,
+ an8: () => `
+ ${TOPBAR('Gratitude', true)}
+ <div class="an-body">
+ <div class="gc-card" style="padding:14px;gap:10px">
+ <div class="an-daily-head">
+ <span class="an-daily-ic-lg" style="background:var(--t-20);color:var(--t-80)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 21s-7-4.5-9-9.5C2 7 5 4 8 4c1.7 0 3.2.8 4 2.8-1.2 2.3-2 4-2 3 0 6 3 5 7.5C19 16.5 12 21 12 21z"/></svg></span>
+ <div><h3 style="font-size:15px;font-weight:700;margin:0">Gratitude</h3><div style="font-size:11.5px;color:var(--text-secondary);margin-top:2px">Evening · optional · 2 min</div></div>
+ </div>
+ <p style="font-size:13.5px;line-height:1.5;margin:0;color:var(--text-primary)">"Three small things from today."</p>
+ <div style="display:flex;flex-direction:column;gap:7px">
+ <div class="an-grat-row"><span class="an-grat-n">1</span><input class="an-grat-input" type="text" placeholder="Specific. A coffee, a phone call."></div>
+ <div class="an-grat-row"><span class="an-grat-n">2</span><input class="an-grat-input" type="text" placeholder="Repeats are fine."></div>
+ <div class="an-grat-row"><span class="an-grat-n">3</span><input class="an-grat-input" type="text" placeholder="If you blank, leave it."></div>
+ </div>
+ </div>
+ <button class="gc-btn gc-btn--primary gc-btn--full" onclick="go(0)">Save · back to Anna</button>
+ </div>
+ ${TABBAR()}`,
 };
 
 let idx = 0;
 
 function pickMood(el) {
-  el.parentElement.querySelectorAll('.is-on').forEach(s => s.classList.remove('is-on'));
-  el.classList.add('is-on');
+ el.parentElement.querySelectorAll('.is-on').forEach(s => s.classList.remove('is-on'));
+ el.classList.add('is-on');
 }
 function toggleChip(el) { el.classList.toggle('is-on'); }
 
 function render() {
-  const screen = SCREENS[idx];
-  document.getElementById('stage').innerHTML = `<div class="screen" style="display:flex;flex-direction:column;flex:1;min-height:0">${builders[screen.kind]()}</div>`;
-  document.getElementById('screenId').textContent = screen.id;
-  document.getElementById('screenName').textContent = screen.name;
-  document.getElementById('progressFill').style.width = ((idx + 1) / SCREENS.length * 100) + '%';
-  document.getElementById('navPrev').disabled = idx === 0;
-  document.getElementById('navNext').disabled = idx === SCREENS.length - 1;
-  document.querySelectorAll('.proto-scrubber__item').forEach((el, i) => {
-    el.classList.toggle('is-active', i === idx);
-    if (i === idx) el.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
-  });
-  document.getElementById('contextBody').innerHTML = CTX[screen.kind] || screen.name;
+ const screen = SCREENS[idx];
+ document.getElementById('stage').innerHTML = `<div class="screen" style="display:flex;flex-direction:column;flex:1;min-height:0">${builders[screen.kind]()}</div>`;
+ document.getElementById('screenId').textContent = screen.id;
+ document.getElementById('screenName').textContent = screen.name;
+ document.getElementById('progressFill').style.width = ((idx + 1) / SCREENS.length * 100) + '%';
+ document.getElementById('navPrev').disabled = idx === 0;
+ document.getElementById('navNext').disabled = idx === SCREENS.length - 1;
+ document.querySelectorAll('.proto-scrubber__item').forEach((el, i) => {
+ el.classList.toggle('is-active', i === idx);
+ if (i === idx) el.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+ });
+ document.getElementById('contextBody').innerHTML = CTX[screen.kind] || screen.name;
 }
 
 function next() { if (idx < SCREENS.length - 1) { idx++; render(); } }
@@ -621,35 +621,35 @@ function prev() { if (idx > 0) { idx--; render(); } }
 function go(i) { idx = i; render(); }
 
 function buildScrubber() {
-  const nav = document.getElementById('scrubber');
-  SCREENS.forEach((s, i) => {
-    const btn = document.createElement('button');
-    btn.className = 'proto-scrubber__item';
-    btn.innerHTML = `<span class="proto-scrubber__id">${s.id}</span><span class="proto-scrubber__name">${s.name}</span>`;
-    btn.addEventListener('click', () => go(i));
-    nav.appendChild(btn);
-  });
+ const nav = document.getElementById('scrubber');
+ SCREENS.forEach((s, i) => {
+ const btn = document.createElement('button');
+ btn.className = 'proto-scrubber__item';
+ btn.innerHTML = `<span class="proto-scrubber__id">${s.id}</span><span class="proto-scrubber__name">${s.name}</span>`;
+ btn.addEventListener('click', () => go(i));
+ nav.appendChild(btn);
+ });
 }
 
 function initTheme() {
-  const root = document.documentElement;
-  const stored = localStorage.getItem('gc-proto-theme');
-  const initial = stored || 'dark';
-  root.setAttribute('data-theme', initial);
-  document.querySelector('.theme-label').textContent = initial === 'dark' ? 'Dark' : 'Light';
-  document.querySelector('.proto-theme-toggle').addEventListener('click', () => {
-    const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-    root.setAttribute('data-theme', next);
-    document.querySelector('.theme-label').textContent = next === 'dark' ? 'Dark' : 'Light';
-    try { localStorage.setItem('gc-proto-theme', next); } catch(e) {}
-  });
+ const root = document.documentElement;
+ const stored = localStorage.getItem('gc-proto-theme');
+ const initial = stored || 'dark';
+ root.setAttribute('data-theme', initial);
+ document.querySelector('.theme-label').textContent = initial === 'dark' ? 'Dark' : 'Light';
+ document.querySelector('.proto-theme-toggle').addEventListener('click', () => {
+ const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+ root.setAttribute('data-theme', next);
+ document.querySelector('.theme-label').textContent = next === 'dark' ? 'Dark' : 'Light';
+ try { localStorage.setItem('gc-proto-theme', next); } catch(e) {}
+ });
 }
 
 document.getElementById('navPrev').addEventListener('click', prev);
 document.getElementById('navNext').addEventListener('click', next);
 document.addEventListener('keydown', (e) => {
-  if (e.key === 'ArrowRight') next();
-  if (e.key === 'ArrowLeft') prev();
+ if (e.key === 'ArrowRight') next();
+ if (e.key === 'ArrowLeft') prev();
 });
 
 buildScrubber();
