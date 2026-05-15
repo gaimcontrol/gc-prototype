@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!--
-  GaimControl Android adaptive icon — background layer.
-  Solid brand navy fill at 432x432. Pair with gc-app-icon-android-fg.svg.
+  Holdwell Android adaptive icon — background layer.
+  Solid brand navy fill at 432×432. Pair with gc-app-icon-android-fg.svg.
 -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 432 432" role="img" aria-label="">
   <rect width="432" height="432" fill="#20273C"/>

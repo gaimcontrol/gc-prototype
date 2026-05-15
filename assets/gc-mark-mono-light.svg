@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!--
-  GaimControl mark — monochrome white, transparent background.
-  Drop on top of any photographic or coloured background where you cannot guarantee
-  the navy plate is acceptable. Uses currentColor so callers can recolour by setting
-  CSS color on the inline <svg>.
+  Holdwell mark — monochrome white, transparent background.
+  Single-colour version for in-app chrome (phone app-bar, sidebar, avatar slots).
+  Kept pure white so the existing `filter: invert(1)` light-mode rule still produces a clean navy mark.
 -->
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="-25 -25 50 50" role="img" aria-label="GaimControl" style="color:#FFFFFF">
-  <path fill="currentColor" fill-rule="evenodd"
-    d="m 16.695,-10.298671 c -5.42,-5.76 -13.13,-6.66 -19.42,-3.89 -3.61,-1.16 -7.67,-0.7 -10.97,1.23 -8.27,4.92 -9.4,16.26 -3,23.26 5.41,5.76 13.12,6.66 19.42,3.88 3.61,1.16 7.67,0.7 10.97,-1.23 8.27,-4.92 9.4,-16.26 3,-23.26 z m -0.74,15.76 c -1.16,4.58 -5.34,8.06 -10.03,8.63 -0.98,0.12 -1.99,0.11 -3,0 4.31,-1.96 7.93,-5.65 9.66,-10.68 1.48,-3.48 -0.86,-7.62 -4.63,-8.08 -3.22,-0.44 -6.18,1.81 -6.62,5.02 -0.17,1.48 -0.74,2.88 -1.71,4.05 -2.9,3.46 -8.21,3.78 -11.79,1.12 -3.37,-2.43 -4.84,-6.97 -3.77,-11 1.16,-4.58 5.34,-8.06 10.03,-8.63 0.98,-0.12 1.99,-0.11 3,0 -4.31,1.96 -7.93,5.65 -9.66,10.68 -1.48,3.48 0.86,7.62 4.63,8.08 3.22,0.44 6.18,-1.81 6.62,-5.02 0.17,-1.48 0.74,-2.88 1.71,-4.05 2.9,-3.46 8.2,-3.78 11.79,-1.12 3.37,2.43 4.84,6.97 3.77,11 z"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 150" role="img" aria-label="Holdwell" style="color:#FFFFFF">
+  <path d="M 22 36 L 50 130" stroke="currentColor" stroke-width="22" stroke-linecap="round" fill="none"/>
+  <path d="M 50 130 L 70 60" stroke="currentColor" stroke-width="16" stroke-linecap="round" fill="none" opacity="0.92"/>
+  <path d="M 70 60 L 88 130" stroke="currentColor" stroke-width="12" stroke-linecap="round" fill="none" opacity="0.78"/>
+  <path d="M 88 130 L 108 78" stroke="currentColor" stroke-width="8" stroke-linecap="round" fill="none" opacity="0.6"/>
+  <path d="M 108 78 L 124 124" stroke="currentColor" stroke-width="5" stroke-linecap="round" fill="none" opacity="0.45"/>
 </svg>

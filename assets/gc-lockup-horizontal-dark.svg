@@ -1,22 +1,33 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!--
-  GaimControl horizontal lockup — dark variant.
-  Mark + wordmark on navy. Use as primary brand application in app headers, marketing,
-  pitch decks. NOTE: text is set as <text>; for production print/usage, convert to outlines.
-  Font: Inter Bold (700), letter-spacing tightened for banking-grade feel.
+  Holdwell horizontal lockup — dark variant.
+  Mark (gradient W) + "holdwell" wordmark on navy. Primary lockup for app headers,
+  marketing, pitch decks. NOTE: text is set as <text> for prototype usage;
+  for production print, convert to outlines.
+  Font: Inter Bold (700), letter-spacing tightened to match the wordmark in the brand book.
 -->
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 80" role="img" aria-label="GaimControl">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 80" role="img" aria-label="holdwell">
   <rect width="320" height="80" fill="#20273C"/>
-  <!-- Mark: translated and scaled into a 60x60 box on the left -->
-  <g transform="translate(40 40) scale(1.1)">
-    <path fill="#FFFFFF" fill-rule="evenodd"
-      d="m 16.695,-10.298671 c -5.42,-5.76 -13.13,-6.66 -19.42,-3.89 -3.61,-1.16 -7.67,-0.7 -10.97,1.23 -8.27,4.92 -9.4,16.26 -3,23.26 5.41,5.76 13.12,6.66 19.42,3.88 3.61,1.16 7.67,0.7 10.97,-1.23 8.27,-4.92 9.4,-16.26 3,-23.26 z m -0.74,15.76 c -1.16,4.58 -5.34,8.06 -10.03,8.63 -0.98,0.12 -1.99,0.11 -3,0 4.31,-1.96 7.93,-5.65 9.66,-10.68 1.48,-3.48 -0.86,-7.62 -4.63,-8.08 -3.22,-0.44 -6.18,1.81 -6.62,5.02 -0.17,1.48 -0.74,2.88 -1.71,4.05 -2.9,3.46 -8.21,3.78 -11.79,1.12 -3.37,-2.43 -4.84,-6.97 -3.77,-11 1.16,-4.58 5.34,-8.06 10.03,-8.63 0.98,-0.12 1.99,-0.11 3,0 -4.31,1.96 -7.93,5.65 -9.66,10.68 -1.48,3.48 0.86,7.62 4.63,8.08 3.22,0.44 6.18,-1.81 6.62,-5.02 0.17,-1.48 0.74,-2.88 1.71,-4.05 2.9,-3.46 8.2,-3.78 11.79,-1.12 3.37,2.43 4.84,6.97 3.77,11 z"/>
+  <defs>
+    <linearGradient id="hw-lk-d" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#8576C2"/>
+      <stop offset="0.55" stop-color="#4D608C"/>
+      <stop offset="1" stop-color="#399971"/>
+    </linearGradient>
+  </defs>
+  <!-- Mark: scale 150-unit source to 56 units, translate to leave 12px padding left -->
+  <g transform="translate(12 12) scale(0.373)">
+    <path d="M 22 36 L 50 130" stroke="url(#hw-lk-d)" stroke-width="22" stroke-linecap="round" fill="none"/>
+    <path d="M 50 130 L 70 60" stroke="url(#hw-lk-d)" stroke-width="16" stroke-linecap="round" fill="none" opacity="0.92"/>
+    <path d="M 70 60 L 88 130" stroke="url(#hw-lk-d)" stroke-width="12" stroke-linecap="round" fill="none" opacity="0.78"/>
+    <path d="M 88 130 L 108 78" stroke="url(#hw-lk-d)" stroke-width="8" stroke-linecap="round" fill="none" opacity="0.6"/>
+    <path d="M 108 78 L 124 124" stroke="url(#hw-lk-d)" stroke-width="5" stroke-linecap="round" fill="none" opacity="0.45"/>
   </g>
   <!-- Wordmark -->
-  <text x="92" y="51"
+  <text x="80" y="51"
         font-family="Inter, -apple-system, BlinkMacSystemFont, system-ui, sans-serif"
         font-weight="700"
-        font-size="30"
-        letter-spacing="-0.5"
-        fill="#FFFFFF">GaimControl</text>
+        font-size="32"
+        letter-spacing="-1.2"
+        fill="#FFFFFF">holdwell</text>
 </svg>
