@@ -242,6 +242,11 @@ body { padding-top: var(--gc-fc-h); }
  '<span>PNG</span>';
  const BTN_BUSY_HTML = '<span class="gc-fc-shot__spinner"></span><span>Capturing…</span>';
 
+ // How long to wait after click before capturing.
+ // Covers fade-in (220ms), screen transitions, splash particles, welcome carousels, etc.
+ const CAPTURE_DELAY_MS = 1200;
+ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
  async function captureAndDownload(btn) {
  const target = findCaptureTarget();
  if (!target) {
@@ -249,15 +254,34 @@ body { padding-top: var(--gc-fc-h); }
  return;
  }
  btn.disabled = true;
- btn.innerHTML = BTN_BUSY_HTML;
  try {
- await loadHtml2Canvas();
- // Hide the screenshot button itself so it doesn't appear in cropped output
- // (target only includes .phone/.browser, so the modebar button isn't captured anyway)
- const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+ // Start loading html2canvas in parallel with the wait
+ const libPromise = loadHtml2Canvas();
+
+ // Countdown so the user sees animations land before the snap
+ const totalSecs = Math.ceil(CAPTURE_DELAY_MS / 1000);
+ for (let i = totalSecs; i > 0; i--) {
+ btn.innerHTML = `<span class="gc-fc-shot__spinner"></span><span>Wait ${i}…</span>`;
+ await sleep(1000);
+ }
+
+ // Make sure the lib is in fact loaded before we capture
+ await libPromise;
+
+ btn.innerHTML = '<span class="gc-fc-shot__spinner"></span><span>Capturing…</span>';
+
+ // Scroll the target's internal scroll containers to the top so we
+ // consistently capture the top of the screen content rather than mid-page
+ target.querySelectorAll('.main, .browser__viewport, .sf-body, .pr-body, .ob-body, .sp-body, [class*="-body"]').forEach((el) => {
+ try { el.scrollTop = 0; } catch (e) {}
+ });
+
+ // Give the browser one more frame to settle after scroll resets
+ await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+
  const canvas = await window.html2canvas(target, {
  backgroundColor: null, // transparent
- scale: window.devicePixelRatio >= 2 ? 2 : 2, // always 2x for crisp output
+ scale: 2, // 2x for crisp output
  useCORS: true,
  logging: false,
  allowTaint: false,
