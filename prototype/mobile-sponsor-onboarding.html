@@ -266,7 +266,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-
  <div class="proto-sidebar__footer">
  Source: <a href="../15-sponsor-onboarding.html">15-sponsor-onboarding</a><br>
  Decisions: GEN-03 · GEN-07 · ON-04 · CC-03<br>
- <em>SP4–SP6 shown as Joanna's mobile-web view of sponsor.gaimcontrol.com (responsive · accessible from her phone)</em>
+ <em>SP4–SP6 shown as Joanna's mobile-web view of sponsor.holdwell.com (responsive · accessible from her phone)</em>
  </div>
  </aside>
 
@@ -308,11 +308,11 @@ const SCREENS = [
 
 const CTX = {
  sp1: '<strong>SP1 User invites a sponsor.</strong> Three required fields (sponsor name · relationship · email) + optional 280-char note. Reachable from two entry points per <a href="../41-decisions-log.html">ON-04</a> A/B. Variant A invites at ON6 during onboarding · variant B invites later from §07 Controls. Both downstream flows identical.',
- sp2: '<strong>SP2 Email preview.</strong> Transactional email queued via Customer.io to Joanna. Subject auto-filled with Sam\'s name. Body includes the optional note from SP1. Signed-token URL routes to SP3 explainer landing (web · sponsor.gaimcontrol.com).',
+ sp2: '<strong>SP2 Email preview.</strong> Transactional email queued via Customer.io to Joanna. Subject auto-filled with Sam\'s name. Body includes the optional note from SP1. Signed-token URL routes to SP3 explainer landing (web · sponsor.holdwell.com).',
  pend: '<strong>Pending state.</strong> Sam sees this until Joanna completes SP3–SP6. Status pills track SP2 sent → SP3 viewed → SP4 KYC → SP5 open banking → SP6 dashboard activated.',
  sp4: '<strong>SP4 Light KYC (Joanna on her phone).</strong> Spec says sponsor dash is web-only at MVP. But the surface is responsive, so Joanna clicking the email link on her phone lands here. Vouchsafe-powered (same vendor as user KYC per <a href="../41-decisions-log.html">CC-03</a>). Light set: name + DOB + address + photo ID + selfie. No income / affordability check.',
  sp5: '<strong>SP5 Open banking (Joanna on her phone).</strong> TrueLayer · single account · liveness + AML cross-check only. We don\'t analyse Joanna\'s spending. Per <a href="../41-decisions-log.html">GEN-03</a> the bank link reduces coercion risk by tying her to a real verified account in her own name.',
- sp6: '<strong>SP6 Sponsor dashboard (mobile-web view).</strong> Web-only at MVP per spec. But the same responsive page renders on her phone if she opens sponsor.gaimcontrol.com on mobile. Streak · payment · session attendance · Hold notices · per-MCC categories · sponsor message inbox. Push notifications still hit her phone via the browser. Cannot DM Sam in-app.',
+ sp6: '<strong>SP6 Sponsor dashboard (mobile-web view).</strong> Web-only at MVP per spec. But the same responsive page renders on her phone if she opens sponsor.holdwell.com on mobile. Streak · payment · session attendance · Hold notices · per-MCC categories · sponsor message inbox. Push notifications still hit her phone via the browser. Cannot DM Sam in-app.',
  sp7: '<strong>SP7 Sponsor management.</strong> Lives in §12 Profile under "Sponsor". Up to 3 sponsors per <a href="../41-decisions-log.html">GEN-07</a>. Any-of-N authorisations (SP6.A). Each invited + verified independently. No role differentiation at MVP. Suspend = revoke immediately + retain in audit log; remove = full revocation + cascade.',
 };
 
@@ -325,7 +325,7 @@ const TOPBAR = (title, showBack) => `
 
 const SPONSOR_HEADER = (title, urlPath) => `
  <div class="phone__sponsor-strip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 4.5 6v6c0 5 3.5 9 7.5 10 4-1 7.5-5 7.5-10V6Z"/></svg> Sponsor view · Joanna</div>
- <div class="phone__sponsor-url"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> sponsor.gaimcontrol.com${urlPath}</div>
+ <div class="phone__sponsor-url"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> sponsor.holdwell.com${urlPath}</div>
  <div class="phone__topbar" style="padding-top:10px">
  <button class="phone__back" onclick="prev()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
  <span class="phone__title">${title}</span>
@@ -392,14 +392,14 @@ const builders = {
  </div>
  <div class="sp-email">
  <div class="sp-email__head">
- <div class="sp-email__from"><b>GaimControl</b> <span>noreply@gaimcontrol.com</span></div>
+ <div class="sp-email__from"><b>Holdwell</b> <span>noreply@holdwell.com</span></div>
  <div class="sp-email__from"><b>To</b> <span>joanna.m@hotmail.co.uk</span></div>
- <div class="sp-email__subj">Sam would like you to be her GaimControl sponsor</div>
+ <div class="sp-email__subj">Sam would like you to be her Holdwell sponsor</div>
  </div>
  <div class="sp-email__body">
  <div class="sp-email__hero">
  <h3>Hi Joanna</h3>
- <p>Your sister Sam has named you as a sponsor on her GaimControl account. Here's what that means.</p>
+ <p>Your sister Sam has named you as a sponsor on her Holdwell account. Here's what that means.</p>
  </div>
  <p style="margin:0">A sponsor is someone Sam trusts to see her recovery milestones and act as a second pair of eyes. You won't see her transactions or Anna chat. Just safety signals and major events.</p>
  <div class="sp-email__note">"Hey Jo. Would you do this with me? I've explained it on the call. No pressure x"</div>
@@ -450,7 +450,7 @@ const builders = {
  </div>
  <div class="sp-state">
  <span class="sp-state__ic sp-state__ic--waiting"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="10"/></svg></span>
- <div><div class="sp-state__t">SP6 · Sponsor dashboard</div><div class="sp-state__s">sponsor.gaimcontrol.com (web)</div></div>
+ <div><div class="sp-state__t">SP6 · Sponsor dashboard</div><div class="sp-state__s">sponsor.holdwell.com (web)</div></div>
  <span class="sp-state__pill sp-state__pill--waiting">Not yet</span>
  </div>
  </div>
@@ -598,7 +598,7 @@ const builders = {
  <p style="font-size:11px;color:var(--text-muted);margin:0;line-height:1.5">Co-sign queue: empty · threshold £500.<br>Push + email enabled · cannot DM Sam in-app.</p>
  </div>
  <div class="gc-card gc-card--info">
- <p style="font-size:11.5px;color:var(--text-secondary);line-height:1.5;margin:0">Web-only at MVP per spec. But the page is responsive, so this is what Joanna sees if she opens sponsor.gaimcontrol.com on her phone.</p>
+ <p style="font-size:11.5px;color:var(--text-secondary);line-height:1.5;margin:0">Web-only at MVP per spec. But the page is responsive, so this is what Joanna sees if she opens sponsor.holdwell.com on her phone.</p>
  </div>
  </div>`,
 

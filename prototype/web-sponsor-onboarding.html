@@ -254,7 +254,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-
  <div class="proto-sidebar__footer">
  Source: <a href="../15-sponsor-onboarding.html">15-sponsor-onboarding</a><br>
  Decisions: GEN-03 · GEN-07 · ON-04 · CC-03<br>
- <em>SP1 + SP7 on user surface (app.gaimcontrol.com), SP3–SP6 on sponsor.gaimcontrol.com</em>
+ <em>SP1 + SP7 on user surface (app.gaimcontrol.com), SP3–SP6 on sponsor.holdwell.com</em>
  </div>
  </aside>
 
@@ -302,7 +302,7 @@ const SCREENS = [
 
 const CTX = {
  sp1: '<strong>SP1 User invites a sponsor.</strong> Web entry point. From §12 Profile, "Invite a sponsor" tile. Three required fields (sponsor name · relationship · email) + optional 280-char note. Per <a href="../41-decisions-log.html">ON-04</a> A/B, this same surface is reachable from ON6 (onboarding) and from §07 Controls after onboarding.',
- sp3: '<strong>SP3 Sponsor · explainer landing.</strong> Joanna clicks the email link, lands on <code>sponsor.gaimcontrol.com</code>. Reuses §14 MK8 with first-name + relationship merged. CTA: "Sponsor Sam now". Secondary: expand the abilities matrix (what sponsors can / can\'t do). Decline path: polite ack + user notified.',
+ sp3: '<strong>SP3 Sponsor · explainer landing.</strong> Joanna clicks the email link, lands on <code>sponsor.holdwell.com</code>. Reuses §14 MK8 with first-name + relationship merged. CTA: "Sponsor Sam now". Secondary: expand the abilities matrix (what sponsors can / can\'t do). Decline path: polite ack + user notified.',
  sp4: '<strong>SP4 Sponsor · light KYC.</strong> Vouchsafe-powered. Same vendor as user KYC per <a href="../41-decisions-log.html">CC-03</a>. Lighter set: name + DOB + address + photo ID + selfie. No income or affordability check. Failed KYC routes to ops review.',
  sp5: '<strong>SP5 Sponsor · open banking.</strong> Single account via TrueLayer. Liveness + AML cross-check only. We don\'t analyse Joanna\'s spending. The link reduces coercion risk by tying the sponsor to a real verified account in their own name (per <a href="../41-decisions-log.html">GEN-03</a>).',
  sp6: '<strong>SP6 Sponsor · dashboard.</strong> Web-only at MVP. Sponsors are infrequent visitors. Push + email on subscribed events. Cannot DM the user inside the app. Per <a href="../41-decisions-log.html">GEN-07</a> up to 3 sponsors per user; per SP6.A authorisations are any-of-N · per SP6.B notifications are broadcast-all.',
@@ -313,7 +313,7 @@ const USER_APPNAV = () => `
  <aside class="appnav">
  <div class="appnav__brand">
  <span class="appnav__mark"><img src="../assets/gc-mark-mono-light.svg" alt=""></span>
- <span class="appnav__name">GaimControl</span>
+ <span class="appnav__name">Holdwell</span>
  </div>
  <div class="appnav__user">
  <span class="appnav__avatar">S</span>
@@ -344,7 +344,7 @@ const SPONSOR_APPNAV = () => `
  <aside class="appnav appnav--sponsor">
  <div class="appnav__brand">
  <span class="appnav__mark" style="background:var(--s-40)"><img src="../assets/gc-mark-mono-light.svg" alt=""></span>
- <span><span class="appnav__name">GaimControl</span><span class="appnav__name__sub">Sponsor</span></span>
+ <span><span class="appnav__name">Holdwell</span><span class="appnav__name__sub">Sponsor</span></span>
  </div>
  <div class="appnav__user">
  <span class="appnav__avatar" style="background:linear-gradient(135deg,var(--s-50),var(--p-40))">JM</span>
@@ -427,9 +427,9 @@ const builders = {
  sp3: () => PAGE('sponsor', 'Welcome', '', `
  <div class="stack">
  <div class="sp-landing-hero">
- <span class="sp-landing-hero__tag">Sponsorship · GaimControl</span>
+ <span class="sp-landing-hero__tag">Sponsorship · Holdwell</span>
  <h1 class="sp-landing-hero__h">Hi Joanna. Your sister Sam wants you in her corner.</h1>
- <p class="sp-landing-hero__p">Sam has chosen GaimControl to support her gambling recovery. And she's chosen you as her sponsor. That means you'll see her milestones, hear if something goes off, and (with her permission) co-sign big transfers. You won't see day-to-day spending or her chats with Anna.</p>
+ <p class="sp-landing-hero__p">Sam has chosen Holdwell to support her gambling recovery. And she's chosen you as her sponsor. That means you'll see her milestones, hear if something goes off, and (with her permission) co-sign big transfers. You won't see day-to-day spending or her chats with Anna.</p>
  <div class="sp-landing-hero__cta">
  <button class="gc-btn gc-btn--white gc-btn--lg" onclick="next()">Sponsor Sam · ~8 min</button>
  <button class="gc-btn gc-btn--ghost-light gc-btn--lg">I can't do this right now</button>
@@ -559,7 +559,7 @@ const builders = {
  </div>
  </div>`),
 
- sp6: () => PAGE('sponsor', 'Sam · sponsor dashboard', 'sponsor.gaimcontrol.com · web only at MVP. Push + email on subscribed events. You can\'t DM Sam in here.', `
+ sp6: () => PAGE('sponsor', 'Sam · sponsor dashboard', 'sponsor.holdwell.com · web only at MVP. Push + email on subscribed events. You can\'t DM Sam in here.', `
  <div class="stack">
  <div class="row-3">
  <div class="sp-stat">
@@ -686,7 +686,7 @@ function render() {
  viewport.className = 'browser__viewport browser__viewport--' + (screen.audience === 'sponsor' ? 'sponsor' : 'user-nav');
  viewport.innerHTML = builders[screen.kind]();
  const url = document.getElementById('browserUrl');
- url.textContent = (screen.audience === 'sponsor' ? 'sponsor.gaimcontrol.com' : 'app.gaimcontrol.com') + screen.url;
+ url.textContent = (screen.audience === 'sponsor' ? 'sponsor.holdwell.com' : 'app.gaimcontrol.com') + screen.url;
  url.className = screen.audience === 'sponsor' ? 'browser__url__sponsor' : '';
  document.getElementById('screenId').textContent = screen.id;
  document.getElementById('screenName').textContent = screen.name;

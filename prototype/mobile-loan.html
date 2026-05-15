@@ -279,7 +279,7 @@ const SCREENS = [
 ];
 
 const CTX = {
- lo1: '<strong>LO1 Offer summary.</strong> Opens from the BK1 Day-30 unlock card. £8,400 over 36mo at 19.9% rep APR. Per <a href="../41-decisions-log.html">LO-01</a> GaimControl is the lender, operating as an Appointed Representative of [Insert once Closed]. Algbra (FCA #952360) issues the card but isn\'t party to the loan. Per <a href="../41-decisions-log.html">LO-02</a> APR is built variable but displays the representative figure. Per <a href="../41-decisions-log.html">LO-04</a> Early-access informal cap is £10k. This offer at £8,400 sits comfortably under. Per <a href="../41-decisions-log.html">LO-05</a> creditors are settled via Experian ReFi only.',
+ lo1: '<strong>LO1 Offer summary.</strong> Opens from the BK1 Day-30 unlock card. £8,400 over 36mo at 19.9% rep APR. Per <a href="../41-decisions-log.html">LO-01</a> Holdwell is the lender, operating as an Appointed Representative of [Insert once Closed]. Algbra (FCA #952360) issues the card but isn\'t party to the loan. Per <a href="../41-decisions-log.html">LO-02</a> APR is built variable but displays the representative figure. Per <a href="../41-decisions-log.html">LO-04</a> Early-access informal cap is £10k. This offer at £8,400 sits comfortably under. Per <a href="../41-decisions-log.html">LO-05</a> creditors are settled via Experian ReFi only.',
  lo2: '<strong>LO2 SECCI.</strong> Standard European Consumer Credit Information per CONC 4.2. Same form every UK lender must produce, in the regulator\'s order so users can compare like-for-like. 12 numbered items rendered to scroll. Per <a href="../41-decisions-log.html">LO-07</a> sponsor receives the same SECCI by default. Visible callout shows Joanna received it at 21:02 today.',
  lo3: '<strong>LO3 Affordability.</strong> Final CONC 5.2A.4 fresh check, ~3 min. Income / Essentials / Debts pre-filled from linked accounts. Shows £645 disposable after the new GC repayment. Well above the FCA "sustainable" 5% threshold (£107). Debts-being-settled appear struck through in the breakdown.',
  lo4: '<strong>LO4 Sign &amp; accept.</strong> 14-day right-to-withdraw starts on sign. 24h cool-off before settlement runs so the user can cancel without consequence. 4 attestations including <strong>Relapse Hold (clause 11)</strong> which is contractual, not discretionary. Per <a href="../41-decisions-log.html">LO-06</a> if the user withdraws post-settlement, GC absorbs via an internal cool-off rather than statutory 30-day repayment.',
@@ -379,12 +379,12 @@ const builders = {
  </div>
  </div>
  <div class="gc-card" style="padding:13px 14px">
- <div class="lo-secci"><h4>1 · Lender</h4><p>GaimControl Limited, Appointed Representative of [Insert once Closed] (FCA principal firm, name confirmed at close of AR agreement). Algbra (FCA #952360) issues the card and is not party to this loan agreement.</p></div>
+ <div class="lo-secci"><h4>1 · Lender</h4><p>Holdwell Limited, Appointed Representative of [Insert once Closed] (FCA principal firm, name confirmed at close of AR agreement). Algbra (FCA #952360) issues the card and is not party to this loan agreement.</p></div>
  <div class="lo-secci"><h4>3 · Total credit</h4><p class="mono">£8,400.00</p></div>
  <div class="lo-secci"><h4>5 · APR</h4><p class="mono">19.9% fixed · representative · no risk-based adjustment after offer.</p></div>
  <div class="lo-secci"><h4>7 · Right of withdrawal</h4><p>14 days from sign-day to withdraw without reason (Consumer Credit Act 1974 §66A). Per <a href="../41-decisions-log.html" style="color:var(--accent)">LO-06</a>, if creditors are already paid an internal cool-off mechanism handles unwind. No statutory 30-day repayment surprise.</p></div>
  <div class="lo-secci"><h4>9 · Missed payments</h4><p>Reported to Experian / Equifax / TransUnion. <strong>No default fees</strong> (per <a href="../41-decisions-log.html" style="color:var(--accent)">RP-07</a>).</p></div>
- <div class="lo-secci"><h4>11 · Relapse Hold</h4><p><strong>Unique to GaimControl.</strong> Refused MCC 7995 auto-pauses repayment 7 days, no interest accrues, sponsor notified. Contractual feature, not discretionary.</p></div>
+ <div class="lo-secci"><h4>11 · Relapse Hold</h4><p><strong>Unique to Holdwell.</strong> Refused MCC 7995 auto-pauses repayment 7 days, no interest accrues, sponsor notified. Contractual feature, not discretionary.</p></div>
  </div>
  <a href="#" style="font-size:12px;color:var(--accent);text-decoration:none;font-weight:600;text-align:center;padding:6px 0">Read all 12 items in the PDF →</a>
  <div class="gc-card" style="padding:11px 13px;gap:5px">
@@ -465,7 +465,7 @@ const builders = {
  <label class="lo-attest" onclick="toggleCheck(this)"><span class="gc-checkbox gc-checkbox--on"></span><span>I have read the SECCI and credit agreement.</span></label>
  <label class="lo-attest" onclick="toggleCheck(this)"><span class="gc-checkbox gc-checkbox--on"></span><span>The figures reflect my current finances.</span></label>
  <label class="lo-attest" onclick="toggleCheck(this)"><span class="gc-checkbox gc-checkbox--on"></span><span>I understand <strong>Relapse Hold (clause 11)</strong> auto-pauses repayment 7d on a refused MCC 7995 tx and notifies my sponsor.</span></label>
- <label class="lo-attest" onclick="toggleCheck(this)"><span class="gc-checkbox"></span><span>I authorise GaimControl to instruct <strong>Experian ReFi</strong> to pay £8,400 directly to creditors.</span></label>
+ <label class="lo-attest" onclick="toggleCheck(this)"><span class="gc-checkbox"></span><span>I authorise Holdwell to instruct <strong>Experian ReFi</strong> to pay £8,400 directly to creditors.</span></label>
  </div>
  <div class="gc-card" style="background:var(--bg-surface-2);padding:14px 16px">
  <h3 style="font-size:13px;font-weight:700;margin:0">Sign here</h3>

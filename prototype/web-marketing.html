@@ -386,7 +386,7 @@ const CTX = {
  mk5: '<strong>MK5 Help &amp; FAQs.</strong> Categorised accordion: eligibility · data we pull · what sponsors see · missing a payment · closing your account. Search across all entries. Each answer cross-links to the in-app help screen where relevant.',
  mk6: '<strong>MK6 Privacy &amp; legal.</strong> Privacy policy (GDPR) · cookie policy · T&amp;Cs · vulnerable-customer policy · complaints handling (FOS routing). Versioned with effective-date headers. Canonical source for in-app links from §12 Profile.',
  mk7: '<strong>MK7 Profile UTM landers.</strong> Six paid-acquisition pages. One per profile (P1 Recreational · P2 Habitual · P3 Mood-influenced · P4 At-risk · P5 Recovering · P6 Declined). Same skeleton, different copy + hero + social proof. UTM params flow to onboarding so cohort behaviour ties back to campaign.',
- mk8: '<strong>MK8 Explainer.</strong> Single canonical "what is GaimControl?" landing. Lender-partner referrals AND sponsor-invite emails both link here. Separate landers would diverge over time. User\'s first name + relationship are merged in from the signed token in the URL.',
+ mk8: '<strong>MK8 Explainer.</strong> Single canonical "what is Holdwell?" landing. Lender-partner referrals AND sponsor-invite emails both link here. Separate landers would diverge over time. User\'s first name + relationship are merged in from the signed token in the URL.',
 };
 
 // ────────── SVG ILLUSTRATIONS ──────────
@@ -792,7 +792,7 @@ const builders = {
  <span class="mk-step__n">04</span>
  <div>
  <h3 class="mk-step__h">Loan · only when it's the right one</h3>
- <p class="mk-step__p">If you have gambling-related debt scattered across cards and BNPLs, GaimControl can refinance it into one fixed loan. Underwritten by Algbra, settled via Experian ReFi. Fully FCA SECCI-disclosed. <strong>Relapse Hold</strong> built in: if the system detects a betting attempt, repayment pauses for 7 days, no late fee, no credit impact.</p>
+ <p class="mk-step__p">If you have gambling-related debt scattered across cards and BNPLs, Holdwell can refinance it into one fixed loan. Underwritten by Algbra, settled via Experian ReFi. Fully FCA SECCI-disclosed. <strong>Relapse Hold</strong> built in: if the system detects a betting attempt, repayment pauses for 7 days, no late fee, no credit impact.</p>
  </div>
  <div class="mk-step__art" style="background:linear-gradient(135deg,rgba(82,201,162,0.14),rgba(31,112,88,0.06))">${ART_LOAN()}</div>
  </div>
@@ -904,7 +904,7 @@ const builders = {
  <div>
  <span class="mk-eyebrow">Company · est. 2025</span>
  <h1 class="mk-hero__h1" style="font-size:60px;text-align:center;margin:18px auto;max-width:none">Built by people who needed it.<br><span class="mk-grad">Or watched someone who did.</span></h1>
- <p class="mk-hero__p" style="margin:0 auto">GaimControl exists because the conventional banks treat gambling like any other category. Our founders' experience said: that's the gap.</p>
+ <p class="mk-hero__p" style="margin:0 auto">Holdwell exists because the conventional banks treat gambling like any other category. Our founders' experience said: that's the gap.</p>
  </div>
  </div>
  </section>
@@ -923,7 +923,7 @@ const builders = {
  <span class="mk-team-card__av">JP</span>
  <h4 class="mk-team-card__name">JP · CEO &amp; founder</h4>
  <div class="mk-team-card__role">ex-banking · 15y</div>
- <p class="mk-team-card__bio">Started GaimControl after his brother. Built consumer fintech at three London banks. The product thesis is his.</p>
+ <p class="mk-team-card__bio">Started Holdwell after his brother. Built consumer fintech at three London banks. The product thesis is his.</p>
  </div>
  <div class="mk-team-card">
  <span class="mk-team-card__av">FA</span>
@@ -961,7 +961,7 @@ const builders = {
 
  <section class="mk-section">
  <div class="mk-section__container">
- <div class="mk-section__head"><span class="mk-eyebrow">Regulatory + partners</span><h2 class="mk-section__h2">FCA-regulated. Appointed Representative.</h2><p class="mk-section__p">GaimControl is an Appointed Representative of [Insert once Closed]. The principal firm holds the regulatory permissions; we operate under their supervision with full reporting and oversight. This route lets us ship a real product without two-year direct-authorisation timelines, while keeping FCA-grade safeguards in place from day one.</p></div>
+ <div class="mk-section__head"><span class="mk-eyebrow">Regulatory + partners</span><h2 class="mk-section__h2">FCA-regulated. Appointed Representative.</h2><p class="mk-section__p">Holdwell is an Appointed Representative of [Insert once Closed]. The principal firm holds the regulatory permissions; we operate under their supervision with full reporting and oversight. This route lets us ship a real product without two-year direct-authorisation timelines, while keeping FCA-grade safeguards in place from day one.</p></div>
  <div class="mk-partner-strip">
  <span class="mk-partner">FCA · AR principal [Insert once Closed]</span>
  <span class="mk-partner">Algbra · BaaS</span>
@@ -1016,11 +1016,11 @@ const builders = {
  </div>
  <div style="max-width:760px;margin:0 auto">
  <div class="mk-faq-item is-open" onclick="this.classList.toggle('is-open')">
- <div class="mk-faq-item__q"><span>Who is GaimControl for?</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+ <div class="mk-faq-item__q"><span>Who is Holdwell for?</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
  <p class="mk-faq-item__a">UK adults who recognise gambling as a problem they want help with. After the 2-min assessment we sort users into six profiles. If you're at the lower-risk end ("Recreational") we still serve you. Preventatively. If you're at the higher-risk end ("Compulsive") we route harder, with shorter cool-offs and more safeguarding contact. If you don't qualify at all, we say so and hand off to GamCare.</p>
  </div>
  <div class="mk-faq-item" onclick="this.classList.toggle('is-open')">
- <div class="mk-faq-item__q"><span>Do I need to take a loan to use GaimControl?</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+ <div class="mk-faq-item__q"><span>Do I need to take a loan to use Holdwell?</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
  <p class="mk-faq-item__a">No. The loan exists for users with scattered gambling-related debt who want one fixed payment. If you don't need it, you don't take it. The banking, Anna, and sponsor are independent of any lending decision.</p>
  </div>
  <div class="mk-faq-item" onclick="this.classList.toggle('is-open')">
@@ -1156,7 +1156,7 @@ const builders = {
  <div class="mk-explainer-hero">
  <span class="mk-explainer-tag">Welcome · Joanna</span>
  <h1 class="mk-explainer-h">Your sister Sam asked you to <span style="color:#FAB44A">have her back.</span></h1>
- <p class="mk-explainer-p">GaimControl is the banking + therapy + accountability system Sam's using for her gambling recovery. Being her sponsor means seeing her milestones, hearing if something goes off, and (optionally) co-signing her bigger transfers. You'll never see her transactions or Anna chats.</p>
+ <p class="mk-explainer-p">Holdwell is the banking + therapy + accountability system Sam's using for her gambling recovery. Being her sponsor means seeing her milestones, hearing if something goes off, and (optionally) co-signing her bigger transfers. You'll never see her transactions or Anna chats.</p>
  <div class="mk-cta__btns">
  <a class="mk-btn mk-btn--white mk-btn--xl">Sponsor Sam · ~8 minutes →</a>
  <a class="mk-btn mk-btn--ghost-light mk-btn--xl">I can't right now</a>
@@ -1245,10 +1245,10 @@ const builders = {
 
 // MK7 profile content variants
 const PROFILES = {
- p1: { color: 'p1', pill: 'Profile 1 · Recreational', h: `You're not in trouble. Let's keep it that way.`, p: `Most people who land on GaimControl don't need the heavy rails. If your gambling is occasional and social, this is the preventative layer. The early-warning system that means you never need a heavier intervention. Light on purpose.`, art: ART_P1, utm: '/start/recreational?utm_source=meta&utm_campaign=preventative&utm_content=lighter-touch' },
+ p1: { color: 'p1', pill: 'Profile 1 · Recreational', h: `You're not in trouble. Let's keep it that way.`, p: `Most people who land on Holdwell don't need the heavy rails. If your gambling is occasional and social, this is the preventative layer. The early-warning system that means you never need a heavier intervention. Light on purpose.`, art: ART_P1, utm: '/start/recreational?utm_source=meta&utm_campaign=preventative&utm_content=lighter-touch' },
  p2: { color: 'p2', pill: 'Profile 2 · Habitual', h: `You know the pattern. We hold the line.`, p: `When play is regular and the spend creeps, willpower alone isn't enough. The rails are. The 30-day clean window, the streak counter, the sponsor digest. Structured, predictable, gentle. Every milestone is real.`, art: ART_P2, utm: '/start/habitual?utm_source=meta&utm_campaign=streak&utm_content=30-day-window' },
  p3: { color: 'p3', pill: 'Profile 3 · Mood-influenced', h: `When the day is dark, the urge climbs.`, p: `For users where play correlates with mood. Stress, anger, boredom, after-arguments. Anna's curriculum leans heavy on CBT distortion work and urge-surfing. The in-the-moment tools designed for exactly this. Daily check-ins catch the early dip.`, art: ART_P3, utm: '/start/mood?utm_source=meta&utm_campaign=cbt&utm_content=urge-surfing' },
- p4: { color: 'p4', pill: 'Profile 4 · At-risk', h: `Step away. No financial penalty.`, p: `If your indicators are high, GaimControl might not be the right starting point. But the right starting point exists. We route you to GamCare, NHS 111, and Samaritans with the same care we'd take if you stayed. The decision to step away is the right one as often as the decision to start.`, art: ART_P4, utm: '/start/at-risk?utm_source=meta&utm_campaign=safeguarding&utm_content=helplines-first' },
+ p4: { color: 'p4', pill: 'Profile 4 · At-risk', h: `Step away. No financial penalty.`, p: `If your indicators are high, Holdwell might not be the right starting point. But the right starting point exists. We route you to GamCare, NHS 111, and Samaritans with the same care we'd take if you stayed. The decision to step away is the right one as often as the decision to start.`, art: ART_P4, utm: '/start/at-risk?utm_source=meta&utm_campaign=safeguarding&utm_content=helplines-first' },
  p5: { color: 'p5', pill: 'Profile 5 · Recovering', h: `Consolidate the debt. Keep the safety net.`, p: `For users in recovery with scattered gambling-related debt. Klarna BNPL, the maxed card, the overdraft. Refinance into one fixed loan, no late fee ever, automatic Relapse Hold if the system detects a slip. The loan is the consolidation tool. The Hold is the safety net.`, art: ART_P5, utm: '/start/recovering?utm_source=meta&utm_campaign=consolidate&utm_content=loan-plus-hold' },
  p6: { color: 'p6', pill: 'Profile 6 · Declined', h: `This isn't the right product. Here's what is.`, p: `Sometimes the honest answer is "not us". For users whose assessment suggests another product or service would help more, we hand off. To GamCare, to your GP, to debt-management charities. The handoff is warm and named, not a generic 404. If your situation changes, you can come back.`, art: ART_P6, utm: '/start/declined?utm_source=meta&utm_campaign=handoff&utm_content=gamcare-first' },
 };
