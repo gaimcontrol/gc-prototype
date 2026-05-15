@@ -309,7 +309,7 @@ const SCREENS = [
 
 const CTX = {
  au1: '<strong>AU1 Sign in.</strong> Returning user. Email-only entry (no enumeration. We don\'t reveal whether the email is on file). 2-col split: form left, auto-rotating 5-slide product story right. <a href="../web-ui/04-auth.html">web-ui/04</a>.',
- au2: '<strong>AU2 Sign up.</strong> New user. Adds invite-code field (gated during Sandbox Phase 1–4, removed at general availability). T&amp;C + Privacy checkbox required.',
+ au2: '<strong>AU2 Sign up.</strong> New user. Invite-code field gated during early-access beta; removed at general availability. T&amp;C + Privacy checkbox required.',
  au3: '<strong>AU3 Verify code.</strong> 6-digit OTP, expires in 10 min. Alternate paths: magic link → AU4, recovery → AU5.',
  au4: '<strong>AU4 Magic link sent.</strong> Email link completes server-side and redirects back to /auth/passcode (AU6).',
  au5: '<strong>AU5 Recovery.</strong> The "can\'t access this" off-ramp. Only screen with the Crisis pill visible (Samaritans card).',
@@ -324,7 +324,7 @@ const CAROUSEL_SLIDES = [
  visual: `
  <div class="slide-brand">
  <div class="slide-brand__mark"><img src="../assets/gc-mark-mono-light.svg" alt=""></div>
- <span class="slide-brand__pill">GaimControl · Sandbox Q2 2026</span>
+ <span class="slide-brand__pill">GaimControl · AR · Q2 2026</span>
  </div>`
  },
  {
@@ -462,7 +462,7 @@ const builders = {
  <div class="auth-split__form">
  <div class="auth-form-card">
  <h3 class="auth-form-card__heading">Let's begin</h3>
- <p class="auth-form-card__sub">During the FCA Sandbox you'll need an invite code from us.</p>
+ <p class="auth-form-card__sub">Currently invite-only beta. We'll send you a code by email.</p>
  <div class="gc-segmented"><button class="is-on">Email</button><button>Phone</button></div>
  <div class="gc-field">
  <label class="gc-field__label">Email address</label>

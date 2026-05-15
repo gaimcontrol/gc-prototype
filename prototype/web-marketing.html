@@ -380,9 +380,9 @@ const SCREENS = [
 
 const CTX = {
  mk1: '<strong>MK1 Home.</strong> Top-of-funnel landing. Hero states the recovery thesis in plain language. Three-pillar block (banking · therapy · accountability). Social proof + clinical credentials. Single primary CTA: "Take the 2-minute assessment" → enters onboarding quiz at ON1.',
- mk2: '<strong>MK2 How it Works.</strong> Product walk-through for visitors who want depth before signing up. 30-day clean window · Anna sessions · the loan path · sponsor model. Cross-links to §11 safeguarding and FCA Sandbox page on the regulator\'s site.',
+ mk2: '<strong>MK2 How it Works.</strong> Product walk-through for visitors who want depth before signing up. 30-day clean window · Anna sessions · the loan path · sponsor model. Cross-links to §11 safeguarding and our AR principal's entry on the FCA register.',
  mk3: '<strong>MK3 Contact.</strong> Email + form · routes to hello@gaimcontrol.com via Customer.io. <strong>Crisis-language triage:</strong> if form body trips keywords (suicide / harm / urgent / can\'t go on), success page surfaces helplines (Samaritans · NHS 111 · GamCare · 999) BEFORE the "we\'ll get back to you" copy.',
- mk4: '<strong>MK4 Company.</strong> Team · mission · regulatory status. Names FCA Sandbox cohort + partner lenders (Algbra, TrueLayer, Vouchsafe, Experian ReFi). Links to Sandbox announcement once public.',
+ mk4: '<strong>MK4 Company.</strong> Team · mission · regulatory status. Names the AR principal + partner lenders (Algbra, TrueLayer, Vouchsafe, Experian ReFi). Links to AR registration once public.',
  mk5: '<strong>MK5 Help &amp; FAQs.</strong> Categorised accordion: eligibility · data we pull · what sponsors see · missing a payment · closing your account. Search across all entries. Each answer cross-links to the in-app help screen where relevant.',
  mk6: '<strong>MK6 Privacy &amp; legal.</strong> Privacy policy (GDPR) · cookie policy · T&amp;Cs · vulnerable-customer policy · complaints handling (FOS routing). Versioned with effective-date headers. Canonical source for in-app links from §12 Profile.',
  mk7: '<strong>MK7 Profile UTM landers.</strong> Six paid-acquisition pages. One per profile (P1 Recreational · P2 Habitual · P3 Mood-influenced · P4 At-risk · P5 Recovering · P6 Declined). Same skeleton, different copy + hero + social proof. UTM params flow to onboarding so cohort behaviour ties back to campaign.',
@@ -603,7 +603,7 @@ const FOOTER = () => `
  <div class="mk-footer__container">
  <div>
  <div class="mk-footer__brand-h">GaimControl</div>
- <p class="mk-footer__brand-p">Banking that helps you stop gambling. Built by clinicians, regulated by the FCA Sandbox.</p>
+ <p class="mk-footer__brand-p">Banking that helps you stop gambling. Built by clinicians. FCA-regulated as an Appointed Representative.</p>
  </div>
  <div>
  <h5 class="mk-footer__col-h">Product</h5>
@@ -635,7 +635,7 @@ const FOOTER = () => `
  </div>
  </div>
  <div class="mk-footer__bottom">
- <span>© 2026 GaimControl Ltd · FCA Sandbox · Reg 287442</span>
+ <span>© 2026 GaimControl Ltd · Appointed Representative of [Insert once Closed]</span>
  <span>Banking via Algbra · Open banking via TrueLayer</span>
  </div>
  </footer>`;
@@ -651,7 +651,7 @@ const builders = {
  <div class="mk-hero__bg-orb mk-hero__bg-orb--2"></div>
  <div class="mk-hero__container">
  <div>
- <span class="mk-eyebrow">FCA Sandbox · Cohort 9 · 2026</span>
+ <span class="mk-eyebrow">FCA-regulated · Appointed Representative</span>
  <h1 class="mk-hero__h1">Banking that <span class="mk-grad">helps you stop.</span></h1>
  <p class="mk-hero__p">The first UK current account built around gambling recovery. CBT-trained AI coach, a real sponsor, MCC-blocked card, and a consolidation loan only if you actually need it.</p>
  <div class="mk-hero__cta-row">
@@ -712,7 +712,7 @@ const builders = {
  <div class="mk-stat"><div class="mk-stat__n">2.5m</div><div class="mk-stat__l">UK adults at risk from gambling (Gambling Commission, 2024)</div></div>
  <div class="mk-stat"><div class="mk-stat__n">£1.4bn</div><div class="mk-stat__l">Annual UK gambling-related debt held by mainstream banks</div></div>
  <div class="mk-stat"><div class="mk-stat__n">41%</div><div class="mk-stat__l">Of GamCare callers report unsupportive existing bank tools</div></div>
- <div class="mk-stat"><div class="mk-stat__n">2026</div><div class="mk-stat__l">FCA Sandbox Cohort 9 · live testing with safeguards</div></div>
+ <div class="mk-stat"><div class="mk-stat__n">AR</div><div class="mk-stat__l">Appointed Representative model · FCA-supervised principal</div></div>
  </div>
  </div>
  </section>
@@ -961,9 +961,9 @@ const builders = {
 
  <section class="mk-section">
  <div class="mk-section__container">
- <div class="mk-section__head"><span class="mk-eyebrow">Regulatory + partners</span><h2 class="mk-section__h2">FCA Sandbox · Cohort 9 · 2026.</h2><p class="mk-section__p">Live testing inside the regulator's framework. Real customers, real safeguards, real reporting cadence. The Sandbox lets us ship without two-year approval cycles, and lets the FCA see exactly how we behave under stress.</p></div>
+ <div class="mk-section__head"><span class="mk-eyebrow">Regulatory + partners</span><h2 class="mk-section__h2">FCA-regulated. Appointed Representative.</h2><p class="mk-section__p">GaimControl is an Appointed Representative of [Insert once Closed]. The principal firm holds the regulatory permissions; we operate under their supervision with full reporting and oversight. This route lets us ship a real product without two-year direct-authorisation timelines, while keeping FCA-grade safeguards in place from day one.</p></div>
  <div class="mk-partner-strip">
- <span class="mk-partner">FCA Sandbox</span>
+ <span class="mk-partner">FCA · AR principal [Insert once Closed]</span>
  <span class="mk-partner">Algbra · BaaS</span>
  <span class="mk-partner">TrueLayer · open banking</span>
  <span class="mk-partner">Vouchsafe · KYC</span>

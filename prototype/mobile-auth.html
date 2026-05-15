@@ -390,7 +390,7 @@ const CTX = {
  we4: '<strong>WE4 Welcome · Anna.</strong> "Anna\'s there when it\'s hard." CBT-based AI coach. Sample chat bubbles showing in/out + typing indicator.',
  we5: '<strong>WE5 Welcome · Repair.</strong> "When you\'re ready, we help with the debt." Loan-offer card showing eligibility. Per <a href="../41-decisions-log.html">GEN-01</a>, this slide now says <strong>30 clean days</strong> unlocks consolidation (A/B vs 15). Final CTA is "Get started" → routes to AU2.',
  au1: '<strong>AU1 Sign in.</strong> Returning user. Email or phone toggle, 6-digit OTP sent. No password. Passwordless auth across the product. <a href="../app-ui/04-auth.html">app-ui/04</a>.',
- au2: '<strong>AU2 Sign up.</strong> New user. Adds invite-code field during Sandbox Phase 1 (capped at 10 users/month). T&amp;C + Privacy Policy checkbox required.',
+ au2: '<strong>AU2 Sign up.</strong> New user. Invite-code field shown during early-access beta (currently 10 users/month). T&amp;C + Privacy Policy checkbox required.',
  au3: '<strong>AU3 Verify code.</strong> 6-digit OTP, expires in 10 min. Auto-submits when last box fills. Alternate paths: magic link (→ AU4), recovery (→ AU5).',
  au4: '<strong>AU4 Magic link sent.</strong> Email link opens the app via Universal Link and resumes the flow at AU6. Waiting state with pulse indicator.',
  au5: '<strong>AU5 Recovery.</strong> The "can\'t access this" off-ramp. Only screen in the auth flow with the Crisis pill visible (Samaritans card surfaces emotional-distress entry points).',
@@ -457,7 +457,7 @@ const builders = {
  <span class="we-deco we-deco-circle we-deco--tr"></span>
  <div class="we-brand-bob">
  <div class="we-brand-mark"><img src="../assets/gc-mark-mono-light.svg" alt=""></div>
- <span class="we-brand-pill">GaimControl · FCA Sandbox</span>
+ <span class="we-brand-pill">GaimControl · AR</span>
  </div>
  </div>
  <div class="we-content">
@@ -578,7 +578,7 @@ const builders = {
  <div class="phone__content">
  <span class="phone__brand"><img src="../assets/gc-mark-mono-light.svg" alt=""></span>
  <h3 class="phone__heading phone__heading--center">Let's begin</h3>
- <p class="phone__sub phone__sub--center">During the FCA Sandbox you'll need an invite code from us.</p>
+ <p class="phone__sub phone__sub--center">Currently invite-only beta. We'll send you a code by email.</p>
  <div class="gc-segmented" style="align-self:center"><button class="is-on">Email</button><button>Phone</button></div>
  <div class="phone__field">
  <span class="phone__label">Email</span>

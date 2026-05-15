@@ -166,6 +166,6 @@ For decisions: [`../ui-specs/41-decisions-log.html`](../ui-specs/41-decisions-lo
 
 ## Licence + status
 
-Internal · GaimControl Ltd · FCA Sandbox Cohort 9 · 2026.
+Internal · GaimControl Ltd · Appointed Representative of [Insert once Closed] · 2026.
 
 Built as the working artefact for stakeholder demos and engineer hand-off. Not user-facing code. Versions reflect spec sign-off. See commit history.
