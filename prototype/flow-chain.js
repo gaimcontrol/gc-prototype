@@ -180,4 +180,129 @@ body { padding-top: var(--gc-fc-h); }
  } else {
  init();
  }
+
+ // ─────────── SCREENSHOT BUTTON ───────────
+ // Injects a "📸 PNG" button into .proto-modebar that captures the .phone or .browser
+ // frame as a PNG download. Lazy-loads html2canvas from CDN on first click.
+
+ const SHOT_STYLE = `
+.gc-fc-shot { display: inline-flex; align-items: center; gap: 5px; padding: 7px 12px; border-radius: 8px; background: linear-gradient(120deg, var(--s-50, #8576C2), var(--t-50, #399971)); color: white; border: none; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; cursor: pointer; letter-spacing: 0.04em; box-shadow: 0 4px 12px -4px rgba(133,118,194,0.4); transition: filter 140ms ease, transform 140ms ease; }
+.gc-fc-shot:hover { filter: brightness(1.1); transform: translateY(-1px); }
+.gc-fc-shot:active { transform: translateY(0); }
+.gc-fc-shot:disabled { opacity: 0.6; cursor: wait; transform: none; }
+.gc-fc-shot svg { width: 12px; height: 12px; flex-shrink: 0; }
+.gc-fc-shot__spinner { width: 12px; height: 12px; border: 2px solid rgba(255,255,255,0.3); border-top-color: white; border-radius: 50%; animation: gc-fc-spin 700ms linear infinite; }
+@keyframes gc-fc-spin { to { transform: rotate(360deg); } }
+.gc-fc-shot-toast { position: fixed; top: 60px; left: 50%; transform: translateX(-50%); padding: 9px 16px; border-radius: 10px; background: var(--t-50, #399971); color: white; font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700; letter-spacing: 0.03em; z-index: 10000; box-shadow: 0 8px 24px -8px rgba(57,153,113,0.5); opacity: 0; transition: opacity 220ms ease; }
+.gc-fc-shot-toast.is-on { opacity: 1; }
+.gc-fc-shot-toast--err { background: #C73838; box-shadow: 0 8px 24px -8px rgba(199,56,56,0.5); }
+`;
+
+ const HTML2CANVAS_CDN = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+
+ function loadHtml2Canvas() {
+ if (window.html2canvas) return Promise.resolve();
+ return new Promise((resolve, reject) => {
+ const s = document.createElement('script');
+ s.src = HTML2CANVAS_CDN;
+ s.onload = resolve;
+ s.onerror = () => reject(new Error('Could not load html2canvas. Check your network.'));
+ document.head.appendChild(s);
+ });
+ }
+
+ function toast(msg, isErr) {
+ const el = document.createElement('div');
+ el.className = 'gc-fc-shot-toast' + (isErr ? ' gc-fc-shot-toast--err' : '');
+ el.textContent = msg;
+ document.body.appendChild(el);
+ requestAnimationFrame(() => el.classList.add('is-on'));
+ setTimeout(() => {
+ el.classList.remove('is-on');
+ setTimeout(() => el.remove(), 280);
+ }, 2200);
+ }
+
+ function findCaptureTarget() {
+ return document.querySelector('.phone') || document.querySelector('.browser');
+ }
+
+ function buildFilename() {
+ const page = (location.pathname.split('/').pop() || 'screen').replace(/\.html?$/i, '');
+ const screenIdEl = document.getElementById('screenId');
+ const screenId = screenIdEl ? screenIdEl.textContent.trim() : '';
+ const stamp = new Date().toISOString().slice(0, 16).replace(/[-:T]/g, '');
+ return `gc-${page}${screenId ? '-' + screenId : ''}-${stamp}.png`;
+ }
+
+ const BTN_IDLE_HTML =
+ '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">' +
+ '<path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>' +
+ '<circle cx="12" cy="13" r="4"/></svg>' +
+ '<span>PNG</span>';
+ const BTN_BUSY_HTML = '<span class="gc-fc-shot__spinner"></span><span>Capturing…</span>';
+
+ async function captureAndDownload(btn) {
+ const target = findCaptureTarget();
+ if (!target) {
+ toast('No phone or browser frame on this page', true);
+ return;
+ }
+ btn.disabled = true;
+ btn.innerHTML = BTN_BUSY_HTML;
+ try {
+ await loadHtml2Canvas();
+ // Hide the screenshot button itself so it doesn't appear in cropped output
+ // (target only includes .phone/.browser, so the modebar button isn't captured anyway)
+ const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+ const canvas = await window.html2canvas(target, {
+ backgroundColor: null, // transparent
+ scale: window.devicePixelRatio >= 2 ? 2 : 2, // always 2x for crisp output
+ useCORS: true,
+ logging: false,
+ allowTaint: false,
+ });
+ const link = document.createElement('a');
+ link.download = buildFilename();
+ link.href = canvas.toDataURL('image/png');
+ link.click();
+ toast('Saved · ' + link.download);
+ } catch (e) {
+ console.error('Screenshot failed:', e);
+ toast(e.message || 'Screenshot failed', true);
+ } finally {
+ btn.disabled = false;
+ btn.innerHTML = BTN_IDLE_HTML;
+ }
+ }
+
+ function injectShotButton() {
+ const modebar = document.querySelector('.proto-modebar');
+ if (!modebar) return; // cover pages have no modebar
+ if (!findCaptureTarget()) return; // no phone/browser frame to capture
+ if (modebar.querySelector('.gc-fc-shot')) return; // already injected
+
+ // Inject styles once
+ if (!document.getElementById('gc-fc-shot-styles')) {
+ const s = document.createElement('style');
+ s.id = 'gc-fc-shot-styles';
+ s.textContent = SHOT_STYLE;
+ document.head.appendChild(s);
+ }
+
+ const btn = document.createElement('button');
+ btn.className = 'gc-fc-shot';
+ btn.title = 'Download a PNG of this screen';
+ btn.innerHTML = BTN_IDLE_HTML;
+ btn.addEventListener('click', () => captureAndDownload(btn));
+
+ // Append to the modebar (sits at the right after the arrows)
+ modebar.appendChild(btn);
+ }
+
+ if (document.readyState === 'loading') {
+ document.addEventListener('DOMContentLoaded', injectShotButton);
+ } else {
+ injectShotButton();
+ }
 })();
