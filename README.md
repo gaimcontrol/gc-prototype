@@ -51,16 +51,17 @@ Every per-flow page has three layers of navigation:
 
 ## Running locally
 
-The prototype is pure static HTML. No npm install, no build.
+The prototype is pure static HTML. No npm install, no build. Serve the repo root (not `prototype/`), so
+the pages' `../assets/` links resolve. Either command works on macOS, Linux and Windows; `npx` needs
+Node.js (Windows: `winget install --id OpenJS.NodeJS.LTS`).
 
 ```bash
-cd prototype
+npx serve -l 8000 .
+# or, with Python 3 (on Windows: py -m http.server 8000)
 python3 -m http.server 8000
-# or
-npx serve.
 ```
 
-Open `http://localhost:8000/index.html`.
+Open `http://localhost:8000/prototype/index.html`.
 
 **Why a server, not file://**. the flow-chain script and a couple of in-flow features use relative paths to `../assets/`. Some browsers refuse to load those from `file://`. Any static server works.
 
