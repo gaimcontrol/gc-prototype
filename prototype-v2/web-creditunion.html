@@ -1,0 +1,632 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Holdwell · Web · §17 Credit union portal</title>
+<link rel="icon" href="../assets/gc-favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+ --p-10:#0B0F1C;--p-20:#161B2D;--p-30:#20273C;--p-40:#354872;--p-50:#4D608C;--p-60:#6B7DA6;--p-90:#DCE2F0;--p-95:#ECF0F9;--p-99:#FAFBFE;--p-100:#FFF;
+ --s-10:#28215A;--s-20:#3E3478;--s-30:#534792;--s-40:#6B5DAC;--s-50:#8576C2;--s-70:#B5ACDF;--s-80:#CFC8EA;--s-90:#E8E4F4;
+ --t-20:#1A6047;--t-30:#1F7058;--t-50:#399971;--t-60:#5BB088;--t-80:#ADDCC2;--t-90:#D5EDDF;
+ --w-30:#6B4500;--w-60:#C28200;--w-80:#FAB44A;--w-90:#FFDFA8;
+ --e-30:#7A1F1F;--e-50:#C73838;--e-80:#F4A4A4;--e-90:#FBD9D9;
+ --n-50:#76798A;--n-80:#C5C8D2;--n-95:#F1F2F5;--nv-80:#C5C9DD;
+}
+[data-theme="dark"] { --bg-base: var(--p-30); --bg-surface: var(--p-20); --bg-surface-2: var(--p-10); --border: rgba(255,255,255,0.08); --border-strong: rgba(255,255,255,0.14); --text-primary: var(--n-95); --text-secondary: var(--nv-80); --text-muted: rgba(255,255,255,0.4); --accent: var(--s-70); --accent-strong: var(--s-50); --on-accent: #fff; --page-bg: #0a0e1a; --page-fg: var(--n-95); --page-fg-muted: var(--nv-80); --page-card-bg: var(--p-20); --page-divider: rgba(255,255,255,0.06); }
+[data-theme="light"] { --bg-base: var(--p-99); --bg-surface: #fff; --bg-surface-2: var(--p-95); --border: rgba(22,27,45,0.08); --border-strong: rgba(22,27,45,0.16); --text-primary: var(--p-20); --text-secondary: var(--n-50); --text-muted: var(--n-50); --accent: var(--p-40); --accent-strong: var(--s-40); --on-accent: #fff; --page-bg: var(--p-95); --page-fg: var(--p-20); --page-fg-muted: var(--n-50); --page-card-bg: #fff; --page-divider: rgba(22,27,45,0.08); }
+* { box-sizing: border-box; }
+html, body { background: var(--page-bg); color: var(--page-fg); margin: 0; transition: background-color 220ms ease, color 220ms ease; }
+body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif; font-size: 14px; line-height: 1.5; -webkit-font-smoothing: antialiased; min-height: 100vh; }
+
+.proto-shell { display: grid; grid-template-columns: 280px 1fr; gap: 0; min-height: 100vh; }
+@media (max-width: 1100px) {.proto-shell { grid-template-columns: 1fr; } }
+.proto-sidebar { background: var(--page-card-bg); border-right: 1px solid var(--page-divider); padding: 28px 22px; position: sticky; top: 0; height: 100vh; overflow-y: auto; display: flex; flex-direction: column; gap: 16px; }
+@media (max-width: 1100px) {.proto-sidebar { position: static; height: auto; max-height: 50vh; border-right: none; border-bottom: 1px solid var(--page-divider); } }
+.proto-sidebar__brand { display: flex; align-items: center; gap: 10px; }
+.proto-sidebar__mark { width: 36px; height: 36px; border-radius: 10px; background: var(--p-30); display: inline-flex; align-items: center; justify-content: center; }
+.proto-sidebar__mark img { width: 70%; height: 70%; }
+.proto-sidebar__name { font-weight: 700; font-size: 17px; letter-spacing: -0.01em; }
+.proto-sidebar__pill { display: inline-flex; padding: 3px 9px; border-radius: 999px; background: linear-gradient(120deg, var(--s-50), var(--p-50), var(--t-50)); color: white; font-weight: 700; font-size: 9.5px; font-family: 'JetBrains Mono', monospace; letter-spacing: 0.06em; text-transform: uppercase; }
+.proto-sidebar__back { display: inline-flex; align-items: center; gap: 6px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--page-fg-muted); text-decoration: none; }
+.proto-section-title { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--page-fg-muted); margin: 12px 0 6px; }
+.proto-scrubber { display: flex; flex-direction: column; gap: 2px; }
+.proto-scrubber__item { display: grid; grid-template-columns: 44px 1fr; gap: 8px; align-items: center; padding: 7px 10px; border-radius: 8px; cursor: pointer; border: none; background: transparent; color: inherit; font-family: inherit; text-align: left; }
+.proto-scrubber__item:hover { background: rgba(127,127,127,0.08); }
+.proto-scrubber__item.is-active { background: var(--accent-strong); color: var(--on-accent); }
+.proto-scrubber__item.is-active.proto-scrubber__id { color: rgba(255,255,255,0.85); }
+.proto-scrubber__id { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; color: var(--page-fg-muted); letter-spacing: 0.06em; }
+.proto-scrubber__name { font-size: 12.5px; font-weight: 500; }
+.proto-sidebar__footer { margin-top: auto; padding-top: 16px; border-top: 1px solid var(--page-divider); font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--page-fg-muted); }
+.proto-sidebar__footer a { color: var(--page-fg-muted); text-decoration: none; border-bottom: 1px dotted currentColor; }
+.proto-theme-toggle { display: inline-flex; align-items: center; gap: 8px; padding: 7px 12px; border-radius: 8px; background: var(--bg-surface-2); border: 1px solid var(--border); color: var(--page-fg-muted); cursor: pointer; font-family: 'JetBrains Mono', monospace; font-size: 11px; align-self: flex-start; }
+.proto-theme-toggle svg { width: 12px; height: 12px; }
+[data-theme="dark"].proto-theme-toggle.icon-moon { display: none; }
+[data-theme="light"].proto-theme-toggle.icon-sun { display: none; }
+
+.proto-stage { display: flex; flex-direction: column; align-items: center; padding: 32px 24px 64px; gap: 18px; }
+.proto-modebar { display: flex; align-items: center; gap: 10px; padding: 10px 16px; background: var(--page-card-bg); border: 1px solid var(--page-divider); border-radius: 12px; font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: var(--page-fg-muted); flex-wrap: wrap; justify-content: center; }
+.proto-modebar__pill { display: inline-flex; padding: 3px 9px; border-radius: 999px; background: var(--bg-surface-2); }
+.proto-modebar__id { color: var(--page-fg); font-weight: 700; letter-spacing: 0.06em; }
+.proto-modebar__bar { width: 100px; height: 4px; border-radius: 4px; background: var(--bg-surface-2); position: relative; overflow: hidden; }
+.proto-modebar__bar__fill { position: absolute; left: 0; top: 0; bottom: 0; background: linear-gradient(90deg, var(--s-50), var(--t-50)); transition: width 240ms ease; }
+.proto-arrows { display: flex; align-items: center; gap: 8px; }
+.proto-arrow { width: 36px; height: 36px; border-radius: 10px; background: var(--page-card-bg); border: 1px solid var(--page-divider); color: var(--page-fg-muted); display: inline-flex; align-items: center; justify-content: center; cursor: pointer; }
+.proto-arrow:hover { background: var(--bg-surface-2); color: var(--page-fg); }
+.proto-arrow:disabled { opacity: 0.3; cursor: not-allowed; }
+.proto-arrow svg { width: 18px; height: 18px; }
+
+/* Admin browser frame */
+.browser { width: 100%; max-width: 1380px; background: var(--bg-base); border-radius: 18px; overflow: hidden; border: 1px solid var(--border); box-shadow: 0 24px 60px -20px rgba(0,0,0,0.45), 0 8px 24px -12px rgba(0,0,0,0.25); }
+[data-theme="light"].browser { box-shadow: 0 24px 60px -20px rgba(22,27,45,0.18), 0 8px 24px -12px rgba(22,27,45,0.08); }
+.browser__chrome { display: flex; align-items: center; gap: 14px; padding: 12px 16px; background: var(--p-20); border-bottom: 1px solid var(--border); }
+[data-theme="light"].browser__chrome { background: var(--n-95); }
+.browser__dots { display: inline-flex; gap: 7px; flex-shrink: 0; }
+.browser__dot { width: 11px; height: 11px; border-radius: 50%; }
+.browser__dot:nth-child(1) { background: #FF5F57; }.browser__dot:nth-child(2) { background: #FEBC2E; }.browser__dot:nth-child(3) { background: #28C840; }
+.browser__url { flex: 1; background: var(--bg-base); border: 1px solid var(--border); border-radius: 7px; padding: 6px 14px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--w-80); text-align: center; display: flex; align-items: center; justify-content: center; gap: 8px; }
+.browser__url svg { width: 12px; height: 12px; opacity: 0.7; flex-shrink: 0; }
+.browser__viewport { background: var(--bg-base); min-height: 820px; max-height: 820px; position: relative; color: var(--text-primary); display: grid; grid-template-columns: 240px 1fr; }
+
+/* Admin sidebar / nav */
+.ad-nav { background: var(--bg-surface); border-right: 1px solid var(--border); padding: 16px 12px; display: flex; flex-direction: column; gap: 8px; }
+[data-theme="light"].ad-nav { background: var(--bg-surface-2); border-right: 1px solid rgba(22,27,45,0.12); }
+.ad-nav__brand { display: flex; align-items: center; gap: 10px; padding: 4px 8px 14px; border-bottom: 1px solid var(--border); margin-bottom: 4px; }
+.ad-nav__mark { width: 30px; height: 30px; border-radius: 7px; background: var(--w-60); display: inline-flex; align-items: center; justify-content: center; color: white; font-family: 'JetBrains Mono', monospace; font-weight: 800; font-size: 14px; }
+.ad-nav__name { font-weight: 700; font-size: 14px; letter-spacing: -0.01em; line-height: 1.1; }
+.ad-nav__sub { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; color: var(--text-muted); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 2px; display: block; }
+.ad-nav__user { display: flex; align-items: center; gap: 9px; padding: 8px 10px; border-radius: 8px; background: var(--bg-base); }
+.ad-nav__avatar { width: 28px; height: 28px; border-radius: 50%; background: var(--p-40); color: white; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; font-size: 11px; }
+.ad-nav__user-name { font-size: 12px; font-weight: 600; }
+.ad-nav__user-role { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; color: var(--w-80); padding: 1px 6px; border-radius: 4px; background: var(--w-30); display: inline-block; margin-top: 2px; letter-spacing: 0.05em; font-weight: 700; }
+[data-theme="light"].ad-nav__user-role { background: var(--w-90); color: var(--w-30); }
+.ad-nav__section { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); padding: 8px 10px 4px; }
+.ad-nav__item { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 7px; cursor: pointer; color: var(--text-secondary); text-decoration: none; font-size: 13px; font-weight: 500; }
+.ad-nav__item:hover { background: var(--bg-base); color: var(--text-primary); }
+.ad-nav__item.is-on { background: var(--w-30); color: var(--w-80); font-weight: 600; }
+[data-theme="light"].ad-nav__item.is-on { background: var(--w-90); color: var(--w-30); }
+.ad-nav__item svg { width: 15px; height: 15px; flex-shrink: 0; }
+.ad-nav__item__count { margin-left: auto; font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; padding: 1px 6px; border-radius: 999px; background: var(--bg-surface-2); }
+.ad-nav__item.is-on.ad-nav__item__count { background: rgba(255,255,255,0.18); color: white; }
+.ad-nav__item__count--danger { background: var(--e-50); color: white; }
+.ad-nav__cmd-k { margin-top: auto; padding: 8px 10px; background: var(--bg-base); border: 1px solid var(--border); border-radius: 7px; display: flex; align-items: center; gap: 8px; cursor: pointer; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-muted); }
+.ad-nav__cmd-k svg { width: 12px; height: 12px; }
+.ad-nav__cmd-k kbd { margin-left: auto; padding: 1px 6px; border-radius: 4px; background: var(--bg-surface-2); font-family: inherit; font-size: 10px; }
+
+/* Main content */
+.ad-main { padding: 0; overflow-y: auto; max-height: 820px; display: flex; flex-direction: column; }
+.ad-main::-webkit-scrollbar { width: 6px; }
+.ad-main::-webkit-scrollbar-thumb { background: rgba(127,127,127,0.2); border-radius: 6px; }
+.ad-topbar { display: flex; align-items: center; gap: 14px; padding: 12px 22px; border-bottom: 1px solid var(--border); background: var(--bg-base); position: sticky; top: 0; z-index: 10; }
+.ad-topbar__path { font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: var(--text-muted); letter-spacing: 0.04em; }
+.ad-topbar__path b { color: var(--text-primary); font-weight: 700; }
+.ad-topbar__actions { margin-left: auto; display: flex; gap: 6px; }
+.ad-topbar__btn { padding: 6px 12px; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; border: 1px solid var(--border); background: var(--bg-base); color: var(--text-secondary); border-radius: 5px; cursor: pointer; letter-spacing: 0.04em; text-transform: uppercase; display: inline-flex; align-items: center; gap: 5px; }
+.ad-topbar__btn:hover { border-color: var(--accent); color: var(--text-primary); }
+.ad-topbar__btn--primary { background: var(--w-60); color: white; border-color: transparent; }
+.ad-topbar__btn--danger { background: var(--e-50); color: white; border-color: transparent; }
+
+.ad-body { padding: 22px; display: flex; flex-direction: column; gap: 18px; }
+.ad-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 14px; padding-bottom: 12px; border-bottom: 1px solid var(--border); flex-wrap: wrap; }
+.ad-head h2 { font-size: 22px; font-weight: 800; letter-spacing: -0.02em; margin: 0; }
+.ad-head__sub { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-muted); margin-top: 4px; }
+
+/* Dense table */
+.ad-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.ad-table thead { background: var(--bg-surface-2); }
+.ad-table th { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-muted); text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--border); }
+.ad-table td { padding: 11px 12px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+.ad-table tr:hover td { background: var(--bg-surface); cursor: pointer; }
+.ad-table__cust { font-weight: 600; }
+.ad-table__id { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-muted); margin-top: 1px; }
+.ad-table__time { font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: var(--text-secondary); }
+
+/* Pills */
+.ad-pill { display: inline-flex; align-items: center; gap: 5px; padding: 3px 9px; border-radius: 4px; font-family: 'JetBrains Mono', monospace; font-size: 10.5px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; }
+.ad-pill--ok { background: var(--t-20); color: var(--t-80); }
+[data-theme="light"].ad-pill--ok { background: var(--t-90); color: var(--t-30); }
+.ad-pill--warn { background: var(--w-30); color: var(--w-80); }
+[data-theme="light"].ad-pill--warn { background: var(--w-90); color: var(--w-30); }
+.ad-pill--danger { background: var(--e-30); color: var(--e-90); }
+[data-theme="light"].ad-pill--danger { background: var(--e-90); color: var(--e-30); }
+.ad-pill--info { background: var(--p-40); color: var(--p-95); }
+[data-theme="light"].ad-pill--info { background: var(--p-90); color: var(--p-30); }
+.ad-pill--purple { background: var(--s-20); color: var(--s-80); }
+[data-theme="light"].ad-pill--purple { background: var(--s-90); color: var(--s-20); }
+
+.ad-card { padding: 18px 20px; background: var(--bg-surface); border: 1px solid var(--border); border-radius: 10px; display: flex; flex-direction: column; gap: 10px; }
+.ad-card__h { display: flex; align-items: center; gap: 10px; padding-bottom: 8px; border-bottom: 1px solid var(--border); margin-bottom: 2px; }
+.ad-card__t { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-secondary); }
+
+/* Stat tiles */
+.ad-stat-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
+@media (max-width: 1100px) {.ad-stat-grid { grid-template-columns: repeat(3, 1fr); } }
+.ad-stat { padding: 14px 16px; background: var(--bg-surface); border: 1px solid var(--border); border-radius: 8px; }
+.ad-stat__l { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-muted); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 5px; }
+.ad-stat__n { font-family: 'JetBrains Mono', monospace; font-size: 26px; font-weight: 700; letter-spacing: -0.01em; line-height: 1; }
+.ad-stat__d { font-size: 11px; color: var(--text-secondary); margin-top: 3px; }
+.ad-stat__d--ok { color: var(--t-60); }
+.ad-stat__d--warn { color: var(--w-80); }
+.ad-stat__d--danger { color: var(--e-50); }
+[data-theme="light"].ad-stat__d--ok { color: var(--t-30); }
+[data-theme="light"].ad-stat__d--warn { color: var(--w-30); }
+
+/* Definition list */
+.ad-defs { display: grid; grid-template-columns: 130px 1fr; gap: 6px 14px; font-size: 12.5px; }
+.ad-defs dt { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--text-muted); padding-top: 2px; }
+.ad-defs dd { margin: 0; }
+
+/* Tabs */
+.ad-tabs { display: flex; gap: 2px; border-bottom: 1px solid var(--border); margin-bottom: 14px; flex-wrap: wrap; }
+.ad-tab { padding: 9px 14px; font-family: inherit; font-size: 13px; font-weight: 500; background: transparent; border: none; color: var(--text-secondary); cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px; }
+.ad-tab:hover { color: var(--text-primary); }
+.ad-tab.is-on { color: var(--w-80); border-bottom-color: var(--w-60); font-weight: 700; }
+[data-theme="light"].ad-tab.is-on { color: var(--w-30); }
+
+/* Customer header */
+.ad-cust-head { display: grid; grid-template-columns: 56px 1fr auto; gap: 16px; align-items: center; padding: 16px 20px; background: var(--bg-surface); border: 1px solid var(--border); border-radius: 10px; }
+.ad-cust-head__av { width: 56px; height: 56px; border-radius: 50%; background: linear-gradient(135deg,var(--s-50),var(--p-40)); color: white; display: inline-flex; align-items: center; justify-content: center; font-weight: 800; font-size: 22px; }
+.ad-cust-head__name { font-size: 19px; font-weight: 800; letter-spacing: -0.01em; }
+.ad-cust-head__sub { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-muted); margin-top: 2px; letter-spacing: 0.04em; }
+.ad-cust-head__pills { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 6px; }
+.ad-cust-head__actions { display: flex; flex-direction: column; gap: 6px; }
+
+/* Override form */
+.ad-form-row { display: grid; grid-template-columns: 200px 1fr; gap: 14px; align-items: flex-start; padding: 14px 0; border-top: 1px solid var(--border); }
+.ad-form-row:first-of-type { border-top: none; padding-top: 0; }
+.ad-form-row__label { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--text-secondary); padding-top: 6px; }
+.ad-form-row__hint { font-size: 11.5px; color: var(--text-muted); margin-top: 4px; line-height: 1.45; }
+.ad-input,.ad-select { padding: 9px 12px; font-family: inherit; font-size: 13px; background: var(--bg-base); border: 1px solid var(--border); border-radius: 6px; color: var(--text-primary); width: 100%; outline: none; }
+.ad-input:focus,.ad-select:focus { border-color: var(--accent); }
+.ad-textarea { padding: 10px 12px; font-family: inherit; font-size: 13px; background: var(--bg-base); border: 1px solid var(--border); border-radius: 6px; color: var(--text-primary); width: 100%; outline: none; resize: vertical; min-height: 70px; line-height: 1.55; }
+
+/* Approve four-eyes checklist */
+.ad-check { display: grid; grid-template-columns: 22px 1fr; gap: 10px; align-items: flex-start; padding: 9px 0; border-top: 1px solid var(--border); }
+.ad-check:first-of-type { border-top: none; padding-top: 0; }
+.ad-check__icon { width: 20px; height: 20px; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+.ad-check__icon svg { width: 11px; height: 11px; }
+.ad-check--ok.ad-check__icon { background: var(--t-50); color: white; }
+.ad-check--warn.ad-check__icon { background: var(--w-60); color: white; }
+.ad-check--info.ad-check__icon { background: var(--p-40); color: white; font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 11px; }
+.ad-check__t { font-size: 12.5px; font-weight: 600; }
+.ad-check__s { font-size: 11.5px; color: var(--text-secondary); margin-top: 1px; line-height: 1.45; }
+
+/* Audit log */
+.ad-audit-row { display: grid; grid-template-columns: 110px 100px 1fr 120px; gap: 12px; align-items: center; padding: 9px 12px; border-bottom: 1px solid var(--border); font-size: 12px; }
+.ad-audit-row:hover { background: var(--bg-surface); }
+.ad-audit-row__when { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-muted); }
+.ad-audit-row__actor { font-family: 'JetBrains Mono', monospace; font-size: 11px; }
+.ad-audit-row__what { font-size: 12.5px; }
+.ad-audit-row__what code { font-family: 'JetBrains Mono', monospace; font-size: 11px; padding: 1px 6px; background: var(--bg-surface-2); border-radius: 4px; color: var(--text-secondary); }
+.ad-audit-row__cust { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-secondary); }
+
+/* Report card */
+.ad-report-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 1000px) {.ad-report-grid { grid-template-columns: 1fr; } }
+.ad-report { padding: 16px 18px; background: var(--bg-surface); border: 1px solid var(--border); border-radius: 8px; display: flex; flex-direction: column; gap: 6px; }
+.ad-report__h { display: flex; align-items: center; gap: 8px; padding-bottom: 8px; border-bottom: 1px solid var(--border); margin-bottom: 4px; }
+.ad-report__t { font-size: 14px; font-weight: 700; }
+.ad-report__code { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; padding: 2px 7px; border-radius: 4px; background: var(--bg-surface-2); color: var(--text-muted); margin-left: auto; }
+.ad-report__d { font-size: 12px; color: var(--text-secondary); line-height: 1.5; }
+.ad-report__when { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-muted); padding-top: 6px; border-top: 1px solid var(--border); margin-top: 4px; display: flex; justify-content: space-between; }
+
+/* Row-2 split */
+.row-2 { display: grid; grid-template-columns: 2fr 1fr; gap: 16px; align-items: start; }
+.row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; align-items: stretch; }
+@media (max-width: 1000px) {.row-2 { grid-template-columns: 1fr; }.row-3 { grid-template-columns: 1fr; } }
+
+.proto-context { width: 100%; max-width: 1380px; padding: 16px 20px; background: var(--page-card-bg); border: 1px solid var(--page-divider); border-radius: 12px; font-size: 13px; color: var(--page-fg-muted); line-height: 1.55; }
+.proto-context strong { color: var(--page-fg); }
+.proto-context a { color: var(--page-accent, var(--s-70)); text-decoration: none; border-bottom: 1px dotted currentColor; }
+.proto-context__head { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; color: var(--page-fg); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px; }
+
+.screen { animation: fade-in 220ms ease; }
+@keyframes fade-in { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+</style>
+<script src="flow-chain.js" defer></script>
+</head>
+<body>
+
+<div class="proto-shell">
+
+ <aside class="proto-sidebar">
+ <div class="proto-sidebar__brand">
+ <span class="proto-sidebar__mark"><img src="../assets/gc-mark-mono-light.svg" alt=""></span>
+ <span>
+ <div class="proto-sidebar__name">holdwell</div>
+ <span class="proto-sidebar__pill">web · credit union</span>
+ </span>
+ </div>
+ <a class="proto-sidebar__back" href="index.html">← prototype index</a>
+ <button class="proto-theme-toggle" type="button" aria-label="Toggle theme">
+ <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+ <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+ <span class="theme-label">Dark</span>
+ </button>
+ <div class="proto-section-title">§17 · CU1 – CU7</div>
+ <nav class="proto-scrubber" id="scrubber"></nav>
+ <div class="proto-sidebar__footer">v2 · new surface (J1)<br>Used by Northbank lending staff<br>Status only · no member data beyond consent</div>
+ </aside>
+
+ <main class="proto-stage">
+
+ <div class="proto-modebar">
+ <span>Screen <span class="proto-modebar__id" id="screenId">CU1</span></span>
+ <span class="proto-modebar__pill" id="screenName">Overview · pilot</span>
+ <span class="proto-modebar__pill" style="background:var(--w-30);color:var(--w-80)">Web-only · partner</span>
+ <div class="proto-modebar__bar"><div class="proto-modebar__bar__fill" id="progressFill" style="width:14%"></div></div>
+ <div class="proto-arrows">
+ <button class="proto-arrow" id="navPrev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+ <button class="proto-arrow" id="navNext"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
+ </div>
+ </div>
+
+ <div class="browser">
+ <div class="browser__chrome">
+ <span class="browser__dots"><span class="browser__dot"></span><span class="browser__dot"></span><span class="browser__dot"></span></span>
+ <span class="browser__url">
+ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+ <span id="browserUrl">admin.gaimcontrol.com</span>
+ </span>
+ </div>
+ <div class="browser__viewport" id="viewport"></div>
+ </div>
+
+ <div class="proto-context" id="contextPanel">
+ <div class="proto-context__head">Screen context</div>
+ <div id="contextBody"></div>
+ </div>
+
+ </main>
+</div>
+
+<script>
+const SCREENS = [
+ { id: 'CU1', name: 'Overview · pilot', kind: 'cu1', url: '/partner' },
+ { id: 'CU2', name: 'Refer a member', kind: 'cu2', url: '/partner/refer' },
+ { id: 'CU3', name: 'Referral link sent', kind: 'cu3', url: '/partner/refer/NB-48213' },
+ { id: 'CU4', name: 'Members · by stage', kind: 'cu4', url: '/partner/members' },
+ { id: 'CU5', name: 'Member · Sam Kennedy', kind: 'cu5', url: '/partner/members/NB-48213' },
+ { id: 'CU6', name: 'Completion report', kind: 'cu6', url: '/partner/reports/NB-48166' },
+ { id: 'CU7', name: 'Pilot results', kind: 'cu7', url: '/partner/pilot' },
+];
+
+const V2 = (ids, k, t) => `<div class="v2-meta"><span class="v2-meta__when v2-${k}">${t}</span><span class="v2-meta__ids">Backlog ${ids}</span></div>`;
+const OPEN = (q) => `<div class="v2-open"><strong>Open question</strong> ${q}</div>`;
+
+const CTX = {
+ cu1: V2('J1 · J6', 'mvp1', 'MVP · Drop 1') + OPEN('Does Northbank want a portal at all for the pilot, or are a referral link and emailed reports enough (J1)?') + '<strong>CU1 Overview.</strong> New in v2. The credit union\'s view of the pilot: how many people they referred, where they are, and what is waiting on Northbank (call-backs to make, reports to read). Status only, never Anna content or transactions.',
+ cu2: V2('A1 · A2 · J3', 'mvp1', 'MVP · Drop 1') + OPEN('Who chooses programme length, Northbank or Holdwell, and on what basis (J3)?') + '<strong>CU2 Refer a member.</strong> The lender defers rather than declines (A1) and creates a referral. Only what Holdwell needs to match the sign-up. Programme length is set per referral (30 / 60 / 90 days, J3).',
+ cu3: V2('A1 · A2', 'mvp1', 'MVP · Drop 1') + '<strong>CU3 Referral link sent.</strong> Unique link plus a suggested deferral email Northbank can send in its own words. The link pre-fills the referral code in the member app (AU2).',
+ cu4: V2('J1 · J2', 'mvp1', 'MVP · Drop 1') + '<strong>CU4 Members by stage.</strong> Invited → signed up → doors closed → in programme → completed / left. Matches the notes Holdwell sends (started, completed, left early).',
+ cu5: V2('J1 · J2 · F9', 'mvp1', 'MVP · Drop 1') + OPEN('Should Northbank see the weekly engagement tick, or only start and end (J1)?') + '<strong>CU5 Member detail.</strong> What Northbank can see about Sam on day 24: stage, self-exclusion done, expected end date. Explicitly lists what it cannot see.',
+ cu6: V2('J2 · J4 · J7', 'mvp1', 'MVP · Drop 1') + OPEN('Does Northbank record its lending decision here so the pilot can measure outcomes (J4)? Needs consent from the member.') + '<strong>CU6 Completion report.</strong> The report Holdwell signed off (OP7). Northbank books the call-back and, optionally, records the outcome. GaimControl never recommends a lending decision.',
+ cu7: V2('J4 · J5 · J6', 'mvp2', 'MVP · Drop 2') + OPEN('Agree pilot success measures with Northbank before launch (J6).') + '<strong>CU7 Pilot results.</strong> Funnel from referral to completion, plus outcomes Northbank chooses to record. Numbers here are illustrative.',
+};
+
+const NAV = (active) => `
+ <aside class="ad-nav">
+ <div class="ad-nav__brand">
+ <span class="ad-nav__mark">NB</span>
+ <span><span class="ad-nav__name">Northbank CU</span><span class="ad-nav__sub">Holdwell partner portal</span></span>
+ </div>
+ <div class="ad-nav__user">
+ <span class="ad-nav__avatar">RA</span>
+ <div><div class="ad-nav__user-name">R. Ahmed</div><div class="ad-nav__user-role">Lending officer</div></div>
+ </div>
+ <div class="ad-nav__section">Referrals</div>
+ <a class="ad-nav__item ${active==='cu1'?'is-on':''}" onclick="go(0)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>Overview<span class="ad-nav__item__count ad-nav__item__count--danger">2</span></a>
+ <a class="ad-nav__item ${active==='cu2'||active==='cu3'?'is-on':''}" onclick="go(1)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 5v14M5 12h14"/></svg>Refer a member</a>
+ <a class="ad-nav__item ${active==='cu4'||active==='cu5'?'is-on':''}" onclick="go(3)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="7" r="4"/><path d="M5 21a7 7 0 0 1 14 0"/></svg>Members<span class="ad-nav__item__count">41</span></a>
+ <a class="ad-nav__item ${active==='cu6'?'is-on':''}" onclick="go(5)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Reports<span class="ad-nav__item__count">2</span></a>
+ <div class="ad-nav__section">Pilot</div>
+ <a class="ad-nav__item ${active==='cu7'?'is-on':''}" onclick="go(6)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 3v18h18"/><path d="m7 15 4-4 3 3 5-6"/></svg>Results</a>
+ <button class="ad-nav__cmd-k"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>Search · <kbd>⌘K</kbd></button>
+ </aside>`;
+
+const TOPBAR = (path, actions) => `
+ <div class="ad-topbar">
+ <span class="ad-topbar__path">${path}</span>
+ <div class="ad-topbar__actions">${actions || ''}</div>
+ </div>`;
+
+const IC = {
+ ok: '<span class="ad-check__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg></span>',
+ no: '<span class="ad-check__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M18 6 6 18M6 6l12 12"/></svg></span>',
+ warn: '<span class="ad-check__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 9v4M12 17h.01"/><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z"/></svg></span>',
+};
+const CHECK = (kind, t, s, icon) => `<div class="ad-check ad-check--${kind}">${icon || (kind === 'ok' ? IC.ok : kind === 'warn' ? IC.warn : '<span class="ad-check__icon">·</span>')}<div><div class="ad-check__t">${t}</div><div class="ad-check__s">${s}</div></div></div>`;
+const CUST = (n, id) => `<div class="ad-table__cust">${n}</div><div class="ad-table__id">${id}</div>`;
+const PILL = (k, t) => `<span class="ad-pill${k ? ' ad-pill--' + k : ''}">${t}</span>`;
+const TABLE = (pill, sla, head, rows) => `
+ <div class="ad-card" style="padding:0;gap:0">
+ <div style="padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px">${pill}<span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-muted);margin-left:auto">${sla}</span></div>
+ <table class="ad-table"><thead><tr>${head.map(h => `<th>${h}</th>`).join('')}</tr></thead><tbody>${rows.join('')}</tbody></table>
+ </div>`;
+const ROW = (label, hint, field) => `<div class="ad-form-row"><span class="ad-form-row__label">${label}</span><div>${field}${hint ? `<div class="ad-form-row__hint">${hint}</div>` : ''}</div></div>`;
+const AUDIT = (w, a, what, c) => `<div class="ad-audit-row"><span class="ad-audit-row__when">${w}</span><span class="ad-audit-row__actor">${a}</span><span class="ad-audit-row__what">${what}</span><span class="ad-audit-row__cust">${c}</span></div>`;
+const BAR = (label, n, max, k) => `<div style="display:grid;grid-template-columns:minmax(90px,130px) 1fr 32px;gap:12px;align-items:center;font-size:12.5px;padding:6px 0"><span style="color:var(--text-secondary)">${label}</span><div style="height:10px;background:var(--bg-base);border-radius:5px;overflow:hidden"><div style="height:100%;width:${Math.round(n / max * 100)}%;background:var(${k || '--accent'});border-radius:5px"></div></div><strong style="text-align:right">${n}</strong></div>`;
+
+const builders = {
+ cu1: () => `
+ <div class="screen" style="display:contents">
+ ${NAV('cu1')}
+ <div class="ad-main">
+ ${TOPBAR('partner / <b>overview</b>', '<button class="ad-topbar__btn ad-topbar__btn--primary" onclick="go(1)">Refer a member</button>')}
+ <div class="ad-body">
+ <div class="ad-head"><div><h2>Good morning, Rashid</h2><div class="ad-head__sub">Holdwell pilot · started 2 Mar 2026 · 41 people referred</div></div></div>
+ <div class="ad-stat-grid">
+ <div class="ad-stat"><div class="ad-stat__l">Referred</div><div class="ad-stat__n">41</div><div class="ad-stat__d">Since 2 Mar</div></div>
+ <div class="ad-stat"><div class="ad-stat__l">Signed up</div><div class="ad-stat__n">33</div><div class="ad-stat__d ad-stat__d--ok">80%</div></div>
+ <div class="ad-stat"><div class="ad-stat__l">In programme</div><div class="ad-stat__n">24</div><div class="ad-stat__d">All doors closed</div></div>
+ <div class="ad-stat"><div class="ad-stat__l">Completed</div><div class="ad-stat__n">5</div><div class="ad-stat__d ad-stat__d--ok">2 reports new</div></div>
+ <div class="ad-stat"><div class="ad-stat__l">Left early</div><div class="ad-stat__n">4</div><div class="ad-stat__d">Re-referral welcome</div></div>
+ </div>
+ ${TABLE(PILL('danger', 'Waiting on Northbank · 2'), 'Call-back within 5 working days', ['Member', 'Application', 'Completed', 'Next step'], [
+  `<tr onclick="go(5)"><td>${CUST('Aisha Williams', 'NB-48166')}</td><td>£2,000 · deferred 10 Mar</td><td class="ad-table__time">13 May</td><td>${PILL('warn', 'Read report · call-back 20 May')}</td></tr>`,
+  `<tr><td>${CUST('Kevin Doyle', 'NB-48170')}</td><td>£1,200 · deferred 12 Mar</td><td class="ad-table__time">11 May</td><td>${PILL('danger', 'Book call-back')}</td></tr>`,
+ ])}
+ ${TABLE(PILL('info', 'Recent updates from Holdwell'), 'Last 7 days', ['When', 'Member', 'Update'], [
+  `<tr><td class="ad-table__time">13 May</td><td>${CUST('Aisha Williams', 'NB-48166')}</td><td>${PILL('ok', 'Completed · report ready')}</td></tr>`,
+  `<tr><td class="ad-table__time">13 May</td><td>${CUST('Margaret Patel', 'NB-48236')}</td><td>${PILL('info', 'Signed up · closing doors')}</td></tr>`,
+  `<tr><td class="ad-table__time">09 May</td><td>${CUST('Leon Hart', 'NB-48190')}</td><td>${PILL('', 'Left early · day 31')}</td></tr>`,
+ ])}
+ </div>
+ </div>
+ </div>`,
+
+ cu2: () => `
+ <div class="screen" style="display:contents">
+ ${NAV('cu2')}
+ <div class="ad-main">
+ ${TOPBAR('partner / <b>refer a member</b>', '<button class="ad-topbar__btn">Cancel</button><button class="ad-topbar__btn ad-topbar__btn--primary" onclick="go(2)">Create referral link</button>')}
+ <div class="ad-body">
+ <div class="ad-head"><div><h2>Refer a member</h2><div class="ad-head__sub">For applicants you're deferring because of gambling · not a decline</div></div></div>
+ <div class="row-2">
+ <div class="ad-card">
+ ${ROW('Full name', '', '<input class="ad-input" value="Sam Kennedy">')}
+ ${ROW('Email', 'Holdwell uses this to match the sign-up. If they use another email, Holdwell checks by hand.', '<input class="ad-input" value="sam.k@example.com">')}
+ ${ROW('Application', '', '<input class="ad-input" value="NB-48213" style="font-family:\'JetBrains Mono\',monospace">')}
+ ${ROW('Amount applied for', 'Shown to Holdwell for context only.', '<input class="ad-input" value="£3,000">')}
+ ${ROW('Programme length', 'Pilot default is 60 days (J3).', '<select class="ad-select"><option>30 days</option><option selected>60 days</option><option>90 days</option></select>')}
+ ${ROW('Your note to Holdwell', 'Optional · never shown to the member.', '<textarea class="ad-textarea" placeholder="Anything that would help">Gambling transactions on statements. Keen to consolidate.</textarea>')}
+ </div>
+ <div style="display:flex;flex-direction:column;gap:14px">
+ <div class="ad-card">
+ <div class="ad-card__h"><span class="ad-card__t">Before you refer</span></div>
+ ${CHECK('ok', 'You\'ve told the applicant the loan is deferred, not declined', 'Script in the pilot pack')}
+ ${CHECK('ok', 'They know Holdwell is a separate company', 'And that Holdwell doesn\'t lend')}
+ ${CHECK('info', 'They agree to the referral', 'They\'ll consent again inside the app (A3)')}
+ </div>
+ <div class="ad-card">
+ <div class="ad-card__h"><span class="ad-card__t">What you'll hear back</span></div>
+ <ul style="margin:0;padding:0 0 0 16px;font-size:12px;color:var(--text-secondary);line-height:1.6">
+ <li>Started · once every door is closed</li>
+ <li>Completed · with a report, around day 60</li>
+ <li>Or left early · with the day they left</li>
+ </ul>
+ </div>
+ </div>
+ </div>
+ </div>
+ </div>
+ </div>`,
+
+ cu3: () => `
+ <div class="screen" style="display:contents">
+ ${NAV('cu3')}
+ <div class="ad-main">
+ ${TOPBAR('partner / refer / <b>NB-48213</b>', '<button class="ad-topbar__btn">Copy link</button><button class="ad-topbar__btn ad-topbar__btn--primary">Open in my email</button>')}
+ <div class="ad-body">
+ <div class="ad-head"><div><h2>Referral link ready</h2><div class="ad-head__sub">Sam Kennedy · NB-48213 · 60 days · link valid 30 days</div></div></div>
+ <div class="ad-card">
+ <div class="ad-card__h"><span class="ad-card__t">Unique link</span>${PILL('ok', 'Created 18 Apr 10:12')}</div>
+ <div style="padding:10px 12px;background:var(--bg-base);border:1px solid var(--border);border-radius:6px;font-family:'JetBrains Mono',monospace;font-size:13px">holdwell.example/r/NB-48213-7KQ2</div>
+ </div>
+ <div class="ad-card">
+ <div class="ad-card__h"><span class="ad-card__t">Suggested email · edit freely</span></div>
+ <div style="background:var(--bg-base);border:1px solid var(--border);border-radius:6px;padding:14px 16px;font-size:12.5px;line-height:1.7;color:var(--text-secondary)">
+ Dear Sam,<br><br>
+ Thank you for your loan application. We're not able to approve it today, but we haven't declined it.<br><br>
+ We work with Holdwell, a separate service that helps people take a break from gambling. If you complete their 60-day programme, we'll call you back to look at your application again.<br><br>
+ You can start here: <span style="color:var(--accent)">holdwell.example/r/NB-48213-7KQ2</span><br><br>
+ Rashid Ahmed · Northbank Credit Union
+ </div>
+ </div>
+ </div>
+ </div>
+ </div>`,
+
+ cu4: () => `
+ <div class="screen" style="display:contents">
+ ${NAV('cu4')}
+ <div class="ad-main">
+ ${TOPBAR('partner / <b>members</b>', '<button class="ad-topbar__btn">Export</button><button class="ad-topbar__btn ad-topbar__btn--primary" onclick="go(1)">Refer a member</button>')}
+ <div class="ad-body">
+ <div class="ad-head"><div><h2>Members</h2><div class="ad-head__sub">41 referred · status only</div></div></div>
+ <div class="ad-tabs">
+ <button class="ad-tab">All · 41</button><button class="ad-tab">Invited · 8</button><button class="ad-tab">Closing doors · 3</button><button class="ad-tab is-on">In programme · 21</button><button class="ad-tab">Completed · 5</button><button class="ad-tab">Left early · 4</button>
+ </div>
+ ${TABLE(PILL('info', 'In programme · 21'), 'Sorted by expected end', ['Member', 'Application', 'Started', 'Progress', 'Expected end'], [
+  `<tr><td>${CUST('Ryan Holmes', 'NB-48181')}</td><td>£2,500</td><td class="ad-table__time">2 Apr</td><td>${PILL('info', 'Day 42 of 60')}</td><td class="ad-table__time">1 Jun</td></tr>`,
+  `<tr onclick="go(4)"><td>${CUST('Sam Kennedy', 'NB-48213')}</td><td>£3,000</td><td class="ad-table__time">21 Apr</td><td>${PILL('info', 'Day 24 of 60')}</td><td class="ad-table__time">20 Jun</td></tr>`,
+  `<tr><td>${CUST('Daniel Okafor', 'NB-48228')}</td><td>£800</td><td class="ad-table__time">1 May</td><td>${PILL('info', 'Day 14 of 30')}</td><td class="ad-table__time">31 May</td></tr>`,
+  `<tr><td>${CUST('Linda Coleman', 'NB-48232')}</td><td>£4,000</td><td class="ad-table__time">13 May</td><td>${PILL('info', 'Day 2 of 90')}</td><td class="ad-table__time">11 Aug</td></tr>`,
+ ])}
+ </div>
+ </div>
+ </div>`,
+
+ cu5: () => `
+ <div class="screen" style="display:contents">
+ ${NAV('cu5')}
+ <div class="ad-main">
+ ${TOPBAR('partner / members / <b>NB-48213</b>', '<button class="ad-topbar__btn">← Members</button><button class="ad-topbar__btn">Note</button>')}
+ <div class="ad-body">
+ <div class="ad-cust-head">
+ <span class="ad-cust-head__av">SK</span>
+ <div>
+ <div class="ad-cust-head__name">Sam Kennedy</div>
+ <div class="ad-cust-head__sub">NB-48213 · £3,000 · deferred 18 Apr 2026 · referred by R. Ahmed</div>
+ <div class="ad-cust-head__pills">${PILL('info', 'In programme · day 24 of 60')}${PILL('ok', 'Self-excluded')}</div>
+ </div>
+ </div>
+ <div class="row-2">
+ <div style="display:flex;flex-direction:column;gap:14px">
+ <div class="ad-card">
+ <div class="ad-card__h"><span class="ad-card__t">Timeline</span></div>
+ ${CHECK('ok', 'Referred', '18 Apr · link sent by you')}
+ ${CHECK('ok', 'Signed up and matched', '19 Apr')}
+ ${CHECK('ok', 'Every door closed · programme started', '21 Apr · GAMSTOP, betting shops, bingo, device blocker')}
+ ${CHECK('info', 'Completion expected', '20 Jun · report within 2 working days')}
+ ${CHECK('info', 'Call-back with you', 'Member books it from the app around day 55')}
+ </div>
+ </div>
+ <div style="display:flex;flex-direction:column;gap:14px">
+ <div class="ad-card">
+ <div class="ad-card__h"><span class="ad-card__t">What you can't see</span></div>
+ ${CHECK('no', 'Anna conversations, quiz answers, risk scores', 'Private to the member', IC.no)}
+ ${CHECK('no', 'Transactions, balances, blocked attempts', 'Private to the member', IC.no)}
+ ${CHECK('no', 'Sponsor details', 'Private to the member', IC.no)}
+ ${CHECK('no', 'Wellbeing or safeguarding notes', 'Holdwell handles these directly', IC.no)}
+ </div>
+ <div class="ad-card">
+ <div class="ad-card__h"><span class="ad-card__t">Consent</span></div>
+ <p style="font-size:12px;color:var(--text-secondary);line-height:1.6;margin:0">Sam agreed on 19 Apr that Holdwell can tell Northbank whether she finishes. She can withdraw this at any time; you'd see "consent withdrawn" here.</p>
+ </div>
+ </div>
+ </div>
+ </div>
+ </div>
+ </div>`,
+
+ cu6: () => `
+ <div class="screen" style="display:contents">
+ ${NAV('cu6')}
+ <div class="ad-main">
+ ${TOPBAR('partner / reports / <b>NB-48166</b>', '<button class="ad-topbar__btn">Download PDF</button><button class="ad-topbar__btn ad-topbar__btn--primary">Confirm call-back 20 May 10:00</button>')}
+ <div class="ad-body">
+ <div class="ad-head"><div><h2>Completion report · Aisha Williams</h2><div class="ad-head__sub">Signed by two Holdwell reviewers 14 May · NB-48166 · £2,000 deferred 10 Mar</div></div></div>
+ <div class="row-2">
+ <div class="ad-card">
+ <div class="ad-card__h"><span class="ad-card__t">Outcome</span>${PILL('ok', 'Completed')}</div>
+ <dl class="ad-defs">
+ <dt>Programme</dt><dd>60 days · 13 Mar – 13 May 2026</dd>
+ <dt>Self-exclusion</dt><dd>GAMSTOP · betting shops · bingo · device blocker</dd>
+ <dt>Gambling spend</dt><dd>None seen on linked accounts</dd>
+ <dt>Engagement</dt><dd>Weekly sessions completed</dd>
+ <dt>Call-back</dt><dd>20 May 10:00 · booked by member</dd>
+ </dl>
+ </div>
+ <div style="display:flex;flex-direction:column;gap:14px">
+ <div class="ad-card">
+ <div class="ad-card__h"><span class="ad-card__t">After the call · optional</span>${PILL('purple', 'Pilot measurement')}</div>
+ ${ROW('Your decision', 'Recorded for the pilot only, with the member\'s consent (J4). Holdwell makes no recommendation.', '<select class="ad-select"><option>Not decided yet</option><option>Approved</option><option>Approved, lower amount</option><option>Deferred again</option><option>Declined</option></select>')}
+ </div>
+ <div class="ad-card">
+ <div class="ad-card__h"><span class="ad-card__t">After completion</span></div>
+ <p style="font-size:12px;color:var(--text-secondary);line-height:1.6;margin:0">Self-exclusions keep running. Aisha may keep using Holdwell after the programme (E10, open). Holdwell won't send further updates unless you both agree.</p>
+ </div>
+ </div>
+ </div>
+ </div>
+ </div>
+ </div>`,
+
+ cu7: () => `
+ <div class="screen" style="display:contents">
+ ${NAV('cu7')}
+ <div class="ad-main">
+ ${TOPBAR('partner / <b>pilot results</b>', '<button class="ad-topbar__btn">Export CSV</button>')}
+ <div class="ad-body">
+ <div class="ad-head"><div><h2>Pilot results</h2><div class="ad-head__sub">2 Mar – 14 May 2026 · illustrative numbers</div></div></div>
+ <div class="ad-stat-grid">
+ <div class="ad-stat"><div class="ad-stat__l">Sign-up rate</div><div class="ad-stat__n">80%</div><div class="ad-stat__d">33 of 41</div></div>
+ <div class="ad-stat"><div class="ad-stat__l">Doors closed</div><div class="ad-stat__n">88%</div><div class="ad-stat__d">29 of 33</div></div>
+ <div class="ad-stat"><div class="ad-stat__l">Completion</div><div class="ad-stat__n">56%</div><div class="ad-stat__d">5 of 9 who reached the end</div></div>
+ <div class="ad-stat"><div class="ad-stat__l">Loans after</div><div class="ad-stat__n">3</div><div class="ad-stat__d">Recorded by you</div></div>
+ </div>
+ <div class="row-2">
+ <div class="ad-card">
+ <div class="ad-card__h"><span class="ad-card__t">Funnel</span></div>
+ ${BAR('Referred', 41, 41)}
+ ${BAR('Signed up', 33, 41)}
+ ${BAR('Doors closed', 29, 41)}
+ ${BAR('Reached day 30', 17, 41)}
+ ${BAR('Completed', 5, 41, '--t-60')}
+ ${BAR('Left early', 4, 41, '--w-60')}
+ </div>
+ <div class="ad-card">
+ <div class="ad-card__h"><span class="ad-card__t">Recorded decisions · 5 completed</span></div>
+ ${BAR('Approved', 2, 5, '--t-60')}
+ ${BAR('Lower amount', 1, 5, '--t-60')}
+ ${BAR('Not decided yet', 2, 5)}
+ <p style="font-size:11.5px;color:var(--text-muted);line-height:1.5;margin:6px 0 0">Repayment tracking after the loan (J4) needs Northbank's data and a separate consent. To agree.</p>
+ </div>
+ </div>
+ </div>
+ </div>
+ </div>`,
+};
+
+let idx = 0;
+
+function render() {
+ const screen = SCREENS[idx];
+ document.getElementById('viewport').innerHTML = builders[screen.kind]();
+ document.getElementById('browserUrl').textContent = 'partners.holdwell.example' + screen.url;
+ document.getElementById('screenId').textContent = screen.id;
+ document.getElementById('screenName').textContent = screen.name;
+ document.getElementById('progressFill').style.width = ((idx + 1) / SCREENS.length * 100) + '%';
+ document.getElementById('navPrev').disabled = idx === 0;
+ document.getElementById('navNext').disabled = idx === SCREENS.length - 1;
+ document.querySelectorAll('.proto-scrubber__item').forEach((el, i) => {
+ el.classList.toggle('is-active', i === idx);
+ if (i === idx) el.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+ });
+ document.getElementById('contextBody').innerHTML = CTX[screen.kind] || screen.name;
+}
+
+function next() { if (idx < SCREENS.length - 1) { idx++; render(); } }
+function prev() { if (idx > 0) { idx--; render(); } }
+function go(i) { idx = i; render(); }
+
+function buildScrubber() {
+ const nav = document.getElementById('scrubber');
+ SCREENS.forEach((s, i) => {
+ const btn = document.createElement('button');
+ btn.className = 'proto-scrubber__item';
+ btn.innerHTML = `<span class="proto-scrubber__id">${s.id}</span><span class="proto-scrubber__name">${s.name}</span>`;
+ btn.addEventListener('click', () => go(i));
+ nav.appendChild(btn);
+ });
+}
+
+function initTheme() {
+ const root = document.documentElement;
+ const stored = localStorage.getItem('gc-proto-theme');
+ const initial = stored || 'dark';
+ root.setAttribute('data-theme', initial);
+ document.querySelector('.theme-label').textContent = initial === 'dark' ? 'Dark' : 'Light';
+ document.querySelector('.proto-theme-toggle').addEventListener('click', () => {
+ const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+ root.setAttribute('data-theme', next);
+ document.querySelector('.theme-label').textContent = next === 'dark' ? 'Dark' : 'Light';
+ try { localStorage.setItem('gc-proto-theme', next); } catch(e) {}
+ });
+}
+
+document.getElementById('navPrev').addEventListener('click', prev);
+document.getElementById('navNext').addEventListener('click', next);
+document.addEventListener('keydown', (e) => { if (e.key === 'ArrowRight') next(); if (e.key === 'ArrowLeft') prev(); });
+buildScrubber();
+initTheme();
+render();
+</script>
+
+</body>
+</html>

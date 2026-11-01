@@ -1,0 +1,570 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Holdwell · Mobile · §10 Programme + completion</title>
+<link rel="icon" href="../assets/gc-favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+ --p-10:#0B0F1C;--p-20:#161B2D;--p-30:#20273C;--p-40:#354872;--p-50:#4D608C;--p-60:#6B7DA6;--p-70:#8E9DC0;--p-80:#B5BFD9;--p-90:#DCE2F0;--p-95:#ECF0F9;--p-99:#FAFBFE;--p-100:#FFF;
+ --s-10:#28215A;--s-20:#3E3478;--s-30:#534792;--s-40:#6B5DAC;--s-50:#8576C2;--s-70:#B5ACDF;--s-80:#CFC8EA;--s-90:#E8E4F4;
+ --t-20:#1A6047;--t-30:#1F7058;--t-50:#399971;--t-60:#5BB088;--t-80:#ADDCC2;--t-90:#D5EDDF;
+ --w-30:#6B4500;--w-60:#C28200;--w-80:#FAB44A;--w-90:#FFDFA8;
+ --e-30:#7A1F1F;--e-50:#C73838;--e-80:#F4A4A4;--e-90:#FBD9D9;
+ --n-30:#43475A;--n-50:#76798A;--n-80:#C5C8D2;--n-95:#F1F2F5;--nv-80:#C5C9DD;
+}
+[data-theme="dark"] { --bg-base: var(--p-30); --bg-surface: var(--p-20); --bg-surface-2: var(--p-10); --border: rgba(255,255,255,0.08); --text-primary: var(--n-95); --text-secondary: var(--nv-80); --text-muted: rgba(255,255,255,0.4); --accent: var(--s-70); --accent-strong: var(--s-50); --on-accent: #fff; --page-bg: #0a0e1a; --page-fg: var(--n-95); --page-fg-muted: var(--nv-80); --page-card-bg: var(--p-20); --page-divider: rgba(255,255,255,0.06); }
+[data-theme="light"] { --bg-base: var(--p-99); --bg-surface: #fff; --bg-surface-2: var(--p-95); --border: rgba(22,27,45,0.08); --text-primary: var(--p-20); --text-secondary: var(--n-50); --text-muted: var(--n-50); --accent: var(--p-40); --accent-strong: var(--s-40); --on-accent: #fff; --page-bg: var(--p-95); --page-fg: var(--p-20); --page-fg-muted: var(--n-50); --page-card-bg: #fff; --page-divider: rgba(22,27,45,0.08); }
+* { box-sizing: border-box; }
+html, body { background: var(--page-bg); color: var(--page-fg); margin: 0; transition: background-color 220ms ease, color 220ms ease; }
+body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif; font-size: 14px; line-height: 1.5; -webkit-font-smoothing: antialiased; min-height: 100vh; }
+
+/* SHELL */
+.proto-shell { display: grid; grid-template-columns: 280px 1fr; gap: 0; min-height: 100vh; }
+@media (max-width: 960px) {.proto-shell { grid-template-columns: 1fr; } }
+.proto-sidebar { background: var(--page-card-bg); border-right: 1px solid var(--page-divider); padding: 28px 22px; position: sticky; top: 0; height: 100vh; overflow-y: auto; display: flex; flex-direction: column; gap: 16px; }
+@media (max-width: 960px) {.proto-sidebar { position: static; height: auto; max-height: 50vh; border-right: none; border-bottom: 1px solid var(--page-divider); } }
+.proto-sidebar__brand { display: flex; align-items: center; gap: 10px; }
+.proto-sidebar__mark { width: 36px; height: 36px; border-radius: 10px; background: var(--p-30); display: inline-flex; align-items: center; justify-content: center; }
+.proto-sidebar__mark img { width: 70%; height: 70%; }
+.proto-sidebar__name { font-weight: 700; font-size: 17px; letter-spacing: -0.01em; }
+.proto-sidebar__pill { display: inline-flex; padding: 3px 9px; border-radius: 999px; background: linear-gradient(120deg, var(--s-50), var(--p-50), var(--t-50)); color: white; font-weight: 700; font-size: 9.5px; font-family: 'JetBrains Mono', monospace; letter-spacing: 0.06em; text-transform: uppercase; }
+.proto-sidebar__back { display: inline-flex; align-items: center; gap: 6px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--page-fg-muted); text-decoration: none; }
+.proto-sidebar__back:hover { color: var(--page-accent); }
+.proto-section-title { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--page-fg-muted); margin: 12px 0 6px; }
+.proto-scrubber { display: flex; flex-direction: column; gap: 2px; }
+.proto-scrubber__item { display: grid; grid-template-columns: 44px 1fr; gap: 8px; align-items: center; padding: 7px 10px; border-radius: 8px; cursor: pointer; border: none; background: transparent; color: inherit; font-family: inherit; text-align: left; }
+.proto-scrubber__item:hover { background: rgba(127,127,127,0.08); }
+.proto-scrubber__item.is-active { background: var(--accent-strong); color: var(--on-accent); }
+.proto-scrubber__item.is-active.proto-scrubber__id { color: rgba(255,255,255,0.85); }
+.proto-scrubber__id { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; color: var(--page-fg-muted); letter-spacing: 0.06em; }
+.proto-scrubber__name { font-size: 12.5px; font-weight: 500; }
+.proto-sidebar__footer { margin-top: auto; padding-top: 16px; border-top: 1px solid var(--page-divider); font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--page-fg-muted); }
+.proto-sidebar__footer a { color: var(--page-fg-muted); text-decoration: none; border-bottom: 1px dotted currentColor; }
+.proto-theme-toggle { display: inline-flex; align-items: center; gap: 8px; padding: 7px 12px; border-radius: 8px; background: var(--bg-surface-2); border: 1px solid var(--border); color: var(--page-fg-muted); cursor: pointer; font-family: 'JetBrains Mono', monospace; font-size: 11px; align-self: flex-start; }
+.proto-theme-toggle svg { width: 12px; height: 12px; }
+[data-theme="dark"].proto-theme-toggle.icon-moon { display: none; }
+[data-theme="light"].proto-theme-toggle.icon-sun { display: none; }
+
+/* STAGE */
+.proto-stage { display: flex; flex-direction: column; align-items: center; padding: 32px 24px 64px; gap: 22px; }
+.proto-modebar { display: flex; align-items: center; gap: 10px; padding: 10px 16px; background: var(--page-card-bg); border: 1px solid var(--page-divider); border-radius: 12px; font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: var(--page-fg-muted); flex-wrap: wrap; justify-content: center; }
+.proto-modebar__pill { display: inline-flex; padding: 3px 9px; border-radius: 999px; background: var(--bg-surface-2); }
+.proto-modebar__id { color: var(--page-fg); font-weight: 700; letter-spacing: 0.06em; }
+.proto-modebar__bar { width: 100px; height: 4px; border-radius: 4px; background: var(--bg-surface-2); position: relative; overflow: hidden; }
+.proto-modebar__bar__fill { position: absolute; left: 0; top: 0; bottom: 0; background: linear-gradient(90deg, var(--s-50), var(--t-50)); transition: width 240ms ease; }
+.proto-arrows { display: flex; align-items: center; gap: 8px; }
+.proto-arrow { width: 36px; height: 36px; border-radius: 10px; background: var(--page-card-bg); border: 1px solid var(--page-divider); color: var(--page-fg-muted); display: inline-flex; align-items: center; justify-content: center; cursor: pointer; }
+.proto-arrow:hover { background: var(--bg-surface-2); color: var(--page-fg); }
+.proto-arrow:disabled { opacity: 0.3; cursor: not-allowed; }
+.proto-arrow svg { width: 18px; height: 18px; }
+
+/* PHONE */
+.phone { width: 393px; height: 852px; flex-shrink: 0; border-radius: 56px; background: #000; padding: 13px; position: relative; box-shadow: 0 0 0 1.5px #2a2e3a, 0 30px 60px -20px rgba(0,0,0,0.7), 0 16px 32px -16px rgba(0,0,0,0.4); }
+.phone::before,.phone::after { content: ''; position: absolute; background: #2a2e3a; }
+.phone::before { left: -3px; top: 110px; width: 3px; height: 30px; border-radius: 3px 0 0 3px; }
+.phone::after { left: -3px; top: 160px; width: 3px; height: 60px; border-radius: 3px 0 0 3px; }
+.phone__inner { width: 100%; height: 100%; background: var(--bg-base); color: var(--text-primary); border-radius: 44px; overflow: hidden; position: relative; display: flex; flex-direction: column; }
+.phone__notch { position: absolute; top: 12px; left: 50%; transform: translateX(-50%); width: 120px; height: 32px; background: #000; border-radius: 18px; z-index: 30; }
+.phone__statusbar { height: 44px; padding: 12px 32px 0; display: flex; align-items: center; justify-content: space-between; font-size: 14px; font-weight: 600; color: var(--text-primary); font-feature-settings: "tnum"; flex-shrink: 0; }
+.phone__statusbar__right { display: flex; align-items: center; gap: 5px; font-size: 13px; }
+.phone__topbar { display: flex; align-items: center; justify-content: space-between; padding: 8px 18px 12px; gap: 10px; flex-shrink: 0; }
+.phone__mark { width: 32px; height: 32px; border-radius: 9px; background: var(--bg-surface); border: 1px solid var(--border); display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.phone__mark img { width: 65%; height: 65%; }
+[data-theme="light"].phone__mark img { filter: invert(1) brightness(0.3); }
+.phone__back { width: 32px; height: 32px; border-radius: 50%; background: transparent; border: none; color: var(--text-primary); display: inline-flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; }
+.phone__back:hover { background: rgba(127,127,127,0.06); }
+.phone__back svg { width: 20px; height: 20px; }
+.phone__title { flex: 1; text-align: center; font-size: 14.5px; font-weight: 600; letter-spacing: -0.01em; }
+.gc-crisis-pill { display: inline-flex; align-items: center; gap: 5px; padding: 6px 11px; border-radius: 999px; background: var(--e-50); color: white; border: none; font-family: inherit; font-size: 11.5px; font-weight: 600; cursor: pointer; flex-shrink: 0; }
+.gc-crisis-pill svg { width: 11px; height: 11px; flex-shrink: 0; }
+
+.cc-body { flex: 1; padding: 4px 16px 12px; overflow-y: auto; display: flex; flex-direction: column; gap: 11px; }
+.cc-body::-webkit-scrollbar { width: 4px; }
+.cc-body::-webkit-scrollbar-thumb { background: rgba(127,127,127,0.2); border-radius: 4px; }
+
+/* Card */
+.gc-card { padding: 14px; background: var(--bg-surface); border: 1px solid var(--border); border-radius: 14px; display: flex; flex-direction: column; gap: 8px; }
+.gc-card--anna { background: linear-gradient(135deg, rgba(133,118,194,0.15), rgba(83,71,146,0.08)); border-color: rgba(133,118,194,0.25); flex-direction: row; align-items: center; gap: 10px; padding: 11px 13px; }
+.gc-card--anna.anna-av { width: 30px; height: 30px; border-radius: 50%; background: var(--p-30); display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.gc-card--anna.anna-av img { width: 60%; height: 60%; }
+.gc-card--anna.anna-name { font-size: 12.5px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 1px; }
+.gc-card--anna p { font-size: 13px; line-height: 1.4; margin: 0; }
+.gc-card--milestone { background: linear-gradient(135deg, var(--s-40), var(--p-40)); color: white; border-color: transparent; }
+.gc-card--milestone p { color: rgba(255,255,255,0.92); }
+.gc-card--alert { background: var(--bg-surface-2); border-left: 3px solid var(--w-60); border-radius: 4px 12px 12px 4px; padding: 11px 14px; gap: 4px; }
+
+/* Card art (CC1) */
+.cc-card-art { width: 100%; aspect-ratio: 1.59; background: linear-gradient(135deg, var(--s-30) 0%, var(--p-20) 100%); border-radius: 14px; padding: 16px; position: relative; color: white; overflow: hidden; }
+.cc-card-art__brand { width: 32px; height: 32px; opacity: 0.95; filter: brightness(1.2); }
+.cc-card-art__cn { position: absolute; top: 14px; right: 14px; width: 24px; height: 24px; color: rgba(255,255,255,0.6); }
+.cc-card-art__chip { position: absolute; top: 60%; left: 16px; width: 32px; height: 24px; border-radius: 4px; background: linear-gradient(135deg, #d4b56a, #8a6b30); }
+.cc-card-art__num { position: absolute; bottom: 38px; left: 16px; font-family: 'JetBrains Mono', monospace; font-size: 17px; font-weight: 700; letter-spacing: 0.1em; }
+.cc-card-art__name { position: absolute; bottom: 14px; left: 16px; font-size: 10px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; opacity: 0.92; }
+.cc-card-art__exp { position: absolute; bottom: 14px; right: 16px; font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; opacity: 0.85; }
+.cc-card-art__net { position: absolute; top: 14px; right: 56px; display: flex; gap: -8px; }
+.cc-card-art__net span { width: 18px; height: 18px; border-radius: 50%; background: rgba(255,255,255,0.4); margin-left: -8px; }
+.cc-card-art__net span:first-child { background: rgba(255,180,40,0.85); margin-left: 0; }
+
+/* Step list (CC1) */
+.cc-step { display: grid; grid-template-columns: 28px 1fr; gap: 10px; align-items: flex-start; padding: 6px 0; }
+.cc-step__c { width: 28px; height: 28px; border-radius: 50%; background: var(--bg-surface-2); border: 1px solid var(--border); display: inline-flex; align-items: center; justify-content: center; color: var(--text-secondary); font-weight: 700; font-size: 12px; font-family: 'JetBrains Mono', monospace; flex-shrink: 0; }
+.cc-step.is-done.cc-step__c { background: var(--t-50); color: white; border-color: transparent; }
+.cc-step.is-done.cc-step__c svg { width: 14px; height: 14px; }
+.cc-step.is-active.cc-step__c { background: var(--accent-strong); color: white; border-color: transparent; }
+.cc-step__t { font-size: 13px; font-weight: 600; }
+.cc-step__s { font-size: 11.5px; color: var(--text-secondary); margin-top: 1px; }
+
+/* Status pill */
+.cc-pill { display: inline-flex; align-items: center; gap: 6px; padding: 3px 11px 3px 4px; border-radius: 999px; font-size: 10px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; align-self: flex-start; }
+.cc-pill::before { content: ''; width: 9px; height: 9px; border-radius: 50%; }
+.cc-pill--ok { background: var(--t-20); color: var(--t-80); }
+.cc-pill--ok::before { background: var(--t-50); }
+[data-theme="light"].cc-pill--ok { background: var(--t-90); color: var(--t-30); }
+.cc-pill--err { background: var(--e-30); color: var(--e-90); }
+.cc-pill--err::before { background: var(--e-50); }
+[data-theme="light"].cc-pill--err { background: var(--e-90); color: var(--e-30); }
+.cc-pill--warn { background: var(--w-30); color: var(--w-80); }
+.cc-pill--warn::before { background: var(--w-60); }
+[data-theme="light"].cc-pill--warn { background: var(--w-90); color: var(--w-30); }
+.cc-pill--sponsor { background: var(--s-20); color: var(--s-80); }
+.cc-pill--sponsor::before { background: var(--s-50); }
+[data-theme="light"].cc-pill--sponsor { background: var(--s-90); color: var(--s-20); }
+.cc-pill--info { background: var(--p-40); color: var(--p-95); }
+.cc-pill--info::before { background: var(--p-90); }
+[data-theme="light"].cc-pill--info { background: var(--p-90); color: var(--p-30); }
+
+/* MCC row */
+.cc-mcc { display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: center; padding: 11px 0; border-top: 1px solid var(--border); }
+.cc-mcc:first-child { border-top: none; padding-top: 0; }
+.cc-mcc__head { display: flex; align-items: center; gap: 8px; }
+.cc-mcc__code { font-family: 'JetBrains Mono', monospace; font-size: 11.5px; font-weight: 700; padding: 2px 7px; border-radius: 5px; background: var(--bg-surface-2); color: var(--text-secondary); }
+.cc-mcc__name { font-size: 13.5px; font-weight: 600; }
+.cc-mcc__sub { font-size: 11.5px; color: var(--text-secondary); margin-top: 2px; }
+.cc-mcc__locked { display: inline-flex; align-items: center; gap: 4px; font-size: 10px; font-family: 'JetBrains Mono', monospace; color: var(--text-muted); margin-top: 3px; letter-spacing: 0.04em; }
+.cc-mcc__locked svg { width: 10px; height: 10px; }
+
+/* Toggle */
+.gc-toggle { width: 40px; height: 24px; background: var(--bg-surface-2); border: 1px solid var(--border); border-radius: 999px; position: relative; flex-shrink: 0; cursor: pointer; transition: background 160ms ease; }
+.gc-toggle::after { content: ''; position: absolute; top: 2px; left: 2px; width: 18px; height: 18px; background: var(--text-muted); border-radius: 50%; transition: transform 160ms ease, background 160ms ease; }
+.gc-toggle.is-on { background: var(--accent); border-color: transparent; }
+.gc-toggle.is-on::after { transform: translateX(16px); background: white; }
+.gc-toggle.is-locked { opacity: 0.6; cursor: not-allowed; }
+.gc-toggle--ok { background: var(--t-50); border-color: transparent; }
+.gc-toggle--ok::after { transform: translateX(16px); background: white; }
+
+/* Channel row */
+.cc-chan { display: grid; grid-template-columns: 34px 1fr 40px; gap: 11px; align-items: center; padding: 11px 0; border-top: 1px solid var(--border); }
+.cc-chan:first-child { border-top: none; padding-top: 0; }
+.cc-chan__ic { width: 34px; height: 34px; border-radius: 10px; display: inline-flex; align-items: center; justify-content: center; }
+.cc-chan__t { font-size: 13.5px; font-weight: 600; }
+.cc-chan__s { font-size: 11.5px; color: var(--text-secondary); margin-top: 1px; }
+.cc-chan__note { grid-column: 1 / -1; font-size: 11px; color: var(--text-secondary); padding-top: 3px; line-height: 1.4; }
+.cc-chan__note strong { color: var(--text-primary); }
+
+/* Permission row (CC6) */
+.cc-perm { display: grid; grid-template-columns: 1fr 40px; gap: 10px; align-items: center; padding: 11px 0; border-top: 1px solid var(--border); }
+.cc-perm:first-child { border-top: none; padding-top: 0; }
+.cc-perm__t { font-size: 13.5px; font-weight: 600; }
+.cc-perm__s { font-size: 11.5px; color: var(--text-secondary); margin-top: 1px; line-height: 1.4; }
+
+/* Stat strip (CC2) */
+.cc-stat-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; padding-top: 8px; border-top: 1px solid var(--border); margin-top: 6px; }
+.cc-stat-row > div { text-align: left; }
+.cc-stat-row__n { font-size: 17px; font-weight: 800; letter-spacing: -0.015em; }
+.cc-stat-row__l { font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 2px; }
+
+/* Trust row (Gamban) */
+.cc-trust { display: grid; grid-template-columns: 30px 1fr; gap: 11px; align-items: center; padding: 10px 0; border-top: 1px solid var(--border); }
+.cc-trust:first-child { border-top: none; padding-top: 0; }
+.cc-trust__ic { width: 30px; height: 30px; border-radius: 9px; background: var(--bg-surface-2); display: inline-flex; align-items: center; justify-content: center; color: var(--text-primary); }
+.cc-trust__ic svg { width: 16px; height: 16px; }
+.cc-trust__t { font-size: 13px; font-weight: 600; }
+.cc-trust__s { font-size: 11.5px; color: var(--text-secondary); }
+
+/* Field (CC7) */
+.cc-field { display: flex; flex-direction: column; gap: 5px; }
+.cc-field__label { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); }
+.cc-field__input { background: var(--bg-base); border: 1px solid var(--border); border-radius: 9px; padding: 11px 13px; font-size: 14px; color: var(--text-primary); }
+.cc-chips { display: flex; gap: 5px; flex-wrap: wrap; }
+.cc-chip { padding: 6px 11px; border-radius: 999px; font-size: 12px; font-family: inherit; font-weight: 500; background: var(--bg-base); border: 1px solid var(--border); color: var(--text-primary); cursor: pointer; }
+.cc-chip.is-on { background: var(--accent-strong); color: var(--on-accent); border-color: transparent; font-weight: 600; }
+
+/* CTAs */
+.gc-btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 12px 16px; border-radius: 12px; font-family: inherit; font-size: 13.5px; font-weight: 600; cursor: pointer; border: 1px solid transparent; }
+.gc-btn--primary { background: var(--accent-strong); color: var(--on-accent); }
+.gc-btn--primary:hover { background: var(--s-40); }
+.gc-btn--ghost { background: transparent; color: var(--text-primary); border-color: var(--border); }
+.gc-btn--full { width: 100%; }
+.gc-btn--sm { padding: 8px 12px; font-size: 12px; border-radius: 10px; }
+
+/* Avatar */
+.cc-avatar { width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(135deg, var(--s-50), var(--p-40)); color: white; display: inline-flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; flex-shrink: 0; }
+
+/* Bottom tab bar */
+.phone__tabbar { display: grid; grid-template-columns: repeat(5, 1fr); padding: 8px 8px 22px; border-top: 1px solid var(--border); background: var(--bg-base); flex-shrink: 0; }
+.phone__tab { display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 5px 4px; cursor: pointer; color: var(--text-muted); }
+.phone__tab.is-on { color: var(--accent-strong); }
+.phone__tab svg { width: 22px; height: 22px; }
+.phone__tab span { font-size: 10px; font-weight: 600; }
+
+/* Decision note */
+.cc-decision { font-size: 11px; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; text-align: center; padding: 4px 0; line-height: 1.4; }
+
+/* Context */
+.proto-context { width: 100%; max-width: 480px; padding: 14px 16px; background: var(--page-card-bg); border: 1px solid var(--page-divider); border-radius: 12px; font-size: 12.5px; color: var(--page-fg-muted); line-height: 1.55; }
+.proto-context strong { color: var(--page-fg); }
+.proto-context a { color: var(--page-accent, var(--s-70)); text-decoration: none; border-bottom: 1px dotted currentColor; }
+.proto-context__head { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; font-weight: 700; color: var(--page-fg); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px; }
+
+.screen { animation: fade-in 220ms ease; }
+@keyframes fade-in { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+@media (max-width: 720px) {.phone { transform: scale(0.92); transform-origin: top center; } }
+@media (max-width: 480px) {.phone { transform: scale(0.78); } }
+</style>
+<script src="flow-chain.js" defer></script>
+</head>
+<body>
+
+<div class="proto-shell">
+
+ <aside class="proto-sidebar">
+ <div class="proto-sidebar__brand">
+ <span class="proto-sidebar__mark"><img src="../assets/gc-mark-mono-light.svg" alt=""></span>
+ <span>
+ <div class="proto-sidebar__name">holdwell</div>
+ <span class="proto-sidebar__pill">mobile</span>
+ </span>
+ </div>
+ <a class="proto-sidebar__back" href="index.html">← prototype index</a>
+
+ <button class="proto-theme-toggle" type="button" aria-label="Toggle theme">
+ <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+ <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+ <span class="theme-label">Dark</span>
+ </button>
+
+ <div class="proto-section-title">§10 · PG1 – PG8 · new in v2</div>
+ <nav class="proto-scrubber" id="scrubber"></nav>
+
+ <div class="proto-sidebar__footer">
+ Source: 31 Oct backlog review · J2–J7, I1–I2<br>
+ Replaces v1 §10 Repayment + Hold</div>
+ </aside>
+
+ <main class="proto-stage">
+
+ <div class="proto-modebar">
+ <span>Screen <span class="proto-modebar__id" id="screenId">PG1</span></span>
+ <span class="proto-modebar__pill" id="screenName">Programme</span>
+ <div class="proto-modebar__bar"><div class="proto-modebar__bar__fill" id="progressFill" style="width:14%"></div></div>
+ <div class="proto-arrows">
+ <button class="proto-arrow" id="navPrev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+ <button class="proto-arrow" id="navNext"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
+ </div>
+ </div>
+
+ <div class="phone">
+ <div class="phone__notch"></div>
+ <div class="phone__inner">
+ <div class="phone__statusbar">
+ <span>9:41</span>
+ <span class="phone__statusbar__right">
+ <span style="display:inline-flex;gap:3px"><span style="width:4px;height:4px;border-radius:50%;background:currentColor"></span><span style="width:4px;height:5px;border-radius:1px;background:currentColor"></span><span style="width:4px;height:6px;border-radius:1px;background:currentColor"></span><span style="width:4px;height:7px;border-radius:1px;background:currentColor"></span></span>
+ <span>100%</span>
+ </span>
+ </div>
+ <div id="stage" style="flex:1;display:flex;flex-direction:column;min-height:0"></div>
+ </div>
+ </div>
+
+ <div class="proto-context" id="contextPanel">
+ <div class="proto-context__head">Screen context</div>
+ <div id="contextBody"></div>
+ </div>
+
+ </main>
+</div>
+
+<script>
+const SCREENS = [
+ { id: 'PG1', name: 'Programme · day 24 of 60', kind: 'pg1' },
+ { id: 'PG2', name: 'Weekly summary', kind: 'pg2' },
+ { id: 'PG3', name: 'A pattern we noticed', kind: 'pg3' },
+ { id: 'PG4', name: 'What "complete" means', kind: 'pg4' },
+ { id: 'PG5', name: 'Day 60 · complete', kind: 'pg5' },
+ { id: 'PG6', name: 'What Northbank will see', kind: 'pg6' },
+ { id: 'PG7', name: 'Call-back requested', kind: 'pg7' },
+ { id: 'PG8', name: 'After the programme', kind: 'pg8' },
+];
+
+const V2 = (ids, k, t) => `<div class="v2-meta"><span class="v2-meta__when v2-${k}">${t}</span><span class="v2-meta__ids">Backlog ${ids}</span></div>`;
+const OPEN = (q) => `<div class="v2-open"><strong>Open design question.</strong> ${q}</div>`;
+const CTX = {
+ pg1: '<strong>PG1 Programme home.</strong> New §10, replacing v1 §10 Repayment + Hold. Sam always sees where she stands against the completion criteria, so she knows what\'s left before the Northbank call-back. Days without gambling top-ups come from open banking monitoring (I1).' + V2('J7 · I1 · G5 · A5', 'mvp1', 'MVP · Drop 1'),
+ pg2: '<strong>PG2 Weekly summary.</strong> Sunday evening. Same facts Joanna gets in her weekly summary (F4), so nothing is said behind Sam\'s back. Engagement tiers (daily, 4× a day plus games, weekly) feed the completion model later (J5).' + V2('G5 · F4', 'mvp1', 'MVP · Drop 1'),
+ pg3: '<strong>PG3 A pattern we noticed.</strong> Displacement check (I2). In the MVP a person spots it in the weekly open banking review (§13 ops console) and sends this; automated detection is Phase 1. Sam hears first; Joanna is told only if it continues. Only sees connected accounts, hence B9.' + V2('I2 · B9 · K5', 'mvp1', 'MVP · Drop 1'),
+ pg4: '<strong>PG4 What complete means.</strong> A written definition that GaimControl signs off before the report goes to the credit union (J7). The criteria here are a starting proposal from the backlog, not yet agreed.' + V2('J7', 'mvp1', 'MVP · Drop 1') + OPEN('Exact completion definition and who signs it off (J7).'),
+ pg5: '<strong>PG5 Day 60 complete.</strong> Signed off by a named person in the ops console. No automatic reapplication: Sam asks for a call-back and Northbank makes its own decision (J2).' + V2('J2 · J7', 'mvp1', 'MVP · Drop 1'),
+ pg6: '<strong>PG6 What Northbank will see.</strong> Milestones only, under the consent Sam gave in ON1.c. No transactions, no Anna chats, no therapy content, no PGSI score. Same report the credit union sees in §17 CU4.' + V2('J2 · A3', 'mvp1', 'MVP · Drop 1'),
+ pg7: '<strong>PG7 Call-back requested.</strong> Northbank commits to call within 5 working days. Consent for a soft check at 12 months (J4) feeds outcome tracking and the pilot measures (J6).' + V2('J2 · J4 · J6', 'mvp1', 'MVP · Drop 1'),
+ pg8: '<strong>PG8 After the programme.</strong> Card, sponsor and Anna stay. Who pays for the card after day 60 is a business-model decision needed before the MVP (E10, owner JP); the screen shows a 3-month free period as a placeholder.' + V2('E10', 'p2', 'Phase 2 / later') + OPEN('Card after the programme: free period, lender pays, or member pays? (E10, decide before MVP)'),
+};
+
+const ANNA = (text) => `
+ <div class="gc-card gc-card--anna">
+ <span class="anna-av"><img src="../assets/gc-mark-mono-light.svg" alt=""></span>
+ <div><div class="anna-name">Anna</div><p>${text}</p></div>
+ </div>`;
+
+const TOPBAR = (title, back = false) => `
+ <div class="phone__topbar">
+ ${back ? `<button class="phone__back" onclick="prev()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>` : `<span class="phone__mark"><img src="../assets/gc-mark-mono-light.svg" alt=""></span>`}
+ <span class="phone__title">${title}</span>
+ <button class="gc-crisis-pill" type="button"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7-4.5-9-9.5C2 7 5 4 8 4c1.7 0 3.2.8 4 2.8-1.2 2.3-2 4-2 3 0 6 3 5 7.5C19 16.5 12 21 12 21z"/></svg> Help</button>
+ </div>`;
+
+const TABBAR = (active = 0) => {
+ const tabs = [
+ { name: 'Home', svg: '<path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>' },
+ { name: 'Banking', svg: '<rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>' },
+ { name: 'Anna', svg: '<path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/>' },
+ { name: 'Activity', svg: '<path d="M3 3v18h18"/><path d="m7 14 4-4 4 4 5-5"/>' },
+ { name: 'Profile', svg: '<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>' },
+ ];
+ return `<div class="phone__tabbar">${tabs.map((t, i) =>
+ `<div class="phone__tab ${i === active ? 'is-on' : ''}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${t.svg}</svg><span>${t.name}</span></div>`
+ ).join('')}</div>`;
+};
+
+const TICK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>';
+const STEP = (state, n, t, s) => `<div class="cc-step ${state === 'done' ? 'is-done' : state === 'now' ? 'is-active' : ''}"><span class="cc-step__c">${state === 'done' ? TICK : n}</span><div><div class="cc-step__t">${t}</div><div class="cc-step__s">${s}</div></div></div>`;
+const BAR = (pct, col = 'var(--t-50)') => `<div style="width:100%;height:7px;background:var(--bg-surface-2);border-radius:999px;overflow:hidden"><div style="height:100%;width:${pct}%;background:${col};border-radius:999px"></div></div>`;
+const CRIT = (t, s, pct, right) => `<div style="display:flex;flex-direction:column;gap:5px;padding:9px 0;border-top:1px solid var(--border)"><div style="display:flex;justify-content:space-between;gap:8px"><span style="font-size:12.5px;font-weight:700">${t}</span><span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-secondary)">${right}</span></div>${BAR(pct, pct >= 100 ? 'var(--t-50)' : 'linear-gradient(90deg,var(--s-50),var(--t-50))')}<span style="font-size:11px;color:var(--text-secondary)">${s}</span></div>`;
+
+const builders = {
+ pg1: () => `
+ ${TOPBAR('Programme')}
+ <div class="cc-body">
+ <div class="gc-card gc-card--milestone">
+ <span class="cc-pill" style="background:rgba(255,255,255,0.18);color:white">Day 24 of 60 · ends 30 Apr</span>
+ <h2 style="font-size:22px;font-weight:800;letter-spacing:-0.02em;line-height:1.15;margin:2px 0 0">24 days without gambling.</h2>
+ <p style="font-size:12.5px;line-height:1.5;margin:0">Your longest run so far. 36 to go before Northbank calls you.</p>
+ </div>
+ <div class="gc-card" style="padding:13px 14px;gap:0">
+ <h3 style="font-size:13.5px;font-weight:700;margin:0 0 4px">Your completion checklist</h3>
+ ${CRIT('Self-exclusion', 'GAMSTOP and betting shops · verified', 100, 'Done')}
+ ${CRIT('Gamban', 'Phone and laptop · confirmed by Joanna', 100, 'Done')}
+ ${CRIT('No gambling top-ups', '24 of 60 days', 40, '24 / 60')}
+ ${CRIT('Anna course', 'Session 3 of 12 · minimum 8', 25, '3 / 8')}
+ ${CRIT('Sponsor active', 'Joanna · 4 weekly summaries', 40, 'On track')}
+ </div>
+ ${ANNA("Session 3 today: You've Shown Strength. Six minutes, then one brain game.")}
+ <button class="gc-btn gc-btn--primary gc-btn--full">Start Session 3</button>
+ </div>
+ ${TABBAR(0)}`,
+
+ pg2: () => `
+ ${TOPBAR('This week', true)}
+ <div class="cc-body">
+ <div class="gc-card">
+ <span class="cc-pill cc-pill--info">Week 4 · Sunday summary</span>
+ <h2 style="font-size:20px;font-weight:800;letter-spacing:-0.02em;line-height:1.2;margin:2px 0 0">A steady week.</h2>
+ <p style="font-size:12px;color:var(--text-secondary);line-height:1.5;margin:0">Joanna gets the same summary tonight. Nothing else.</p>
+ </div>
+ <div class="cc-stat-row">
+ <div><div class="cc-stat-row__n">7 / 7</div><div class="cc-stat-row__l">Days clear</div></div>
+ <div><div class="cc-stat-row__n">4</div><div class="cc-stat-row__l">Anna sessions</div></div>
+ <div><div class="cc-stat-row__n">3</div><div class="cc-stat-row__l">Brain games</div></div>
+ </div>
+ <div class="gc-card" style="padding:13px 14px">
+ <h3 style="font-size:13.5px;font-weight:700;margin:0">What happened</h3>
+ ${STEP('done', 1, 'Session 3 complete', 'Mood in 2 → mood out 4')}
+ ${STEP('done', 2, '2 top-ups approved by Joanna', '£60 and £40')}
+ ${STEP('done', 3, 'Urge checks', 'Peak 7/10 on Saturday · you walked it off')}
+ </div>
+ ${ANNA("Saturday was the match. You named it before it happened. That's the skill.")}
+ </div>
+ ${TABBAR(0)}`,
+
+ pg3: () => `
+ ${TOPBAR('From the Holdwell team', true)}
+ <div class="cc-body">
+ <div class="gc-card gc-card--alert">
+ <strong style="font-size:13.5px;color:var(--text-primary)">Corner-shop spending has gone up</strong>
+ <p style="font-size:12px;color:var(--text-secondary);line-height:1.5;margin:0">Since you stopped gambling online, spending at your local shop has risen from about £15 to £55 a week, often 2–3 visits a day. Sometimes gambling moves to scratchcards or the lottery. Is that happening?</p>
+ </div>
+ <div class="gc-card" style="padding:13px 14px;gap:8px">
+ <button class="gc-btn gc-btn--ghost gc-btn--full">No, it's food and bits</button>
+ <button class="gc-btn gc-btn--ghost gc-btn--full">Yes, some scratchcards</button>
+ <button class="gc-btn gc-btn--primary gc-btn--full">I'd like to talk to someone</button>
+ </div>
+ <div class="gc-card" style="padding:12px 14px">
+ <p style="font-size:11.5px;color:var(--text-secondary);margin:0;line-height:1.5">This came from Priya on the Holdwell team, who looks at everyone's spending pattern once a week. Joanna won't be told unless it carries on for 2 more weeks.</p>
+ </div>
+ </div>
+ ${TABBAR(0)}`,
+
+ pg4: () => `
+ ${TOPBAR('Completing', true)}
+ <div class="cc-body">
+ <div style="padding:6px 0">
+ <h2 style="font-size:20px;font-weight:800;margin:0">What "complete" means.</h2>
+ <p style="font-size:12px;color:var(--text-secondary);margin:4px 0 0">Agreed with Northbank. Signed off by a person at Holdwell.</p>
+ </div>
+ <div class="gc-card" style="padding:13px 14px">
+ ${STEP('done', 1, 'Self-excluded and verified', 'Every scheme in your plan')}
+ ${STEP('done', 2, 'Gamban on all your devices', 'Confirmed by your sponsor')}
+ ${STEP('now', 3, '60 days with no gambling top-ups', 'Across every linked account')}
+ ${STEP('', 4, 'At least 8 of 12 Anna sessions', 'Brain games count as a bonus')}
+ ${STEP('', 5, 'A sponsor throughout', 'Changing sponsor is fine')}
+ </div>
+ <div class="gc-card gc-card--alert">
+ <strong style="font-size:12.5px;color:var(--text-primary)">If you slip</strong>
+ <p style="font-size:11.5px;color:var(--text-secondary);line-height:1.5;margin:0">A blocked attempt doesn't reset anything. A gambling top-up from another account restarts the 60-day count, and we'll talk it through first.</p>
+ </div>
+ <div class="cc-decision">open question · completion definition and sign-off (J7)</div>
+ </div>
+ ${TABBAR(0)}`,
+
+ pg5: () => `
+ ${TOPBAR('Day 60')}
+ <div class="cc-body">
+ <div class="gc-card gc-card--milestone">
+ <span class="cc-pill" style="background:rgba(255,255,255,0.18);color:white">Signed off · 30 Apr</span>
+ <h2 style="font-size:24px;font-weight:800;letter-spacing:-0.02em;line-height:1.1;margin:2px 0 0">Programme complete.</h2>
+ <p style="font-size:12.5px;line-height:1.5;margin:0">60 days. Every door closed. You did the work.</p>
+ </div>
+ <div class="gc-card" style="padding:13px 14px">
+ ${STEP('done', 1, 'Self-exclusion verified', 'GAMSTOP · betting shops')}
+ ${STEP('done', 2, '60 days, no gambling top-ups', '1 blocked attempt · day 19')}
+ ${STEP('done', 3, 'Anna course', '9 of 12 sessions')}
+ ${STEP('done', 4, 'Sponsor throughout', 'Joanna · 9 weekly summaries')}
+ </div>
+ ${ANNA("Sixty days ago you said you wanted to stop being scared of your bank app. How does it feel now?")}
+ <button class="gc-btn gc-btn--primary gc-btn--full" onclick="next()">See what Northbank will get</button>
+ </div>
+ ${TABBAR(0)}`,
+
+ pg6: () => `
+ ${TOPBAR('Completion report', true)}
+ <div class="cc-body">
+ <div class="gc-card">
+ <span class="cc-pill">To Northbank Credit Union · NB-48213</span>
+ <h2 style="font-size:18px;font-weight:800;letter-spacing:-0.02em;line-height:1.2;margin:2px 0 0">Sam Kennedy completed the programme.</h2>
+ </div>
+ <div class="gc-card" style="padding:13px 14px">
+ <h3 style="font-size:13.5px;font-weight:700;margin:0">Northbank sees</h3>
+ <div class="cc-perm"><div><div class="cc-perm__t">Each completion criterion</div><div class="cc-perm__s">Met / not met, with dates</div></div><div class="gc-toggle gc-toggle--ok is-on is-locked"></div></div>
+ <div class="cc-perm"><div><div class="cc-perm__t">Self-exclusion schemes and length</div><div class="cc-perm__s">GAMSTOP 5 yrs · betting shops 12 months</div></div><div class="gc-toggle gc-toggle--ok is-on is-locked"></div></div>
+ <div class="cc-perm"><div><div class="cc-perm__t">Your transactions</div><div class="cc-perm__s">Never shared</div></div><div class="gc-toggle is-locked"></div></div>
+ <div class="cc-perm"><div><div class="cc-perm__t">Your chats with Anna and your profile</div><div class="cc-perm__s">Never shared</div></div><div class="gc-toggle is-locked"></div></div>
+ </div>
+ <button class="gc-btn gc-btn--primary gc-btn--full" onclick="next()">Ask Northbank to call me</button>
+ <p style="font-size:11px;color:var(--text-secondary);margin:0;text-align:center">Completing doesn't guarantee a loan. Northbank makes its own decision.</p>
+ </div>
+ ${TABBAR(0)}`,
+
+ pg7: () => `
+ ${TOPBAR('Call-back', true)}
+ <div class="cc-body">
+ <div class="gc-card gc-card--milestone">
+ <span class="cc-pill" style="background:rgba(0,0,0,0.22);color:white">Requested · 30 Apr 10:12</span>
+ <h2 style="font-size:20px;font-weight:800;letter-spacing:-0.02em;line-height:1.2;margin:2px 0 0">Northbank will call you within 5 working days.</h2>
+ </div>
+ <div class="gc-card" style="padding:13px 14px">
+ ${STEP('done', 1, 'Report sent to Northbank', 'Signed off by the Holdwell team')}
+ ${STEP('now', 2, 'Northbank calls you', 'About application NB-48213')}
+ ${STEP('', 3, 'In 12 months', 'A soft check to see how you\'re doing · you agreed in ON1.c')}
+ </div>
+ ${ANNA("Whatever they decide, the progress is yours. Want to plan what you'll say on the call?")}
+ </div>
+ ${TABBAR(0)}`,
+
+ pg8: () => `
+ ${TOPBAR('What\'s next')}
+ <div class="cc-body">
+ <div style="padding:6px 0">
+ <h2 style="font-size:20px;font-weight:800;margin:0">What stays with you.</h2>
+ <p style="font-size:12px;color:var(--text-secondary);margin:4px 0 0">The programme ends. The protection doesn't have to.</p>
+ </div>
+ <div class="gc-card" style="padding:13px 14px">
+ <div class="cc-chan"><span class="cc-chan__ic" style="background:var(--s-20);color:var(--s-80)">✦</span><div><div class="cc-chan__t">Anna</div><div class="cc-chan__s">Sessions 10–12 and daily check-ins</div></div><span class="cc-pill cc-pill--info">Free</span></div>
+ <div class="cc-chan"><span class="cc-chan__ic" style="background:var(--p-40);color:var(--p-95)">▭</span><div><div class="cc-chan__t">Holdwell card + bills account</div><div class="cc-chan__s">Same blocks · same sponsor approvals</div></div><span class="cc-pill">3 months free</span></div>
+ <div class="cc-chan"><span class="cc-chan__ic" style="background:var(--t-20);color:var(--t-80)">♡</span><div><div class="cc-chan__t">Joanna as sponsor</div><div class="cc-chan__s">She can stay on or step down</div></div><span class="cc-pill">Your choice</span></div>
+ <div class="cc-chan"><span class="cc-chan__ic" style="background:var(--w-30);color:var(--w-80)">⛨</span><div><div class="cc-chan__t">Self-exclusion</div><div class="cc-chan__s">GAMSTOP runs until 2031</div></div><span class="cc-pill cc-pill--info">Active</span></div>
+ </div>
+ <div class="cc-decision">placeholder · card after the programme is a business-model decision (E10)</div>
+ </div>
+ ${TABBAR(0)}`,
+};
+
+let idx = 0;
+
+function toggleClass(el) {
+ if (el.classList.contains('is-locked')) return;
+ el.classList.toggle('is-on');
+}
+
+function render() {
+ const screen = SCREENS[idx];
+ document.getElementById('stage').innerHTML = `<div class="screen" style="display:flex;flex-direction:column;flex:1;min-height:0">${builders[screen.kind]()}</div>`;
+ document.getElementById('screenId').textContent = screen.id;
+ document.getElementById('screenName').textContent = screen.name;
+ document.getElementById('progressFill').style.width = ((idx + 1) / SCREENS.length * 100) + '%';
+ document.getElementById('navPrev').disabled = idx === 0;
+ document.getElementById('navNext').disabled = idx === SCREENS.length - 1;
+ document.querySelectorAll('.proto-scrubber__item').forEach((el, i) => {
+ el.classList.toggle('is-active', i === idx);
+ if (i === idx) el.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+ });
+ document.getElementById('contextBody').innerHTML = CTX[screen.kind] || screen.name;
+}
+
+function next() { if (idx < SCREENS.length - 1) { idx++; render(); } }
+function prev() { if (idx > 0) { idx--; render(); } }
+function go(i) { idx = i; render(); }
+
+function buildScrubber() {
+ const nav = document.getElementById('scrubber');
+ SCREENS.forEach((s, i) => {
+ const btn = document.createElement('button');
+ btn.className = 'proto-scrubber__item';
+ btn.innerHTML = `<span class="proto-scrubber__id">${s.id}</span><span class="proto-scrubber__name">${s.name}</span>`;
+ btn.addEventListener('click', () => go(i));
+ nav.appendChild(btn);
+ });
+}
+
+function initTheme() {
+ const root = document.documentElement;
+ const stored = localStorage.getItem('gc-proto-theme');
+ const initial = stored || 'dark';
+ root.setAttribute('data-theme', initial);
+ document.querySelector('.theme-label').textContent = initial === 'dark' ? 'Dark' : 'Light';
+ document.querySelector('.proto-theme-toggle').addEventListener('click', () => {
+ const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+ root.setAttribute('data-theme', next);
+ document.querySelector('.theme-label').textContent = next === 'dark' ? 'Dark' : 'Light';
+ try { localStorage.setItem('gc-proto-theme', next); } catch(e) {}
+ });
+}
+
+document.getElementById('navPrev').addEventListener('click', prev);
+document.getElementById('navNext').addEventListener('click', next);
+document.addEventListener('keydown', (e) => {
+ if (e.key === 'ArrowRight') next();
+ if (e.key === 'ArrowLeft') prev();
+});
+
+buildScrubber();
+initTheme();
+render();
+</script>
+
+</body>
+</html>

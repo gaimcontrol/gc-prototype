@@ -1,0 +1,980 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Holdwell · Mobile · §05 Onboarding</title>
+<link rel="icon" href="../assets/gc-favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+ /* Color scale tokens. Exact from spec 01-brand & 02-design-system */
+ --p-10:#0B0F1C;--p-20:#161B2D;--p-30:#20273C;--p-40:#354872;--p-50:#4D608C;--p-60:#6B7DA6;--p-70:#8E9DC0;--p-80:#B5BFD9;--p-90:#DCE2F0;--p-95:#ECF0F9;--p-99:#FAFBFE;--p-100:#FFF;
+ --s-10:#28215A;--s-20:#3E3478;--s-30:#534792;--s-40:#6B5DAC;--s-50:#8576C2;--s-60:#9D90D2;--s-70:#B5ACDF;--s-80:#CFC8EA;--s-90:#E8E4F4;
+ --t-10:#0E4A35;--t-20:#1A6047;--t-30:#1F7058;--t-40:#2A8060;--t-50:#399971;--t-60:#5BB088;--t-70:#82C7A4;--t-80:#ADDCC2;--t-90:#D5EDDF;
+ --w-30:#6B4500;--w-40:#8C5A00;--w-50:#A36A00;--w-60:#C28200;--w-70:#E09900;--w-80:#FAB44A;--w-90:#FFDFA8;
+ --e-30:#7A1F1F;--e-50:#C73838;--e-90:#FBD9D9;
+ --n-50:#76798A;--n-60:#9094A3;--n-95:#F1F2F5;--nv-80:#C5C9DD;
+}
+
+/* Dark theme = product default */
+[data-theme="dark"] {
+ --bg-base: var(--p-30);
+ --bg-surface: var(--p-20);
+ --bg-surface-2: var(--p-10);
+ --border: rgba(255,255,255,0.08);
+ --text-primary: var(--n-95);
+ --text-secondary: var(--nv-80);
+ --accent: var(--s-70);
+ --accent-strong: var(--s-50);
+ --on-accent: #fff;
+ --page-bg: #0a0e1a;
+ --page-fg: var(--n-95);
+ --page-fg-muted: var(--nv-80);
+ --page-card-bg: var(--p-20);
+ --page-divider: rgba(255,255,255,0.06);
+}
+[data-theme="light"] {
+ --bg-base: var(--p-99);
+ --bg-surface: #fff;
+ --bg-surface-2: var(--p-95);
+ --border: rgba(22,27,45,0.08);
+ --text-primary: var(--p-20);
+ --text-secondary: var(--n-50);
+ --accent: var(--p-40);
+ --accent-strong: var(--s-40);
+ --on-accent: #fff;
+ --page-bg: var(--p-95);
+ --page-fg: var(--p-20);
+ --page-fg-muted: var(--n-50);
+ --page-card-bg: #fff;
+ --page-divider: rgba(22,27,45,0.08);
+}
+
+* { box-sizing: border-box; }
+html, body { background: var(--page-bg); color: var(--page-fg); margin: 0; transition: background-color 220ms ease, color 220ms ease; }
+body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif; font-size: 14px; line-height: 1.5; -webkit-font-smoothing: antialiased; min-height: 100vh; }
+
+/* ============= PROTOTYPE CHROME (everything outside the phone) ============= */
+.proto-shell { display: grid; grid-template-columns: 280px 1fr; gap: 0; min-height: 100vh; }
+@media (max-width: 960px) {.proto-shell { grid-template-columns: 1fr; } }
+
+.proto-sidebar { background: var(--page-card-bg); border-right: 1px solid var(--page-divider); padding: 28px 22px; position: sticky; top: 0; height: 100vh; overflow-y: auto; display: flex; flex-direction: column; gap: 16px; }
+@media (max-width: 960px) {.proto-sidebar { position: static; height: auto; max-height: 50vh; border-right: none; border-bottom: 1px solid var(--page-divider); } }
+.proto-sidebar__brand { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
+.proto-sidebar__mark { width: 36px; height: 36px; border-radius: 10px; background: var(--p-30); display: inline-flex; align-items: center; justify-content: center; }
+.proto-sidebar__mark img { width: 70%; height: 70%; }
+.proto-sidebar__name { font-weight: 700; font-size: 17px; letter-spacing: -0.01em; }
+.proto-sidebar__pill { display: inline-flex; padding: 3px 9px; border-radius: 999px; background: linear-gradient(120deg, var(--s-50), var(--p-50), var(--t-50)); color: white; font-weight: 700; font-size: 9.5px; font-family: 'JetBrains Mono', monospace; letter-spacing: 0.06em; text-transform: uppercase; }
+
+.proto-sidebar__back { display: inline-flex; align-items: center; gap: 6px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--page-fg-muted); text-decoration: none; margin-bottom: 4px; }
+.proto-sidebar__back:hover { color: var(--page-accent, var(--s-70)); }
+
+.proto-section-title { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--page-fg-muted); margin: 12px 0 6px; }
+
+.proto-scrubber { display: flex; flex-direction: column; gap: 2px; }
+.proto-scrubber__item { display: grid; grid-template-columns: 44px 1fr; gap: 8px; align-items: center; padding: 7px 10px; border-radius: 8px; cursor: pointer; font-size: 12.5px; transition: background 140ms ease; border: none; background: transparent; color: inherit; font-family: inherit; text-align: left; }
+.proto-scrubber__item:hover { background: rgba(127,127,127,0.08); }
+.proto-scrubber__item.is-active { background: var(--accent-strong); color: var(--on-accent); }
+.proto-scrubber__item.is-active.proto-scrubber__id { color: rgba(255,255,255,0.85); }
+.proto-scrubber__id { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; color: var(--page-fg-muted); letter-spacing: 0.06em; }
+.proto-scrubber__name { font-size: 12.5px; font-weight: 500; }
+
+.proto-sidebar__footer { margin-top: auto; padding-top: 16px; border-top: 1px solid var(--page-divider); font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--page-fg-muted); }
+.proto-sidebar__footer a { color: var(--page-fg-muted); text-decoration: none; border-bottom: 1px dotted currentColor; }
+.proto-sidebar__footer a:hover { color: var(--page-accent, var(--s-70)); }
+
+.proto-theme-toggle { display: inline-flex; align-items: center; gap: 8px; padding: 7px 12px; border-radius: 8px; background: var(--bg-surface-2); border: 1px solid var(--border); color: var(--page-fg-muted); cursor: pointer; font-family: 'JetBrains Mono', monospace; font-size: 11px; align-self: flex-start; }
+.proto-theme-toggle svg { width: 12px; height: 12px; }
+[data-theme="dark"].proto-theme-toggle.icon-moon { display: none; }
+[data-theme="light"].proto-theme-toggle.icon-sun { display: none; }
+
+/* ============= STAGE (where the phone sits) ============= */
+.proto-stage { display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding: 48px 24px 64px; gap: 24px; }
+.proto-stage__caption { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--page-fg-muted); letter-spacing: 0.06em; text-transform: uppercase; }
+.proto-stage__caption strong { color: var(--page-fg); }
+
+/* ============= PHONE FRAME (real iPhone 14 size: 393 × 852 inner) ============= */
+.phone {
+ width: 393px; height: 852px; flex-shrink: 0;
+ border-radius: 56px;
+ background: #000;
+ padding: 13px;
+ position: relative;
+ box-shadow: 0 0 0 1.5px #2a2e3a, 0 30px 60px -20px rgba(0,0,0,0.7), 0 16px 32px -16px rgba(0,0,0,0.4);
+}
+.phone::before,.phone::after { content: ''; position: absolute; background: #2a2e3a; }
+.phone::before { left: -3px; top: 110px; width: 3px; height: 30px; border-radius: 3px 0 0 3px; }
+.phone::after { left: -3px; top: 160px; width: 3px; height: 60px; border-radius: 3px 0 0 3px; }
+.phone__inner {
+ width: 100%; height: 100%; background: var(--bg-base); color: var(--text-primary);
+ border-radius: 44px; overflow: hidden; position: relative;
+ display: flex; flex-direction: column;
+}
+.phone__notch {
+ position: absolute; top: 12px; left: 50%; transform: translateX(-50%);
+ width: 120px; height: 32px; background: #000; border-radius: 18px; z-index: 30;
+}
+
+/* Status bar */
+.phone__statusbar {
+ height: 44px; padding: 12px 32px 0;
+ display: flex; align-items: center; justify-content: space-between;
+ font-size: 14px; font-weight: 600; color: var(--text-primary);
+ font-feature-settings: "tnum"; letter-spacing: -0.01em;
+ flex-shrink: 0;
+}
+.phone__statusbar__time { font-weight: 700; }
+.phone__statusbar__right { display: flex; align-items: center; gap: 5px; font-size: 13px; }
+
+/* App-bar (per design-system §10) */
+.phone__topbar {
+ display: flex; align-items: center; justify-content: space-between;
+ padding: 8px 18px 14px; gap: 10px; flex-shrink: 0;
+}
+.phone__mark {
+ width: 32px; height: 32px; border-radius: 9px;
+ background: var(--bg-surface); border: 1px solid var(--border);
+ display: inline-flex; align-items: center; justify-content: center;
+ cursor: pointer; flex-shrink: 0;
+}
+.phone__mark img { width: 65%; height: 65%; }
+/* Mono-light SVG is white; invert it on light backgrounds so the mark stays visible */
+[data-theme="light"].phone__mark img { filter: invert(1) brightness(0.3); }
+.phone__title { flex: 1; text-align: center; font-size: 14px; font-weight: 600; color: var(--text-primary); letter-spacing: -0.01em; }
+.gc-crisis-pill {
+ display: inline-flex; align-items: center; gap: 5px;
+ padding: 6px 11px; border-radius: 999px;
+ background: var(--e-50); color: white;
+ border: none; font-family: inherit;
+ font-size: 11.5px; font-weight: 600;
+ cursor: pointer; flex-shrink: 0;
+}
+
+/* Body */
+.ob-body {
+ flex: 1; padding: 4px 18px 18px; overflow-y: auto;
+ display: flex; flex-direction: column; gap: 12px;
+ scrollbar-width: thin;
+}
+.ob-body::-webkit-scrollbar { width: 4px; }
+.ob-body::-webkit-scrollbar-thumb { background: rgba(127,127,127,0.2); border-radius: 4px; }
+
+/* Anna welcome (ON1) */
+.ob-anna-mark { position: relative; width: 88px; height: 88px; border-radius: 22px; background: linear-gradient(135deg, var(--s-30), var(--p-20)); display: inline-flex; align-items: center; justify-content: center; align-self: center; margin: 12px 0 4px; }
+.ob-anna-mark img { width: 60%; height: 60%; }
+.ob-anna-mark__pulse { position: absolute; inset: -7px; border-radius: 28px; border: 2px solid var(--s-50); opacity: 0.5; animation: ob-pulse 2.4s ease-in-out infinite; }
+@keyframes ob-pulse { 0%,100% { transform: scale(1); opacity: 0.5; } 50% { transform: scale(1.06); opacity: 0.2; } }
+.ob-anna-name { font-weight: 700; font-size: 14px; color: var(--text-primary); text-align: center; }
+
+.gc-card { padding: 14px; background: var(--bg-surface); border: 1px solid var(--border); border-radius: 14px; display: flex; gap: 10px; }
+.gc-card--anna { background: linear-gradient(135deg, rgba(133,118,194,0.15), rgba(83,71,146,0.08)); border-color: rgba(133,118,194,0.25); flex-direction: row; align-items: flex-start; gap: 10px; padding: 12px 14px; border-radius: 14px; }
+.gc-card--anna.anna-avatar { width: 28px; height: 28px; border-radius: 50%; background: var(--p-30); display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.gc-card--anna.anna-avatar img { width: 60%; height: 60%; }
+.gc-card--anna.anna-name { font-size: 12px; font-weight: 700; letter-spacing: -0.01em; }
+.gc-card--anna p { font-size: 13px; line-height: 1.5; margin: 2px 0 0; color: var(--text-primary); }
+
+.ob-h { font-size: 22px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.15; color: var(--text-primary); margin: 8px 0 4px; }
+
+.ob-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 7px; }
+.ob-list li { display: grid; grid-template-columns: 28px 1fr; gap: 11px; align-items: center; padding: 10px 13px; background: var(--bg-surface); border: 1px solid var(--border); border-radius: 11px; font-size: 13.5px; color: var(--text-primary); }
+.ob-list__num { width: 28px; height: 28px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 12px; background: var(--accent-strong); color: var(--on-accent); }
+
+/* Bottom CTA area */
+.ob-cta { padding: 14px 18px 24px; border-top: 1px solid var(--border); background: var(--bg-base); flex-shrink: 0; }
+.gc-btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 14px 18px; border-radius: 14px; font-family: inherit; font-size: 15px; font-weight: 600; cursor: pointer; border: 1px solid transparent; transition: transform 120ms ease, background-color 160ms ease; }
+.gc-btn:active { transform: scale(0.98); }
+.gc-btn--primary { background: var(--accent-strong); color: var(--on-accent); }
+.gc-btn--primary:hover { background: var(--s-40); }
+[data-theme="light"].gc-btn--primary:hover { background: var(--s-30); }
+.gc-btn--ghost { background: transparent; color: var(--text-primary); border-color: var(--border); }
+.gc-btn--ghost:hover { background: rgba(127,127,127,0.06); }
+.gc-btn--ghost:disabled { opacity: 0.35; cursor: not-allowed; }
+.gc-btn--full { width: 100%; }
+
+/* Quiz progress dots */
+.ob-progress { display: flex; gap: 8px; align-items: center; justify-content: center; margin: 4px 0 8px; }
+.ob-progress__step { width: 30px; height: 30px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700; background: var(--bg-surface-2); color: var(--text-secondary); border: 1px solid var(--border); }
+.ob-progress__step.is-done { background: var(--t-50); color: white; border-color: transparent; }
+.ob-progress__step.is-current { background: var(--accent-strong); color: var(--on-accent); border-color: transparent; transform: scale(1.08); }
+
+/* Question card */
+.ob-question { background: var(--bg-surface); border: 1px solid var(--border); border-radius: 14px; padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+.ob-question__num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); }
+.ob-question__title { font-size: 17px; font-weight: 700; line-height: 1.3; color: var(--text-primary); margin: 0; letter-spacing: -0.01em; }
+
+/* PGSI 0–3 scale */
+.ob-scale { display: grid; grid-template-columns: repeat(2, 1fr); gap: 7px; }
+.ob-scale__opt { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; padding: 12px 8px; background: var(--bg-base); border: 1px solid var(--border); border-radius: 11px; cursor: pointer; font-family: inherit; color: var(--text-primary); transition: background 140ms ease; }
+.ob-scale__opt:hover { background: rgba(127,127,127,0.06); }
+.ob-scale__opt.is-on { background: var(--accent-strong); color: var(--on-accent); border-color: var(--accent-strong); }
+.ob-scale__num { font-family: 'JetBrains Mono', monospace; font-size: 18px; font-weight: 700; }
+.ob-scale__label { font-size: 11px; font-weight: 500; text-align: center; }
+
+/* Single-choice list */
+.ob-choices { display: flex; flex-direction: column; gap: 7px; }
+.ob-choice { padding: 12px 14px; background: var(--bg-base); border: 1px solid var(--border); border-radius: 11px; font-family: inherit; font-size: 14px; font-weight: 500; color: var(--text-primary); text-align: left; cursor: pointer; transition: background 140ms ease; }
+.ob-choice:hover { background: rgba(127,127,127,0.06); }
+.ob-choice.is-on { background: var(--accent-strong); color: var(--on-accent); border-color: var(--accent-strong); font-weight: 600; }
+
+/* Multi-checkbox list */
+.ob-checks { display: flex; flex-direction: column; gap: 7px; }
+.ob-check { display: flex; align-items: center; gap: 11px; padding: 11px 14px; background: var(--bg-base); border: 1px solid var(--border); border-radius: 11px; font-size: 14px; color: var(--text-primary); cursor: pointer; transition: background 140ms ease; }
+.ob-check:hover { background: rgba(127,127,127,0.06); }
+.ob-check.is-on { background: var(--accent-strong); color: var(--on-accent); border-color: var(--accent-strong); }
+.gc-checkbox { width: 18px; height: 18px; border-radius: 5px; border: 1.5px solid currentColor; flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center; }
+.ob-check.is-on.gc-checkbox { background: white; border-color: white; color: var(--accent-strong); }
+.ob-check.is-on.gc-checkbox::after { content: '✓'; font-size: 12px; font-weight: 700; }
+
+/* Text input */
+.phone__field { display: flex; flex-direction: column; gap: 6px; }
+.phone__label { font-size: 11.5px; font-weight: 600; color: var(--text-secondary); letter-spacing: 0.02em; }
+.phone__input { padding: 12px 14px; background: var(--bg-base); border: 1px solid var(--border); border-radius: 11px; font-family: inherit; font-size: 15px; color: var(--text-primary); width: 100%; }
+.phone__input:focus { outline: none; border-color: var(--accent-strong); }
+.phone__hint { font-size: 11.5px; color: var(--text-secondary); line-height: 1.4; }
+
+/* Profile hero (ON7) */
+.profile-hero { background: linear-gradient(135deg, var(--s-40), var(--p-50)); color: white; padding: 18px 20px; border-radius: 16px; display: flex; flex-direction: column; gap: 6px; position: relative; overflow: hidden; }
+.profile-hero__kicker { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.8; }
+.profile-hero__name { font-size: 26px; font-weight: 800; letter-spacing: -0.02em; margin: 0; }
+.profile-hero__sub { font-size: 13px; line-height: 1.5; margin: 2px 0 0; opacity: 0.92; }
+.profile-hero__chips { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+.profile-hero__chip { background: rgba(0,0,0,0.22); padding: 4px 10px; border-radius: 999px; font-size: 11px; font-weight: 600; }
+
+.ob-result-list { display: flex; flex-direction: column; gap: 7px; }
+.ob-result-item { display: grid; grid-template-columns: 30px 1fr; gap: 11px; align-items: center; padding: 11px 13px; background: var(--bg-surface); border: 1px solid var(--border); border-radius: 11px; }
+.ob-result-item__icon { width: 30px; height: 30px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; }
+.ob-result-item__t { font-weight: 600; font-size: 13.5px; color: var(--text-primary); line-height: 1.25; }
+.ob-result-item__s { font-size: 11.5px; color: var(--text-secondary); margin-top: 1px; }
+
+/* KYC camera */
+.kyc-camera { background: var(--bg-surface-2); border-radius: 14px; padding: 18px; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.kyc-camera__frame { width: 100%; aspect-ratio: 1.6; border: 2.5px dashed var(--t-60); border-radius: 14px; background: linear-gradient(135deg, #1a3052, #0e1f3a); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; color: rgba(255,255,255,0.92); }
+.kyc-camera__caption { display: inline-flex; align-items: center; gap: 7px; font-size: 12px; color: var(--text-secondary); }
+.kyc-camera__caption::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--t-50); }
+
+/* Liveness oval */
+.kyc-liveness { display: flex; flex-direction: column; align-items: center; gap: 14px; padding: 14px 0; }
+.kyc-liveness__oval { width: 180px; height: 230px; border-radius: 50%/55%; border: 3px solid var(--s-50); background: linear-gradient(135deg, var(--p-20), var(--s-20)); display: flex; align-items: center; justify-content: center; position: relative; }
+.kyc-liveness__face { position: relative; width: 80%; height: 80%; }
+.kyc-liveness__eye { position: absolute; top: 35%; width: 8px; height: 8px; border-radius: 50%; background: white; }
+.kyc-liveness__mouth { position: absolute; top: 60%; left: 50%; transform: translateX(-50%); width: 30%; height: 6px; border-radius: 0 0 14px 14px; background: rgba(255,255,255,0.6); }
+.kyc-liveness__steps { display: flex; flex-direction: column; gap: 5px; align-items: center; }
+.kyc-liveness__step { padding: 6px 12px; border-radius: 999px; font-size: 12px; font-family: 'JetBrains Mono', monospace; color: var(--text-secondary); background: var(--bg-surface-2); }
+.kyc-liveness__step.is-done { background: var(--t-20); color: var(--t-80); }
+.kyc-liveness__step.is-current { background: var(--accent-strong); color: var(--on-accent); }
+
+/* Suit list (KYC result, suitability result) */
+.ob-suit-list { display: flex; flex-direction: column; gap: 7px; }
+.ob-suit-item { display: grid; grid-template-columns: 30px 1fr; gap: 11px; align-items: center; padding: 11px 13px; background: var(--bg-surface); border: 1px solid var(--border); border-radius: 11px; }
+.ob-suit-icon { width: 30px; height: 30px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; flex-shrink: 0; }
+.ob-suit-icon--ok { background: var(--t-90); color: var(--t-30); }
+[data-theme="dark"].ob-suit-icon--ok { background: var(--t-20); color: var(--t-80); }
+.ob-suit-icon--warn { background: var(--w-90); color: var(--w-30); }
+[data-theme="dark"].ob-suit-icon--warn { background: var(--w-30); color: var(--w-80); }
+.ob-suit-t { font-weight: 600; font-size: 13.5px; color: var(--text-primary); line-height: 1.25; }
+.ob-suit-s { font-size: 11.5px; color: var(--text-secondary); margin-top: 1px; }
+
+/* Bank explain */
+.ob-explain { display: grid; grid-template-columns: 38px 1fr; gap: 12px; align-items: center; padding: 12px 14px; background: var(--bg-surface); border: 1px solid var(--border); border-radius: 12px; }
+.ob-explain__icon { width: 38px; height: 38px; border-radius: 11px; display: inline-flex; align-items: center; justify-content: center; }
+.ob-explain__icon--t { background: var(--t-90); color: var(--t-30); }
+[data-theme="dark"].ob-explain__icon--t { background: var(--t-20); color: var(--t-80); }
+.ob-explain__icon--p { background: var(--p-90); color: var(--p-30); }
+[data-theme="dark"].ob-explain__icon--p { background: var(--p-40); color: var(--p-95); }
+.ob-explain__icon--s { background: var(--s-90); color: var(--s-10); }
+[data-theme="dark"].ob-explain__icon--s { background: var(--s-20); color: var(--s-80); }
+.ob-explain__t { font-weight: 600; font-size: 14px; color: var(--text-primary); }
+.ob-explain__s { font-size: 12px; color: var(--text-secondary); margin-top: 1px; }
+
+/* Bank list (ON13) */
+.bank-list { display: flex; flex-direction: column; gap: 6px; }
+.bank-row { display: flex; align-items: center; gap: 11px; padding: 11px 14px; background: var(--bg-base); border: 1px solid var(--border); border-radius: 11px; cursor: pointer; transition: background 140ms ease; color: var(--text-primary); font-family: inherit; text-align: left; }
+.bank-row:hover { background: rgba(127,127,127,0.06); }
+.bank-row.is-on { background: var(--accent-strong); color: var(--on-accent); border-color: var(--accent-strong); }
+.bank-row__logo { width: 30px; height: 30px; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0; font-size: 13px; }
+.bank-row__name { font-weight: 600; font-size: 14px; color: inherit; }
+
+/* Vendor badge */
+.vendor-badge { display: inline-flex; align-items: center; gap: 6px; font-size: 11.5px; color: var(--text-secondary); padding: 8px 11px; background: var(--bg-base); border-radius: 8px; border: 1px solid var(--border); }
+.vendor-badge svg { width: 13px; height: 13px; flex-shrink: 0; }
+
+/* Connect progress (ON14) */
+.connect-progress { display: flex; flex-direction: column; gap: 6px; width: 100%; max-width: 280px; }
+.connect-progress__step { padding: 9px 14px; border-radius: 10px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--text-secondary); background: var(--bg-surface-2); border: 1px solid var(--border); }
+.connect-progress__step.is-done { background: var(--t-20); color: var(--t-80); border-color: transparent; }
+.connect-progress__step.is-current { background: var(--accent-strong); color: var(--on-accent); border-color: transparent; }
+
+/* Bank summary (ON15) */
+.ob-bank-summary { background: var(--bg-surface); border: 1px solid var(--border); border-radius: 14px; padding: 14px; display: flex; flex-direction: column; gap: 11px; }
+.ob-bank-summary__head { display: flex; align-items: center; justify-content: space-between; }
+.ob-bank-summary__head__name { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 13.5px; }
+.ob-bank-summary__head__name span { width: 24px; height: 24px; border-radius: 6px; background: #005EB8; color: white; display: inline-flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; }
+.ob-bank-summary__head__meta { font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: var(--text-secondary); }
+.ob-bank-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.ob-bank-stat { padding: 11px 13px; background: var(--bg-base); border: 1px solid var(--border); border-radius: 10px; }
+.ob-bank-stat__n { font-size: 17px; font-weight: 800; letter-spacing: -0.01em; color: var(--text-primary); }
+.ob-bank-stat__l { font-size: 11px; color: var(--text-secondary); margin-top: 2px; }
+
+/* Signpost (ON16 decline) */
+.ob-signpost { display: grid; grid-template-columns: 32px 1fr; gap: 11px; padding: 11px 13px; background: var(--bg-surface); border: 1px solid var(--border); border-radius: 11px; }
+.ob-signpost__num { width: 32px; height: 32px; border-radius: 9px; background: var(--bg-base); display: inline-flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 12px; color: var(--text-secondary); }
+.ob-signpost strong { font-size: 13.5px; color: var(--text-primary); display: block; }
+.ob-signpost__s { font-size: 11.5px; color: var(--text-secondary); margin-top: 1px; }
+
+/* Suitability variant chip */
+.suit-status { display: inline-flex; align-items: center; gap: 7px; padding: 5px 13px 5px 6px; border-radius: 999px; font-size: 11px; font-weight: 700; }
+.suit-status::before { content: ''; width: 9px; height: 9px; border-radius: 50%; background: currentColor; opacity: 0.8; }
+.suit-status--ok { background: var(--t-20); color: var(--t-80); }
+.suit-status--ok::before { background: var(--t-50); opacity: 1; }
+.suit-status--warn { background: var(--w-30); color: var(--w-80); }
+.suit-status--warn::before { background: var(--w-60); opacity: 1; }
+.suit-status--err { background: var(--e-30); color: var(--e-90); }
+.suit-status--err::before { background: var(--e-50); opacity: 1; }
+[data-theme="light"].suit-status--ok { background: var(--t-90); color: var(--t-30); }
+[data-theme="light"].suit-status--warn { background: var(--w-90); color: var(--w-30); }
+[data-theme="light"].suit-status--err { background: var(--e-90); color: var(--e-30); }
+
+/* Decision callout (where decisions log applies) */
+.decision-callout { padding: 11px 13px; background: rgba(133,118,194,0.10); border: 1px solid rgba(133,118,194,0.28); border-radius: 10px; font-size: 11px; color: var(--text-secondary); line-height: 1.5; }
+.decision-callout strong { color: var(--accent); }
+
+/* Sponsor invite (ON6-A) */
+.sponsor-form { display: flex; flex-direction: column; gap: 11px; padding: 14px; background: var(--bg-surface); border: 1px solid var(--border); border-radius: 14px; }
+
+/* SCREEN VISIBILITY */
+.screen { display: none; height: 100%; flex-direction: column; }
+.screen.is-active { display: flex; }
+
+/* Inter-screen transitions */
+.screen { animation: fade-in 220ms ease; }
+@keyframes fade-in { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+/* Wide-screen tweaks: phone scales down a bit on narrow */
+@media (max-width: 720px) {
+.phone { transform: scale(0.92); transform-origin: top center; }
+}
+@media (max-width: 480px) {
+.phone { transform: scale(0.78); }
+}
+
+/* Mode-bar above phone */
+.proto-modebar { display: flex; align-items: center; gap: 10px; padding: 10px 16px; background: var(--page-card-bg); border: 1px solid var(--page-divider); border-radius: 12px; font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: var(--page-fg-muted); flex-wrap: wrap; justify-content: center; }
+.proto-modebar__pill { display: inline-flex; padding: 3px 9px; border-radius: 999px; background: var(--bg-surface-2); color: var(--page-fg-muted); }
+.proto-modebar__id { color: var(--page-fg); font-weight: 700; letter-spacing: 0.06em; }
+.proto-modebar__bar { width: 100px; height: 4px; border-radius: 4px; background: var(--bg-surface-2); position: relative; overflow: hidden; }
+.proto-modebar__bar__fill { position: absolute; left: 0; top: 0; bottom: 0; background: linear-gradient(90deg, var(--s-50), var(--t-50)); transition: width 240ms ease; }
+
+/* Nav arrows above phone */
+.proto-arrows { display: flex; align-items: center; gap: 8px; }
+.proto-arrow { width: 36px; height: 36px; border-radius: 10px; background: var(--page-card-bg); border: 1px solid var(--page-divider); color: var(--page-fg-muted); display: inline-flex; align-items: center; justify-content: center; cursor: pointer; transition: background 160ms ease; }
+.proto-arrow:hover { background: var(--bg-surface-2); color: var(--page-fg); }
+.proto-arrow:disabled { opacity: 0.3; cursor: not-allowed; }
+.proto-arrow svg { width: 18px; height: 18px; }
+
+/* Decisions panel under the phone */
+.proto-context { width: 100%; max-width: 420px; padding: 14px 16px; background: var(--page-card-bg); border: 1px solid var(--page-divider); border-radius: 12px; font-size: 12.5px; color: var(--page-fg-muted); line-height: 1.55; }
+.proto-context strong { color: var(--page-fg); }
+.proto-context a { color: var(--page-accent, var(--s-70)); text-decoration: none; border-bottom: 1px dotted currentColor; }
+.proto-context__head { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; font-weight: 700; color: var(--page-fg); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px; }
+</style>
+<script src="flow-chain.js" defer></script>
+</head>
+<body>
+
+<div class="proto-shell">
+
+ <!-- ============= SIDEBAR ============= -->
+ <aside class="proto-sidebar">
+ <div class="proto-sidebar__brand">
+ <span class="proto-sidebar__mark"><img src="../assets/gc-mark-mono-light.svg" alt=""></span>
+ <span>
+ <div class="proto-sidebar__name">holdwell</div>
+ <span class="proto-sidebar__pill">mobile</span>
+ </span>
+ </div>
+ <a class="proto-sidebar__back" href="index.html">← prototype index</a>
+
+ <button class="proto-theme-toggle" type="button" aria-label="Toggle theme">
+ <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+ <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+ <span class="theme-label">Dark</span>
+ </button>
+
+ <div class="proto-section-title">§05 · ON1 – ON16</div>
+ <nav class="proto-scrubber" id="scrubber"></nav>
+
+ <div class="proto-sidebar__footer">
+ Source spec: <a href="../app-ui/05-onboarding-quiz.html">app-ui/05</a><br>
+ Decisions: <a href="../41-decisions-log.html">41 log</a>
+ </div>
+ </aside>
+
+ <!-- ============= STAGE ============= -->
+ <main class="proto-stage">
+
+ <div class="proto-modebar">
+ <span>Screen <span class="proto-modebar__id" id="screenId">ON1</span></span>
+ <span class="proto-modebar__pill" id="screenName">Welcome</span>
+ <div class="proto-modebar__bar"><div class="proto-modebar__bar__fill" id="progressFill" style="width:5%"></div></div>
+ <div class="proto-arrows">
+ <button class="proto-arrow" id="navPrev" aria-label="Previous"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+ <button class="proto-arrow" id="navNext" aria-label="Next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
+ </div>
+ </div>
+
+ <!-- ============= PHONE ============= -->
+ <div class="phone">
+ <div class="phone__notch"></div>
+ <div class="phone__inner">
+ <div class="phone__statusbar">
+ <span class="phone__statusbar__time">9:41</span>
+ <span class="phone__statusbar__right" id="statusbarRight"><span style="display:inline-flex;gap:3px"><span style="width:4px;height:4px;border-radius:50%;background:currentColor"></span><span style="width:4px;height:5px;border-radius:1px;background:currentColor"></span><span style="width:4px;height:6px;border-radius:1px;background:currentColor"></span><span style="width:4px;height:7px;border-radius:1px;background:currentColor"></span></span><span>100%</span></span>
+ </div>
+ <div class="phone__topbar">
+ <span class="phone__mark"><img src="../assets/gc-mark-mono-light.svg" alt=""></span>
+ <span class="phone__title" id="phoneTitle">Welcome</span>
+ <button class="gc-crisis-pill" type="button" aria-label="Help">
+ <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7-4.5-9-9.5C2 7 5 4 8 4c1.7 0 3.2.8 4 2.8-1.2 2.3-2 4-2 3 0 6 3 5 7.5C19 16.5 12 21 12 21z"/></svg>
+ Help
+ </button>
+ </div>
+ <div id="stage" style="flex:1;display:flex;flex-direction:column;min-height:0"></div>
+ </div>
+ </div>
+
+ <!-- ============= CONTEXT PANEL ============= -->
+ <div class="proto-context" id="contextPanel">
+ <div class="proto-context__head">Screen context</div>
+ <div id="contextBody">Loading…</div>
+ </div>
+
+ </main>
+</div>
+
+<!-- ============= SCRIPT ============= -->
+<script>
+/* ====================================================================
+ SCREEN DEFINITIONS
+ Each screen: { id, name, title, statusbar, body, context, cta }
+ `body` is the HTML for the scrolling content area.
+ `cta` is the bottom button row.
+ ==================================================================== */
+
+const ANNA_BUBBLE = (text) => `
+ <div class="gc-card gc-card--anna">
+ <span class="anna-avatar"><img src="../assets/gc-mark-mono-light.svg" alt=""></span>
+ <div>
+ <div class="anna-name">Anna</div>
+ <p>${text}</p>
+ </div>
+ </div>`;
+
+const PROGRESS_DOTS = (current, total = 5, done = []) => {
+ let html = '<div class="ob-progress">';
+ for (let i = 1; i <= total; i++) {
+ if (done.includes(i)) html += `<span class="ob-progress__step is-done">✓</span>`;
+ else if (i === current) html += `<span class="ob-progress__step is-current">${i}</span>`;
+ else html += `<span class="ob-progress__step">${i}</span>`;
+ }
+ html += '</div>';
+ return html;
+};
+
+/* ----- v2 · QUIZ DATA ·
+   Onboarding is kept light (31 Oct review): only what's needed to build Sam's plan.
+   PGSI, patterns and help-seeking move into Anna's first sessions (B4, B7). Each block ends with a result (A9). ----- */
+const QUIZ = [
+ // Block 1 · About you
+ { section: 1, sectionName: 'About you', title: 'About you', anna: "Northbank told us a little. A few more basics so this feels like yours.", q: 1, of: 3, qText: 'How old are you?', kind: 'choice', options: ['18 – 24', '25 – 34', '35 – 44', '45 – 54', '55 +', 'Prefer not to answer'], on: 1 },
+ { section: 1, sectionName: 'About you', title: 'About you', anna: "Helps me fit sessions around your week.", q: 2, of: 3, qText: "What's your work like?", kind: 'choice', options: ['Working for someone else', 'Running my own show', 'Shift work', 'Between jobs', 'Studying', 'Prefer not to say'], on: 2 },
+ { section: 1, sectionName: 'About you', title: 'About you', anna: "Last one in this block.", q: 3, of: 3, qText: 'When are you usually paid?', kind: 'choice', options: ['Weekly', 'Every 2 weeks', 'Monthly', 'It varies', 'Prefer not to say'], on: 2, nextLabel: 'See your first result →' },
+ // Block 2 · How you gamble (decides which self-exclusions are needed)
+ { section: 2, sectionName: 'How you gamble', title: 'How you gamble', anna: "This tells us which doors to close. Pick everything that applies, even occasionally.", q: 1, of: 3, qText: 'Where do you gamble?', kind: 'checks', options: ['Online casino or slots', 'Sports betting on my phone', 'Betting shops', 'Bingo halls', 'Arcades or fruit machines', 'Scratchcards or lottery', 'Crypto or trading apps'], on: [0, 1, 2] },
+ { section: 2, sectionName: 'How you gamble', title: 'How you gamble', anna: "Every email you've ever gambled with matters for GAMSTOP.", q: 2, of: 3, qText: 'How many email addresses have you used for gambling accounts?', kind: 'choice', options: ['Just one', 'Two', 'Three or more', "I'm not sure"], on: 1 },
+ { section: 2, sectionName: 'How you gamble', title: 'How you gamble', anna: "Last one. Then you'll see your plan take shape.", q: 3, of: 3, qText: 'When do urges usually hit?', kind: 'choice', options: ['Payday', 'Late at night', 'Weekends and match days', 'After a bad day', "There's no pattern"], on: 2, nextLabel: 'See your second result →' },
+ // Block 3 · Money (debt picture: open banking + self-declaration, B6)
+ { section: 3, sectionName: 'Money', title: 'Money', anna: "We can already see your bank debts. Some debts don't show anywhere, so we ask.", q: 1, of: 2, qText: 'Do you owe money to family or friends?', kind: 'choice', options: ['No', 'Yes, under £500', 'Yes, £500 – £2,000', 'Yes, over £2,000', 'Prefer not to say'], on: 2 },
+ { section: 3, sectionName: 'Money', title: 'Money', anna: "Honest answers make the plan work. Nothing here goes to Northbank.", q: 2, of: 2, qText: 'Is anyone pressing you to repay right now?', kind: 'choice', options: ['No', 'Yes, family or friends', 'Yes, a lender or collector', 'Prefer not to say'], on: 0, nextLabel: 'See your plan →' },
+];
+
+const RESULTS = {
+ 1: { kicker: 'Result 1 of 3', name: 'Monthly-pay rhythm', sub: 'People paid monthly often feel the pull hardest in payday week. We\'ll time your first blocks and Anna check-ins around the 28th.', chips: ['Shift work', 'Paid monthly'] },
+ 2: { kicker: 'Result 2 of 3', name: 'Fast-paced gambler', sub: 'Online slots and in-play sports bets move quickly, so urges hit fast. You do best with every door closed before the next match day.', chips: ['Online', 'Betting shops', '2 emails'] },
+};
+
+/* ----- SCREEN LIST ----- */
+const SCREENS = [
+ { id: 'ON0', name: 'Northbank deferral email', kind: 'ref' },
+ { id: 'ON1', name: 'Welcome · referred', kind: 'on1' },
+ { id: 'ON1.c', name: 'Consent · data sharing', kind: 'consent' },
+ { id: 'ON1.h', name: 'Set-up checklist', kind: 'hub' },
+ { id: 'ON8', name: 'Confirm your details', kind: 'on8' },
+ { id: 'ON12', name: 'Banking · Intro', kind: 'on12' },
+ { id: 'ON13', name: 'Banking · Select', kind: 'on13' },
+ { id: 'ON14', name: 'Banking · Connecting', kind: 'on14' },
+ { id: 'ON15', name: 'Banking · Result', kind: 'on15' },
+ { id: 'ON15.b', name: 'Accounts not connected', kind: 'missing' },
+ ...QUIZ.filter(q => q.section === 1).map(q => ({ id: `ON2.${q.q}`, name: `${q.sectionName} · Q${q.q}/${q.of}`, kind: 'quiz', data: q })),
+ { id: 'ON2.r', name: 'Result 1 · your rhythm', kind: 'result', data: 1 },
+ ...QUIZ.filter(q => q.section === 2).map(q => ({ id: `ON3.${q.q}`, name: `${q.sectionName} · Q${q.q}/${q.of}`, kind: 'quiz', data: q })),
+ { id: 'ON3.r', name: 'Result 2 · your pattern', kind: 'result', data: 2 },
+ ...QUIZ.filter(q => q.section === 3).map(q => ({ id: `ON4.${q.q}`, name: `${q.sectionName} · Q${q.q}/${q.of}`, kind: 'quiz', data: q })),
+ { id: 'ON7', name: 'Your plan · 60 days', kind: 'on7' },
+ { id: 'ON6+', name: 'Invite your sponsor', kind: 'sponsor' },
+ { id: 'ON16', name: 'Next: self-exclusion', kind: 'on16' },
+];
+
+/* ----- CONTEXT NOTES per screen ----- */
+const V2 = (ids, when) => `<div class="v2-meta"><span class="v2-meta__when v2-${when.k}">${when.t}</span><span class="v2-meta__ids">Backlog ${ids}</span></div>`;
+const W1 = { k: 'mvp1', t: 'MVP · Drop 1' }, W2 = { k: 'mvp2', t: 'MVP · Drop 2' }, P1 = { k: 'p1', t: 'Phase 1' }, P2 = { k: 'p2', t: 'Phase 2 / later' };
+const CTX = {
+ ref: '<strong>ON0 Deferral email.</strong> Sent by Northbank, not by us. For the pilot the credit union uses its own decline email with one extra paragraph pointing to the programme (A1 not needed at day 1). No referral link or token (A2 not needed): matching is by name, DOB and postcode against the credit union\'s list, done by ops when it isn\'t exact (A8).' + V2('A1 · A2 · J3', P1),
+ on1: '<strong>ON1 Welcome · referred.</strong> Replaces the open-market welcome. Frames the programme as the way back to Northbank: deferred, not declined. Disclaimer: completing doesn\'t guarantee credit. Programme length (60 days) is set per credit union (J3).' + V2('A4 · J3', W1),
+ consent: '<strong>ON1.c Consent.</strong> Data sharing between Northbank, Holdwell and a therapist gets its own tick-box (GDPR); T&amp;Cs and privacy notice are accepted by continuing. Consent to a soft check at 12 months for outcome tracking (J4). Sign-in itself is §04 (magic link; Face ID for Tuomas to decide, A7).' + V2('A3 · J4', W1),
+ hub: '<strong>ON1.h Set-up checklist.</strong> Agreed in session 4: a summary page linking to each step, so Sam always knows how far through she is (A5) and can stop and come back (A6). Open banking and self-exclusion rarely finish in one sitting.' + V2('A5 · A6', W1),
+ on8: '<strong>ON8 Confirm your details.</strong> Replaces document capture + liveness (old ON8–ON11). Light-touch ID: name plus address or DOB, pre-filled from Northbank where it can pass it (Griffin reliance workflow). Assume no credit-union integration at launch. Full KYC only when the card is issued, done by the issuer (§07).' + V2('B1', W1),
+ on12: '<strong>ON12 Banking intro.</strong> Holdwell runs its own open banking check, even if Northbank already did, because the credit union may miss accounts. 12 months of history, read-only. Provider still to pick: Yapily or Plaid.' + V2('B2', W1),
+ on13: '<strong>ON13 Bank select.</strong> Joint-account self-attest kept from ON-07. Sam is asked to connect every account she uses, not just the main one.' + V2('B2', W1),
+ on14: '<strong>Bank link.</strong> Read-only consent, 12-month pull, refreshes weekly. Consent renews every 90 days; the completeness check reruns at each renewal (B9).' + V2('B2 · B9', W1),
+ on15: '<strong>ON15 Banking result.</strong> Internal baseline only. Per the 31 Oct review, no gambling-spend visualisation goes back to the user in the MVP (B3). Sam sees accounts and a neutral summary.' + V2('B2 · B3', W1),
+ missing: '<strong>ON15.b Accounts not connected.</strong> Linked-account completeness (B9). Two signals: transfers to an account that isn\'t linked, and accounts on the soft credit check that Sam didn\'t connect. The soft credit check is used only for this, at entry (B5). Northbank doesn\'t see these details.' + V2('B9 · B5', W1),
+ result: '<strong>Give-back result.</strong> Short question blocks, each followed by something useful about Sam (A9). Agreed in session 4: four or five questions then a result keeps engagement up. JP designs the full set from the behavioural-science notes in Drive (PGSI Gamification).' + V2('A9 · B7', W1),
+ on7: '<strong>ON7 Your plan.</strong> Built from the answers: which self-exclusions Sam needs (all required on day one if she uses them), Gamban, sponsor, card, Anna. Profile labels and PGSI scoring move into Anna (B7, B4). The debt picture is rebuilt internally from 12 months of open banking plus self-declaration (B6).' + V2('A9 · B6 · B7 · C1–C3', W1),
+ sponsor: '<strong>Invite your sponsor.</strong> No longer an A/B placement: the sponsor comes before self-exclusion, because they confirm Gamban (D1) and approve card top-ups (E4). Conversation guide for Sam (F2). Joanna does her own declaration in §15 (B8). "Later" is allowed but the card can\'t activate without a sponsor.' + V2('F1 · F2', W1),
+ on16: '<strong>ON16 Next steps.</strong> Replaces the suitability decision (no lending decision here). Hands over to §15 (Joanna accepts) and §09 Self-exclusion. The card follows once self-exclusion and Gamban are confirmed, in Drop 2 if issuing isn\'t approved by March.' + V2('A5 · C1 · E1', W1),
+};
+
+/* ----- SCREEN BUILDERS ----- */
+function buildRef() {
+ return {
+ title: 'Mail', statusbar: '100%',
+ body: `
+ <div class="gc-card" style="flex-direction:column;gap:9px;align-items:stretch">
+ <div style="font-size:11px;color:var(--text-secondary)">From: Northbank Credit Union · loans@northbank-cu.example</div>
+ <h3 style="font-size:16px;font-weight:800;letter-spacing:-0.01em;margin:0;color:var(--text-primary)">About your loan application NB-48213</h3>
+ <p style="font-size:13px;line-height:1.55;margin:0;color:var(--text-primary)">Dear Sam,</p>
+ <p style="font-size:13px;line-height:1.55;margin:0;color:var(--text-secondary)">Thank you for applying for a £3,000 debt consolidation loan. We can't approve it today. Recent gambling on your account makes repayment harder to predict.</p>
+ <p style="font-size:13px;line-height:1.55;margin:0;color:var(--text-primary)"><strong>This is a deferral, not a final no.</strong> We work with Holdwell, a free 60-day programme. When you complete it, you can ask us to call you back and look at your application again.</p>
+ <button class="gc-btn gc-btn--primary" style="align-self:flex-start" onclick="next()">Start with Holdwell</button>
+ <p style="font-size:11px;line-height:1.5;margin:0;color:var(--text-secondary)">Completing the programme doesn't guarantee a loan. Free debt advice: StepChange, 0800 138 1111.</p>
+ </div>
+ <div class="decision-callout"><strong>Credit union sends this.</strong> Its own template, sent by hand in the pilot.</div>`,
+ cta: `<button class="gc-btn gc-btn--primary gc-btn--full" onclick="next()">Open the link →</button>`
+ };
+}
+
+function buildON1() {
+ return {
+ title: 'Welcome', statusbar: '100%',
+ body: `
+ ${ANNA_BUBBLE("Hi Sam. I'm Anna. Northbank asked us to help you get back on track. No judgement here.")}
+ <div class="ob-anna-mark">
+ <img src="../assets/gc-mark-mono-light.svg" alt="">
+ <span class="ob-anna-mark__pulse"></span>
+ </div>
+ <div class="ob-anna-name">Referred by Northbank Credit Union</div>
+ <h2 class="ob-h">Deferred, not declined.</h2>
+ <ul class="ob-list">
+ <li><span class="ob-list__num">1</span><span>Close every door to gambling</span></li>
+ <li><span class="ob-list__num">2</span><span>Install Gamban on your devices</span></li>
+ <li><span class="ob-list__num">3</span><span>Choose a sponsor you trust</span></li>
+ <li><span class="ob-list__num">4</span><span>Use a Holdwell card for day-to-day spending</span></li>
+ <li><span class="ob-list__num">5</span><span>Work with me, a few minutes a day</span></li>
+ </ul>
+ <p style="font-size:11.5px;color:var(--text-secondary);margin:0;line-height:1.5">60 days. When you finish, Northbank will call you back about your application. It's not a promise of credit.</p>`,
+ cta: `<button class="gc-btn gc-btn--primary gc-btn--full" onclick="next()">Let's start →</button>`
+ };
+}
+
+function buildConsent() {
+ return {
+ title: 'Your data', statusbar: '100%',
+ body: `
+ ${ANNA_BUBBLE("Before anything else: who sees what. You're in control of this.")}
+ <div class="gc-card" style="flex-direction:column;gap:10px">
+ <label class="ob-check is-on" onclick="toggleCheck(this)"><span class="gc-checkbox"></span><span style="font-size:13px;line-height:1.45"><strong>Share my progress with Northbank.</strong> Northbank and Holdwell can share my application details and programme milestones. Holdwell can share my progress with a therapist if I'm referred to one.</span></label>
+ <label class="ob-check is-on" onclick="toggleCheck(this)"><span class="gc-checkbox"></span><span style="font-size:13px;line-height:1.45"><strong>Soft credit checks.</strong> One now, and one in 12 months to see if the programme helped. Soft checks don't affect my credit score.</span></label>
+ </div>
+ <div class="gc-card" style="flex-direction:column;gap:6px">
+ <h3 style="font-size:13.5px;font-weight:700;margin:0;color:var(--text-primary)">Northbank never sees</h3>
+ <p style="font-size:12px;color:var(--text-secondary);margin:0;line-height:1.5">Your transactions · your chats with Anna · what you tell a therapist</p>
+ </div>
+ <p style="font-size:11.5px;color:var(--text-secondary);margin:0">By continuing you accept the Terms and Privacy notice.</p>`,
+ cta: `<button class="gc-btn gc-btn--primary gc-btn--full" onclick="next()">Agree and continue →</button>`
+ };
+}
+
+function hubRow(state, n, t, s) {
+ const icon = state === 'done' ? '<span class="ob-suit-icon ob-suit-icon--ok">✓</span>' : state === 'next' ? `<span class="ob-suit-icon" style="background:var(--accent);color:var(--on-accent)">${n}</span>` : `<span class="ob-suit-icon" style="background:var(--bg-surface-2);color:var(--text-secondary)">${n}</span>`;
+ const pill = state === 'done' ? '<span class="suit-status suit-status--ok">Done</span>' : state === 'next' ? '<span class="suit-status" style="background:var(--accent);color:var(--on-accent)">Next</span>' : '';
+ return `<div class="ob-suit-item" style="align-items:center${state === 'next' ? ';border-color:var(--accent)' : ''}">${icon}<div style="flex:1"><div class="ob-suit-t">${t}</div><div class="ob-suit-s">${state === 'done' ? '✓ ' : ''}${s}</div></div></div>`;
+}
+function buildHub() {
+ return {
+ title: 'Set-up', statusbar: '3/8',
+ body: `
+ ${PROGRESS_DOTS(1, 8, [])}
+ <h2 style="font-size:22px;font-weight:800;letter-spacing:-0.02em;margin:0;color:var(--text-primary)">8 steps. About 20 minutes.</h2>
+ <p style="font-size:12.5px;color:var(--text-secondary);margin:0;line-height:1.5">Stop whenever you like. We'll bring you back here.</p>
+ <div class="ob-suit-list">
+ ${hubRow('done', 1, 'Consent', 'Done just now')}
+ ${hubRow('next', 2, 'Confirm your details', '1 min · pre-filled by Northbank')}
+ ${hubRow('', 3, 'Connect your bank accounts', '5 min · every account you use')}
+ ${hubRow('', 4, 'A few questions', '3 short blocks')}
+ ${hubRow('', 5, 'Invite your sponsor', '2 min')}
+ ${hubRow('', 6, 'Self-exclusion', '10–30 min · GAMSTOP and more')}
+ ${hubRow('', 7, 'Install Gamban', '5 min · phone and laptop')}
+ ${hubRow('', 8, 'Your Holdwell card', 'After the steps above')}
+ </div>`,
+ cta: `<div style="display:flex;gap:8px"><button class="gc-btn gc-btn--ghost" style="flex:0 0 auto">Finish later</button><button class="gc-btn gc-btn--primary" style="flex:1" onclick="next()">Continue →</button></div>`
+ };
+}
+
+function buildON8() {
+ return {
+ title: 'Your details', statusbar: '2/8',
+ body: `
+ ${ANNA_BUBBLE("Northbank shared these. Just check they're right.")}
+ <div class="gc-card" style="flex-direction:column;gap:11px">
+ <h3 style="font-size:16px;font-weight:700;margin:0;letter-spacing:-0.01em;color:var(--text-primary)">Is this you?</h3>
+ <div class="phone__field"><span class="phone__label">Full name · from Northbank</span><input class="phone__input" type="text" value="Sam Kennedy"></div>
+ <div class="phone__field"><span class="phone__label">Date of birth · from Northbank</span><input class="phone__input" type="text" value="14 / 03 / 1994"></div>
+ <div class="phone__field"><span class="phone__label">Home address · from Northbank</span><input class="phone__input" type="text" value="42 Finsbury Park Rd, N4 2JX"></div>
+ <div class="phone__field"><span class="phone__label">Mobile</span><input class="phone__input" type="text" value="07700 900 431"></div>
+ </div>
+ <div class="decision-callout"><strong>No passport or selfie.</strong> Full ID checks only happen if you get the Holdwell card, done by the card issuer.</div>`,
+ cta: `<div style="display:flex;gap:8px"><button class="gc-btn gc-btn--ghost" style="flex:0 0 auto">Something's wrong</button><button class="gc-btn gc-btn--primary" style="flex:1" onclick="next()">Yes, that's me →</button></div>`
+ };
+}
+
+function buildON12() {
+ return {
+ title: 'Connect your banks', statusbar: '3/8',
+ body: `
+ ${ANNA_BUBBLE("Read-only, 12 months. We see patterns; we never move your money.")}
+ <div class="gc-card" style="flex-direction:column;gap:10px">
+ <h3 style="font-size:16px;font-weight:700;margin:0;letter-spacing:-0.01em;color:var(--text-primary)">Why every account</h3>
+ <div class="ob-explain">
+ <span class="ob-explain__icon ob-explain__icon--t"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>
+ <div><div class="ob-explain__t">Read-only</div><div class="ob-explain__s">FCA-regulated open banking</div></div>
+ </div>
+ <div class="ob-explain">
+ <span class="ob-explain__icon ob-explain__icon--p"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></span>
+ <div><div class="ob-explain__t">12 months</div><div class="ob-explain__s">Refreshes weekly while you're on the programme</div></div>
+ </div>
+ <div class="ob-explain">
+ <span class="ob-explain__icon ob-explain__icon--s"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/></svg></span>
+ <div><div class="ob-explain__t">Every account counts</div><div class="ob-explain__s">The programme only works if we see all your spending</div></div>
+ </div>
+ </div>`,
+ cta: `<button class="gc-btn gc-btn--primary gc-btn--full" onclick="next()">Connect your first bank →</button>`
+ };
+}
+
+function buildON13() {
+ return {
+ title: 'Choose bank', statusbar: '3/8',
+ body: `
+ ${ANNA_BUBBLE("Start with where your pay goes. Then we'll add the rest.")}
+ <div class="gc-card" style="flex-direction:column;gap:11px">
+ <div class="phone__field"><input class="phone__input" type="text" placeholder="Search…" value="Barc"></div>
+ <div class="bank-list">
+ <button class="bank-row is-on" onclick="pickBank(this, 'Barclays')"><span class="bank-row__logo" style="background:#005EB8;color:white">B</span><span class="bank-row__name">Barclays</span></button>
+ <button class="bank-row" onclick="pickBank(this, 'Barclaycard')"><span class="bank-row__logo" style="background:#0099CC;color:white">B</span><span class="bank-row__name">Barclaycard</span></button>
+ </div>
+ <label class="ob-check" onclick="toggleCheck(this)" style="margin-top:2px">
+ <span class="gc-checkbox"></span>
+ <span style="font-size:13px;line-height:1.4">This is a <strong>joint account</strong>: verify against the named co-holder</span>
+ </label>
+ <div class="vendor-badge">
+ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+ Open banking provider · Yapily or Plaid (TBC)
+ </div>
+ </div>`,
+ cta: `<button class="gc-btn gc-btn--primary gc-btn--full" onclick="next()">Connect Barclays →</button>`
+ };
+}
+
+function buildON14() {
+ return {
+ title: 'Connecting…', statusbar: '3/8',
+ body: `
+ <div class="connecting-tap" onclick="next()" role="button" tabindex="0" style="display:flex;flex-direction:column;align-items:center;gap:16px;padding:28px 16px;border-radius:18px;cursor:pointer;background:var(--bg-surface);border:1px solid var(--border)">
+ <div style="position:relative;width:80px;height:80px;display:inline-flex;align-items:center;justify-content:center">
+ <span style="position:absolute;inset:0;border-radius:24px;border:2px solid #005EB8;opacity:0.4;animation:ob-pulse 2.4s ease-in-out infinite"></span>
+ <div style="width:64px;height:64px;border-radius:18px;background:linear-gradient(135deg,#005EB8,#003D75);display:inline-flex;align-items:center;justify-content:center;color:white;font-size:24px;font-weight:800;position:relative">B</div>
+ </div>
+ <h3 style="font-size:18px;font-weight:800;letter-spacing:-0.02em;margin:0;text-align:center;color:var(--text-primary)">Opening Barclays securely…</h3>
+ <p style="font-size:13px;color:var(--text-secondary);max-width:280px;text-align:center;margin:0;line-height:1.55">You'll land in your Barclays app for a moment. Approve, then come back.</p>
+ <div class="connect-progress">
+ <div class="connect-progress__step is-done">✓ Authorising</div>
+ <div class="connect-progress__step is-current">→ Opening Barclays</div>
+ <div class="connect-progress__step">Pulling 12 months</div>
+ <div class="connect-progress__step">Categorising</div>
+ </div>
+ <span style="font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--accent);letter-spacing:0.08em;text-transform:uppercase;margin-top:4px">tap to continue (sim)</span>
+ </div>`,
+ cta: `<button class="gc-btn gc-btn--ghost gc-btn--full" onclick="prev()">Cancel</button>`
+ };
+}
+
+function buildON15() {
+ return {
+ title: 'Banks connected', statusbar: '3/8',
+ body: `
+ ${ANNA_BUBBLE("Thanks, Sam. Three accounts in. One more check before we move on.")}
+ <div class="ob-bank-summary">
+ <div class="ob-bank-summary__head">
+ <span class="ob-bank-summary__head__name"><span>B</span>Barclays · ****4291</span>
+ <span class="ob-bank-summary__head__meta">Current · 1,206 tx</span>
+ </div>
+ <div class="ob-bank-summary__head" style="border-top:1px solid var(--border)">
+ <span class="ob-bank-summary__head__name"><span style="background:#FF4F64">M</span>Monzo · ****0817</span>
+ <span class="ob-bank-summary__head__meta">Current · 388 tx</span>
+ </div>
+ <div class="ob-bank-summary__head" style="border-top:1px solid var(--border)">
+ <span class="ob-bank-summary__head__name"><span style="background:#7A3FA0">V</span>Vanquis · ****5530</span>
+ <span class="ob-bank-summary__head__meta">Credit card · 94 tx</span>
+ </div>
+ </div>
+ <div class="decision-callout"><strong>No spending charts here.</strong> Your gambling baseline is for the programme team and Anna, not a scorecard for you.</div>`,
+ cta: `<button class="gc-btn gc-btn--primary gc-btn--full" onclick="next()">Continue →</button>`
+ };
+}
+
+function buildMissing() {
+ return {
+ title: 'Banks', statusbar: '3/8',
+ body: `
+ ${ANNA_BUBBLE("Two accounts aren't connected yet. Gaps make the programme harder to trust.")}
+ <div class="gc-card" style="flex-direction:column;gap:7px;border-color:var(--w-60)">
+ <span class="suit-status" style="background:var(--w-90);color:var(--w-30);align-self:flex-start">From your transfers</span>
+ <h3 style="font-size:15px;font-weight:800;margin:0;color:var(--text-primary)">Account ending 4417</h3>
+ <p style="font-size:12.5px;color:var(--text-secondary);margin:0;line-height:1.5">You sent £1,140 there in the last 3 months. Is it yours?</p>
+ <div style="display:flex;gap:8px"><button class="gc-btn gc-btn--primary" style="flex:1">Connect it</button><button class="gc-btn gc-btn--ghost" style="flex:1">Someone else's</button></div>
+ </div>
+ <div class="gc-card" style="flex-direction:column;gap:7px;border-color:var(--w-60)">
+ <span class="suit-status" style="background:var(--w-90);color:var(--w-30);align-self:flex-start">From your credit file</span>
+ <h3 style="font-size:15px;font-weight:800;margin:0;color:var(--text-primary)">Starling current account</h3>
+ <p style="font-size:12.5px;color:var(--text-secondary);margin:0;line-height:1.5">Opened March 2025. Connect it, or tell us it's closed.</p>
+ <div style="display:flex;gap:8px"><button class="gc-btn gc-btn--primary" style="flex:1">Connect it</button><button class="gc-btn gc-btn--ghost" style="flex:1">It's closed</button></div>
+ </div>`,
+ cta: `<button class="gc-btn gc-btn--ghost gc-btn--full" onclick="next()">Continue →</button>`
+ };
+}
+
+function buildQuiz(q) {
+ let dots = [];
+ for (let i = 1; i < q.section; i++) dots.push(i);
+ const progress = PROGRESS_DOTS(q.section, 3, dots);
+ let answerHtml = '';
+ if (q.kind === 'choice') {
+ answerHtml = '<div class="ob-choices">';
+ q.options.forEach((opt, i) => { answerHtml += `<button class="ob-choice${i === q.on ? ' is-on' : ''}" onclick="pickOne(this)">${opt}</button>`; });
+ answerHtml += '</div>';
+ } else if (q.kind === 'checks') {
+ answerHtml = '<div class="ob-checks">';
+ q.options.forEach((opt, i) => { answerHtml += `<label class="ob-check${(q.on || []).includes(i) ? ' is-on' : ''}" onclick="toggleCheck(this)"><span class="gc-checkbox"></span>${opt}</label>`; });
+ answerHtml += '</div>';
+ }
+ return {
+ title: q.title, statusbar: '4/8',
+ body: `
+ ${progress}
+ ${ANNA_BUBBLE(q.anna)}
+ <div class="ob-question">
+ <span class="ob-question__num">Question ${q.q} of ${q.of}</span>
+ <h3 class="ob-question__title">${q.qText}</h3>
+ ${answerHtml}
+ </div>`,
+ cta: `
+ <div style="display:flex;gap:8px;align-items:center">
+ <button class="gc-btn gc-btn--ghost" onclick="prev()" style="flex:0 0 auto">← Back</button>
+ <button class="gc-btn gc-btn--primary" style="flex:1" onclick="next()">${q.nextLabel || 'Next →'}</button>
+ </div>`
+ };
+}
+
+function buildResult(n) {
+ const r = RESULTS[n];
+ return {
+ title: 'What we learned', statusbar: '4/8',
+ body: `
+ ${PROGRESS_DOTS(n + 1, 3, Array.from({ length: n }, (_, i) => i + 1))}
+ <div class="profile-hero">
+ <span class="profile-hero__kicker">${r.kicker}</span>
+ <h3 class="profile-hero__name">${r.name}</h3>
+ <p class="profile-hero__sub">${r.sub}</p>
+ <div class="profile-hero__chips">${r.chips.map(c => `<span class="profile-hero__chip">${c}</span>`).join('')}</div>
+ </div>
+ ${ANNA_BUBBLE(n === 1 ? "You're not alone in this. Around 1 in 4 people Northbank defers for gambling are in the same spot." : "That's useful. It means betting shops go on your self-exclusion list, not just online.")}`,
+ cta: `<button class="gc-btn gc-btn--primary gc-btn--full" onclick="next()">Next block →</button>`
+ };
+}
+
+function buildON7() {
+ return {
+ title: 'Your plan', statusbar: '4/8',
+ body: `
+ ${ANNA_BUBBLE("Here's your 60-day plan, Sam. Built from your answers.")}
+ <div class="profile-hero">
+ <span class="profile-hero__kicker">Your plan · 60 days</span>
+ <h3 class="profile-hero__name">Close every door.</h3>
+ <p class="profile-hero__sub">Then build the habits that keep them closed. Northbank looks again when you finish.</p>
+ <div class="profile-hero__chips"><span class="profile-hero__chip">Ends 30 Apr</span><span class="profile-hero__chip">Northbank NB-48213</span></div>
+ </div>
+ <div class="ob-result-list">
+ <div class="ob-result-item"><span class="ob-result-item__icon ob-suit-icon--ok">✓</span><div><div class="ob-result-item__t">GAMSTOP · online</div><div class="ob-result-item__s">Both your email addresses</div></div></div>
+ <div class="ob-result-item"><span class="ob-result-item__icon ob-suit-icon--ok">✓</span><div><div class="ob-result-item__t">Betting-shop exclusion</div><div class="ob-result-item__s">Home, work and match-day routes</div></div></div>
+ <div class="ob-result-item"><span class="ob-result-item__icon ob-suit-icon--ok">✓</span><div><div class="ob-result-item__t">Gamban · phone and laptop</div><div class="ob-result-item__s">Your sponsor confirms it's on</div></div></div>
+ <div class="ob-result-item"><span class="ob-result-item__icon ob-suit-icon--ok">✓</span><div><div class="ob-result-item__t">Holdwell card</div><div class="ob-result-item__s">Gambling and cash blocked</div></div></div>
+ <div class="ob-result-item"><span class="ob-result-item__icon ob-suit-icon--ok">✓</span><div><div class="ob-result-item__t">Anna · daily</div><div class="ob-result-item__s">12-session course, check-ins, brain games</div></div></div>
+ </div>`,
+ cta: `<button class="gc-btn gc-btn--primary gc-btn--full" onclick="next()">Next: your sponsor →</button>`
+ };
+}
+
+function buildSponsor() {
+ return {
+ title: 'Your sponsor', statusbar: '5/8',
+ body: `
+ ${ANNA_BUBBLE("A sponsor backs you for 60 days. They approve top-ups to your card and check Gamban is on. They never see your chats with me.")}
+ <div class="sponsor-form">
+ <div class="phone__field"><span class="phone__label">Their name</span><input class="phone__input" type="text" value="Joanna Mitchell"></div>
+ <div class="phone__field"><span class="phone__label">Relationship</span><input class="phone__input" type="text" value="Sister"></div>
+ <div class="phone__field"><span class="phone__label">Email or mobile</span><input class="phone__input" type="email" value="joanna@example.com"><span class="phone__hint">They get an invitation and a short explainer. Add a note in your own words.</span></div>
+ </div>
+ <div class="gc-card" style="flex-direction:column;gap:6px">
+ <h3 style="font-size:13.5px;font-weight:700;margin:0;color:var(--text-primary)">Not sure how to ask?</h3>
+ <p style="font-size:12px;color:var(--text-secondary);margin:0;line-height:1.5">Our 3-minute guide helps you explain what's going on and why you're asking them.</p>
+ <button class="gc-btn gc-btn--ghost" style="align-self:flex-start">Open the conversation guide</button>
+ </div>
+ <button class="gc-btn gc-btn--ghost gc-btn--full" style="font-size:13px;padding:10px" onclick="next()">I'll do this later</button>`,
+ cta: `<button class="gc-btn gc-btn--primary gc-btn--full" onclick="next()">Send invitation →</button>`
+ };
+}
+
+function buildON16() {
+ return {
+ title: 'Next steps', statusbar: '5/8',
+ body: `
+ ${ANNA_BUBBLE("Invitation sent to Joanna. While she reads it, let's close the first door.")}
+ <div style="display:flex;flex-direction:column;align-items:flex-start;gap:7px">
+ <span class="suit-status suit-status--ok">5 of 8 done</span>
+ <h2 style="font-size:24px;font-weight:800;letter-spacing:-0.02em;line-height:1.05;margin:2px 0 0;color:var(--text-primary)">Halfway through set-up.</h2>
+ </div>
+ <div class="ob-suit-list">
+ <div class="ob-suit-item"><span class="ob-suit-icon ob-suit-icon--ok">✓</span><div><div class="ob-suit-t">Details confirmed</div><div class="ob-suit-s">Matched to Northbank's referral</div></div></div>
+ <div class="ob-suit-item"><span class="ob-suit-icon ob-suit-icon--ok">✓</span><div><div class="ob-suit-t">5 accounts connected</div><div class="ob-suit-s">Including Starling and ••4417</div></div></div>
+ <div class="ob-suit-item"><span class="ob-suit-icon ob-suit-icon--ok">✓</span><div><div class="ob-suit-t">Plan ready</div><div class="ob-suit-s">60 days · ends 30 Apr</div></div></div>
+ <div class="ob-suit-item"><span class="ob-suit-icon ob-suit-icon--warn">…</span><div><div class="ob-suit-t">Joanna invited</div><div class="ob-suit-s">Waiting for her to accept</div></div></div>
+ </div>`,
+ cta: `<button class="gc-btn gc-btn--primary gc-btn--full" onclick="location.href='mobile-selfexclusion.html'">Start self-exclusion →</button>`
+ };
+}
+
+/* ----- BUILDER MAP ----- */
+const builders = {
+ ref: buildRef, on1: buildON1, consent: buildConsent, hub: buildHub, on8: buildON8,
+ on12: buildON12, on13: buildON13, on14: buildON14, on15: buildON15, missing: buildMissing,
+ on7: buildON7, sponsor: buildSponsor, on16: buildON16,
+};
+
+/* ----- STATE + NAV ----- */
+let idx = 0;
+
+function render() {
+ const screen = SCREENS[idx];
+ let payload;
+ if (screen.kind === 'quiz') payload = buildQuiz(screen.data);
+ else if (screen.kind === 'result') payload = buildResult(screen.data);
+ else payload = builders[screen.kind]();
+
+ document.getElementById('phoneTitle').textContent = payload.title;
+ document.getElementById('statusbarRight').innerHTML = `<span style="display:inline-flex;gap:3px"><span style="width:4px;height:4px;border-radius:50%;background:currentColor"></span><span style="width:4px;height:5px;border-radius:1px;background:currentColor"></span><span style="width:4px;height:6px;border-radius:1px;background:currentColor"></span><span style="width:4px;height:7px;border-radius:1px;background:currentColor"></span></span><span>${payload.statusbar}</span>`;
+ document.getElementById('stage').innerHTML = `
+ <div class="screen is-active">
+ <div class="ob-body">${payload.body}</div>
+ <div class="ob-cta">${payload.cta}</div>
+ </div>`;
+
+ document.getElementById('screenId').textContent = screen.id;
+ document.getElementById('screenName').textContent = screen.name;
+ document.getElementById('progressFill').style.width = ((idx + 1) / SCREENS.length * 100) + '%';
+ document.getElementById('navPrev').disabled = idx === 0;
+ document.getElementById('navNext').disabled = idx === SCREENS.length - 1;
+
+ document.querySelectorAll('.proto-scrubber__item').forEach((el, i) => {
+ el.classList.toggle('is-active', i === idx);
+ if (i === idx) el.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+ });
+
+ document.getElementById('contextBody').innerHTML = screen.kind === 'quiz'
+ ? `<strong>${screen.name}</strong>. One question per screen, Back / Next at the bottom. Block ${screen.data.section} of 3; a result follows each block.` + V2('A9 · B6 · B7', W1)
+ : (CTX[screen.kind] || screen.name);
+}
+
+function next() { if (idx < SCREENS.length - 1) { idx++; render(); } }
+function prev() { if (idx > 0) { idx--; render(); } }
+function go(i) { idx = i; render(); }
+function restart() { idx = 0; render(); }
+
+function pickOne(el) {
+ const parent = el.parentElement;
+ parent.querySelectorAll('.is-on').forEach(s => s.classList.remove('is-on'));
+ el.classList.add('is-on');
+}
+function toggleCheck(el) {
+ el.classList.toggle('is-on');
+}
+function pickBank(el, name) {
+ pickOne(el);
+ const btn = document.querySelector('#stage.gc-btn--primary.gc-btn--full');
+ if (btn) btn.textContent = `Connect ${name} →`;
+}
+
+/* ----- SCRUBBER BUILD ----- */
+function buildScrubber() {
+ const nav = document.getElementById('scrubber');
+ SCREENS.forEach((s, i) => {
+ const btn = document.createElement('button');
+ btn.className = 'proto-scrubber__item';
+ btn.innerHTML = `<span class="proto-scrubber__id">${s.id}</span><span class="proto-scrubber__name">${s.name}</span>`;
+ btn.addEventListener('click', () => go(i));
+ nav.appendChild(btn);
+ });
+}
+
+/* ----- THEME ----- */
+function initTheme() {
+ const root = document.documentElement;
+ const stored = localStorage.getItem('gc-proto-theme');
+ const initial = stored || 'dark';
+ root.setAttribute('data-theme', initial);
+ document.querySelector('.theme-label').textContent = initial === 'dark' ? 'Dark' : 'Light';
+ document.querySelector('.proto-theme-toggle').addEventListener('click', () => {
+ const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+ root.setAttribute('data-theme', next);
+ document.querySelector('.theme-label').textContent = next === 'dark' ? 'Dark' : 'Light';
+ try { localStorage.setItem('gc-proto-theme', next); } catch(e) {}
+ });
+}
+
+/* ----- KEYBOARD ----- */
+document.getElementById('navPrev').addEventListener('click', prev);
+document.getElementById('navNext').addEventListener('click', next);
+document.addEventListener('keydown', (e) => {
+ if (e.key === 'ArrowRight') next();
+ if (e.key === 'ArrowLeft') prev();
+});
+
+buildScrubber();
+initTheme();
+render();
+</script>
+
+</body>
+</html>

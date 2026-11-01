@@ -1,0 +1,674 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Holdwell · Mobile · §09 Self-exclusion + Gamban</title>
+<link rel="icon" href="../assets/gc-favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+ --p-10:#0B0F1C;--p-20:#161B2D;--p-30:#20273C;--p-40:#354872;--p-50:#4D608C;--p-60:#6B7DA6;--p-70:#8E9DC0;--p-80:#B5BFD9;--p-90:#DCE2F0;--p-95:#ECF0F9;--p-99:#FAFBFE;--p-100:#FFF;
+ --s-10:#28215A;--s-20:#3E3478;--s-30:#534792;--s-40:#6B5DAC;--s-50:#8576C2;--s-70:#B5ACDF;--s-80:#CFC8EA;--s-90:#E8E4F4;
+ --t-20:#1A6047;--t-30:#1F7058;--t-50:#399971;--t-60:#5BB088;--t-80:#ADDCC2;--t-90:#D5EDDF;
+ --w-30:#6B4500;--w-60:#C28200;--w-80:#FAB44A;--w-90:#FFDFA8;
+ --e-30:#7A1F1F;--e-50:#C73838;--e-80:#F4A4A4;--e-90:#FBD9D9;
+ --n-30:#43475A;--n-50:#76798A;--n-80:#C5C8D2;--n-95:#F1F2F5;--nv-80:#C5C9DD;
+}
+[data-theme="dark"] { --bg-base: var(--p-30); --bg-surface: var(--p-20); --bg-surface-2: var(--p-10); --border: rgba(255,255,255,0.08); --text-primary: var(--n-95); --text-secondary: var(--nv-80); --text-muted: rgba(255,255,255,0.4); --accent: var(--s-70); --accent-strong: var(--s-50); --on-accent: #fff; --page-bg: #0a0e1a; --page-fg: var(--n-95); --page-fg-muted: var(--nv-80); --page-card-bg: var(--p-20); --page-divider: rgba(255,255,255,0.06); }
+[data-theme="light"] { --bg-base: var(--p-99); --bg-surface: #fff; --bg-surface-2: var(--p-95); --border: rgba(22,27,45,0.08); --text-primary: var(--p-20); --text-secondary: var(--n-50); --text-muted: var(--n-50); --accent: var(--p-40); --accent-strong: var(--s-40); --on-accent: #fff; --page-bg: var(--p-95); --page-fg: var(--p-20); --page-fg-muted: var(--n-50); --page-card-bg: #fff; --page-divider: rgba(22,27,45,0.08); }
+* { box-sizing: border-box; }
+html, body { background: var(--page-bg); color: var(--page-fg); margin: 0; transition: background-color 220ms ease, color 220ms ease; }
+body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif; font-size: 14px; line-height: 1.5; -webkit-font-smoothing: antialiased; min-height: 100vh; }
+
+/* SHELL */
+.proto-shell { display: grid; grid-template-columns: 280px 1fr; gap: 0; min-height: 100vh; }
+@media (max-width: 960px) {.proto-shell { grid-template-columns: 1fr; } }
+.proto-sidebar { background: var(--page-card-bg); border-right: 1px solid var(--page-divider); padding: 28px 22px; position: sticky; top: 0; height: 100vh; overflow-y: auto; display: flex; flex-direction: column; gap: 16px; }
+@media (max-width: 960px) {.proto-sidebar { position: static; height: auto; max-height: 50vh; border-right: none; border-bottom: 1px solid var(--page-divider); } }
+.proto-sidebar__brand { display: flex; align-items: center; gap: 10px; }
+.proto-sidebar__mark { width: 36px; height: 36px; border-radius: 10px; background: var(--p-30); display: inline-flex; align-items: center; justify-content: center; }
+.proto-sidebar__mark img { width: 70%; height: 70%; }
+.proto-sidebar__name { font-weight: 700; font-size: 17px; letter-spacing: -0.01em; }
+.proto-sidebar__pill { display: inline-flex; padding: 3px 9px; border-radius: 999px; background: linear-gradient(120deg, var(--s-50), var(--p-50), var(--t-50)); color: white; font-weight: 700; font-size: 9.5px; font-family: 'JetBrains Mono', monospace; letter-spacing: 0.06em; text-transform: uppercase; }
+.proto-sidebar__back { display: inline-flex; align-items: center; gap: 6px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--page-fg-muted); text-decoration: none; }
+.proto-sidebar__back:hover { color: var(--page-accent); }
+.proto-section-title { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--page-fg-muted); margin: 12px 0 6px; }
+.proto-scrubber { display: flex; flex-direction: column; gap: 2px; }
+.proto-scrubber__item { display: grid; grid-template-columns: 44px 1fr; gap: 8px; align-items: center; padding: 7px 10px; border-radius: 8px; cursor: pointer; border: none; background: transparent; color: inherit; font-family: inherit; text-align: left; }
+.proto-scrubber__item:hover { background: rgba(127,127,127,0.08); }
+.proto-scrubber__item.is-active { background: var(--accent-strong); color: var(--on-accent); }
+.proto-scrubber__item.is-active.proto-scrubber__id { color: rgba(255,255,255,0.85); }
+.proto-scrubber__id { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; color: var(--page-fg-muted); letter-spacing: 0.06em; }
+.proto-scrubber__name { font-size: 12.5px; font-weight: 500; }
+.proto-sidebar__footer { margin-top: auto; padding-top: 16px; border-top: 1px solid var(--page-divider); font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--page-fg-muted); }
+.proto-sidebar__footer a { color: var(--page-fg-muted); text-decoration: none; border-bottom: 1px dotted currentColor; }
+.proto-theme-toggle { display: inline-flex; align-items: center; gap: 8px; padding: 7px 12px; border-radius: 8px; background: var(--bg-surface-2); border: 1px solid var(--border); color: var(--page-fg-muted); cursor: pointer; font-family: 'JetBrains Mono', monospace; font-size: 11px; align-self: flex-start; }
+.proto-theme-toggle svg { width: 12px; height: 12px; }
+[data-theme="dark"].proto-theme-toggle.icon-moon { display: none; }
+[data-theme="light"].proto-theme-toggle.icon-sun { display: none; }
+
+/* STAGE */
+.proto-stage { display: flex; flex-direction: column; align-items: center; padding: 32px 24px 64px; gap: 22px; }
+.proto-modebar { display: flex; align-items: center; gap: 10px; padding: 10px 16px; background: var(--page-card-bg); border: 1px solid var(--page-divider); border-radius: 12px; font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: var(--page-fg-muted); flex-wrap: wrap; justify-content: center; }
+.proto-modebar__pill { display: inline-flex; padding: 3px 9px; border-radius: 999px; background: var(--bg-surface-2); }
+.proto-modebar__id { color: var(--page-fg); font-weight: 700; letter-spacing: 0.06em; }
+.proto-modebar__bar { width: 100px; height: 4px; border-radius: 4px; background: var(--bg-surface-2); position: relative; overflow: hidden; }
+.proto-modebar__bar__fill { position: absolute; left: 0; top: 0; bottom: 0; background: linear-gradient(90deg, var(--s-50), var(--t-50)); transition: width 240ms ease; }
+.proto-arrows { display: flex; align-items: center; gap: 8px; }
+.proto-arrow { width: 36px; height: 36px; border-radius: 10px; background: var(--page-card-bg); border: 1px solid var(--page-divider); color: var(--page-fg-muted); display: inline-flex; align-items: center; justify-content: center; cursor: pointer; }
+.proto-arrow:hover { background: var(--bg-surface-2); color: var(--page-fg); }
+.proto-arrow:disabled { opacity: 0.3; cursor: not-allowed; }
+.proto-arrow svg { width: 18px; height: 18px; }
+
+/* PHONE */
+.phone { width: 393px; height: 852px; flex-shrink: 0; border-radius: 56px; background: #000; padding: 13px; position: relative; box-shadow: 0 0 0 1.5px #2a2e3a, 0 30px 60px -20px rgba(0,0,0,0.7), 0 16px 32px -16px rgba(0,0,0,0.4); }
+.phone::before,.phone::after { content: ''; position: absolute; background: #2a2e3a; }
+.phone::before { left: -3px; top: 110px; width: 3px; height: 30px; border-radius: 3px 0 0 3px; }
+.phone::after { left: -3px; top: 160px; width: 3px; height: 60px; border-radius: 3px 0 0 3px; }
+.phone__inner { width: 100%; height: 100%; background: var(--bg-base); color: var(--text-primary); border-radius: 44px; overflow: hidden; position: relative; display: flex; flex-direction: column; }
+.phone__notch { position: absolute; top: 12px; left: 50%; transform: translateX(-50%); width: 120px; height: 32px; background: #000; border-radius: 18px; z-index: 30; }
+.phone__statusbar { height: 44px; padding: 12px 32px 0; display: flex; align-items: center; justify-content: space-between; font-size: 14px; font-weight: 600; color: var(--text-primary); font-feature-settings: "tnum"; flex-shrink: 0; }
+.phone__statusbar__right { display: flex; align-items: center; gap: 5px; font-size: 13px; }
+.phone__topbar { display: flex; align-items: center; justify-content: space-between; padding: 8px 18px 12px; gap: 10px; flex-shrink: 0; }
+.phone__mark { width: 32px; height: 32px; border-radius: 9px; background: var(--bg-surface); border: 1px solid var(--border); display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.phone__mark img { width: 65%; height: 65%; }
+[data-theme="light"].phone__mark img { filter: invert(1) brightness(0.3); }
+.phone__back { width: 32px; height: 32px; border-radius: 50%; background: transparent; border: none; color: var(--text-primary); display: inline-flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; }
+.phone__back:hover { background: rgba(127,127,127,0.06); }
+.phone__back svg { width: 20px; height: 20px; }
+.phone__title { flex: 1; text-align: center; font-size: 14.5px; font-weight: 600; letter-spacing: -0.01em; }
+.gc-crisis-pill { display: inline-flex; align-items: center; gap: 5px; padding: 6px 11px; border-radius: 999px; background: var(--e-50); color: white; border: none; font-family: inherit; font-size: 11.5px; font-weight: 600; cursor: pointer; flex-shrink: 0; }
+.gc-crisis-pill svg { width: 11px; height: 11px; flex-shrink: 0; }
+
+.cc-body { flex: 1; padding: 4px 16px 12px; overflow-y: auto; display: flex; flex-direction: column; gap: 11px; }
+.cc-body::-webkit-scrollbar { width: 4px; }
+.cc-body::-webkit-scrollbar-thumb { background: rgba(127,127,127,0.2); border-radius: 4px; }
+
+/* Card */
+.gc-card { padding: 14px; background: var(--bg-surface); border: 1px solid var(--border); border-radius: 14px; display: flex; flex-direction: column; gap: 8px; }
+.gc-card--anna { background: linear-gradient(135deg, rgba(133,118,194,0.15), rgba(83,71,146,0.08)); border-color: rgba(133,118,194,0.25); flex-direction: row; align-items: center; gap: 10px; padding: 11px 13px; }
+.gc-card--anna.anna-av { width: 30px; height: 30px; border-radius: 50%; background: var(--p-30); display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.gc-card--anna.anna-av img { width: 60%; height: 60%; }
+.gc-card--anna.anna-name { font-size: 12.5px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 1px; }
+.gc-card--anna p { font-size: 13px; line-height: 1.4; margin: 0; }
+.gc-card--milestone { background: linear-gradient(135deg, var(--s-40), var(--p-40)); color: white; border-color: transparent; }
+.gc-card--milestone p { color: rgba(255,255,255,0.92); }
+.gc-card--alert { background: var(--bg-surface-2); border-left: 3px solid var(--w-60); border-radius: 4px 12px 12px 4px; padding: 11px 14px; gap: 4px; }
+
+/* Card art (CC1) */
+.cc-card-art { width: 100%; aspect-ratio: 1.59; background: linear-gradient(135deg, var(--s-30) 0%, var(--p-20) 100%); border-radius: 14px; padding: 16px; position: relative; color: white; overflow: hidden; }
+.cc-card-art__brand { width: 32px; height: 32px; opacity: 0.95; filter: brightness(1.2); }
+.cc-card-art__cn { position: absolute; top: 14px; right: 14px; width: 24px; height: 24px; color: rgba(255,255,255,0.6); }
+.cc-card-art__chip { position: absolute; top: 60%; left: 16px; width: 32px; height: 24px; border-radius: 4px; background: linear-gradient(135deg, #d4b56a, #8a6b30); }
+.cc-card-art__num { position: absolute; bottom: 38px; left: 16px; font-family: 'JetBrains Mono', monospace; font-size: 17px; font-weight: 700; letter-spacing: 0.1em; }
+.cc-card-art__name { position: absolute; bottom: 14px; left: 16px; font-size: 10px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; opacity: 0.92; }
+.cc-card-art__exp { position: absolute; bottom: 14px; right: 16px; font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; opacity: 0.85; }
+.cc-card-art__net { position: absolute; top: 14px; right: 56px; display: flex; gap: -8px; }
+.cc-card-art__net span { width: 18px; height: 18px; border-radius: 50%; background: rgba(255,255,255,0.4); margin-left: -8px; }
+.cc-card-art__net span:first-child { background: rgba(255,180,40,0.85); margin-left: 0; }
+
+/* Step list (CC1) */
+.cc-step { display: grid; grid-template-columns: 28px 1fr; gap: 10px; align-items: flex-start; padding: 6px 0; }
+.cc-step__c { width: 28px; height: 28px; border-radius: 50%; background: var(--bg-surface-2); border: 1px solid var(--border); display: inline-flex; align-items: center; justify-content: center; color: var(--text-secondary); font-weight: 700; font-size: 12px; font-family: 'JetBrains Mono', monospace; flex-shrink: 0; }
+.cc-step.is-done.cc-step__c { background: var(--t-50); color: white; border-color: transparent; }
+.cc-step.is-done.cc-step__c svg { width: 14px; height: 14px; }
+.cc-step.is-active.cc-step__c { background: var(--accent-strong); color: white; border-color: transparent; }
+.cc-step__t { font-size: 13px; font-weight: 600; }
+.cc-step__s { font-size: 11.5px; color: var(--text-secondary); margin-top: 1px; }
+
+/* Status pill */
+.cc-pill { display: inline-flex; align-items: center; gap: 6px; padding: 3px 11px 3px 4px; border-radius: 999px; font-size: 10px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; align-self: flex-start; }
+.cc-pill::before { content: ''; width: 9px; height: 9px; border-radius: 50%; }
+.cc-pill--ok { background: var(--t-20); color: var(--t-80); }
+.cc-pill--ok::before { background: var(--t-50); }
+[data-theme="light"].cc-pill--ok { background: var(--t-90); color: var(--t-30); }
+.cc-pill--err { background: var(--e-30); color: var(--e-90); }
+.cc-pill--err::before { background: var(--e-50); }
+[data-theme="light"].cc-pill--err { background: var(--e-90); color: var(--e-30); }
+.cc-pill--warn { background: var(--w-30); color: var(--w-80); }
+.cc-pill--warn::before { background: var(--w-60); }
+[data-theme="light"].cc-pill--warn { background: var(--w-90); color: var(--w-30); }
+.cc-pill--sponsor { background: var(--s-20); color: var(--s-80); }
+.cc-pill--sponsor::before { background: var(--s-50); }
+[data-theme="light"].cc-pill--sponsor { background: var(--s-90); color: var(--s-20); }
+.cc-pill--info { background: var(--p-40); color: var(--p-95); }
+.cc-pill--info::before { background: var(--p-90); }
+[data-theme="light"].cc-pill--info { background: var(--p-90); color: var(--p-30); }
+
+/* MCC row */
+.cc-mcc { display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: center; padding: 11px 0; border-top: 1px solid var(--border); }
+.cc-mcc:first-child { border-top: none; padding-top: 0; }
+.cc-mcc__head { display: flex; align-items: center; gap: 8px; }
+.cc-mcc__code { font-family: 'JetBrains Mono', monospace; font-size: 11.5px; font-weight: 700; padding: 2px 7px; border-radius: 5px; background: var(--bg-surface-2); color: var(--text-secondary); }
+.cc-mcc__name { font-size: 13.5px; font-weight: 600; }
+.cc-mcc__sub { font-size: 11.5px; color: var(--text-secondary); margin-top: 2px; }
+.cc-mcc__locked { display: inline-flex; align-items: center; gap: 4px; font-size: 10px; font-family: 'JetBrains Mono', monospace; color: var(--text-muted); margin-top: 3px; letter-spacing: 0.04em; }
+.cc-mcc__locked svg { width: 10px; height: 10px; }
+
+/* Toggle */
+.gc-toggle { width: 40px; height: 24px; background: var(--bg-surface-2); border: 1px solid var(--border); border-radius: 999px; position: relative; flex-shrink: 0; cursor: pointer; transition: background 160ms ease; }
+.gc-toggle::after { content: ''; position: absolute; top: 2px; left: 2px; width: 18px; height: 18px; background: var(--text-muted); border-radius: 50%; transition: transform 160ms ease, background 160ms ease; }
+.gc-toggle.is-on { background: var(--accent); border-color: transparent; }
+.gc-toggle.is-on::after { transform: translateX(16px); background: white; }
+.gc-toggle.is-locked { opacity: 0.6; cursor: not-allowed; }
+.gc-toggle--ok { background: var(--t-50); border-color: transparent; }
+.gc-toggle--ok::after { transform: translateX(16px); background: white; }
+
+/* Channel row */
+.cc-chan { display: grid; grid-template-columns: 34px 1fr 40px; gap: 11px; align-items: center; padding: 11px 0; border-top: 1px solid var(--border); }
+.cc-chan:first-child { border-top: none; padding-top: 0; }
+.cc-chan__ic { width: 34px; height: 34px; border-radius: 10px; display: inline-flex; align-items: center; justify-content: center; }
+.cc-chan__t { font-size: 13.5px; font-weight: 600; }
+.cc-chan__s { font-size: 11.5px; color: var(--text-secondary); margin-top: 1px; }
+.cc-chan__note { grid-column: 1 / -1; font-size: 11px; color: var(--text-secondary); padding-top: 3px; line-height: 1.4; }
+.cc-chan__note strong { color: var(--text-primary); }
+
+/* Permission row (CC6) */
+.cc-perm { display: grid; grid-template-columns: 1fr 40px; gap: 10px; align-items: center; padding: 11px 0; border-top: 1px solid var(--border); }
+.cc-perm:first-child { border-top: none; padding-top: 0; }
+.cc-perm__t { font-size: 13.5px; font-weight: 600; }
+.cc-perm__s { font-size: 11.5px; color: var(--text-secondary); margin-top: 1px; line-height: 1.4; }
+
+/* Stat strip (CC2) */
+.cc-stat-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; padding-top: 8px; border-top: 1px solid var(--border); margin-top: 6px; }
+.cc-stat-row > div { text-align: left; }
+.cc-stat-row__n { font-size: 17px; font-weight: 800; letter-spacing: -0.015em; }
+.cc-stat-row__l { font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 2px; }
+
+/* Trust row (Gamban) */
+.cc-trust { display: grid; grid-template-columns: 30px 1fr; gap: 11px; align-items: center; padding: 10px 0; border-top: 1px solid var(--border); }
+.cc-trust:first-child { border-top: none; padding-top: 0; }
+.cc-trust__ic { width: 30px; height: 30px; border-radius: 9px; background: var(--bg-surface-2); display: inline-flex; align-items: center; justify-content: center; color: var(--text-primary); }
+.cc-trust__ic svg { width: 16px; height: 16px; }
+.cc-trust__t { font-size: 13px; font-weight: 600; }
+.cc-trust__s { font-size: 11.5px; color: var(--text-secondary); }
+
+/* Field (CC7) */
+.cc-field { display: flex; flex-direction: column; gap: 5px; }
+.cc-field__label { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); }
+.cc-field__input { background: var(--bg-base); border: 1px solid var(--border); border-radius: 9px; padding: 11px 13px; font-size: 14px; color: var(--text-primary); }
+.cc-chips { display: flex; gap: 5px; flex-wrap: wrap; }
+.cc-chip { padding: 6px 11px; border-radius: 999px; font-size: 12px; font-family: inherit; font-weight: 500; background: var(--bg-base); border: 1px solid var(--border); color: var(--text-primary); cursor: pointer; }
+.cc-chip.is-on { background: var(--accent-strong); color: var(--on-accent); border-color: transparent; font-weight: 600; }
+
+/* CTAs */
+.gc-btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 12px 16px; border-radius: 12px; font-family: inherit; font-size: 13.5px; font-weight: 600; cursor: pointer; border: 1px solid transparent; }
+.gc-btn--primary { background: var(--accent-strong); color: var(--on-accent); }
+.gc-btn--primary:hover { background: var(--s-40); }
+.gc-btn--ghost { background: transparent; color: var(--text-primary); border-color: var(--border); }
+.gc-btn--full { width: 100%; }
+.gc-btn--sm { padding: 8px 12px; font-size: 12px; border-radius: 10px; }
+
+/* Avatar */
+.cc-avatar { width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(135deg, var(--s-50), var(--p-40)); color: white; display: inline-flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; flex-shrink: 0; }
+
+/* Bottom tab bar */
+.phone__tabbar { display: grid; grid-template-columns: repeat(5, 1fr); padding: 8px 8px 22px; border-top: 1px solid var(--border); background: var(--bg-base); flex-shrink: 0; }
+.phone__tab { display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 5px 4px; cursor: pointer; color: var(--text-muted); }
+.phone__tab.is-on { color: var(--accent-strong); }
+.phone__tab svg { width: 22px; height: 22px; }
+.phone__tab span { font-size: 10px; font-weight: 600; }
+
+/* Decision note */
+.cc-decision { font-size: 11px; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; text-align: center; padding: 4px 0; line-height: 1.4; }
+
+/* Context */
+.proto-context { width: 100%; max-width: 480px; padding: 14px 16px; background: var(--page-card-bg); border: 1px solid var(--page-divider); border-radius: 12px; font-size: 12.5px; color: var(--page-fg-muted); line-height: 1.55; }
+.proto-context strong { color: var(--page-fg); }
+.proto-context a { color: var(--page-accent, var(--s-70)); text-decoration: none; border-bottom: 1px dotted currentColor; }
+.proto-context__head { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; font-weight: 700; color: var(--page-fg); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px; }
+
+.screen { animation: fade-in 220ms ease; }
+@keyframes fade-in { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+@media (max-width: 720px) {.phone { transform: scale(0.92); transform-origin: top center; } }
+@media (max-width: 480px) {.phone { transform: scale(0.78); } }
+</style>
+<script src="flow-chain.js" defer></script>
+</head>
+<body>
+
+<div class="proto-shell">
+
+ <aside class="proto-sidebar">
+ <div class="proto-sidebar__brand">
+ <span class="proto-sidebar__mark"><img src="../assets/gc-mark-mono-light.svg" alt=""></span>
+ <span>
+ <div class="proto-sidebar__name">holdwell</div>
+ <span class="proto-sidebar__pill">mobile</span>
+ </span>
+ </div>
+ <a class="proto-sidebar__back" href="index.html">← prototype index</a>
+
+ <button class="proto-theme-toggle" type="button" aria-label="Toggle theme">
+ <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+ <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+ <span class="theme-label">Dark</span>
+ </button>
+
+ <div class="proto-section-title">§09 · SE1 – SE11 · new in v2</div>
+ <nav class="proto-scrubber" id="scrubber"></nav>
+
+ <div class="proto-sidebar__footer">
+ Source: 31 Oct backlog review · C1–C7, D1–D2<br>
+ Replaces v1 §09 Loan + SECCI</div>
+ </aside>
+
+ <main class="proto-stage">
+
+ <div class="proto-modebar">
+ <span>Screen <span class="proto-modebar__id" id="screenId">SE1</span></span>
+ <span class="proto-modebar__pill" id="screenName">Your self-exclusion plan</span>
+ <div class="proto-modebar__bar"><div class="proto-modebar__bar__fill" id="progressFill" style="width:14%"></div></div>
+ <div class="proto-arrows">
+ <button class="proto-arrow" id="navPrev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+ <button class="proto-arrow" id="navNext"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
+ </div>
+ </div>
+
+ <div class="phone">
+ <div class="phone__notch"></div>
+ <div class="phone__inner">
+ <div class="phone__statusbar">
+ <span>9:41</span>
+ <span class="phone__statusbar__right">
+ <span style="display:inline-flex;gap:3px"><span style="width:4px;height:4px;border-radius:50%;background:currentColor"></span><span style="width:4px;height:5px;border-radius:1px;background:currentColor"></span><span style="width:4px;height:6px;border-radius:1px;background:currentColor"></span><span style="width:4px;height:7px;border-radius:1px;background:currentColor"></span></span>
+ <span>100%</span>
+ </span>
+ </div>
+ <div id="stage" style="flex:1;display:flex;flex-direction:column;min-height:0"></div>
+ </div>
+ </div>
+
+ <div class="proto-context" id="contextPanel">
+ <div class="proto-context__head">Screen context</div>
+ <div id="contextBody"></div>
+ </div>
+
+ </main>
+</div>
+
+<script>
+const SCREENS = [
+ { id: 'SE1', name: 'Your self-exclusion plan', kind: 'se1' },
+ { id: 'SE2', name: 'GAMSTOP · step by step', kind: 'se2' },
+ { id: 'SE3', name: 'GAMSTOP · show us it\'s done', kind: 'se3' },
+ { id: 'SE4', name: 'GAMSTOP · verified', kind: 'se4' },
+ { id: 'SE5', name: 'No ID GAMSTOP accepts', kind: 'se5' },
+ { id: 'SE6', name: 'Betting shops · by phone', kind: 'se6' },
+ { id: 'SE7', name: 'Betting shops · at Northbank', kind: 'se7' },
+ { id: 'SE8', name: 'Bingo + arcades', kind: 'se8' },
+ { id: 'SE9', name: 'Gamban · install', kind: 'se9' },
+ { id: 'SE10', name: 'Gamban · Joanna confirms', kind: 'se10' },
+ { id: 'SE11', name: 'All doors closed', kind: 'se11' },
+];
+
+const V2 = (ids, k, t) => `<div class="v2-meta"><span class="v2-meta__when v2-${k}">${t}</span><span class="v2-meta__ids">Backlog ${ids}</span></div>`;
+const OPEN = (q) => `<div class="v2-open"><strong>Open design question.</strong> ${q}</div>`;
+const CTX = {
+ se1: '<strong>SE1 Your plan.</strong> New §09, replacing v1 §09 Loan + SECCI. Every scheme Sam needs, from how she said she gambles (ON3). All are required on day one for anyone who uses them (31 Oct review). Status comes from evidence Sam provides plus an ops check (§13). The credit union sees "self-exclusion verified" as a milestone.' + V2('C1 · C2 · C3 · C6', 'mvp1', 'MVP · Drop 1'),
+ se2: '<strong>SE2 GAMSTOP, step by step.</strong> GAMSTOP has no API and won\'t share status with us, so Sam registers on GAMSTOP\'s own site with guidance. We don\'t register on her behalf (an agent was discussed and parked: C4, Phase 2). Every email she has gambled with is listed (ON3.2).' + V2('C1', 'mvp1', 'MVP · Drop 1'),
+ se3: '<strong>SE3 Show us it\'s done.</strong> Two options for proof: connect the inbox read-only so we can find GAMSTOP\'s confirmation (match the address and the time), or forward it. Time from referral to exclusion is recorded: a data point for the completion model (J5).' + V2('C1 · C6', 'mvp1', 'MVP · Drop 1') + OPEN('Build inbox connection, forwarding, or both? (C1 · owner JP + Tuomas)'),
+ se4: '<strong>SE4 Verified.</strong> v1 CC5 content kept (what GAMSTOP covers and doesn\'t). "Doesn\'t cover" now points to the SE6–SE8 schemes and Gamban instead of BetFilter TBD. Ops verifies the evidence in §13 before the status goes green.' + V2('C1 · C6', 'mvp1', 'MVP · Drop 1'),
+ se5: '<strong>SE5 No accepted ID.</strong> Raised in session 4: some people can\'t register because they lack ID GAMSTOP accepts. Options: an ID provider built for people without standard ID (name unclear in the recording), or emailing every licensed operator from Sam\'s own inbox (operator email agent, Phase 2).' + V2('C1 · C4', 'p1', 'Phase 1') + OPEN('Which ID provider for people without standard ID?'),
+ se6: '<strong>SE6 Betting shops by phone.</strong> The betting-shop scheme is phone-only and covers the areas Sam chooses; staff may offer support on the call. Sam calls with the script on screen, then uploads the confirmation. A voice agent was discussed and is Phase 2 (C5).' + V2('C2 · C6', 'mvp1', 'MVP · Drop 1'),
+ se7: '<strong>SE7 At the credit union.</strong> Session 4 option: do it in person at the Northbank branch with staff. Partner credit unions are in Liverpool, Manchester and Scotland.' + V2('C2', 'mvp1', 'MVP · Drop 1') + OPEN('Can partner credit unions host in-branch self-exclusion? Ask the first credit union.'),
+ se8: '<strong>SE8 Bingo and arcades.</strong> JP: "Yes, needed." Lower risk for online gamblers like Sam, so optional for her; required for anyone who says they use them. Lessons from the first weeks decide how hard we push.' + V2('C3', 'mvp1', 'MVP · Drop 1'),
+ se9: '<strong>SE9 Gamban.</strong> v1 CC4, moved here. Sam must have Gamban on phone and laptop; GC pays the subscription. v1\'s daily API check is replaced by sponsor confirmation (agreed in session 4); automatic checking is later (D2). We don\'t run our own VPN.' + V2('D1 · D2', 'mvp1', 'MVP · Drop 1'),
+ se10: '<strong>SE10 Joanna confirms.</strong> Shown only once Joanna has accepted (§15). The phone confirmation unlocks card activation in §07.' + V2('D1', 'mvp1', 'MVP · Drop 1'),
+ se11: '<strong>SE11 All doors closed.</strong> Summary with times. Feeds the completion criteria (§10) and the credit union milestone. Next stop: the card, which needs all of the above plus an accepted sponsor.' + V2('C6 · J7', 'mvp1', 'MVP · Drop 1'),
+};
+
+const ANNA = (text) => `
+ <div class="gc-card gc-card--anna">
+ <span class="anna-av"><img src="../assets/gc-mark-mono-light.svg" alt=""></span>
+ <div><div class="anna-name">Anna</div><p>${text}</p></div>
+ </div>`;
+
+const TOPBAR = (title, back = false) => `
+ <div class="phone__topbar">
+ ${back ? `<button class="phone__back" onclick="prev()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>` : `<span class="phone__mark"><img src="../assets/gc-mark-mono-light.svg" alt=""></span>`}
+ <span class="phone__title">${title}</span>
+ <button class="gc-crisis-pill" type="button"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7-4.5-9-9.5C2 7 5 4 8 4c1.7 0 3.2.8 4 2.8-1.2 2.3-2 4-2 3 0 6 3 5 7.5C19 16.5 12 21 12 21z"/></svg> Help</button>
+ </div>`;
+
+const TABBAR = (active = 0) => {
+ const tabs = [
+ { name: 'Home', svg: '<path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>' },
+ { name: 'Banking', svg: '<rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>' },
+ { name: 'Anna', svg: '<path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/>' },
+ { name: 'Activity', svg: '<path d="M3 3v18h18"/><path d="m7 14 4-4 4 4 5-5"/>' },
+ { name: 'Profile', svg: '<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>' },
+ ];
+ return `<div class="phone__tabbar">${tabs.map((t, i) =>
+ `<div class="phone__tab ${i === active ? 'is-on' : ''}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${t.svg}</svg><span>${t.name}</span></div>`
+ ).join('')}</div>`;
+};
+
+const TICK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>';
+const STEP = (state, n, t, s) => `<div class="cc-step ${state === 'done' ? 'is-done' : state === 'now' ? 'is-active' : ''}"><span class="cc-step__c">${state === 'done' ? TICK : n}</span><div><div class="cc-step__t">${t}</div><div class="cc-step__s">${s}</div></div></div>`;
+const SCHEME = (ic, bg, fg, t, s, pill) => `<div class="cc-chan"><span class="cc-chan__ic" style="background:${bg};color:${fg}">${ic}</span><div><div class="cc-chan__t">${t}</div><div class="cc-chan__s">${s}</div></div>${pill}</div>`;
+const ICON = {
+ web: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 4 10 15 15 0 0 1-4 10 15 15 0 0 1-4-10 15 15 0 0 1 4-10z"/></svg>',
+ shop: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 9 5 4h14l2 5"/><path d="M4 9v11h16V9"/><path d="M9 20v-6h6v6"/></svg>',
+ bingo: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg>',
+ arcade: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="5" y="3" width="14" height="18" rx="2"/><circle cx="12" cy="10" r="3"/><path d="M9 17h6"/></svg>',
+ shield: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 2 4.5 6v6c0 5 3.5 9 7.5 10 4-1 7.5-5 7.5-10V6Z"/></svg>',
+};
+
+const builders = {
+ se1: () => `
+ ${TOPBAR('Self-exclusion')}
+ <div class="cc-body">
+ <div class="gc-card gc-card--milestone">
+ <span class="cc-pill" style="background:rgba(255,255,255,0.18);color:white">Step 6 of 8 · Northbank sees this</span>
+ <h2 style="font-size:22px;font-weight:800;letter-spacing:-0.02em;line-height:1.15;margin:2px 0 0">Close every door.</h2>
+ <p style="font-size:12.5px;line-height:1.5;margin:0">Free, and lasts at least 6 months. Built from how you said you gamble.</p>
+ </div>
+ <div class="gc-card" style="padding:13px 14px">
+ <h3 style="font-size:13.5px;font-weight:700;margin:0">Your schemes</h3>
+ ${SCHEME(ICON.web, 'var(--p-40)', 'var(--p-95)', 'GAMSTOP · online', 'All licensed UK sites and apps · 2 emails', '<span class="cc-pill cc-pill--info">Start</span>')}
+ ${SCHEME(ICON.shop, 'var(--w-30)', 'var(--w-80)', 'Betting shops', 'Home N4, work EC2, match days N7', '<span class="cc-pill">To do</span>')}
+ ${SCHEME(ICON.bingo, 'var(--s-20)', 'var(--s-80)', 'Bingo halls', 'You said you don\'t use them', '<span class="cc-pill">Optional</span>')}
+ ${SCHEME(ICON.arcade, 'var(--s-20)', 'var(--s-80)', 'Arcades', 'You said you don\'t use them', '<span class="cc-pill">Optional</span>')}
+ ${SCHEME(ICON.shield, 'var(--t-20)', 'var(--t-80)', 'Gamban', 'Phone and laptop · Joanna confirms', '<span class="cc-pill">To do</span>')}
+ </div>
+ ${ANNA("Most people do GAMSTOP in one go and the shops another day. Both count from the day you finish.")}
+ <button class="gc-btn gc-btn--primary gc-btn--full" onclick="next()">Start with GAMSTOP</button>
+ </div>
+ ${TABBAR(0)}`,
+
+ se2: () => `
+ ${TOPBAR('GAMSTOP', true)}
+ <div class="cc-body">
+ <div class="gc-card">
+ <span class="cc-pill cc-pill--info">~5 minutes</span>
+ <h2 style="font-size:20px;font-weight:800;letter-spacing:-0.02em;line-height:1.2;margin:2px 0 0">Register on GAMSTOP's site.</h2>
+ <p style="font-size:12.5px;color:var(--text-secondary);line-height:1.5;margin:0">We can't do it for you, but we'll walk you through it.</p>
+ </div>
+ <div class="gc-card" style="padding:13px 14px">
+ ${STEP('done', 1, 'Open gamstop.co.uk', 'Opens in your browser')}
+ ${STEP('now', 2, 'Add every email you\'ve gambled with', 'sam.kennedy@… and samk94@… · plus old numbers')}
+ ${STEP('', 3, 'Choose 5 years', 'Minimum is 6 months. Longer gives you room.')}
+ ${STEP('', 4, 'Come back here', 'We\'ll look for GAMSTOP\'s confirmation')}
+ </div>
+ <div class="gc-card gc-card--alert">
+ <strong style="font-size:12.5px;color:var(--text-primary)">Every email matters</strong>
+ <p style="font-size:11.5px;color:var(--text-secondary);line-height:1.5;margin:0">Operators match on email, phone and address. One missing email is the most common gap.</p>
+ </div>
+ <button class="gc-btn gc-btn--primary gc-btn--full" onclick="next()">Open GAMSTOP</button>
+ <button class="gc-btn gc-btn--ghost gc-btn--full" onclick="go(4)">I can't register: no accepted ID</button>
+ </div>
+ ${TABBAR(0)}`,
+
+ se3: () => `
+ ${TOPBAR('GAMSTOP', true)}
+ <div class="cc-body">
+ <div style="padding:6px 0">
+ <h2 style="font-size:20px;font-weight:800;margin:0">Show us it's done.</h2>
+ <p style="font-size:12px;color:var(--text-secondary);margin:4px 0 0">Northbank needs it verified, not just ticked.</p>
+ </div>
+ <div class="gc-card" style="padding:13px 14px">
+ <h3 style="font-size:13.5px;font-weight:700;margin:0">Option 1 · we find the email</h3>
+ <p style="font-size:12px;color:var(--text-secondary);line-height:1.5;margin:0">Connect your inbox once, read-only. We only look for GAMSTOP's confirmation, then disconnect.</p>
+ <button class="gc-btn gc-btn--primary" style="align-self:flex-start;margin-top:4px">Connect Gmail</button>
+ </div>
+ <div class="gc-card" style="padding:13px 14px">
+ <h3 style="font-size:13.5px;font-weight:700;margin:0">Option 2 · forward it</h3>
+ <p style="font-size:12px;color:var(--text-secondary);line-height:1.5;margin:0">Forward GAMSTOP's email to</p>
+ <div style="font-family:'JetBrains Mono',monospace;font-size:12px;padding:8px 10px;border-radius:8px;background:var(--bg-surface-2)">proof@holdwell.com</div>
+ </div>
+ <div class="gc-card gc-card--milestone">
+ <span class="cc-pill" style="background:rgba(0,0,0,0.22);color:white">Found</span>
+ <h3 style="font-size:15px;font-weight:800;margin:2px 0 0">GAMSTOP confirmation · 10:42 today</h3>
+ <p style="font-size:11.5px;margin:0;line-height:1.5">sam.kennedy@… · samk94@… · 5 years · checking now</p>
+ </div>
+ <div class="cc-decision">open question · inbox connection, forwarding, or both (C1)</div>
+ <button class="gc-btn gc-btn--primary gc-btn--full" onclick="next()">Continue</button>
+ </div>
+ ${TABBAR(0)}`,
+
+ se4: () => `
+ ${TOPBAR('GAMSTOP', true)}
+ <div class="cc-body">
+ <div class="gc-card">
+ <span class="cc-pill cc-pill--info">Verified by Holdwell · 14:20</span>
+ <h2 style="font-size:18px;font-weight:800;letter-spacing:-0.02em;line-height:1.2;margin:2px 0 0">Self-excluded · UK online gambling · 5 yrs.</h2>
+ <p style="font-size:12.5px;color:var(--text-secondary);line-height:1.5;margin:0">All licensed operators must refuse you.</p>
+ <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;padding-top:8px;border-top:1px solid var(--border);margin-top:4px">
+ <div><span style="font-family:'JetBrains Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-muted)">Referral → excluded</span><div style="font-size:12.5px;font-weight:700;margin-top:2px">1 day 3 hrs</div></div>
+ <div><span style="font-family:'JetBrains Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-muted)">Expires</span><div style="font-size:12.5px;font-weight:700;margin-top:2px">10 Mar 2031</div></div>
+ </div>
+ </div>
+ <div class="gc-card" style="padding:13px 14px">
+ <h3 style="font-size:13.5px;font-weight:700;margin:0">What it covers</h3>
+ <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:7px;font-size:12px;line-height:1.55;color:var(--text-secondary)">
+ <li><strong style="color:var(--text-primary)">All UKGC-licensed</strong> · online + apps</li>
+ <li><strong style="color:var(--text-primary)">Cannot be lifted early</strong></li>
+ </ul>
+ </div>
+ <div class="gc-card" style="padding:13px 14px">
+ <h3 style="font-size:13.5px;font-weight:700;margin:0">Doesn't cover · next steps</h3>
+ <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:6px;font-size:11.5px;line-height:1.5;color:var(--text-secondary)">
+ <li>Betting shops → SE6 / SE7</li>
+ <li>Bingo halls and arcades → SE8</li>
+ <li>Unlicensed sites → Gamban (SE9) + your card's block list</li>
+ </ul>
+ </div>
+ <button class="gc-btn gc-btn--primary gc-btn--full" onclick="go(5)">Next: betting shops</button>
+ </div>
+ ${TABBAR(0)}`,
+
+ se5: () => `
+ ${TOPBAR('GAMSTOP', true)}
+ <div class="cc-body">
+ <div style="padding:6px 0">
+ <h2 style="font-size:20px;font-weight:800;margin:0">No problem. There's another way.</h2>
+ <p style="font-size:12px;color:var(--text-secondary);margin:4px 0 0">Some people can't register because their ID isn't accepted.</p>
+ </div>
+ <div class="gc-card" style="padding:13px 14px">
+ <div class="cc-trust"><span class="cc-trust__ic">${ICON.shield}</span><div><div class="cc-trust__t">Get a free digital ID</div><div class="cc-trust__s">Works with a bank account or a bill. Then retry GAMSTOP.</div></div></div>
+ <div class="cc-trust"><span class="cc-trust__ic">${ICON.web}</span><div><div class="cc-trust__t">We email the operators for you · Phase 2</div><div class="cc-trust__s">From your own inbox, to every licensed operator. You approve before anything is sent.</div></div></div>
+ <div class="cc-trust"><span class="cc-trust__ic">${ICON.shop}</span><div><div class="cc-trust__t">Talk to the Holdwell team</div><div class="cc-trust__s">We'll go through it with you</div></div></div>
+ </div>
+ ${ANNA("This happens more than people think. It doesn't hold your programme up.")}
+ <button class="gc-btn gc-btn--ghost gc-btn--full" onclick="go(1)">Back to GAMSTOP</button>
+ </div>
+ ${TABBAR(0)}`,
+
+ se6: () => `
+ ${TOPBAR('Betting shops', true)}
+ <div class="cc-body">
+ <div class="gc-card">
+ <span class="cc-pill cc-pill--info">10–30 min · by phone</span>
+ <h2 style="font-size:20px;font-weight:800;letter-spacing:-0.02em;line-height:1.2;margin:2px 0 0">Exclude from shops near you.</h2>
+ <p style="font-size:12.5px;color:var(--text-secondary);line-height:1.5;margin:0">The scheme covers the areas you choose. Think home, work and your usual routes.</p>
+ </div>
+ <div class="gc-card" style="padding:13px 14px">
+ <div class="cc-field">
+ <span class="cc-field__label">Areas</span>
+ <div class="cc-chips"><button class="cc-chip is-on">Home · N4</button><button class="cc-chip is-on">Work · EC2</button><button class="cc-chip is-on">Match days · N7</button><button class="cc-chip">+ Add</button></div>
+ </div>
+ <div class="cc-field">
+ <span class="cc-field__label">Call the scheme</span>
+ <div class="cc-field__input" style="font-family:'JetBrains Mono',monospace">Scheme helpline · number TBC</div>
+ </div>
+ <p style="font-size:11.5px;color:var(--text-secondary);line-height:1.5;margin:0">Say: "I'd like to self-exclude from betting shops in N4, EC2 and N7 for 12 months." Have a recent photo of yourself ready.</p>
+ </div>
+ ${STEP('now', 1, 'Upload the confirmation', 'Text, email or letter · a photo is fine')}
+ <button class="gc-btn gc-btn--primary gc-btn--full">Upload confirmation</button>
+ <button class="gc-btn gc-btn--ghost gc-btn--full" onclick="next()">Rather do it in person?</button>
+ </div>
+ ${TABBAR(0)}`,
+
+ se7: () => `
+ ${TOPBAR('Betting shops', true)}
+ <div class="cc-body">
+ <div class="gc-card gc-card--milestone">
+ <span class="cc-pill" style="background:rgba(255,255,255,0.18);color:white">Northbank Credit Union</span>
+ <h2 style="font-size:20px;font-weight:800;letter-spacing:-0.02em;line-height:1.2;margin:2px 0 0">Do it with us, in branch.</h2>
+ <p style="font-size:12.5px;line-height:1.5;margin:0">A member of staff sits with you while you call. Bring a photo ID if you have one.</p>
+ </div>
+ <div class="gc-card" style="padding:13px 14px">
+ <h3 style="font-size:13.5px;font-weight:700;margin:0">Finsbury Park branch</h3>
+ <div class="cc-chips"><button class="cc-chip">Thu 12 · 10:00</button><button class="cc-chip is-on">Thu 12 · 14:30</button><button class="cc-chip">Sat 14 · 11:00</button></div>
+ </div>
+ <div class="cc-decision">open question · can partner credit unions host this? (C2)</div>
+ <button class="gc-btn gc-btn--primary gc-btn--full" onclick="next()">Book Thu 12 · 14:30</button>
+ </div>
+ ${TABBAR(0)}`,
+
+ se8: () => `
+ ${TOPBAR('Bingo + arcades', true)}
+ <div class="cc-body">
+ <div class="gc-card">
+ <span class="cc-pill">Optional for you</span>
+ <h2 style="font-size:18px;font-weight:800;letter-spacing:-0.02em;line-height:1.2;margin:2px 0 0">Bingo halls and arcades have their own schemes.</h2>
+ <p style="font-size:12.5px;color:var(--text-secondary);line-height:1.5;margin:0">You said you don't use them. If that changes, it's quick to add.</p>
+ </div>
+ <div class="gc-card" style="padding:13px 14px">
+ ${SCHEME(ICON.bingo, 'var(--s-20)', 'var(--s-80)', 'Bingo halls', 'National bingo self-exclusion scheme', '<button class="gc-btn gc-btn--ghost" style="padding:6px 10px;font-size:12px">Add</button>')}
+ ${SCHEME(ICON.arcade, 'var(--s-20)', 'var(--s-80)', 'Arcades', 'Adult gaming centres scheme', '<button class="gc-btn gc-btn--ghost" style="padding:6px 10px;font-size:12px">Add</button>')}
+ </div>
+ ${ANNA("If gambling starts to move somewhere new, like arcades or scratchcards, we'll notice and talk to you first.")}
+ <button class="gc-btn gc-btn--primary gc-btn--full" onclick="next()">Next: Gamban</button>
+ </div>
+ ${TABBAR(0)}`,
+
+ se9: () => `
+ ${TOPBAR('Gamban', true)}
+ <div class="cc-body">
+ <div class="gc-card gc-card--milestone">
+ <span class="cc-pill" style="background:rgba(0,0,0,0.22);color:white">Holdwell pays</span>
+ <h2 style="font-size:20px;font-weight:800;letter-spacing:-0.02em;line-height:1.15;margin:2px 0 0">Block gambling on every device.</h2>
+ <p style="font-size:12.5px;line-height:1.5;margin:0">600,000+ gambling sites and apps refuse to open.</p>
+ </div>
+ <div class="gc-card" style="padding:13px 14px">
+ <h3 style="font-size:13.5px;font-weight:700;margin:0">Your devices</h3>
+ ${SCHEME(ICON.shield, 'var(--t-20)', 'var(--t-80)', 'This phone', 'Installed 9 Mar 19:20', '<span class="cc-pill cc-pill--info">Installed</span>')}
+ ${SCHEME(ICON.web, 'var(--p-40)', 'var(--p-95)', 'Laptop', 'Link sent to your email', '<span class="cc-pill">To do</span>')}
+ ${SCHEME(ICON.arcade, 'var(--s-20)', 'var(--s-80)', 'Any other device', 'Tablet, work laptop…', '<span class="cc-pill">Optional</span>')}
+ </div>
+ <div class="gc-card" style="padding:13px 14px">
+ <h3 style="font-size:13.5px;font-weight:700;margin:0">Three layers</h3>
+ <div class="cc-trust"><span class="cc-trust__ic">${ICON.shield}</span><div><div class="cc-trust__t">Self-exclusion</div><div class="cc-trust__s">Operators refuse you</div></div></div>
+ <div class="cc-trust"><span class="cc-trust__ic">${ICON.web}</span><div><div class="cc-trust__t">Gamban (this screen)</div><div class="cc-trust__s">Your devices refuse the sites</div></div></div>
+ <div class="cc-trust"><span class="cc-trust__ic">${ICON.shop}</span><div><div class="cc-trust__t">Holdwell card</div><div class="cc-trust__s">Your card refuses the payment</div></div></div>
+ </div>
+ <button class="gc-btn gc-btn--primary gc-btn--full" onclick="next()">Ask Joanna to confirm</button>
+ </div>
+ ${TABBAR(0)}`,
+
+ se10: () => `
+ ${TOPBAR('Gamban', true)}
+ <div class="cc-body">
+ <div class="gc-card" style="padding:14px 16px">
+ <div style="display:flex;align-items:center;gap:12px">
+ <span class="cc-avatar">JM</span>
+ <div style="flex:1;min-width:0">
+ <span class="cc-pill cc-pill--sponsor" style="margin-bottom:4px">Sponsor</span>
+ <h2 style="font-size:17px;font-weight:800;letter-spacing:-0.01em;margin:2px 0 0">Joanna checks it with you</h2>
+ <div style="font-size:11.5px;color:var(--text-secondary);margin-top:1px">Accepted 8 Mar · sees "Protection on" in person</div>
+ </div>
+ </div>
+ </div>
+ <div class="gc-card" style="padding:13px 14px">
+ ${STEP('done', 1, 'Phone confirmed by Joanna', '9 Mar 19:40 · card can now activate')}
+ ${STEP('now', 2, 'Laptop', 'Installed · waiting for Joanna')}
+ </div>
+ ${ANNA("Having someone look is harder to get round than any automatic check. That's the point.")}
+ <button class="gc-btn gc-btn--primary gc-btn--full" onclick="next()">Continue</button>
+ </div>
+ ${TABBAR(0)}`,
+
+ se11: () => `
+ ${TOPBAR('Self-exclusion')}
+ <div class="cc-body">
+ <div class="gc-card gc-card--milestone">
+ <span class="cc-pill" style="background:rgba(255,255,255,0.18);color:white">Verified · Northbank notified</span>
+ <h2 style="font-size:22px;font-weight:800;letter-spacing:-0.02em;line-height:1.15;margin:2px 0 0">Every door closed.</h2>
+ <p style="font-size:12.5px;line-height:1.5;margin:0">2 days from Northbank's referral. That's faster than most.</p>
+ </div>
+ <div class="gc-card" style="padding:13px 14px">
+ ${STEP('done', 1, 'GAMSTOP · 5 years', 'Verified 9 Mar 14:20')}
+ ${STEP('done', 2, 'Betting shops · N4, EC2, N7', 'Verified 10 Mar 16:05')}
+ ${STEP('done', 3, 'Gamban · phone', 'Confirmed by Joanna 9 Mar')}
+ ${STEP('now', 4, 'Gamban · laptop', 'Waiting for Joanna')}
+ </div>
+ <div class="cc-stat-row">
+ <div><div class="cc-stat-row__n">2 days</div><div class="cc-stat-row__l">To exclude</div></div>
+ <div><div class="cc-stat-row__n">3</div><div class="cc-stat-row__l">Schemes</div></div>
+ <div><div class="cc-stat-row__n">7/8</div><div class="cc-stat-row__l">Set-up</div></div>
+ </div>
+ <button class="gc-btn gc-btn--primary gc-btn--full" onclick="location.href='mobile-cards.html'">Next: your Holdwell card →</button>
+ </div>
+ ${TABBAR(0)}`,
+};
+
+let idx = 0;
+
+function toggleClass(el) {
+ if (el.classList.contains('is-locked')) return;
+ el.classList.toggle('is-on');
+}
+
+function render() {
+ const screen = SCREENS[idx];
+ document.getElementById('stage').innerHTML = `<div class="screen" style="display:flex;flex-direction:column;flex:1;min-height:0">${builders[screen.kind]()}</div>`;
+ document.getElementById('screenId').textContent = screen.id;
+ document.getElementById('screenName').textContent = screen.name;
+ document.getElementById('progressFill').style.width = ((idx + 1) / SCREENS.length * 100) + '%';
+ document.getElementById('navPrev').disabled = idx === 0;
+ document.getElementById('navNext').disabled = idx === SCREENS.length - 1;
+ document.querySelectorAll('.proto-scrubber__item').forEach((el, i) => {
+ el.classList.toggle('is-active', i === idx);
+ if (i === idx) el.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+ });
+ document.getElementById('contextBody').innerHTML = CTX[screen.kind] || screen.name;
+}
+
+function next() { if (idx < SCREENS.length - 1) { idx++; render(); } }
+function prev() { if (idx > 0) { idx--; render(); } }
+function go(i) { idx = i; render(); }
+
+function buildScrubber() {
+ const nav = document.getElementById('scrubber');
+ SCREENS.forEach((s, i) => {
+ const btn = document.createElement('button');
+ btn.className = 'proto-scrubber__item';
+ btn.innerHTML = `<span class="proto-scrubber__id">${s.id}</span><span class="proto-scrubber__name">${s.name}</span>`;
+ btn.addEventListener('click', () => go(i));
+ nav.appendChild(btn);
+ });
+}
+
+function initTheme() {
+ const root = document.documentElement;
+ const stored = localStorage.getItem('gc-proto-theme');
+ const initial = stored || 'dark';
+ root.setAttribute('data-theme', initial);
+ document.querySelector('.theme-label').textContent = initial === 'dark' ? 'Dark' : 'Light';
+ document.querySelector('.proto-theme-toggle').addEventListener('click', () => {
+ const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+ root.setAttribute('data-theme', next);
+ document.querySelector('.theme-label').textContent = next === 'dark' ? 'Dark' : 'Light';
+ try { localStorage.setItem('gc-proto-theme', next); } catch(e) {}
+ });
+}
+
+document.getElementById('navPrev').addEventListener('click', prev);
+document.getElementById('navNext').addEventListener('click', next);
+document.addEventListener('keydown', (e) => {
+ if (e.key === 'ArrowRight') next();
+ if (e.key === 'ArrowLeft') prev();
+});
+
+buildScrubber();
+initTheme();
+render();
+</script>
+
+</body>
+</html>

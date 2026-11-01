@@ -1,0 +1,805 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Holdwell · Mobile · §15 Sponsor onboarding</title>
+<link rel="icon" href="../assets/gc-favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+ --p-10:#0B0F1C;--p-20:#161B2D;--p-30:#20273C;--p-40:#354872;--p-50:#4D608C;--p-60:#6B7DA6;--p-90:#DCE2F0;--p-95:#ECF0F9;--p-99:#FAFBFE;--p-100:#FFF;
+ --s-10:#28215A;--s-20:#3E3478;--s-30:#534792;--s-40:#6B5DAC;--s-50:#8576C2;--s-70:#B5ACDF;--s-80:#CFC8EA;--s-90:#E8E4F4;
+ --t-20:#1A6047;--t-30:#1F7058;--t-50:#399971;--t-60:#5BB088;--t-80:#ADDCC2;--t-90:#D5EDDF;
+ --w-30:#6B4500;--w-60:#C28200;--w-80:#FAB44A;--w-90:#FFDFA8;
+ --e-30:#7A1F1F;--e-50:#C73838;--e-80:#F4A4A4;--e-90:#FBD9D9;
+ --n-50:#76798A;--n-80:#C5C8D2;--n-95:#F1F2F5;--nv-80:#C5C9DD;
+}
+[data-theme="dark"] { --bg-base: var(--p-30); --bg-surface: var(--p-20); --bg-surface-2: var(--p-10); --border: rgba(255,255,255,0.08); --text-primary: var(--n-95); --text-secondary: var(--nv-80); --text-muted: rgba(255,255,255,0.4); --accent: var(--s-70); --accent-strong: var(--s-50); --on-accent: #fff; --page-bg: #0a0e1a; --page-fg: var(--n-95); --page-fg-muted: var(--nv-80); --page-card-bg: var(--p-20); --page-divider: rgba(255,255,255,0.06); }
+[data-theme="light"] { --bg-base: var(--p-99); --bg-surface: #fff; --bg-surface-2: var(--p-95); --border: rgba(22,27,45,0.08); --text-primary: var(--p-20); --text-secondary: var(--n-50); --text-muted: var(--n-50); --accent: var(--p-40); --accent-strong: var(--s-40); --on-accent: #fff; --page-bg: var(--p-95); --page-fg: var(--p-20); --page-fg-muted: var(--n-50); --page-card-bg: #fff; --page-divider: rgba(22,27,45,0.08); }
+* { box-sizing: border-box; }
+html, body { background: var(--page-bg); color: var(--page-fg); margin: 0; transition: background-color 220ms ease, color 220ms ease; }
+body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif; font-size: 14px; line-height: 1.5; -webkit-font-smoothing: antialiased; min-height: 100vh; }
+.proto-shell { display: grid; grid-template-columns: 280px 1fr; gap: 0; min-height: 100vh; }
+@media (max-width: 960px) {.proto-shell { grid-template-columns: 1fr; } }
+.proto-sidebar { background: var(--page-card-bg); border-right: 1px solid var(--page-divider); padding: 28px 22px; position: sticky; top: 0; height: 100vh; overflow-y: auto; display: flex; flex-direction: column; gap: 16px; }
+@media (max-width: 960px) {.proto-sidebar { position: static; height: auto; max-height: 50vh; border-right: none; border-bottom: 1px solid var(--page-divider); } }
+.proto-sidebar__brand { display: flex; align-items: center; gap: 10px; }
+.proto-sidebar__mark { width: 36px; height: 36px; border-radius: 10px; background: var(--p-30); display: inline-flex; align-items: center; justify-content: center; }
+.proto-sidebar__mark img { width: 70%; height: 70%; }
+.proto-sidebar__name { font-weight: 700; font-size: 17px; letter-spacing: -0.01em; }
+.proto-sidebar__pill { display: inline-flex; padding: 3px 9px; border-radius: 999px; background: linear-gradient(120deg, var(--s-50), var(--p-50), var(--t-50)); color: white; font-weight: 700; font-size: 9.5px; font-family: 'JetBrains Mono', monospace; letter-spacing: 0.06em; text-transform: uppercase; }
+.proto-sidebar__back { display: inline-flex; align-items: center; gap: 6px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--page-fg-muted); text-decoration: none; }
+.proto-section-title { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--page-fg-muted); margin: 12px 0 6px; }
+.proto-scrubber { display: flex; flex-direction: column; gap: 2px; }
+.proto-scrubber__item { display: grid; grid-template-columns: 44px 1fr; gap: 8px; align-items: center; padding: 7px 10px; border-radius: 8px; cursor: pointer; border: none; background: transparent; color: inherit; font-family: inherit; text-align: left; }
+.proto-scrubber__item:hover { background: rgba(127,127,127,0.08); }
+.proto-scrubber__item.is-active { background: var(--accent-strong); color: var(--on-accent); }
+.proto-scrubber__item.is-active.proto-scrubber__id { color: rgba(255,255,255,0.85); }
+.proto-scrubber__id { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; color: var(--page-fg-muted); letter-spacing: 0.06em; }
+.proto-scrubber__name { font-size: 12.5px; font-weight: 500; }
+.proto-sidebar__footer { margin-top: auto; padding-top: 16px; border-top: 1px solid var(--page-divider); font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--page-fg-muted); }
+.proto-sidebar__footer a { color: var(--page-fg-muted); text-decoration: none; border-bottom: 1px dotted currentColor; }
+.proto-theme-toggle { display: inline-flex; align-items: center; gap: 8px; padding: 7px 12px; border-radius: 8px; background: var(--bg-surface-2); border: 1px solid var(--border); color: var(--page-fg-muted); cursor: pointer; font-family: 'JetBrains Mono', monospace; font-size: 11px; align-self: flex-start; }
+.proto-theme-toggle svg { width: 12px; height: 12px; }
+[data-theme="dark"].proto-theme-toggle.icon-moon { display: none; }
+[data-theme="light"].proto-theme-toggle.icon-sun { display: none; }
+.proto-stage { display: flex; flex-direction: column; align-items: center; padding: 32px 24px 64px; gap: 22px; }
+.proto-modebar { display: flex; align-items: center; gap: 10px; padding: 10px 16px; background: var(--page-card-bg); border: 1px solid var(--page-divider); border-radius: 12px; font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: var(--page-fg-muted); flex-wrap: wrap; justify-content: center; }
+.proto-modebar__pill { display: inline-flex; padding: 3px 9px; border-radius: 999px; background: var(--bg-surface-2); }
+.proto-modebar__pill--sponsor { background: var(--s-50); color: white; }
+
+/* Sponsor-mode wrapper (visible accent strip on phone for sponsor-facing screens) */
+.phone__sponsor-strip { display: flex; align-items: center; justify-content: center; gap: 6px; padding: 5px 12px; background: var(--s-50); color: white; font-family: 'JetBrains Mono', monospace; font-size: 10.5px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; flex-shrink: 0; }
+.phone__sponsor-strip svg { width: 11px; height: 11px; }
+.phone__sponsor-url { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; padding: 6px 12px; background: var(--bg-surface-2); color: var(--text-secondary); flex-shrink: 0; text-align: center; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: center; gap: 6px; }
+.phone__sponsor-url svg { width: 10px; height: 10px; opacity: 0.7; }
+
+/* SP4 KYC step list */
+.sp-kyc-step { display: grid; grid-template-columns: 30px 1fr auto; gap: 11px; align-items: center; padding: 11px 13px; background: var(--bg-surface); border: 1px solid var(--border); border-radius: 12px; }
+.sp-kyc-step--current { border-color: var(--accent-strong); box-shadow: 0 0 0 2px rgba(133,118,194,0.18); }
+.sp-kyc-step__n { width: 30px; height: 30px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 12px; background: var(--bg-surface-2); color: var(--text-secondary); flex-shrink: 0; }
+.sp-kyc-step--done.sp-kyc-step__n { background: var(--t-50); color: white; }
+.sp-kyc-step--current.sp-kyc-step__n { background: var(--accent-strong); color: white; }
+.sp-kyc-step__t { font-size: 13px; font-weight: 600; }
+.sp-kyc-step__s { font-size: 11.5px; color: var(--text-secondary); margin-top: 1px; }
+.sp-kyc-step__pill { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; font-weight: 700; letter-spacing: 0.05em; padding: 2px 7px; border-radius: 999px; background: var(--bg-surface-2); color: var(--text-muted); }
+.sp-kyc-step--current.sp-kyc-step__pill { background: var(--accent-strong); color: white; }
+.sp-kyc-step--done.sp-kyc-step__pill { background: var(--t-20); color: var(--t-80); }
+[data-theme="light"].sp-kyc-step--done.sp-kyc-step__pill { background: var(--t-90); color: var(--t-30); }
+
+.sp-cam-frame { aspect-ratio: 4/5; background: var(--bg-base); border: 2px dashed var(--border); border-radius: 14px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; padding: 18px; color: var(--text-muted); position: relative; }
+.sp-cam-oval { width: 130px; height: 170px; border: 2.5px solid var(--accent); border-radius: 50%; opacity: 0.7; }
+.sp-cam-frame__t { font-size: 13px; font-weight: 600; color: var(--text-primary); margin-top: 8px; }
+.sp-cam-frame__s { font-size: 11px; text-align: center; line-height: 1.5; max-width: 28ch; }
+
+/* SP5 mobile bank grid */
+.sp-bank-grid-m { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.sp-bank-m { display: flex; align-items: center; gap: 10px; padding: 11px 12px; background: var(--bg-surface); border: 1px solid var(--border); border-radius: 11px; cursor: pointer; font-family: inherit; color: inherit; text-align: left; }
+.sp-bank-m:hover { border-color: var(--accent); }
+.sp-bank-m.is-on { border-color: var(--accent-strong); box-shadow: 0 0 0 2px rgba(133,118,194,0.18); }
+.sp-bank-m__logo { width: 32px; height: 32px; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; font-weight: 800; color: white; font-family: 'JetBrains Mono', monospace; font-size: 13px; flex-shrink: 0; box-shadow: 0 0 0 1px rgba(255,255,255,0.06); }
+[data-theme="light"].sp-bank-m__logo { box-shadow: 0 0 0 1px rgba(22,27,45,0.08); }
+.sp-bank-m__n { font-size: 12.5px; font-weight: 600; }
+
+/* SP6 mobile sponsor dashboard */
+.sp6-stat { padding: 13px 14px; background: var(--bg-surface); border: 1px solid var(--border); border-radius: 12px; }
+.sp6-stat__l { font-size: 10px; font-family: 'JetBrains Mono', monospace; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin-bottom: 4px; }
+.sp6-stat__n { font-size: 21px; font-weight: 800; letter-spacing: -0.02em; line-height: 1; }
+.sp6-stat__d { font-size: 11px; color: var(--text-secondary); margin-top: 3px; }
+.sp6-stat__d--ok { color: var(--t-60); }
+[data-theme="light"].sp6-stat__d--ok { color: var(--t-30); }
+.sp6-stat-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+
+.sp6-tl { display: grid; grid-template-columns: auto 1fr; gap: 9px; align-items: flex-start; padding: 10px 0; border-top: 1px solid var(--border); }
+.sp6-tl:first-of-type { border-top: none; padding-top: 0; }
+.sp6-tl__pill { display: inline-flex; padding: 2px 8px; border-radius: 999px; font-size: 9px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; font-family: 'JetBrains Mono', monospace; flex-shrink: 0; height: fit-content; margin-top: 2px; }
+.sp6-tl__pill--milestone { background: var(--t-20); color: var(--t-80); }
+[data-theme="light"].sp6-tl__pill--milestone { background: var(--t-90); color: var(--t-30); }
+.sp6-tl__pill--hold { background: var(--w-30); color: var(--w-80); }
+[data-theme="light"].sp6-tl__pill--hold { background: var(--w-90); color: var(--w-30); }
+.sp6-tl__pill--message { background: var(--s-20); color: var(--s-80); }
+[data-theme="light"].sp6-tl__pill--message { background: var(--s-90); color: var(--s-20); }
+.sp6-tl__t { font-size: 12.5px; font-weight: 600; }
+.sp6-tl__s { font-size: 11px; color: var(--text-secondary); margin-top: 1px; line-height: 1.4; }
+.sp6-tl__when { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-muted); margin-top: 3px; }
+
+.sp6-mcc { display: flex; flex-direction: column; gap: 7px; }
+.sp6-mcc-row { display: flex; flex-direction: column; gap: 3px; }
+.sp6-mcc-head { display: flex; justify-content: space-between; font-size: 12px; }
+.sp6-mcc-head__n { font-family: 'JetBrains Mono', monospace; color: var(--text-muted); font-size: 11px; }
+.sp6-mcc-bar { height: 5px; background: var(--bg-surface-2); border-radius: 99px; overflow: hidden; }
+.sp6-mcc-bar div { height: 100%; border-radius: 99px; }
+.proto-modebar__id { color: var(--page-fg); font-weight: 700; letter-spacing: 0.06em; }
+.proto-modebar__bar { width: 100px; height: 4px; border-radius: 4px; background: var(--bg-surface-2); position: relative; overflow: hidden; }
+.proto-modebar__bar__fill { position: absolute; left: 0; top: 0; bottom: 0; background: linear-gradient(90deg, var(--s-50), var(--t-50)); transition: width 240ms ease; }
+.proto-arrows { display: flex; align-items: center; gap: 8px; }
+.proto-arrow { width: 36px; height: 36px; border-radius: 10px; background: var(--page-card-bg); border: 1px solid var(--page-divider); color: var(--page-fg-muted); display: inline-flex; align-items: center; justify-content: center; cursor: pointer; }
+.proto-arrow:hover { background: var(--bg-surface-2); color: var(--page-fg); }
+.proto-arrow:disabled { opacity: 0.3; cursor: not-allowed; }
+.proto-arrow svg { width: 18px; height: 18px; }
+.phone { width: 393px; height: 852px; flex-shrink: 0; border-radius: 56px; background: #000; padding: 13px; position: relative; box-shadow: 0 0 0 1.5px #2a2e3a, 0 30px 60px -20px rgba(0,0,0,0.7), 0 16px 32px -16px rgba(0,0,0,0.4); }
+.phone::before,.phone::after { content: ''; position: absolute; background: #2a2e3a; }
+.phone::before { left: -3px; top: 110px; width: 3px; height: 30px; border-radius: 3px 0 0 3px; }
+.phone::after { left: -3px; top: 160px; width: 3px; height: 60px; border-radius: 3px 0 0 3px; }
+.phone__inner { width: 100%; height: 100%; background: var(--bg-base); color: var(--text-primary); border-radius: 44px; overflow: hidden; position: relative; display: flex; flex-direction: column; }
+.phone__notch { position: absolute; top: 12px; left: 50%; transform: translateX(-50%); width: 120px; height: 32px; background: #000; border-radius: 18px; z-index: 30; }
+.phone__statusbar { height: 44px; padding: 12px 32px 0; display: flex; align-items: center; justify-content: space-between; font-size: 14px; font-weight: 600; color: var(--text-primary); font-feature-settings: "tnum"; flex-shrink: 0; }
+.phone__statusbar__right { display: flex; align-items: center; gap: 5px; font-size: 13px; }
+.phone__topbar { display: flex; align-items: center; justify-content: space-between; padding: 8px 18px 12px; gap: 10px; flex-shrink: 0; }
+.phone__back { width: 32px; height: 32px; border-radius: 50%; background: transparent; border: none; color: var(--text-primary); display: inline-flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; }
+.phone__back svg { width: 20px; height: 20px; }
+.phone__title { flex: 1; text-align: center; font-size: 14.5px; font-weight: 600; letter-spacing: -0.01em; }
+.gc-crisis-pill { display: inline-flex; align-items: center; gap: 5px; padding: 6px 11px; border-radius: 999px; background: var(--e-50); color: white; border: none; font-family: inherit; font-size: 11.5px; font-weight: 600; cursor: pointer; flex-shrink: 0; }
+.gc-crisis-pill svg { width: 11px; height: 11px; }
+
+.sp-body { flex: 1; padding: 4px 16px 12px; overflow-y: auto; display: flex; flex-direction: column; gap: 11px; }
+.sp-body::-webkit-scrollbar { width: 4px; }
+.sp-body::-webkit-scrollbar-thumb { background: rgba(127,127,127,0.2); border-radius: 4px; }
+
+.gc-card { padding: 14px; background: var(--bg-surface); border: 1px solid var(--border); border-radius: 14px; display: flex; flex-direction: column; gap: 8px; }
+.gc-card--anna { background: linear-gradient(135deg, rgba(133,118,194,0.15), rgba(83,71,146,0.08)); border-color: rgba(133,118,194,0.25); flex-direction: row; align-items: center; gap: 10px; padding: 11px 13px; }
+.gc-card--anna.anna-av { width: 30px; height: 30px; border-radius: 50%; background: var(--p-30); display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.gc-card--anna.anna-av img { width: 60%; height: 60%; }
+.gc-card--anna p { font-size: 12px; line-height: 1.45; margin: 0; font-style: italic; }
+.gc-card--info { background: var(--bg-surface-2); border-left: 3px solid var(--s-50); border-radius: 4px 14px 14px 4px; padding: 13px 15px; }
+.gc-card--success { background: linear-gradient(135deg, var(--t-50), var(--t-30)); color: white; border-color: transparent; }
+
+/* Sponsor invite form */
+.sp-input { padding: 12px 14px; background: var(--bg-base); border: 1px solid var(--border); border-radius: 11px; font-family: inherit; font-size: 14px; color: var(--text-primary); width: 100%; outline: none; }
+.sp-input:focus { border-color: var(--accent); }
+.sp-input--filled { font-weight: 600; }
+.sp-textarea { padding: 11px 13px; background: var(--bg-base); border: 1px solid var(--border); border-radius: 11px; font-family: inherit; font-size: 13px; color: var(--text-primary); width: 100%; outline: none; resize: vertical; min-height: 75px; line-height: 1.55; }
+.sp-label { font-size: 11.5px; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 5px; display: block; }
+.sp-label-row { display: flex; justify-content: space-between; }
+.sp-counter { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; color: var(--text-muted); }
+
+.sp-rel-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 7px; }
+.sp-rel { padding: 9px 6px; background: var(--bg-base); border: 1px solid var(--border); border-radius: 9px; font-family: inherit; font-size: 12px; font-weight: 600; cursor: pointer; color: var(--text-primary); text-align: center; }
+.sp-rel.is-on { background: var(--accent-strong); color: white; border-color: transparent; }
+
+/* Email preview SP2 */
+.sp-email { background: var(--bg-base); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+.sp-email__head { padding: 11px 13px; border-bottom: 1px solid var(--border); display: flex; flex-direction: column; gap: 4px; background: var(--bg-surface-2); }
+.sp-email__from { display: flex; align-items: center; gap: 7px; font-size: 11.5px; }
+.sp-email__from b { color: var(--text-primary); font-weight: 700; }
+.sp-email__from span { color: var(--text-muted); font-family: 'JetBrains Mono', monospace; font-size: 10.5px; }
+.sp-email__subj { font-size: 13px; font-weight: 700; line-height: 1.4; }
+.sp-email__body { padding: 13px 14px; display: flex; flex-direction: column; gap: 9px; font-size: 12.5px; line-height: 1.55; color: var(--text-secondary); }
+.sp-email__hero { padding: 18px; background: linear-gradient(135deg, var(--s-50), var(--p-40)); color: white; border-radius: 10px; text-align: center; }
+.sp-email__hero h3 { font-size: 16px; margin: 0 0 4px; font-weight: 800; letter-spacing: -0.01em; }
+.sp-email__hero p { font-size: 11.5px; margin: 0; opacity: 0.92; line-height: 1.5; }
+.sp-email__note { padding: 10px 12px; background: var(--bg-surface-2); border-left: 3px solid var(--s-50); border-radius: 4px 10px 10px 4px; font-style: italic; color: var(--text-primary); font-size: 12px; }
+.sp-email__cta { display: inline-block; padding: 11px 18px; background: var(--accent-strong); color: white; border-radius: 10px; font-weight: 700; font-size: 13px; text-align: center; text-decoration: none; align-self: flex-start; }
+.sp-email__footer { font-size: 10.5px; color: var(--text-muted); padding-top: 8px; border-top: 1px solid var(--border); font-family: 'JetBrains Mono', monospace; }
+
+/* SP_SENT confirmation */
+.sp-sent-hero { padding: 22px 18px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 8px; }
+.sp-sent-hero__ic { width: 56px; height: 56px; border-radius: 50%; background: rgba(255,255,255,0.18); display: inline-flex; align-items: center; justify-content: center; }
+.sp-sent-hero__ic svg { width: 28px; height: 28px; }
+.sp-sent-hero h2 { font-size: 20px; font-weight: 800; letter-spacing: -0.02em; margin: 0; }
+.sp-sent-hero p { font-size: 13px; line-height: 1.55; margin: 0; opacity: 0.92; }
+
+.sp-state { display: grid; grid-template-columns: 30px 1fr auto; gap: 12px; align-items: center; padding: 11px 0; border-top: 1px solid var(--border); }
+.sp-state:first-of-type { border-top: none; padding-top: 0; }
+.sp-state__ic { width: 30px; height: 30px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; }
+.sp-state__ic--done { background: var(--t-20); color: var(--t-80); }
+[data-theme="light"].sp-state__ic--done { background: var(--t-90); color: var(--t-30); }
+.sp-state__ic--pending { background: var(--w-30); color: var(--w-80); }
+[data-theme="light"].sp-state__ic--pending { background: var(--w-90); color: var(--w-30); }
+.sp-state__ic--waiting { background: var(--bg-surface-2); color: var(--text-muted); }
+.sp-state__ic svg { width: 14px; height: 14px; }
+.sp-state__t { font-size: 13px; font-weight: 600; }
+.sp-state__s { font-size: 11.5px; color: var(--text-secondary); margin-top: 1px; }
+.sp-state__pill { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; padding: 2px 7px; border-radius: 999px; letter-spacing: 0.05em; font-weight: 700; }
+.sp-state__pill--done { background: var(--t-20); color: var(--t-80); }
+[data-theme="light"].sp-state__pill--done { background: var(--t-90); color: var(--t-30); }
+.sp-state__pill--pending { background: var(--w-30); color: var(--w-80); }
+[data-theme="light"].sp-state__pill--pending { background: var(--w-90); color: var(--w-30); }
+.sp-state__pill--waiting { background: var(--bg-surface-2); color: var(--text-muted); }
+
+/* SP7 sponsor management */
+.sp-mgmt-card { display: flex; align-items: center; gap: 12px; padding: 14px; background: var(--bg-surface); border: 1px solid var(--border); border-radius: 14px; }
+.sp-mgmt-card--pending { border-left: 3px solid var(--w-60); border-radius: 4px 14px 14px 4px; }
+.sp-mgmt-card__av { width: 42px; height: 42px; border-radius: 50%; background: linear-gradient(135deg, var(--s-50), var(--p-40)); color: white; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; font-size: 16px; flex-shrink: 0; }
+.sp-mgmt-card__nm { font-size: 14px; font-weight: 700; letter-spacing: -0.01em; }
+.sp-mgmt-card__sub { font-size: 11.5px; color: var(--text-secondary); margin-top: 2px; font-family: 'JetBrains Mono', monospace; }
+.sp-mgmt-card__chev { color: var(--text-muted); }
+
+.sp-cap { display: flex; gap: 8px; padding: 3px 9px; border-radius: 999px; font-size: 9.5px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; font-family: 'JetBrains Mono', monospace; }
+.sp-cap--active { background: var(--t-20); color: var(--t-80); }
+[data-theme="light"].sp-cap--active { background: var(--t-90); color: var(--t-30); }
+.sp-cap--pending { background: var(--w-30); color: var(--w-80); }
+[data-theme="light"].sp-cap--pending { background: var(--w-90); color: var(--w-30); }
+
+.sp-perm { display: grid; grid-template-columns: 24px 1fr; gap: 10px; align-items: flex-start; padding: 9px 0; border-top: 1px solid var(--border); }
+.sp-perm:first-of-type { border-top: none; padding-top: 0; }
+.sp-perm__ic { width: 24px; height: 24px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+.sp-perm__ic--y { background: var(--t-20); color: var(--t-80); }
+[data-theme="light"].sp-perm__ic--y { background: var(--t-90); color: var(--t-30); }
+.sp-perm__ic--n { background: var(--e-30); color: var(--e-90); }
+[data-theme="light"].sp-perm__ic--n { background: var(--e-90); color: var(--e-30); }
+.sp-perm__ic svg { width: 11px; height: 11px; }
+.sp-perm__t { font-size: 12.5px; font-weight: 600; }
+.sp-perm__s { font-size: 11px; color: var(--text-secondary); margin-top: 1px; line-height: 1.4; }
+
+.gc-btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 11px 15px; border-radius: 12px; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; border: 1px solid transparent; text-decoration: none; }
+.gc-btn--primary { background: var(--accent-strong); color: var(--on-accent); }
+.gc-btn--primary:hover { background: var(--s-40); }
+.gc-btn--ghost { background: transparent; color: var(--text-primary); border-color: var(--border); }
+.gc-btn--full { width: 100%; }
+
+.sp-decision { font-size: 11px; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; padding: 8px 12px; background: var(--bg-surface-2); border-radius: 8px; line-height: 1.5; }
+.sp-decision a { color: var(--text-secondary); text-decoration: none; border-bottom: 1px dotted currentColor; }
+
+.proto-context { width: 100%; max-width: 480px; padding: 14px 16px; background: var(--page-card-bg); border: 1px solid var(--page-divider); border-radius: 12px; font-size: 12.5px; color: var(--page-fg-muted); line-height: 1.55; }
+.proto-context strong { color: var(--page-fg); }
+.proto-context a { color: var(--page-accent, var(--s-70)); text-decoration: none; border-bottom: 1px dotted currentColor; }
+.proto-context__head { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; font-weight: 700; color: var(--page-fg); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px; }
+
+.screen { animation: fade-in 220ms ease; }
+@keyframes fade-in { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+@media (max-width: 720px) {.phone { transform: scale(0.92); transform-origin: top center; } }
+@media (max-width: 480px) {.phone { transform: scale(0.78); } }
+</style>
+<script src="flow-chain.js" defer></script>
+</head>
+<body>
+
+<div class="proto-shell">
+
+ <aside class="proto-sidebar">
+ <div class="proto-sidebar__brand">
+ <span class="proto-sidebar__mark"><img src="../assets/gc-mark-mono-light.svg" alt=""></span>
+ <span><div class="proto-sidebar__name">holdwell</div><span class="proto-sidebar__pill">mobile</span></span>
+ </div>
+ <a class="proto-sidebar__back" href="index.html">← prototype index</a>
+ <button class="proto-theme-toggle" type="button">
+ <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+ <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+ <span class="theme-label">Dark</span>
+ </button>
+ <div class="proto-section-title">§15 · SP1 – SP7</div>
+ <nav class="proto-scrubber" id="scrubber"></nav>
+ <div class="proto-sidebar__footer">
+ Source: <a href="../15-sponsor-onboarding.html">15-sponsor-onboarding</a><br>
+ Decisions: GEN-03 · GEN-07 · ON-04 · CC-03<br>
+ <em>SP4–SP6 shown as Joanna's mobile-web view of sponsor.holdwell.com (responsive · accessible from her phone)</em>
+ </div>
+ </aside>
+
+ <main class="proto-stage">
+ <div class="proto-modebar">
+ <span>Screen <span class="proto-modebar__id" id="screenId">SP1</span></span>
+ <span class="proto-modebar__pill" id="screenName">User invites a sponsor</span>
+ <span class="proto-modebar__pill" id="audiencePill" style="background:var(--bg-surface-2)">User · Sam</span>
+ <div class="proto-modebar__bar"><div class="proto-modebar__bar__fill" id="progressFill" style="width:14%"></div></div>
+ <div class="proto-arrows">
+ <button class="proto-arrow" id="navPrev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+ <button class="proto-arrow" id="navNext"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
+ </div>
+ </div>
+ <div class="phone">
+ <div class="phone__notch"></div>
+ <div class="phone__inner">
+ <div class="phone__statusbar">
+ <span>9:41</span>
+ <span class="phone__statusbar__right"><span style="display:inline-flex;gap:3px"><span style="width:4px;height:4px;border-radius:50%;background:currentColor"></span><span style="width:4px;height:5px;border-radius:1px;background:currentColor"></span><span style="width:4px;height:6px;border-radius:1px;background:currentColor"></span><span style="width:4px;height:7px;border-radius:1px;background:currentColor"></span></span><span>100%</span></span>
+ </div>
+ <div id="stage" style="flex:1;display:flex;flex-direction:column;min-height:0"></div>
+ </div>
+ </div>
+ <div class="proto-context" id="contextPanel"><div class="proto-context__head">Screen context</div><div id="contextBody"></div></div>
+ </main>
+</div>
+
+<script>
+const SCREENS = [
+ { id: 'SP1', name: 'Sam invites a sponsor', kind: 'sp1', audience: 'user' },
+ { id: 'SP2', name: 'Email preview (what Joanna gets)', kind: 'sp2', audience: 'user' },
+ { id: 'PEND', name: 'Invite sent · sponsor pending', kind: 'pend', audience: 'user' },
+ { id: 'PEND.r', name: 'No reply after 3 days', kind: 'pendr', audience: 'user' },
+ { id: 'SP3', name: 'Sponsor · what this means', kind: 'sp3', audience: 'sponsor' },
+ { id: 'SP4', name: 'Sponsor · declaration', kind: 'sp4', audience: 'sponsor' },
+ { id: 'SP5', name: 'Sponsor · open banking (Phase 1)', kind: 'sp5', audience: 'sponsor' },
+ { id: 'SP5.g', name: 'Sponsor · confirm Gamban', kind: 'sp5g', audience: 'sponsor' },
+ { id: 'SP6', name: 'Sponsor · dashboard', kind: 'sp6', audience: 'sponsor' },
+ { id: 'SP6.a', name: 'Sponsor · approve a top-up', kind: 'sp6a', audience: 'sponsor' },
+ { id: 'SP6.b', name: 'Sponsor · approve a new payee', kind: 'sp6b', audience: 'sponsor' },
+ { id: 'SP6.c', name: 'Sponsor · blocked-payment alert', kind: 'sp6c', audience: 'sponsor' },
+ { id: 'SP7', name: 'Sponsor management · §12 PR4', kind: 'sp7', audience: 'user' },
+];
+
+const V2 = (ids, k, t) => `<div class="v2-meta"><span class="v2-meta__when v2-${k}">${t}</span><span class="v2-meta__ids">Backlog ${ids}</span></div>`;
+const CTX = {
+ sp1: '<strong>SP1 Sam invites a sponsor.</strong> v2: the sponsor is no longer optional or A/B-placed. Invited at the end of onboarding (ON6+), before self-exclusion, because Joanna confirms Gamban (D1) and approves card top-ups (E4). The card can\'t activate without an accepted sponsor. Optional note in Sam\'s own words; conversation guide linked (F2).' + V2('F1 · F2', 'mvp1', 'MVP · Drop 1'),
+ sp2: '<strong>SP2 Email preview.</strong> Transactional email to Joanna. v2 copy explains the Northbank programme, the 60 days and the two jobs: approvals and confirming Gamban. Signed link to the SP3 explainer (sponsor.holdwell.com).' + V2('F1 · F2', 'mvp1', 'MVP · Drop 1'),
+ pend: '<strong>Pending state.</strong> Sam sees this until Joanna completes SP3–SP5.g. v2 steps: explainer → declaration → confirm Gamban → dashboard live. Open banking for sponsors is Phase 1 (debated in session 4).' + V2('F1 · F10', 'mvp1', 'MVP · Drop 1'),
+ pendr: '<strong>PEND.r No reply.</strong> Raised at the end of session 4: if the first sponsor doesn\'t respond, Sam can nudge her or invite someone else (F10). Ops sees non-response after 5 days in the queue (§13).' + V2('F10 · F6', 'mvp1', 'MVP · Drop 1'),
+ sp3: '<strong>SP3 What being a sponsor means.</strong> Lands from the email. Sets expectations both ways: what Joanna will see and what she never sees. This is the consent basis for sponsor visibility (F9). Short primer on why blocking alone isn\'t enough (displacement).' + V2('F2 · F9', 'mvp1', 'MVP · Drop 1'),
+ sp4: '<strong>SP4 Declaration.</strong> Replaces Vouchsafe KYC + selfie. MVP sponsor suitability = self-declaration plus Sam\'s confirmation (B8). The open banking check of the sponsor was argued both ways in session 4 (catch an unsuitable sponsor early vs cost) and sits in Phase 1 for now.' + V2('B8', 'mvp1', 'MVP · Drop 1'),
+ sp5: '<strong>SP5 Open banking (Phase 1, debated).</strong> Kept from v1 for when it\'s switched on: single account, name match, never analyses Joanna\'s spending. Not in the March launch unless the team reverses the session-4 call.' + V2('F3 · B8', 'p1', 'Phase 1'),
+ sp5g: '<strong>SP5.g Confirm Gamban.</strong> Agreed in session 4: Sam must have Gamban and the sponsor confirms it\'s running. Phone confirmation is required before the card activates; laptop can follow. An automatic install check is later (D2).' + V2('D1', 'mvp1', 'MVP · Drop 1'),
+ sp6: '<strong>SP6 Sponsor dashboard.</strong> Responsive web page, no app. v2: programme day and completion criteria replace the loan tile; approvals queue on top. Spending categories kept from v1 but flagged: what the sponsor sees (F9) hasn\'t been reviewed yet.' + V2('F4 · F9 · E4', 'mvp1', 'MVP · Drop 1'),
+ sp6a: '<strong>SP6.a Approve a top-up.</strong> Moving money from Sam\'s Griffin bills account into the card pot needs Joanna\'s OK (E4, agreed MVP). Shows the reason Sam gave and this month\'s total against the agreed £400. Declining asks for a short note.' + V2('E4 · E3', 'mvp2', 'MVP · Drop 2'),
+ sp6b: '<strong>SP6.b Approve a new payee.</strong> New payees and external transfers on the Griffin account wait for the sponsor, so money can\'t route around the card blocks (E11, new in the 31 Oct review). Depends on Griffin\'s permission model: owner Tuomas.' + V2('E11', 'mvp2', 'MVP · Drop 2'),
+ sp6c: '<strong>SP6.c Blocked-payment alert.</strong> Says what happened, not where. Low-noise by design (F5). Joanna can message Sam, freeze the card (E7, native in Stripe) or call the Holdwell team. Bills keep running from the account when the card is frozen.' + V2('F5 · E7 · E2', 'mvp2', 'MVP · Drop 2'),
+ sp7: '<strong>SP7 Sponsor management.</strong> Lives in §12 Profile. v1 allowed up to 3 sponsors (GEN-07); the backlog lists a wider support circle as Phase 2 (F7), so this is to review. Loan and Relapse Hold permissions removed for the credit-union model.' + V2('F6 · F7', 'mvp1', 'MVP · Drop 1'),
+};
+
+const TOPBAR = (title, showBack) => `
+ <div class="phone__topbar">
+ ${showBack === false ? '<span style="width:32px"></span>' : `<button class="phone__back" onclick="prev()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>`}
+ <span class="phone__title">${title}</span>
+ <button class="gc-crisis-pill"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7-4.5-9-9.5C2 7 5 4 8 4c1.7 0 3.2.8 4 2.8-1.2 2.3-2 4-2 3 0 6 3 5 7.5C19 16.5 12 21 12 21z"/></svg></button>
+ </div>`;
+
+const SPONSOR_HEADER = (title, urlPath) => `
+ <div class="phone__sponsor-strip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 4.5 6v6c0 5 3.5 9 7.5 10 4-1 7.5-5 7.5-10V6Z"/></svg> Sponsor view · Joanna</div>
+ <div class="phone__sponsor-url"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> sponsor.holdwell.com${urlPath}</div>
+ <div class="phone__topbar" style="padding-top:10px">
+ <button class="phone__back" onclick="prev()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
+ <span class="phone__title">${title}</span>
+ <span style="width:32px"></span>
+ </div>`;
+
+const builders = {
+ sp1: () => `
+ ${TOPBAR('Invite a sponsor')}
+ <div class="sp-body">
+ <div class="gc-card">
+ <span style="font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;color:var(--text-muted)">Step 5 of 8 · your sponsor</span>
+ <h2 style="font-size:20px;font-weight:800;letter-spacing:-0.02em;margin:4px 0 0">Who's got your back?</h2>
+ <p style="font-size:12.5px;color:var(--text-secondary);line-height:1.55;margin:0">Someone you trust for the next 60 days. They approve top-ups to your card, check Gamban is on, and see your milestones. Your card can't start until they accept.</p>
+ </div>
+ <div class="gc-card" style="gap:11px">
+ <div>
+ <span class="sp-label">Their name</span>
+ <input class="sp-input sp-input--filled" value="Joanna Mitchell">
+ </div>
+ <div>
+ <span class="sp-label">Relationship</span>
+ <div class="sp-rel-grid">
+ <button class="sp-rel" onclick="pickRel(this)">Partner</button>
+ <button class="sp-rel" onclick="pickRel(this)">Parent</button>
+ <button class="sp-rel is-on" onclick="pickRel(this)">Sibling</button>
+ <button class="sp-rel" onclick="pickRel(this)">Clinician</button>
+ <button class="sp-rel" onclick="pickRel(this)">Friend</button>
+ <button class="sp-rel" onclick="pickRel(this)">Other</button>
+ </div>
+ </div>
+ <div>
+ <span class="sp-label">Email</span>
+ <input class="sp-input sp-input--filled" type="email" value="joanna.m@hotmail.co.uk">
+ </div>
+ <div>
+ <div class="sp-label-row"><span class="sp-label">Note (optional)</span><span class="sp-counter">87 / 280</span></div>
+ <textarea class="sp-textarea">Hey Jo. Would you do this with me? I've explained it on the call. No pressure x</textarea>
+ </div>
+ </div>
+ <div class="gc-card gc-card--info">
+ <h3 style="font-size:13px;font-weight:700;margin:0">What happens next</h3>
+ <ul style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:5px;font-size:12px;color:var(--text-secondary);line-height:1.5">
+ <li><strong style="color:var(--text-primary)">1.</strong> Joanna gets an email · the note above is included</li>
+ <li><strong style="color:var(--text-primary)">2.</strong> She opens it · sees what sponsorship means · decides</li>
+ <li><strong style="color:var(--text-primary)">3.</strong> A short declaration (~2 min), then she checks Gamban with you</li>
+ <li><strong style="color:var(--text-primary)">4.</strong> Done · she approves top-ups and sees milestones, never your chats with Anna</li>
+ </ul>
+ </div>
+ <div class="gc-card--anna gc-card"><span class="anna-av"><img src="../assets/gc-mark-mono-light.svg" alt=""></span><div><p>"Recovering with a witness is harder, more uncomfortable, and roughly 40% more durable. Pick someone who'll be honest when it matters."</p></div></div>
+ <div style="display:flex;gap:8px;margin-top:auto">
+ <button class="gc-btn gc-btn--ghost" onclick="prev()">Later</button>
+ <button class="gc-btn gc-btn--primary" style="flex:1" onclick="next()">Send invite to Joanna</button>
+ </div>
+ </div>`,
+
+ sp2: () => `
+ ${TOPBAR('Invite preview')}
+ <div class="sp-body">
+ <div class="gc-card">
+ <span style="font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;color:var(--text-muted)">Email preview · before send</span>
+ <h2 style="font-size:17px;font-weight:800;letter-spacing:-0.02em;margin:4px 0 0">This is what Joanna will see.</h2>
+ <p style="font-size:12px;color:var(--text-secondary);margin:0;line-height:1.5">Customer.io transactional · arrives in ~30 seconds.</p>
+ </div>
+ <div class="sp-email">
+ <div class="sp-email__head">
+ <div class="sp-email__from"><b>Holdwell</b> <span>noreply@holdwell.com</span></div>
+ <div class="sp-email__from"><b>To</b> <span>joanna.m@hotmail.co.uk</span></div>
+ <div class="sp-email__subj">Sam would like you to be her Holdwell sponsor</div>
+ </div>
+ <div class="sp-email__body">
+ <div class="sp-email__hero">
+ <h3>Hi Joanna</h3>
+ <p>Your sister Sam is doing a 60-day Holdwell programme with Northbank Credit Union, and has asked you to back her.</p>
+ </div>
+ <p style="margin:0">As her sponsor you'd approve money moving onto her Holdwell card, check her gambling blocker is on, and see how she's getting on. About 5 minutes to set up, a couple of minutes a week after that. You'll never see her chats with Anna.</p>
+ <div class="sp-email__note">"Hey Jo. Would you do this with me? I've explained it on the call. No pressure x"</div>
+ <a class="sp-email__cta" href="#">Find out more · ~5 min</a>
+ <p style="font-size:11.5px;color:var(--text-muted);margin:0">Or read more: <a href="#" style="color:var(--accent)">What does sponsorship involve?</a></p>
+ <div class="sp-email__footer">Signed link · expires in 7 days · 14 May 2026 09:41</div>
+ </div>
+ </div>
+ <div class="gc-card gc-card--info">
+ <h3 style="font-size:12.5px;font-weight:700;margin:0">She can also decline</h3>
+ <p style="font-size:11.5px;color:var(--text-secondary);line-height:1.5;margin:0">"I can't do this right now" routes to a polite ack and you get notified. No awkwardness, no follow-up.</p>
+ </div>
+ <div style="display:flex;gap:8px;margin-top:auto">
+ <button class="gc-btn gc-btn--ghost" onclick="prev()">Edit</button>
+ <button class="gc-btn gc-btn--primary" style="flex:1" onclick="next()">Send now</button>
+ </div>
+ </div>`,
+
+ pend: () => `
+ ${TOPBAR('Invite sent')}
+ <div class="sp-body">
+ <div class="gc-card gc-card--success sp-sent-hero">
+ <span class="sp-sent-hero__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+ <h2>Invite delivered.</h2>
+ <p>Joanna will get an email in ~30 seconds. Sponsor link expires in 7 days. We'll let you know each time her status changes.</p>
+ </div>
+ <div class="gc-card">
+ <h3 style="font-size:14px;font-weight:700;margin:0">Joanna's progress</h3>
+ <div class="sp-state">
+ <span class="sp-state__ic sp-state__ic--done"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></span>
+ <div><div class="sp-state__t">SP2 · Invite email sent</div><div class="sp-state__s">14 May 09:41 · via Customer.io</div></div>
+ <span class="sp-state__pill sp-state__pill--done">Done</span>
+ </div>
+ <div class="sp-state">
+ <span class="sp-state__ic sp-state__ic--pending"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l3 2"/></svg></span>
+ <div><div class="sp-state__t">SP3 · Explainer landing</div><div class="sp-state__s">Joanna reads what sponsorship means</div></div>
+ <span class="sp-state__pill sp-state__pill--pending">Waiting</span>
+ </div>
+ <div class="sp-state">
+ <span class="sp-state__ic sp-state__ic--waiting"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="10"/></svg></span>
+ <div><div class="sp-state__t">SP4 · Declaration</div><div class="sp-state__s">A few honest answers · ~2 min</div></div>
+ <span class="sp-state__pill sp-state__pill--waiting">Not yet</span>
+ </div>
+ <div class="sp-state">
+ <span class="sp-state__ic sp-state__ic--waiting"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="10"/></svg></span>
+ <div><div class="sp-state__t">SP5.g · Confirms Gamban</div><div class="sp-state__s">Next time she sees you · phone first</div></div>
+ <span class="sp-state__pill sp-state__pill--waiting">Not yet</span>
+ </div>
+ <div class="sp-state">
+ <span class="sp-state__ic sp-state__ic--waiting"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="10"/></svg></span>
+ <div><div class="sp-state__t">SP6 · Sponsor dashboard</div><div class="sp-state__s">sponsor.holdwell.com (web)</div></div>
+ <span class="sp-state__pill sp-state__pill--waiting">Not yet</span>
+ </div>
+ </div>
+ <div class="gc-card">
+ <h3 style="font-size:13px;font-weight:700;margin:0 0 4px">While you wait</h3>
+ <p style="font-size:12px;color:var(--text-secondary);line-height:1.5;margin:0">You can start self-exclusion now. Your card waits until Joanna accepts and confirms Gamban.</p>
+ <div style="display:flex;gap:7px;flex-wrap:wrap;padding-top:5px">
+ <button class="gc-btn gc-btn--ghost" style="flex:1;font-size:12px;padding:9px 11px">Resend</button>
+ <button class="gc-btn gc-btn--ghost" style="flex:1;font-size:12px;padding:9px 11px">Cancel</button>
+ <button class="gc-btn gc-btn--ghost" style="flex:1;font-size:12px;padding:9px 11px">+ Sponsor</button>
+ </div>
+ </div>
+ <div class="gc-card--anna gc-card"><span class="anna-av"><img src="../assets/gc-mark-mono-light.svg" alt=""></span><div><p>"Joanna deciding is good either way. Yes means a witness, no means she knew herself. Both are wins. The waiting isn't wasted."</p></div></div>
+ </div>`,
+
+ sp4: () => `
+ ${SPONSOR_HEADER('Your declaration', '/join/declaration')}
+ <div class="sp-body">
+ <div class="gc-card">
+ <span style="font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;color:var(--text-muted)">Step 2 of 3 · declaration</span>
+ <h2 style="font-size:18px;font-weight:800;letter-spacing:-0.02em;margin:4px 0 0">A few honest answers.</h2>
+ <p style="font-size:12px;color:var(--text-secondary);line-height:1.5;margin:0">No ID upload, no selfie. Sam confirms it's really you once you accept.</p>
+ </div>
+ <div class="sp-kyc-step sp-kyc-step--done">
+ <span class="sp-kyc-step__n"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></span>
+ <div><div class="sp-kyc-step__t">I don't currently gamble</div><div class="sp-kyc-step__s">Other than the occasional lottery ticket</div></div>
+ <span class="sp-kyc-step__pill">Yes</span>
+ </div>
+ <div class="sp-kyc-step sp-kyc-step--done">
+ <span class="sp-kyc-step__n"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></span>
+ <div><div class="sp-kyc-step__t">Sam doesn't owe me money I'm pressing for</div><div class="sp-kyc-step__s">Debts between you are fine to declare</div></div>
+ <span class="sp-kyc-step__pill">Yes</span>
+ </div>
+ <div class="sp-kyc-step sp-kyc-step--done">
+ <span class="sp-kyc-step__n"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></span>
+ <div><div class="sp-kyc-step__t">I'm not financially dependent on Sam</div><div class="sp-kyc-step__s">We don't share bank accounts</div></div>
+ <span class="sp-kyc-step__pill">Yes</span>
+ </div>
+ <div class="sp-kyc-step sp-kyc-step--current">
+ <span class="sp-kyc-step__n">4</span>
+ <div><div class="sp-kyc-step__t">Your contact details</div><div class="sp-kyc-step__s">Joanna Mitchell · 07700 900 882</div></div>
+ <span class="sp-kyc-step__pill">Now</span>
+ </div>
+ <div class="gc-card gc-card--info">
+ <h3 style="font-size:12.5px;font-weight:700;margin:0">Why we ask</h3>
+ <p style="font-size:11.5px;color:var(--text-secondary);line-height:1.5;margin:0">A sponsor who gambles, or who depends on Sam's money, can make things harder. If anything changes, tell us. You can step down at any time.</p>
+ </div>
+ <button class="gc-btn gc-btn--primary gc-btn--full" onclick="next()" style="margin-top:auto">Accept and become Sam's sponsor</button>
+ </div>`,
+
+ sp5: () => `
+ ${SPONSOR_HEADER('Link a bank account', '/verify/bank')}
+ <div class="sp-body">
+ <div class="gc-card">
+ <span style="font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;color:var(--text-muted)">Phase 1 · Open banking · not in March launch</span>
+ <h2 style="font-size:18px;font-weight:800;letter-spacing:-0.02em;margin:4px 0 0">Pick the bank you'll link.</h2>
+ <p style="font-size:12px;color:var(--text-secondary);line-height:1.5;margin:0">Any account in your own name. We confirm the name matches your KYC, then disconnect. We don't read your transactions.</p>
+ </div>
+ <div class="sp-bank-grid-m">
+ <button class="sp-bank-m is-on" onclick="pickBank(this)"><span class="sp-bank-m__logo" style="background:#0075a4">B</span><span class="sp-bank-m__n">Barclays</span></button>
+ <button class="sp-bank-m" onclick="pickBank(this)"><span class="sp-bank-m__logo" style="background:#db0011">H</span><span class="sp-bank-m__n">HSBC</span></button>
+ <button class="sp-bank-m" onclick="pickBank(this)"><span class="sp-bank-m__logo" style="background:#1c1c1c">M</span><span class="sp-bank-m__n">Monzo</span></button>
+ <button class="sp-bank-m" onclick="pickBank(this)"><span class="sp-bank-m__logo" style="background:#006a4d">L</span><span class="sp-bank-m__n">Lloyds</span></button>
+ <button class="sp-bank-m" onclick="pickBank(this)"><span class="sp-bank-m__logo" style="background:#5f259f">N</span><span class="sp-bank-m__n">NatWest</span></button>
+ <button class="sp-bank-m" onclick="pickBank(this)"><span class="sp-bank-m__logo" style="background:#ec0000">S</span><span class="sp-bank-m__n">Santander</span></button>
+ <button class="sp-bank-m" onclick="pickBank(this)"><span class="sp-bank-m__logo" style="background:#7d3c98">S</span><span class="sp-bank-m__n">Starling</span></button>
+ <button class="sp-bank-m" onclick="pickBank(this)"><span class="sp-bank-m__logo" style="background:#0075c9">N</span><span class="sp-bank-m__n">Nationwide</span></button>
+ </div>
+ <div class="gc-card" style="padding:13px 14px">
+ <h3 style="font-size:13px;font-weight:700;margin:0">What we'll do once linked</h3>
+ <ul style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:6px;font-size:11.5px;color:var(--text-secondary);line-height:1.5">
+ <li>✓ Confirm account name matches your KYC · one-time</li>
+ <li>✓ Check the account isn't used for gambling (debated · session 4)</li>
+ <li>✗ Analyse your spending · we don't look at transactions</li>
+ <li>✗ Move money between you and Sam · sponsor has no payment rail</li>
+ </ul>
+ </div>
+ <div class="gc-card gc-card--info">
+ <h3 style="font-size:12.5px;font-weight:700;margin:0">Why a bank link?</h3>
+ <p style="font-size:11.5px;color:var(--text-secondary);line-height:1.5;margin:0">Ties you to a verified account in your own name. Reduces coercion risk · the alternative (email-only sponsor) is gameable. Per <a href="../41-decisions-log.html" style="color:var(--accent);text-decoration:none">GEN-03</a>. Re-consent every 90 days per FCA.</p>
+ </div>
+ <button class="gc-btn gc-btn--primary gc-btn--full" onclick="next()" style="margin-top:auto">Continue with Barclays →</button>
+ </div>`,
+
+ sp6: () => `
+ ${SPONSOR_HEADER('Sam · sponsor dashboard', '/dashboard')}
+ <div class="sp-body">
+ <div class="gc-card" style="background:linear-gradient(135deg,var(--s-50),var(--p-40));color:white;border-color:transparent;padding:15px 16px">
+ <div style="display:flex;align-items:center;gap:11px">
+ <span style="width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,0.18);color:white;display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:16px">S</span>
+ <div>
+ <div style="font-size:16px;font-weight:800;letter-spacing:-0.01em">Sam Kennedy</div>
+ <div style="font-size:11px;opacity:0.85;font-family:'JetBrains Mono',monospace;margin-top:2px">Sponsoring since 8 Mar · 1 approval waiting</div>
+ </div>
+ </div>
+ </div>
+ <div class="sp6-stat-row">
+ <div class="sp6-stat">
+ <div class="sp6-stat__l">No gambling top-ups</div>
+ <div class="sp6-stat__n">24 days</div>
+ <div class="sp6-stat__d sp6-stat__d--ok">↑ Longest yet</div>
+ </div>
+ <div class="sp6-stat">
+ <div class="sp6-stat__l">Programme</div>
+ <div class="sp6-stat__n">24 / 60</div>
+ <div class="sp6-stat__d">Ends 30 Apr</div>
+ </div>
+ </div>
+ <div class="gc-card" style="padding:13px 14px">
+ <h3 style="font-size:13px;font-weight:700;margin:0">Last 14 days</h3>
+ <div class="sp6-tl">
+ <span class="sp6-tl__pill sp6-tl__pill--milestone">Milestone</span>
+ <div><div class="sp6-tl__t">24 days, no gambling top-ups</div><div class="sp6-tl__s">Longest run so far.</div><div class="sp6-tl__when">31 Mar · 09:01</div></div>
+ </div>
+ <div class="sp6-tl">
+ <span class="sp6-tl__pill sp6-tl__pill--message">Message</span>
+ <div><div class="sp6-tl__t">"Just checking in"</div><div class="sp6-tl__s">Standard check-in template · reply outside the app.</div><div class="sp6-tl__when">12 May · 21:30</div></div>
+ </div>
+ <div class="sp6-tl">
+ <span class="sp6-tl__pill sp6-tl__pill--hold">Blocked</span>
+ <div><div class="sp6-tl__t">A gambling payment was blocked</div><div class="sp6-tl__s">£25 · the card did its job · see SP6.c.</div><div class="sp6-tl__when">27 Mar · 23:14</div></div>
+ </div>
+ <div class="sp6-tl">
+ <span class="sp6-tl__pill sp6-tl__pill--milestone">Verified</span>
+ <div><div class="sp6-tl__t">Self-exclusion verified</div><div class="sp6-tl__s">GAMSTOP 5 years · betting shops N4, EC2, N7.</div><div class="sp6-tl__when">10 Mar · 14:20</div></div>
+ </div>
+ </div>
+ <div class="gc-card" style="padding:13px 14px">
+ <h3 style="font-size:13px;font-weight:700;margin:0">Per-MCC · last 30 days</h3>
+ <p style="font-size:11px;color:var(--text-muted);margin:0">Categories only · never merchants.</p>
+ <div class="sp6-mcc">
+ <div class="sp6-mcc-row"><div class="sp6-mcc-head"><span>Groceries</span><span class="sp6-mcc-head__n">£312</span></div><div class="sp6-mcc-bar"><div style="width:78%;background:var(--t-50)"></div></div></div>
+ <div class="sp6-mcc-row"><div class="sp6-mcc-head"><span>Transport</span><span class="sp6-mcc-head__n">£104</span></div><div class="sp6-mcc-bar"><div style="width:48%;background:var(--t-50)"></div></div></div>
+ <div class="sp6-mcc-row"><div class="sp6-mcc-head"><span>Subscriptions</span><span class="sp6-mcc-head__n">£64</span></div><div class="sp6-mcc-bar"><div style="width:30%;background:var(--t-50)"></div></div></div>
+ <div class="sp6-mcc-row"><div class="sp6-mcc-head"><span>Alcohol</span><span class="sp6-mcc-head__n">£0 · blocked</span></div><div class="sp6-mcc-bar"><div style="width:100%;background:var(--e-50)"></div></div></div>
+ <div class="sp6-mcc-row"><div class="sp6-mcc-head"><span>Gambling 7995</span><span class="sp6-mcc-head__n">£0 · 2 declines</span></div><div class="sp6-mcc-bar"><div style="width:100%;background:var(--e-50)"></div></div></div>
+ </div>
+ </div>
+ <div class="gc-card" style="padding:11px 13px;text-align:center">
+ <p style="font-size:11px;color:var(--text-muted);margin:0;line-height:1.5">Approvals: 1 waiting (top-up £60).<br>Push + email enabled · cannot DM Sam in-app.</p>
+ </div>
+ <div class="gc-card gc-card--info">
+ <p style="font-size:11.5px;color:var(--text-secondary);line-height:1.5;margin:0">Web-only at MVP per spec. But the page is responsive, so this is what Joanna sees if she opens sponsor.holdwell.com on her phone.</p>
+ </div>
+ </div>`,
+
+ pendr: () => `
+ ${TOPBAR('Your sponsor')}
+ <div class="sp-body">
+ <div class="gc-card" style="border-color:var(--w-60)">
+ <span style="font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;color:var(--w-60)">3 days · no reply</span>
+ <h2 style="font-size:18px;font-weight:800;letter-spacing:-0.02em;margin:4px 0 0">Joanna hasn't opened the invite yet.</h2>
+ <p style="font-size:12px;color:var(--text-secondary);line-height:1.5;margin:0">Self-exclusion can carry on. Your card waits until a sponsor accepts.</p>
+ </div>
+ <div class="gc-card" style="gap:9px">
+ <button class="gc-btn gc-btn--primary gc-btn--full">Send Joanna a reminder</button>
+ <button class="gc-btn gc-btn--ghost gc-btn--full" onclick="go(0)">Invite someone else instead</button>
+ <button class="gc-btn gc-btn--ghost gc-btn--full">I don't have anyone to ask</button>
+ </div>
+ <div class="gc-card--anna gc-card"><span class="anna-av"><img src="../assets/gc-mark-mono-light.svg" alt=""></span><div><p>"People often need a day or two to take this in. A short message in your own words usually helps more than another email."</p></div></div>
+ </div>`,
+
+ sp3: () => `
+ ${SPONSOR_HEADER('Backing Sam', '/join')}
+ <div class="sp-body">
+ <div class="gc-card">
+ <span style="font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;color:var(--text-muted)">Step 1 of 3 · what this means</span>
+ <h2 style="font-size:18px;font-weight:800;letter-spacing:-0.02em;margin:4px 0 0">60 days, two jobs.</h2>
+ <p style="font-size:12px;color:var(--text-secondary);line-height:1.5;margin:0">Approve money moving onto Sam's card, and check her gambling blocker is on. That's it.</p>
+ </div>
+ <div class="gc-card">
+ <h3 style="font-size:13.5px;font-weight:700;margin:0">You'll see</h3>
+ <div class="sp-perm"><span class="sp-perm__ic sp-perm__ic--y"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="sp-perm__t">Days without gambling top-ups</div><div class="sp-perm__s">And when a payment is blocked</div></div></div>
+ <div class="sp-perm"><span class="sp-perm__ic sp-perm__ic--y"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="sp-perm__t">Self-exclusion and Gamban status</div><div class="sp-perm__s">Verified by the Holdwell team</div></div></div>
+ <div class="sp-perm"><span class="sp-perm__ic sp-perm__ic--y"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="sp-perm__t">Top-up and new payee requests</div><div class="sp-perm__s">You approve or decline</div></div></div>
+ <div class="sp-perm"><span class="sp-perm__ic sp-perm__ic--n"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6 6 18M6 6l12 12"/></svg></span><div><div class="sp-perm__t">Her chats with Anna</div><div class="sp-perm__s">Private, always</div></div></div>
+ <div class="sp-perm"><span class="sp-perm__ic sp-perm__ic--n"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6 6 18M6 6l12 12"/></svg></span><div><div class="sp-perm__t">Her credit file or loan application</div><div class="sp-perm__s">Between Sam and Northbank</div></div></div>
+ </div>
+ <div class="gc-card gc-card--info">
+ <h3 style="font-size:12.5px;font-weight:700;margin:0">Gambling isn't about willpower</h3>
+ <p style="font-size:11.5px;color:var(--text-secondary);line-height:1.5;margin:0">Blocking access alone often moves gambling somewhere else. Support and structure work better than watching. 3-minute guide →</p>
+ </div>
+ <div style="display:flex;gap:8px;margin-top:auto">
+ <button class="gc-btn gc-btn--ghost">I can't do this right now</button>
+ <button class="gc-btn gc-btn--primary" style="flex:1" onclick="next()">Continue</button>
+ </div>
+ </div>`,
+
+ sp5g: () => `
+ ${SPONSOR_HEADER('Confirm Gamban', '/join/gamban')}
+ <div class="sp-body">
+ <div class="gc-card">
+ <span style="font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;color:var(--text-muted)">Step 3 of 3 · next time you see Sam</span>
+ <h2 style="font-size:18px;font-weight:800;letter-spacing:-0.02em;margin:4px 0 0">Check Gamban is on.</h2>
+ <p style="font-size:12px;color:var(--text-secondary);line-height:1.5;margin:0">Open Gamban on Sam's phone. It should say <strong>Protection on</strong>. Then confirm here.</p>
+ </div>
+ <div class="sp-state">
+ <span class="sp-state__ic sp-state__ic--done"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></span>
+ <div><div class="sp-state__t">Sam's phone</div><div class="sp-state__s">Confirmed by you · 9 Mar 19:40</div></div>
+ <span class="sp-state__pill sp-state__pill--done">Done</span>
+ </div>
+ <div class="sp-state">
+ <span class="sp-state__ic sp-state__ic--pending"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l3 2"/></svg></span>
+ <div><div class="sp-state__t">Sam's laptop</div><div class="sp-state__s">Installed by Sam · waiting for you</div></div>
+ <span class="sp-state__pill sp-state__pill--pending">Confirm</span>
+ </div>
+ <div class="gc-card gc-card--info">
+ <h3 style="font-size:12.5px;font-weight:700;margin:0">Why you, not an automatic check</h3>
+ <p style="font-size:11.5px;color:var(--text-secondary);line-height:1.5;margin:0">A second person looking is harder to get round. Sam's card activates once the phone is confirmed.</p>
+ </div>
+ <button class="gc-btn gc-btn--primary gc-btn--full" onclick="next()" style="margin-top:auto">Confirm laptop</button>
+ </div>`,
+
+ sp6a: () => `
+ ${SPONSOR_HEADER('Approvals', '/approvals/412')}
+ <div class="sp-body">
+ <div class="gc-card">
+ <span style="font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;color:var(--text-muted)">Top-up request · 11:05</span>
+ <h2 style="font-size:28px;font-weight:800;letter-spacing:-0.02em;margin:4px 0 0">£60.00</h2>
+ <p style="font-size:12.5px;color:var(--text-secondary);line-height:1.5;margin:0">"Food shop and bus pass"</p>
+ <div class="sp6-mcc" style="padding-top:6px">
+ <div class="sp6-mcc-row"><div class="sp6-mcc-head"><span>This month</span><span class="sp6-mcc-head__n">£337.60 of £400 agreed</span></div><div class="sp6-mcc-bar"><div style="width:84%;background:var(--t-50)"></div></div></div>
+ </div>
+ </div>
+ <div class="gc-card" style="padding:13px 14px">
+ <h3 style="font-size:13px;font-weight:700;margin:0">From → to</h3>
+ <p style="font-size:12px;color:var(--text-secondary);margin:0;line-height:1.5">Sam's bills account (Griffin) → card pot. Bills and direct debits keep running without approval.</p>
+ </div>
+ <div style="display:flex;gap:8px;margin-top:auto">
+ <button class="gc-btn gc-btn--ghost" style="flex:1">Decline</button>
+ <button class="gc-btn gc-btn--primary" style="flex:1" onclick="next()">Approve £60</button>
+ </div>
+ <p style="font-size:11px;color:var(--text-muted);margin:0;text-align:center">Not sure? Ask Sam what it's for. It's fine to say no.</p>
+ </div>`,
+
+ sp6b: () => `
+ ${SPONSOR_HEADER('Approvals', '/approvals/413')}
+ <div class="sp-body">
+ <div class="gc-card">
+ <span style="font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;color:var(--text-muted)">New payee on Sam's account</span>
+ <h2 style="font-size:18px;font-weight:800;letter-spacing:-0.02em;margin:4px 0 0">M. Hughes</h2>
+ <p style="font-size:12px;color:var(--text-secondary);line-height:1.5;margin:0">20-45-77 · ••0912 · "Car repair" · first payment £180</p>
+ </div>
+ <div class="gc-card" style="border-color:var(--w-60)">
+ <h3 style="font-size:12.5px;font-weight:700;margin:0">Worth a quick check</h3>
+ <p style="font-size:11.5px;color:var(--text-secondary);line-height:1.5;margin:0">Unfamiliar payees can be a way round the card's gambling blocks. If you don't know who this is, ask Sam first.</p>
+ </div>
+ <div style="display:flex;gap:8px;margin-top:auto">
+ <button class="gc-btn gc-btn--ghost" style="flex:1">Decline</button>
+ <button class="gc-btn gc-btn--primary" style="flex:1" onclick="next()">Approve payee</button>
+ </div>
+ </div>`,
+
+ sp6c: () => `
+ ${SPONSOR_HEADER('Sam', '/alerts/77')}
+ <div class="sp-body">
+ <div class="gc-card" style="border-color:var(--e-50)">
+ <span class="sp6-tl__pill sp6-tl__pill--hold" style="align-self:flex-start">Blocked</span>
+ <h2 style="font-size:18px;font-weight:800;letter-spacing:-0.02em;margin:4px 0 0">A gambling payment was blocked.</h2>
+ <p style="font-size:12px;color:var(--text-secondary);line-height:1.5;margin:0">Last night 23:14 · £25. Sam's card did its job. A blocked attempt is common in the first months and doesn't mean she's failed.</p>
+ </div>
+ <div class="gc-card" style="gap:9px">
+ <button class="gc-btn gc-btn--primary gc-btn--full">Send Sam a message</button>
+ <button class="gc-btn gc-btn--ghost gc-btn--full">Freeze Sam's card · bills keep running</button>
+ <button class="gc-btn gc-btn--ghost gc-btn--full">Talk to the Holdwell team</button>
+ </div>
+ <div class="gc-card gc-card--info">
+ <p style="font-size:11.5px;color:var(--text-secondary);line-height:1.5;margin:0">Suggested message: "Saw it was a tough night. Proud of you for sticking with it."</p>
+ </div>
+ </div>`,
+
+ sp7: () => `
+ ${TOPBAR('Sponsor · §12 PR4')}
+ <div class="sp-body">
+ <div class="gc-card">
+ <span style="font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;color:var(--text-muted)">SP7 · sponsor management</span>
+ <h2 style="font-size:17px;font-weight:800;letter-spacing:-0.02em;margin:4px 0 0">Your sponsors</h2>
+ <p style="font-size:12px;color:var(--text-secondary);line-height:1.5;margin:0">Up to 3 active sponsors (GEN-07). Authorisations are any-of-N · notifications go to all. Each sponsor was invited and verified separately. No role differences at MVP.</p>
+ </div>
+ <div class="sp-mgmt-card">
+ <span class="sp-mgmt-card__av">JM</span>
+ <div style="flex:1">
+ <div class="sp-mgmt-card__nm">Joanna Mitchell <span class="sp-cap sp-cap--active">Active</span></div>
+ <div class="sp-mgmt-card__sub">Sister · since 8 Mar 2026 · 4/4 weekly summaries</div>
+ </div>
+ <span class="sp-mgmt-card__chev">→</span>
+ </div>
+ <div class="sp-mgmt-card sp-mgmt-card--pending">
+ <span class="sp-mgmt-card__av" style="background:linear-gradient(135deg,var(--w-60),var(--w-30))">DW</span>
+ <div style="flex:1">
+ <div class="sp-mgmt-card__nm">Dr Williams <span class="sp-cap sp-cap--pending">SP4</span></div>
+ <div class="sp-mgmt-card__sub">Clinician · invited 20 Mar · awaiting declaration</div>
+ </div>
+ <span class="sp-mgmt-card__chev">→</span>
+ </div>
+ <button class="gc-btn gc-btn--ghost gc-btn--full" style="border-style:dashed" onclick="go(0)">+ Invite a third sponsor</button>
+ <div class="gc-card">
+ <h3 style="font-size:13.5px;font-weight:700;margin:0">What Joanna can see</h3>
+ <div class="sp-perm"><span class="sp-perm__ic sp-perm__ic--y"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="sp-perm__t">Programme milestones</div><div class="sp-perm__s">Day 24 of 60 · self-exclusion verified</div></div></div>
+ <div class="sp-perm"><span class="sp-perm__ic sp-perm__ic--y"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="sp-perm__t">Blocked-payment alerts</div><div class="sp-perm__s">What happened, never where</div></div></div>
+ <div class="sp-perm"><span class="sp-perm__ic sp-perm__ic--y"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="sp-perm__t">Confirm Gamban</div><div class="sp-perm__s">Phone and laptop</div></div></div>
+ <div class="sp-perm"><span class="sp-perm__ic sp-perm__ic--y"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></span><div><div class="sp-perm__t">Approve top-ups and new payees</div><div class="sp-perm__s">Any-of-N · she + Dr Williams</div></div></div>
+ <div class="sp-perm"><span class="sp-perm__ic sp-perm__ic--n"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6 6 18M6 6l12 12"/></svg></span><div><div class="sp-perm__t">Anna chat content</div><div class="sp-perm__s">Sponsor-blind per AN-05</div></div></div>
+ <div class="sp-perm"><span class="sp-perm__ic sp-perm__ic--n"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6 6 18M6 6l12 12"/></svg></span><div><div class="sp-perm__t">Transactions · MCC blocks</div><div class="sp-perm__s">Day-to-day private</div></div></div>
+ </div>
+ <div class="sp-decision">decisions · <a href="../41-decisions-log.html">GEN-03</a> KYC + open banking · <a href="../41-decisions-log.html">GEN-07</a> max 3 · <a href="../41-decisions-log.html">CC-03</a> light KYC · <a href="../41-decisions-log.html">ON-04</a> A/B invite timing</div>
+ </div>`,
+};
+
+let idx = 0;
+function pickRel(el) { el.parentElement.querySelectorAll('.is-on').forEach(s => s.classList.remove('is-on')); el.classList.add('is-on'); }
+function pickBank(el) { el.parentElement.querySelectorAll('.is-on').forEach(s => s.classList.remove('is-on')); el.classList.add('is-on'); }
+function render() {
+ const screen = SCREENS[idx];
+ document.getElementById('stage').innerHTML = `<div class="screen" style="display:flex;flex-direction:column;flex:1;min-height:0">${builders[screen.kind]()}</div>`;
+ document.getElementById('screenId').textContent = screen.id;
+ document.getElementById('screenName').textContent = screen.name;
+ const aud = document.getElementById('audiencePill');
+ if (screen.audience === 'sponsor') { aud.textContent = 'Sponsor · Joanna'; aud.className = 'proto-modebar__pill proto-modebar__pill--sponsor'; }
+ else { aud.textContent = 'User · Sam'; aud.className = 'proto-modebar__pill'; aud.style.background = 'var(--bg-surface-2)'; }
+ document.getElementById('progressFill').style.width = ((idx + 1) / SCREENS.length * 100) + '%';
+ document.getElementById('navPrev').disabled = idx === 0;
+ document.getElementById('navNext').disabled = idx === SCREENS.length - 1;
+ document.querySelectorAll('.proto-scrubber__item').forEach((el, i) => { el.classList.toggle('is-active', i === idx); if (i === idx) el.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); });
+ document.getElementById('contextBody').innerHTML = CTX[screen.kind] || screen.name;
+}
+function next() { if (idx < SCREENS.length - 1) { idx++; render(); } }
+function prev() { if (idx > 0) { idx--; render(); } }
+function go(i) { idx = i; render(); }
+function buildScrubber() { const nav = document.getElementById('scrubber'); SCREENS.forEach((s, i) => { const btn = document.createElement('button'); btn.className = 'proto-scrubber__item'; btn.innerHTML = `<span class="proto-scrubber__id">${s.id}</span><span class="proto-scrubber__name">${s.name}</span>`; btn.addEventListener('click', () => go(i)); nav.appendChild(btn); }); }
+function initTheme() { const root = document.documentElement; const stored = localStorage.getItem('gc-proto-theme'); const initial = stored || 'dark'; root.setAttribute('data-theme', initial); document.querySelector('.theme-label').textContent = initial === 'dark' ? 'Dark' : 'Light'; document.querySelector('.proto-theme-toggle').addEventListener('click', () => { const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; root.setAttribute('data-theme', next); document.querySelector('.theme-label').textContent = next === 'dark' ? 'Dark' : 'Light'; try { localStorage.setItem('gc-proto-theme', next); } catch(e) {} }); }
+document.getElementById('navPrev').addEventListener('click', prev);
+document.getElementById('navNext').addEventListener('click', next);
+document.addEventListener('keydown', (e) => { if (e.key === 'ArrowRight') next(); if (e.key === 'ArrowLeft') prev(); });
+buildScrubber(); initTheme(); render();
+</script>
+
+</body>
+</html>
